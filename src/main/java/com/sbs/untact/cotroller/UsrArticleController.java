@@ -27,35 +27,52 @@ public class UsrArticleController {
 		articles.add(new Article(++articleLastId, "2020-12-12 12:12:12", "내용3", "제목3"));
 		// ++articleLastId => 0에서 ++
 	}
-	
+
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	// http://localhost:8024
 	public Map<String, Object> doDelete(int id) {
-	
-		Map<String, Object> rs = new HashMap<>();
-	
-		// 해시맵으로 구체적인 성공과 실패의 여부를 알려주기 위한 수단
-		rs.put("resultCode", "s-1");
-		rs.put("msg", "성공하였습니다.");
-		rs.put("id", articleLastId);
+		boolean deleteArticleRs = deleteArticle(id);
 		
+		Map<String, Object> rs = new HashMap<>();
+
+		if(deleteArticleRs) {
+			rs.put("resultCode", "s-1");
+			rs.put("msg", "게시물이 취소 되었습니다.");
+		} else {			
+			rs.put("resultCode", "f-1");
+			rs.put("msg", "해당 게시물은 존재하지 않습니다.");
+		}
+		rs.put("id", articleLastId);
+
 		return rs;
+	}
+
+	private boolean deleteArticle(int id) {
+		for (Article article : articles) {
+			if (article.getId() == id) {
+				articles.remove(id);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	// http://localhost:8024/usr/article/doAdd?regDate=2020-12-12 12:12:12&title=제목4&body=내용4
+	// http://localhost:8024/usr/article/doAdd?regDate=2020-12-12
+	// 12:12:12&title=제목4&body=내용4
 	public Map<String, Object> doAdd(String regDate, String title, String body) {
-		
+
 		articles.add(new Article(++articleLastId, regDate, title, body));
-		
+
 		Map<String, Object> rs = new HashMap<>();
 		// 해시맵으로 구체적인 성공과 실패의 여부를 알려주기 위한 수단
 		rs.put("resultCode", "s-1");
-		rs.put("msg", "성공하였습니다.");
+		rs.put("msg", "게시물이 추가 되었습니다.");
 		rs.put("id", articleLastId);
-		
+
 		return rs;
 	}
 
