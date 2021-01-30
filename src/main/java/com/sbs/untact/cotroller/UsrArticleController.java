@@ -18,7 +18,8 @@ import com.sbs.untact.util.Util;
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
-
+	// zzzzzzzzzzzzzzzzzzzzzzzzzz
+	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData doModify(int id, String title, String body) {
