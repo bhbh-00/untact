@@ -84,7 +84,15 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
 	// http://localhost:8024
-	public List<Article> showList(String searchKeyword) {
+	public List<Article> showList(String searchKeywordType, String searchKeyword) {
+		if (searchKeywordType != null) {
+			searchKeywordType = searchKeywordType.trim();
+		}
+
+		if (searchKeywordType == null || searchKeywordType.length() == 0) {
+			searchKeywordType = "titleAndBody";
+		}
+
 		if (searchKeyword != null && searchKeyword.length() == 0) {
 			searchKeyword = null;
 		}
@@ -92,8 +100,8 @@ public class UsrArticleController {
 		if (searchKeyword != null) {
 			searchKeyword = searchKeyword.trim();
 		} // 불필요한 뛰어쓰기 같은거는 필터링하고 검색
-		
-		return articleService.getArticleList(searchKeyword);
+
+		return articleService.getArticleList(searchKeywordType, searchKeyword);
 	}
 
 }

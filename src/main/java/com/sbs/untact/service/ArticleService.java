@@ -20,9 +20,9 @@ public class ArticleService {
 		articleLastId = 0;
 		articles = new ArrayList<>();
 
-		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "내용1", "제목1"));
-		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "내용2", "제목2"));
-		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "내용3", "제목3"));
+		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "제목1", "내용1"));
+		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "제목2", "내용2"));
+		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "제목3", "내용3"));
 		// ++articleLastId => 0에서 ++
 	}
 
@@ -67,7 +67,7 @@ public class ArticleService {
 		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
 	}
 
-	public List<Article> getArticleList(String searchKeyword) {
+	public List<Article> getArticleList(String searchKeywordType, String searchKeyword) {
 		if (searchKeyword == null) {
 			return articles;
 		}
@@ -75,7 +75,21 @@ public class ArticleService {
 		List<Article> filtered = new ArrayList<>();
 
 		for (Article article : articles) {
-			if (article.getTitle().contains(searchKeyword)) {
+			boolean contains = false;
+
+			if (searchKeywordType.equals("title")) {
+				contains = article.getTitle().contains(searchKeyword);
+			} else if (searchKeywordType.equals("body")) {
+				contains = article.getBody().contains(searchKeyword);
+			} else {
+				contains = article.getTitle().contains(searchKeyword);
+
+				if (contains == false) {
+					contains = article.getBody().contains(searchKeyword);
+				}
+			}
+
+			if (contains) {
 				filtered.add(article);
 			}
 		}
