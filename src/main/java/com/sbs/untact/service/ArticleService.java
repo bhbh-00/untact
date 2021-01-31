@@ -72,4 +72,10 @@ public class ArticleService {
 		return articles;
 	}
 
+	public List<Article> getSearchArticle(String searchKeyword) {
+		
+		
+		return articles;
+	}
+
 }

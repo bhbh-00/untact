@@ -18,12 +18,24 @@ import com.sbs.untact.util.Util;
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
-	// zzzzzzzzzzzzzzzzzzzzzzzzzz
-	
+
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(int id, String title, String body) {
+	public ResultData doModify(Integer id, String title, String body) {
+		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
+		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
 		Article article = articleService.getArticle(id);
+		if (id == null) {
+			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+		}
+
+		if (title == null) {
+			return new ResultData("F-1", "제목을 입력해주세요.");
+		}
+
+		if (body == null) {
+			return new ResultData("F-1", "내용을 입력해주세요.");
+		}
 
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
@@ -48,12 +60,12 @@ public class UsrArticleController {
 	@ResponseBody
 	// http://localhost:8024/usr/article/doAdd?title=제목4&body=내용4
 	public ResultData doAdd(String title, String body) {
-
-		if (title != null) {
+		// String title, String body이 null이면 내용이 없는 거!!
+		if (title == null) {
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		}
 
-		if (body != null) {
+		if (body == null) {
 			return new ResultData("F-1", "내용을 입력해주세요.");
 		}
 
@@ -64,10 +76,18 @@ public class UsrArticleController {
 	@ResponseBody
 	// http://localhost:8024
 	public Article showDetail(int id) {
-		
+
 		Article article = articleService.getArticle(id);
 		return article;
 	}
+
+//	@RequestMapping("/usr/article/list")
+//	@ResponseBody
+//	// http://localhost:8024
+//	public List<Article> showList(String searchKeyword) {
+//
+//		return articleService.getSearchArticle(searchKeyword);
+//	}
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
