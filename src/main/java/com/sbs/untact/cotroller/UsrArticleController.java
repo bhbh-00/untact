@@ -81,20 +81,19 @@ public class UsrArticleController {
 		return article;
 	}
 
-//	@RequestMapping("/usr/article/list")
-//	@ResponseBody
-//	// http://localhost:8024
-//	public List<Article> showList(String searchKeyword) {
-//
-//		return articleService.getSearchArticle(searchKeyword);
-//	}
-
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
 	// http://localhost:8024
-	public List<Article> showList() {
+	public List<Article> showList(String searchKeyword) {
+		if (searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
 
-		return articleService.getArticleList();
+		if (searchKeyword != null) {
+			searchKeyword = searchKeyword.trim();
+		} // 불필요한 뛰어쓰기 같은거는 필터링하고 검색
+		
+		return articleService.getArticleList(searchKeyword);
 	}
 
 }

@@ -63,19 +63,24 @@ public class ArticleService {
 		String updateDate = regDate;
 
 		articles.add(new Article(id, regDate, updateDate, title, body));
-		
+
 		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
 	}
 
-	public List<Article> getArticleList() {
+	public List<Article> getArticleList(String searchKeyword) {
+		if (searchKeyword == null) {
+			return articles;
+		}
 
-		return articles;
-	}
+		List<Article> filtered = new ArrayList<>();
 
-	public List<Article> getSearchArticle(String searchKeyword) {
-		
-		
-		return articles;
+		for (Article article : articles) {
+			if (article.getTitle().contains(searchKeyword)) {
+				filtered.add(article);
+			}
+		}
+
+		return filtered;
 	}
 
 }
