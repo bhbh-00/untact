@@ -1,98 +1,27 @@
 package com.sbs.untact.dao;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dto.Article;
-import com.sbs.untact.util.Util;
 
-@Component
-public class ArticleDao {
+@Mapper
+public interface ArticleDao {
 
-	private int articleLastId;
-	private List<Article> articles;
+	public void doModify(@Param(value = "id") int id, @Param(value = "title") String title,
+			@Param(value = "body") String body);
 
-	public ArticleDao() {
-		// 멤버변수 초기화
-		articleLastId = 0;
-		articles = new ArrayList<>();
+	public void deleteArticle(@Param(value = "id") int id);
 
-		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "제목1", "내용1"));
-		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "제목2", "내용2"));
-		articles.add(new Article(++articleLastId, "2021-12-12 12:12:12", "2021-12-12 12:13:13", "제목3", "내용3"));
-		// ++articleLastId => 0에서 ++
-	}
+	public Article getArticle(@Param(value = "id") int id);
 
-	public void doModify(int id, String title, String body) {
-		Article article = getArticle(id);
+	public void addArticle(Map<String, Object> param);
 
-		article.setBody(body);
-		article.setTitle(title);
-		article.setUpdateDate(Util.getCurrenDate());
-
-	}
-
-	public boolean deleteArticle(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				articles.remove(article);
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public Article getArticle(int id) {
-		for (Article article : articles) {
-			if (article.getId() == id) {
-				return article;
-			}
-		}
-
-		return null;
-	}
-
-	public int addArticle(String title, String body) {
-		int id = ++articleLastId;
-		String regDate = Util.getCurrenDate();
-		String updateDate = regDate;
-
-		articles.add(new Article(id, regDate, updateDate, title, body));
-
-		return id;
-	}
-
-	public List<Article> getArticles(String searchKeywordType, String searchKeyword) {
-		if (searchKeyword == null) {
-			return articles;
-		}
-
-		List<Article> filtered = new ArrayList<>();
-
-		for (Article article : articles) {
-			boolean contains = false;
-
-			if (searchKeywordType.equals("title")) {
-				contains = article.getTitle().contains(searchKeyword);
-			} else if (searchKeywordType.equals("body")) {
-				contains = article.getBody().contains(searchKeyword);
-			} else {
-				contains = article.getTitle().contains(searchKeyword);
-
-				if (contains == false) {
-					contains = article.getBody().contains(searchKeyword);
-				}
-			}
-
-			if (contains) {
-				filtered.add(article);
-			}
-		}
-
-		return filtered;
-	}
+	public List<Article> getArticles(@Param(value = "searchKeywordType") String searchKeywordType,
+			@Param(value = "searchKeyword") String searchKeyword);
 
 }
