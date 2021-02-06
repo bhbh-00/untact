@@ -101,6 +101,10 @@ public class UsrArticleController {
 		if (searchKeyword != null) {
 			searchKeyword = searchKeyword.trim();
 		} // 불필요한 뛰어쓰기 같은거는 필터링하고 검색
+		
+		if (searchKeyword == null) {
+			searchKeywordType = null;
+		}
 
 		return articleService.getArticleList(searchKeywordType, searchKeyword);
 	}
