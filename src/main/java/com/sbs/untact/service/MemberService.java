@@ -27,7 +27,7 @@ public class MemberService {
 	public Member getMemberByloginId(String loginId) {
 		return memberDao.getMemberByloginId(loginId);
 	}
-	
+
 	public Member getMember(int id) {
 		return memberDao.getMember(id);
 	}
@@ -38,5 +38,8 @@ public class MemberService {
 		return new ResultData("s-1", "회원정보 수정이 완료되었습니다.");
 	}
 
+	public boolean isAdmin(int actorId) {
+		return actorId == 1;
+	}
 
 }

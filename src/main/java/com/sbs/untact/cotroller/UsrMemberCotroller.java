@@ -52,7 +52,7 @@ public class UsrMemberCotroller {
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	// http://localhost:8024/usr/member/doLogin?loginId=aaa&loginPw=1234
+	// http://localhost:8024/usr/member/doLogin?loginId=aaa&loginPw=aaa
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 		if (session.getAttribute("loginedMemberId") != null) {
 			return new ResultData("F-4", "이미 로그인 중입니다.");

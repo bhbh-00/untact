@@ -12,16 +12,20 @@ import com.sbs.untact.dto.Article;
 @Mapper
 public interface ArticleDao {
 
-	public void doModify(@Param(value = "id") int id, @Param(value = "title") String title,
-			@Param(value = "body") String body);
+	public void doModify(@Param("id") Integer id, @Param("title") String title, @Param("body") String body);
 
-	public void deleteArticle(@Param(value = "id") int id);
+	public void deleteArticle(@Param("id") Integer id);
 
-	public Article getArticle(@Param(value = "id") int id);
+	public Article getArticle(@Param("id") Integer id);
 
 	public void addArticle(Map<String, Object> param);
 
-	public List<Article> getArticles(@Param(value = "searchKeywordType") String searchKeywordType,
-			@Param(value = "searchKeyword") String searchKeyword);
+	public List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
+			@Param("searchKeyword") String searchKeyword);
+
+	public Article getForPrintArticle(@Param("id") Integer id);
+
+	public List<Article> getForPrintArticleList(@Param("searchKeywordType") String searchKeywordType,
+			@Param("searchKeyword") String searchKeyword);
 
 }
