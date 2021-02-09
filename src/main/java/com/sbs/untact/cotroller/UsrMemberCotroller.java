@@ -23,9 +23,6 @@ public class UsrMemberCotroller {
 	@ResponseBody
 	// http://localhost:8024/usr/member/doModify?name=
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return new ResultData("F-1", "로그인 후 이용해주세요.");
-		}
 
 		if (param.isEmpty()) {
 			return new ResultData("F-2", "수정할 정보를 입력해주세요.");
@@ -41,9 +38,6 @@ public class UsrMemberCotroller {
 	@ResponseBody
 	// http://localhost:8024/usr/member/doLogout
 	public ResultData doLogout(HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return new ResultData("F-1", "로그인이 필요합니다.");
-		}
 
 		session.removeAttribute("loginedMemberId");
 
@@ -52,11 +46,8 @@ public class UsrMemberCotroller {
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	// http://localhost:8024/usr/member/doLogin?loginId=aaa&loginPw=aaa
+	// http://localhost:8024/usr/member/doLogin?loginId=aaa&loginPw=1234
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
-		if (session.getAttribute("loginedMemberId") != null) {
-			return new ResultData("F-4", "이미 로그인 중입니다.");
-		}
 
 		if (loginId == null) {
 			return new ResultData("F-1", "아이디를 입력해주세요.");
@@ -99,7 +90,6 @@ public class UsrMemberCotroller {
 		if (param.get("loginPw") == null) {
 			return new ResultData("F-1", "비밀번호를 입력해주세요.");
 		}
-
 		if (param.get("name") == null) {
 			return new ResultData("F-1", "이름을 입력해주세요.");
 		}

@@ -28,9 +28,6 @@ public class UsrArticleController {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
 		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-		if (loginMemberId == 0) {
-			return new ResultData("F-2", "로그인 후 이용해주세요.");
-		}
 
 		if (id == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
@@ -65,10 +62,6 @@ public class UsrArticleController {
 	public ResultData doDelete(Integer id, HttpSession session) {
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
-		if (loginMemberId == 0) {
-			return new ResultData("F-2", "로그인 후 이용해주세요.");
-		}
-
 		if (id == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
 		}
@@ -94,9 +87,6 @@ public class UsrArticleController {
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
 		// String title, String body이 null이면 내용이 없는 거!!
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-		if (loginMemberId == 0) {
-			return new ResultData("F-2", "로그인 후 이용해주세요.");
-		}
 
 		if (param.get("title") == null) {
 			return new ResultData("F-1", "제목을 입력해주세요.");
@@ -114,13 +104,13 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	@ResponseBody
 	// http://localhost:8024/usr/article/detail
-	public ResultData showDetail(Integer id) {	
-		if (id  == null) {
+	public ResultData showDetail(Integer id) {
+		if (id == null) {
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
-		
+
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
