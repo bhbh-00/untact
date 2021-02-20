@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -66,16 +68,38 @@ public class ArticleService {
 		return articleDao.getForPrintArticle(id);
 	}
 
-	public List<Article> getForPrintArticles(String searchKeywordType, String searchKeyword, int page,
+	public List<Article> getForPrintArticles(int boardId, String searchKeywordType, String searchKeyword, int page,
 			int itemsInAPage) {
-
+		// 페이징 - 시작과 끝 범위
 		int limitStart = (page - 1) * itemsInAPage;
 		// controller에서 한 페이지에 포함 되는 게시물의 갯수의 값을(itemsInAPage) 설정했음.
 		int limitTake = itemsInAPage;
 		// 한 페이지에 포함 되는 게시물의 갯수의 값
-		//LIMIT 20, 20 => 2page LIMIT 40, 20 => 3page 
+		// LIMIT 20, 20 => 2page LIMIT 40, 20 => 3page
 
-		return articleDao.getForPrintArticles(searchKeywordType, searchKeyword, limitStart, limitTake);
+		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
+	}
+
+	public ResultData AddReply(Map<String, Object> param) {
+		articleDao.addReply(param);
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
+	}
+
+	public ResultData doModifyReply(Integer articleId, String body) {
+		articleDao.doModifyReply(articleId, body);
+
+		return new ResultData("s-1", "수정완료되었습니다.", "articleidid", articleId);
+	}
+
+	public List<Reply> getForPrintReplies(Integer articleId) {
+		return articleDao.getForPrintReplies(articleId);
+	}
+
+	public Board getBoard(int boardId) {
+		return articleDao.getBoard(boardId);
 	}
 
 }

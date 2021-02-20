@@ -5,9 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
@@ -25,9 +26,16 @@ public interface ArticleDao {
 
 	public Article getForPrintArticle(@Param("id") Integer id);
 
-	public List<Article> getForPrintArticles(@Param("searchKeywordType") String searchKeywordType,
-			@Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart,
-			@Param("limitTake") int limitTake);
-	// 페이징 - 시작과 끝 범위
+	public List<Article> getForPrintArticles(@Param("boardId") int boardId,
+			@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword,
+			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
+
+	public void addReply(Map<String, Object> param);
+
+	public void doModifyReply(@Param("articleId") Integer articleId, @Param("body") String body);
+
+	public List<Reply> getForPrintReplies(@Param("articleId") Integer articleId);
+
+	public Board getBoard(int boardId);
 
 }

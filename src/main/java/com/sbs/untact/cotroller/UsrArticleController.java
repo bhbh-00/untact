@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.util.Util;
@@ -20,7 +22,80 @@ import com.sbs.untact.util.Util;
 public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
+	
+	// =================================================== 댓글
 
+	@RequestMapping("/usr/article/replies")
+	@ResponseBody
+	// http://localhost:8024/usr/article/replies
+	public ResultData showReplies(Integer articleId, HttpSession session) {
+		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+
+		if (articleId == null) {
+			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+		}
+		
+		Article article = articleService.getArticle(articleId);
+
+		if (article == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+		
+		List<Reply> replies = articleService.getForPrintReplies(articleId);
+
+		return new ResultData("S-1", "성공", "replies", replies);
+	}
+
+	@RequestMapping("/usr/article/doModifyReply")
+	@ResponseBody
+	// http://localhost:8024/usr/article/doModifyReply?articleId=1&body=새로운 댓글입니다!
+	public ResultData doModifyReply(Integer articleId, String body, HttpSession session) {
+		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+
+		if (articleId == null) {
+			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+		}
+
+		if (body == null) {
+			return new ResultData("F-1", "내용을 입력해주세요.");
+		}
+
+		Article article = articleService.getArticle(articleId);
+
+		if (article == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+
+		ResultData actorCanModifyRd = articleService.getActorCanModify(article, loginMemberId);
+
+		if (actorCanModifyRd.isFail()) {
+			return actorCanModifyRd;
+		}
+
+		return articleService.doModifyReply(articleId, body);
+	}
+
+	@RequestMapping("/usr/article/doAddReply")
+	@ResponseBody
+	// http://localhost:8024/usr/article/doAddReply?articleId=댓글1
+	public ResultData AddReply(@RequestParam Map<String, Object> param, HttpSession session) {
+		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+
+		if (param.get("articleId") == null) {
+			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+		}
+
+		if (param.get("body") == null) {
+			return new ResultData("F-1", "댓글을 입력해주세요.");
+		}
+
+		param.put("memberId", loginMemberId);
+
+		return articleService.AddReply(param);
+	}
+	
+	// =================================================== 게시물
+	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doModify?id=1&title=제목4&body=내용4
@@ -95,8 +170,8 @@ public class UsrArticleController {
 		if (param.get("body") == null) {
 			return new ResultData("F-1", "내용을 입력해주세요.");
 		}
-
-		param.put("MemberId", loginMemberId);
+		
+		param.put("memberId", loginMemberId);
 
 		return articleService.doAdd(param);
 	}
@@ -121,8 +196,15 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
 	// http://localhost:8024/usr/article/list
-	public ResultData showList(String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
-		//@RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
+	public ResultData showList(@RequestParam(defaultValue = "1") int boardId, String searchKeywordType,
+			String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+		// @RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
+		
+		Board board = articleService.getBoard(boardId);
+		
+		if (board == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
 		
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
@@ -143,11 +225,12 @@ public class UsrArticleController {
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
-		
+
 		int itemsInAPage = 20;
 		// 한 페이지에 포함 되는 게시물의 갯수
 
-		List<Article> articles = articleService.getForPrintArticles(searchKeywordType, searchKeyword, page, itemsInAPage);
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
+				itemsInAPage);
 
 		return new ResultData("S-1", "성공", "articles", articles);
 	}
