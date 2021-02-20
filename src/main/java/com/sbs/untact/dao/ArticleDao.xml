@@ -5,6 +5,18 @@
 
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
+	<delete id="deleteReply">
+		DELETE FROM reply
+		WHERE articleId = #{articleId}
+		and id = #{replyId};
+	</delete>
+	
+	<select id="getReply" resultType="Reply">
+		SELECT *
+		FROM reply
+		WHERE id = #{replyId}
+	</select>
+
 	<select id="getBoard" resultType="Board">
 		SELECT *
 		FROM board

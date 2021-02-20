@@ -102,4 +102,14 @@ public class ArticleService {
 		return articleDao.getBoard(boardId);
 	}
 
+	public Reply getReply(Integer replyId) {
+		return articleDao.getReply(replyId);
+	}
+
+	public ResultData deleteReply(Integer articleId, Integer replyId) {
+		articleDao.deleteReply(articleId, replyId);
+
+		return new ResultData("S-1", "삭제하였습니다.", "articleId", articleId, "replyId", replyId);
+	}
+
 }

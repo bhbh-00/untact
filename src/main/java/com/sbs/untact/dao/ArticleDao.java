@@ -38,4 +38,8 @@ public interface ArticleDao {
 
 	public Board getBoard(int boardId);
 
+	public Reply getReply(@Param("replyId") Integer replyId);
+
+	public void deleteReply(@Param("articleId") Integer articleId, @Param("replyId") Integer replyId);
+
 }

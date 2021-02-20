@@ -24,13 +24,47 @@ public class UsrArticleController {
 	private ArticleService articleService;
 	
 	// =================================================== 댓글
+	@RequestMapping("/usr/article/doDeleteReply")
+	@ResponseBody
+	// http://localhost:8024/usr/article/doDeleteReply?articleId=1&replyId=1
+	public ResultData doDeleteReply(Integer articleId, Integer replyId, HttpSession session) {
+		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+
+		if (articleId == null) {
+			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+		}
+
+		Article article = articleService.getArticle(articleId);
+
+		if (article == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+		
+		if (replyId == null) {
+			return new ResultData("F-1", "댓글 번호를 입력해주세요.");
+		}
+
+		Reply reply = articleService.getReply(replyId);
+
+		if (reply == null) {
+			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+		}
+
+		ResultData actorCanDeleteRd = articleService.getActorCanDelete(article, loginMemberId);
+
+		if (actorCanDeleteRd.isFail()) {
+			return actorCanDeleteRd;
+		}
+
+		return articleService.deleteReply(articleId, replyId);
+	}
 
 	@RequestMapping("/usr/article/replies")
 	@ResponseBody
 	// http://localhost:8024/usr/article/replies
 	public ResultData showReplies(Integer articleId, HttpSession session) {
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
+		
 		if (articleId == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
 		}
