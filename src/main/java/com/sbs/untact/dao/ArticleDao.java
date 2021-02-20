@@ -25,7 +25,9 @@ public interface ArticleDao {
 
 	public Article getForPrintArticle(@Param("id") Integer id);
 
-	public List<Article> getForPrintArticleList(@Param("searchKeywordType") String searchKeywordType,
-			@Param("searchKeyword") String searchKeyword);
+	public List<Article> getForPrintArticles(@Param("searchKeywordType") String searchKeywordType,
+			@Param("searchKeyword") String searchKeyword, @Param("limitStart") int limitStart,
+			@Param("limitTake") int limitTake);
+	// 페이징 - 시작과 끝 범위
 
 }

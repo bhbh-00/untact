@@ -120,8 +120,10 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/list")
 	@ResponseBody
-	// http://localhost:8024
-	public List<Article> showList(String searchKeywordType, String searchKeyword) {
+	// http://localhost:8024/usr/article/list
+	public ResultData showList(String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+		//@RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
+		
 		if (searchKeywordType != null) {
 			searchKeywordType = searchKeywordType.trim();
 		}
@@ -136,13 +138,18 @@ public class UsrArticleController {
 
 		if (searchKeyword != null) {
 			searchKeyword = searchKeyword.trim();
-		} // 불필요한 뛰어쓰기 같은거는 필터링하고 검색
+		}
 
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
+		
+		int itemsInAPage = 20;
+		// 한 페이지에 포함 되는 게시물의 갯수
 
-		return articleService.getForPrintArticleList(searchKeywordType, searchKeyword);
+		List<Article> articles = articleService.getForPrintArticles(searchKeywordType, searchKeyword, page, itemsInAPage);
+
+		return new ResultData("S-1", "성공", "articles", articles);
 	}
 
 }

@@ -5,12 +5,29 @@
 
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
-	<select id="getForPrintArticleList" resultType="Article">
+	<select id="getForPrintArticles" resultType="Article">
 		SELECT A.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM article AS A
+		FROM article AS
+		A
 		LEFT JOIN `member` AS M
 		ON A.memberId = M.id
+		WHERE 1
+		<if test="searchKeywordType == 'title'">
+			AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'body'">
+			AND A.`body` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'titleAndBody'">
+			AND (A.title LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			A.`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		<!-- 페이지 마이바티스 if and, or 검색해보기 -->
+		ORDER BY A.id ASC
+		<if test="limitStart != null and limitTake != null">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
 	</select>
 
 

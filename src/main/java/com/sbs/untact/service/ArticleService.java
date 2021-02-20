@@ -66,8 +66,16 @@ public class ArticleService {
 		return articleDao.getForPrintArticle(id);
 	}
 
-	public List<Article> getForPrintArticleList(String searchKeywordType, String searchKeyword) {
-		return articleDao.getForPrintArticleList(searchKeywordType,searchKeyword);
+	public List<Article> getForPrintArticles(String searchKeywordType, String searchKeyword, int page,
+			int itemsInAPage) {
+
+		int limitStart = (page - 1) * itemsInAPage;
+		// controller에서 한 페이지에 포함 되는 게시물의 갯수의 값을(itemsInAPage) 설정했음.
+		int limitTake = itemsInAPage;
+		// 한 페이지에 포함 되는 게시물의 갯수의 값
+		//LIMIT 20, 20 => 2page LIMIT 40, 20 => 3page 
+
+		return articleDao.getForPrintArticles(searchKeywordType, searchKeyword, limitStart, limitTake);
 	}
 
 }
