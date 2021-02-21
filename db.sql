@@ -1,4 +1,4 @@
-# 데이터베이스 생성
+﻿# 데이터베이스 생성
 DROP DATABASE IF EXISTS untact;
 CREATE DATABASE untact;
 USE untact;

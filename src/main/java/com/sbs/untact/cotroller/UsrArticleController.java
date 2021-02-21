@@ -63,6 +63,14 @@ public class UsrArticleController {
 	@ResponseBody
 	// http://localhost:8024/usr/article/replies
 	public ResultData showReplies(Integer articleId, HttpSession session) {
+		/* 선생님 -> 로그인 없이 댓글을 볼 수 있게 함
+		 * 댓글 페이징까지!
+		 * 댓글 전용 컨트롤러 따로 만들기!
+		 * 댓글이 꼭 게시물에만 달 수 있는게 아니라 서비스 전체에 달 수 있게 끔 해준다. -> relTypeCode와 relId추가
+		 * sql 쿼리 수정
+		 * sql 인덱스 걸기 -> 순서 중요!
+		 * beforeActionInterceptor에 로그인 없이 할 수 있게 수정 */
+
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
 		
 		if (articleId == null) {
@@ -195,6 +203,7 @@ public class UsrArticleController {
 	// http://localhost:8024/usr/article/doAdd?title=제목4&body=내용4
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
 		// String title, String body이 null이면 내용이 없는 거!!
+		
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
 
 		if (param.get("title") == null) {
@@ -208,6 +217,11 @@ public class UsrArticleController {
 		param.put("memberId", loginMemberId);
 
 		return articleService.doAdd(param);
+		
+		/* 0221 코멘트 
+		 * 게시물 추가를 할 때 boardId도 추가를 해주어야지 오류가 발생하지 않음!
+		 * 그에 대한 해결책을 적용해서 만들기! */
+		
 	}
 
 	@RequestMapping("/usr/article/detail")
