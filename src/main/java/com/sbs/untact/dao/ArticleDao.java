@@ -12,35 +12,25 @@ import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
-	// interface에서는  필요없음!
+	// interface에서는 필요없음!
 
-	 void doModify(@Param("id") Integer id, @Param("title") String title, @Param("body") String body);
+	void doModify(@Param("id") Integer id, @Param("title") String title, @Param("body") String body);
 
-	 void deleteArticle(@Param("id") Integer id);
+	void deleteArticle(@Param("id") Integer id);
 
-	 Article getArticle(@Param("id") Integer id);
+	Article getArticle(@Param("id") Integer id);
 
-	 void addArticle(Map<String, Object> param);
+	void addArticle(Map<String, Object> param);
 
-	 List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
+	List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
 
-	 Article getForPrintArticle(@Param("id") Integer id);
+	Article getForPrintArticle(@Param("id") Integer id);
 
-	 List<Article> getForPrintArticles(@Param("boardId") int boardId,
+	List<Article> getForPrintArticles(@Param("boardId") int boardId,
 			@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword,
 			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
-	 void addReply(Map<String, Object> param);
-
-	 void doModifyReply(@Param("articleId") Integer articleId, @Param("body") String body);
-
-	 List<Reply> getForPrintReplies(@Param("articleId") Integer articleId);
-
-	 Board getBoard(int boardId);
-
-	 Reply getReply(@Param("replyId") Integer replyId);
-
-	 void deleteReply(@Param("articleId") Integer articleId, @Param("replyId") Integer replyId);
+	Board getBoard(int boardId);
 
 }

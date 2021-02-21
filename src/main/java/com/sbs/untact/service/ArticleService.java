@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -80,36 +79,8 @@ public class ArticleService {
 		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
 	}
 
-	public ResultData AddReply(Map<String, Object> param) {
-		articleDao.addReply(param);
-
-		int id = Util.getAsInt(param.get("id"), 0);
-
-		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
-	}
-
-	public ResultData doModifyReply(Integer articleId, String body) {
-		articleDao.doModifyReply(articleId, body);
-
-		return new ResultData("s-1", "수정완료되었습니다.", "articleidid", articleId);
-	}
-
-	public List<Reply> getForPrintReplies(Integer articleId) {
-		return articleDao.getForPrintReplies(articleId);
-	}
-
 	public Board getBoard(int boardId) {
 		return articleDao.getBoard(boardId);
-	}
-
-	public Reply getReply(Integer replyId) {
-		return articleDao.getReply(replyId);
-	}
-
-	public ResultData deleteReply(Integer articleId, Integer replyId) {
-		articleDao.deleteReply(articleId, replyId);
-
-		return new ResultData("S-1", "삭제하였습니다.", "articleId", articleId, "replyId", replyId);
 	}
 
 }
