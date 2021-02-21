@@ -12,6 +12,7 @@ import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
+	// interface에서는 public 필요없음!
 
 	public void doModify(@Param("id") Integer id, @Param("title") String title, @Param("body") String body);
 

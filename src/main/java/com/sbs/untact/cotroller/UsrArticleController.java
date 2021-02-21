@@ -29,7 +29,8 @@ public class UsrArticleController {
 	// http://localhost:8024/usr/article/doDeleteReply?articleId=1&replyId=1
 	public ResultData doDeleteReply(Integer articleId, Integer replyId, HttpSession session) {
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
+		
+		// 선생님은 replyId로만!
 		if (articleId == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
 		}
@@ -51,7 +52,8 @@ public class UsrArticleController {
 		}
 
 		ResultData actorCanDeleteRd = articleService.getActorCanDelete(article, loginMemberId);
-
+		// articleService 말고 이제는 reply서비스에게!
+		
 		if (actorCanDeleteRd.isFail()) {
 			return actorCanDeleteRd;
 		}
@@ -93,7 +95,8 @@ public class UsrArticleController {
 	// http://localhost:8024/usr/article/doModifyReply?articleId=1&body=새로운 댓글입니다!
 	public ResultData doModifyReply(Integer articleId, String body, HttpSession session) {
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
+		
+		// 선생님은 replyId로만!
 		if (articleId == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
 		}
@@ -203,9 +206,12 @@ public class UsrArticleController {
 	// http://localhost:8024/usr/article/doAdd?title=제목4&body=내용4
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
 		// String title, String body이 null이면 내용이 없는 거!!
-		
 		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
-
+		/* HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 
+		 * Util.getAsInt 필요 없음 (int로 형변환 필요함)
+		 * !!로그인과 회원가입은 세션이 필요함
+		 * */
+		
 		if (param.get("title") == null) {
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		}
