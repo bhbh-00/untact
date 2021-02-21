@@ -3,6 +3,7 @@ package com.sbs.untact.cotroller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDeleteReply")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doDeleteReply?articleId=1&replyId=1
-	public ResultData doDeleteReply(Integer articleId, Integer replyId, HttpSession session) {
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+	public ResultData doDeleteReply(Integer articleId, Integer replyId, HttpServletRequest req) {
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 		
 		// 선생님은 replyId로만!
 		if (articleId == null) {
@@ -64,7 +65,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/replies")
 	@ResponseBody
 	// http://localhost:8024/usr/article/replies
-	public ResultData showReplies(Integer articleId, HttpSession session) {
+	public ResultData showReplies(Integer articleId, HttpServletRequest req) {
 		/* 선생님 -> 로그인 없이 댓글을 볼 수 있게 함
 		 * 댓글 페이징까지!
 		 * 댓글 전용 컨트롤러 따로 만들기!
@@ -73,7 +74,7 @@ public class UsrArticleController {
 		 * sql 인덱스 걸기 -> 순서 중요!
 		 * beforeActionInterceptor에 로그인 없이 할 수 있게 수정 */
 
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 		
 		if (articleId == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
@@ -93,8 +94,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModifyReply")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doModifyReply?articleId=1&body=새로운 댓글입니다!
-	public ResultData doModifyReply(Integer articleId, String body, HttpSession session) {
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+	public ResultData doModifyReply(Integer articleId, String body, HttpServletRequest req) {
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 		
 		// 선생님은 replyId로만!
 		if (articleId == null) {
@@ -123,8 +124,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAddReply")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doAddReply?articleId=댓글1
-	public ResultData AddReply(@RequestParam Map<String, Object> param, HttpSession session) {
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+	public ResultData AddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 
 		if (param.get("articleId") == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
@@ -144,10 +145,10 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doModify?id=1&title=제목4&body=내용4
-	public ResultData doModify(Integer id, String title, String body, HttpSession session) {
+	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
 		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 
 		if (id == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
@@ -179,8 +180,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doDelete
-	public ResultData doDelete(Integer id, HttpSession session) {
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+	public ResultData doDelete(Integer id, HttpServletRequest req) {
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 
 		if (id == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
@@ -204,9 +205,9 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	// http://localhost:8024/usr/article/doAdd?title=제목4&body=내용4
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpSession session) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// String title, String body이 null이면 내용이 없는 거!!
-		int loginMemberId = Util.getAsInt(session.getAttribute("loginedMemberId"), 0);
+		int loginMemberId = (int)req.getAttribute("loginedMemberId");
 		/* HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 
 		 * Util.getAsInt 필요 없음 (int로 형변환 필요함)
 		 * !!로그인과 회원가입은 세션이 필요함
