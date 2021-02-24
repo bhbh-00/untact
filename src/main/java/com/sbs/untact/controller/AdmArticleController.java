@@ -17,11 +17,11 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 
 @Controller
-public class UsrArticleController {
+public class AdmArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/article/doModify")
+	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
@@ -55,7 +55,7 @@ public class UsrArticleController {
 		return articleService.doModify(id, title, body);
 	}
 
-	@RequestMapping("/usr/article/doDelete")
+	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
@@ -79,7 +79,7 @@ public class UsrArticleController {
 		return articleService.deleteArticle(id);
 	}
 
-	@RequestMapping("/usr/article/doAdd")
+	@RequestMapping("/adm/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// String title, String body이 null이면 내용이 없는 거!!
@@ -107,7 +107,7 @@ public class UsrArticleController {
 
 	}
 
-	@RequestMapping("/usr/article/detail")
+	@RequestMapping("/adm/article/detail")
 	@ResponseBody
 	public ResultData showDetail(Integer id) {
 		if (id == null) {
@@ -123,7 +123,7 @@ public class UsrArticleController {
 		return new ResultData("S-1", "게시물을 상세보기 입니다.", "article", article);
 	}
 
-	@RequestMapping("/usr/article/list")
+	@RequestMapping("/adm/article/list")
 	@ResponseBody
 	public ResultData showList(@RequestParam(defaultValue = "1") int boardId, String searchKeywordType,
 			String searchKeyword, @RequestParam(defaultValue = "1") int page) {

@@ -18,13 +18,13 @@ import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
 
 @Controller
-public class UsrReplyController {
+public class AdmReplyController {
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/reply/doDelete")
+	@RequestMapping("/adm/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
@@ -50,7 +50,7 @@ public class UsrReplyController {
 		return replyService.delete(id);
 	}
 
-	@RequestMapping("/usr/reply/doModify")
+	@RequestMapping("/adm/reply/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
@@ -76,7 +76,7 @@ public class UsrReplyController {
 		return replyService.doModify(id, body);
 	}
 
-	@RequestMapping("/usr/reply/doAdd")
+	@RequestMapping("/adm/reply/doAdd")
 	@ResponseBody
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
@@ -106,7 +106,7 @@ public class UsrReplyController {
 		return replyService.doAdd(param);
 	}
 
-	@RequestMapping("/usr/reply/list")
+	@RequestMapping("/adm/reply/list")
 	@ResponseBody
 	public ResultData showList(String relTypeCode, Integer relId) {
 		/*

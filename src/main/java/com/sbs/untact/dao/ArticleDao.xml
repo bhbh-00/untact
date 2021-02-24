@@ -98,7 +98,7 @@
 				title = #{title},
 			</if>
 			<if test="body != null">
-				`body` = #{body}
+				`body` = #{body},
 			</if>
 		</set>
 		WHERE id = #{id}

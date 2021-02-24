@@ -14,26 +14,38 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Qualifier("beforeActionInterceptor")
 	HandlerInterceptor beforeActionInterceptor;
 
-	// needToLoginInterceptor 인터셉터 불러오기
+	// needAdminInterceptor 인터셉터 불러오기
 	@Autowired
-	@Qualifier("needToLoginInterceptor")
-	HandlerInterceptor needToLoginInterceptor;
+	@Qualifier("needAdminInterceptor")
+	HandlerInterceptor needAdminInterceptor;
+	
+	// needLoginInterceptor 인터셉터 불러오기
+	@Autowired
+	@Qualifier("needLoginInterceptor")
+	HandlerInterceptor needLoginInterceptor;
 
-	// needToLogoutInterceptor 인터셉터 불러오기
+	// needLogoutInterceptor 인터셉터 불러오기
 	@Autowired
-	@Qualifier("needToLogoutInterceptor")
-	HandlerInterceptor needToLogoutInterceptor;
+	@Qualifier("needLogoutInterceptor")
+	HandlerInterceptor needLogoutInterceptor;
 
 	// 이 함수는 인터셉터를 적용하는 역할을 합니다.
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// beforeActionInterceptor 인터셉터가 모든 액션 실행전에 실행되도록 처리
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**");
-
+		
+		// 어드민 필요
+		registry.addInterceptor(needAdminInterceptor)
+			.addPathPatterns("/adm/**")
+			.excludePathPatterns("/adm/member/login")
+			.excludePathPatterns("/adm/member/doLogin");
+		
 		// 로그인 필요
-		registry.addInterceptor(needToLoginInterceptor)
+		registry.addInterceptor(needLoginInterceptor)
 			.addPathPatterns("/**")
 			.excludePathPatterns("/")
+			.excludePathPatterns("/adm/**")
 			.excludePathPatterns("/resource/**")
 			.excludePathPatterns("/usr/home/main")
 			.excludePathPatterns("/usr/member/login")
@@ -41,6 +53,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.excludePathPatterns("/usr/member/join")
 			.excludePathPatterns("/usr/member/doJoin")
 			.excludePathPatterns("/usr/article/list")
+			.excludePathPatterns("/usr/reply/list")
 			.excludePathPatterns("/usr/article/detail")
 			.excludePathPatterns("/usr/member/findLoginId")
 			.excludePathPatterns("/usr/member/doFindLoginId")
@@ -50,9 +63,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.excludePathPatterns("/usr/file/doTest*")
 			.excludePathPatterns("/test/**")
 			.excludePathPatterns("/error");
-
+		
+		
 		// 로그인 상태에서 접속할 수 없는 URI 전부 기술
-		registry.addInterceptor(needToLogoutInterceptor)
+		registry.addInterceptor(needLogoutInterceptor)
+			.addPathPatterns("/adm/member/login")
+			.addPathPatterns("/adm/member/doLogin")
 			.addPathPatterns("/usr/member/login")
 			.addPathPatterns("/usr/member/doLogin")
 			.addPathPatterns("/usr/member/join")
