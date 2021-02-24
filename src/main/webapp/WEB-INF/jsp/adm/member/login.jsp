@@ -1,17 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>관리자 로그인 페이지</title>
-</head>
+<%@ include file="../part/head.jspf"%>
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css" />
-<body>
-	<script>
+<script>
 	<!--  자바스크립트  -->
 		const LoginForm__checkAndSubmitDone = false;
 		<!--  const = var / 중복 방지를 위한.  -->
@@ -39,33 +31,36 @@
 			form.submit();
 			LoginForm__checkAndSubmitDone = true;
 		}
+		
+	
 	</script>
-	<section class="section-login">
-		<div class="container mx-auto">
-		<!--  mx-auto : margin: 0 auto;  -->
-			<form action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
-				<div class="flex">					
-					<div class="flex-grow p-4">
-					<!--  flex-grow : 가능한 공간을 채우기 위해 플렉스 항목을 확장하는 데 사용 / p : padding -->
-						<input class="w-full" autofocus="autofocus" type="text"
-							placeholder="아이디" name="loginId" maxlength="20" />
-						<!--  w-full : 폭 넓이 전체 / autofocus : 자동 포커스  -->
-					</div>
+<section class="section-login">
+	<div class="container mx-auto min-h-screen flex items-center justify-center">
+		<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+			action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
+			<h1 class="p-1 md:w-36 md:flex md:items-center">LOGIN</h1>
+			<div class="flex flex-col mb-4 md:flex-row">
+				<div class="p-1 md:flex-grow">
+					<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						autofocus="autofocus" type="text" placeholder="아이디"
+						name="loginId" maxlength="20" />
 				</div>
-				<div class="flex">
-					<div class="flex-grow p-4">
-						<input class="w-full" autofocus="autofocus" type="password"
-							placeholder="비밀번호" name="loginPw" maxlength="20" />
-					</div>
+			</div>
+			<div class="flex flex-col mb-4 md:flex-row">
+				<div class="p-1 md:flex-grow">
+					<input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+						autofocus="autofocus" type="text" placeholder="비밀번호"
+						name="loginId" maxlength="20" />
 				</div>
-				<div class="flex">
-					<div class="flex-grow p-4">
-						<input class="w-full" type="submit" value="로그인" />
-					</div>
+			</div>
+			<div class="flex flex-col mb-4 md:flex-row">
+				<div class="p-1 md:flex-grow">
+					<input class="w-full bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
+						type="submit" value="로그인" />
 				</div>
-			</form>
-		</div>
-	</section>
+			</div>			
+		</form>
+	</div>
+</section>
 
-</body>
-</html>
+<%@ include file="../part/foot.jspf"%>
