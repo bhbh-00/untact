@@ -14,6 +14,7 @@
 		loginId =
 		#{loginId},
 		loginPw = #{loginPw},
+		authKey = CONCAT("authKey1__", UUID(), "__",  RAND()),
 		`name` = #{name},
 		nickname =
 		#{nickname},

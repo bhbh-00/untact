@@ -21,7 +21,6 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	// http://localhost:8024/usr/member/doModify?name=
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
 
 		if (param.isEmpty()) {
@@ -36,7 +35,6 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	// http://localhost:8024/usr/member/doLogout
 	public ResultData doLogout(HttpSession session) {
 
 		session.removeAttribute("loginedMemberId");
@@ -46,7 +44,6 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	// http://localhost:8024/usr/member/doLogin?loginId=aaa&loginPw=1234
 	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 
 		if (loginId == null) {
@@ -74,7 +71,6 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	// http://localhost:8024/usr/member/doJoin?loginId=aaa&loginPw=aaa1234&name=홍길동&nickname=길동&cellphoneNo=01012341234&email&=aaa@aaa.com
 	public ResultData doAdd(@RequestParam Map<String, Object> param) {
 
 		if (param.get("loginId") == null) {

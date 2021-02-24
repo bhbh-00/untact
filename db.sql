@@ -3,6 +3,8 @@ DROP DATABASE IF EXISTS untact;
 CREATE DATABASE untact;
 USE untact;
 
+# ============================================== article
+
 # 게시물 테이블 생성
 CREATE TABLE article (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -30,6 +32,20 @@ SET regDate = NOW(),
 updateDate = NOW(),
 title = "제목3 입니다.",
 `body` = "내용3 입니다.";
+
+# 게시물 테이블에 boardId 칼럼 추가
+ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# 게시물 테이블에 회원번호 칼럼 추가
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# 기존 게시물의 작성자를 회원1로 지정
+UPDATE article
+SET memberId = 1
+WHERE memberId = 0;
+
+
+# ============================================== `member`
 
 # 회원 테이블 생성
 CREATE TABLE `member` (
@@ -68,23 +84,16 @@ nickname = "촬스",
 cellphoneNo = "01077778888",
 email = "bbb4321@gmail.com";
 
-# 게시물 테이블에 회원번호 칼럼 추가
-ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
-
-# 기존 게시물의 작성자를 회원1로 지정
-UPDATE article
-SET memberId = 1
-WHERE memberId = 0;
-
-SELECT * FROM article;
-
 # 테스트 게시물 생성, memberId 랜덤, 제목, 내용 랜덤
 INSERT INTO article
 (regDate, updateDate, memberId, title, `body`)
 SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1)
 FROM article;
 
-SELECT * FROM `member`;
+# 멤버 테이블에 authKey 칼럼 추가
+ALTER TABLE `member` ADD COLUMN authKey CHAR(60) NOT NULL AFTER loginPw;
+
+# ============================================== board
 
 # 게시판 별 리스팅(board) 테이블 생성
 CREATE TABLE board (
@@ -110,15 +119,12 @@ updateDate = NOW(),
 `code` = "free",
 `name` = "자유";
 
-# 게시물 테이블에 boardId 칼럼 추가
-ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER updateDate;
-
-SELECT * FROM article;
-
 # 게시물 테이블에 boardId  랜덤 번호 생성
 UPDATE article
 SET boardId = FLOOR(RAND() * 2) + 1
 WHERE boardId = 0;
+
+# ============================================== reply
 
 # 댓글 테이블 생성
 CREATE TABLE reply (
