@@ -44,7 +44,6 @@ UPDATE article
 SET memberId = 1
 WHERE memberId = 0;
 
-
 # ============================================== `member`
 
 # 회원 테이블 생성
@@ -91,7 +90,7 @@ SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 100
 FROM article;
 
 # 멤버 테이블에 authKey 칼럼 추가
-ALTER TABLE `member` ADD COLUMN authKey CHAR(60) NOT NULL AFTER loginPw;
+ALTER TABLE `member` ADD COLUMN authKey CHAR(80) NOT NULL AFTER loginPw;
 
 # ============================================== board
 
