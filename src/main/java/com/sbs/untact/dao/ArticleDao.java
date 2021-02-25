@@ -14,7 +14,7 @@ import com.sbs.untact.dto.Reply;
 public interface ArticleDao {
 	// interface에서는 필요없음!
 
-	void doModify(@Param("id") Integer id, @Param("title") String title, @Param("body") String body);
+	void modifyArticle(@Param("id") Integer id, @Param(value = "title") String title, @Param(value = "body") String body);
 
 	void deleteArticle(@Param("id") Integer id);
 

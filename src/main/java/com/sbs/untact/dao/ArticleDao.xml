@@ -88,10 +88,10 @@
 		WHERE id = #{id}
 	</delete>
 
-	<update id="doModify">
+	<update id="modifyArticle">
 		UPDATE article
 		<set>
-			<if test="title != null || body != null">
+			<if test="title != null or body != null">
 				updateDate = NOW(),
 			</if>
 			<if test="title != null">

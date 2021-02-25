@@ -46,13 +46,13 @@ public class AdmArticleController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = articleService.getActorCanModify(article, loginMemberId);
+		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginMemberId);
 
 		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
 		}
 
-		return articleService.doModify(id, title, body);
+		return articleService.modifyArticle(id, title, body);
 	}
 
 	@RequestMapping("/adm/article/doDelete")
@@ -70,7 +70,7 @@ public class AdmArticleController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = articleService.getActorCanDelete(article, loginMemberId);
+		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginMemberId);
 
 		if (actorCanDeleteRd.isFail()) {
 			return actorCanDeleteRd;

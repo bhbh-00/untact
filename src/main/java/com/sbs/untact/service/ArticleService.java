@@ -19,8 +19,8 @@ public class ArticleService {
 	@Autowired
 	private MemberService memberService;
 
-	public ResultData doModify(int id, String title, String body) {
-		articleDao.doModify(id, title, body);
+	public ResultData modifyArticle(int id, String title, String body) {
+		articleDao.modifyArticle(id, title, body);
 
 		return new ResultData("s-1", "수정완료되었습니다.", "id", id);
 	}
@@ -47,22 +47,6 @@ public class ArticleService {
 		return articleDao.getArticles(searchKeywordType, searchKeyword);
 	}
 
-	public ResultData getActorCanModify(Article article, int actorId) {
-		if (article.getMemberId() == actorId) {
-			return new ResultData("s-1", "가능합니다.");
-		}
-
-		if (memberService.isAdmin(actorId)) {
-			return new ResultData("s-2", "관리자 권한으로 가능합니다.");
-		}
-
-		return new ResultData("F-1", "권한이 없습니다.");
-	}
-
-	public ResultData getActorCanDelete(Article article, int actorId) {
-		return getActorCanModify(article, actorId);
-	}
-
 	public Article getForPrintArticle(Integer id) {
 		return articleDao.getForPrintArticle(id);
 	}
@@ -81,6 +65,22 @@ public class ArticleService {
 
 	public Board getBoard(int boardId) {
 		return articleDao.getBoard(boardId);
+	}
+
+	public ResultData getActorCanModifyRd(Article article, int actorId) {
+		if (article.getMemberId() == actorId) {
+			return new ResultData("S-1", "가능합니다.");
+		}
+
+		if (memberService.isAdmin(actorId)) {
+			return new ResultData("S-2", "가능합니다.");
+		}
+
+		return new ResultData("F-1", "권한이 없습니다.");
+	}
+
+	public ResultData getActorCanDeleteRd(Article article, int actorId) {
+		return getActorCanModifyRd(article, actorId);
 	}
 
 }
