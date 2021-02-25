@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component("needLogoutInterceptor") // 컴포넌트 이름 설정
-public class NeedToLogoutInterceptor implements HandlerInterceptor {
+public class NeedLogoutInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
