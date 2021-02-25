@@ -53,7 +53,7 @@ public class ArticleService {
 		}
 
 		if (memberService.isAdmin(actorId)) {
-			return new ResultData("s-1", "가능합니다.");
+			return new ResultData("s-2", "관리자 권한으로 가능합니다.");
 		}
 
 		return new ResultData("F-1", "권한이 없습니다.");

@@ -41,7 +41,20 @@ public class UsrMemberController {
 
 		return new ResultData("S-1", "로그아웃 되었습니다.");
 	}
-	
+
+	@RequestMapping("/usr/member/memberByauthKey")
+	@ResponseBody
+	public ResultData showMemberByauthKey(String authKey) {
+
+		if (authKey == null) {
+			return new ResultData("F-1", "아이디를 입력해주세요.");
+		}
+
+		Member existingMember = memberService.getMemberByAuthKey(authKey);
+
+		return new ResultData("S-1", String.format("유효한 회원"), "member", existingMember);
+	}
+
 	@RequestMapping("/usr/member/authKey")
 	@ResponseBody
 	public ResultData showAuthKey(String loginId, String loginPw) {
@@ -64,7 +77,9 @@ public class UsrMemberController {
 			return new ResultData("F-3", "비밀번호가 일치하지 않습니다.");
 		}
 
-		return new ResultData("S-1", String.format("%s님! 환영합니다.", existingMember.getNickname()),"authKey", existingMember.getAuthKey());
+		return new ResultData("S-1", String.format("%s님! 환영합니다.", existingMember.getNickname()), "authKey",
+				existingMember.getAuthKey(), "id : ", existingMember.getId(), "name : ", existingMember.getName(),
+				"nickname : ", existingMember.getNickname());
 	}
 
 	@RequestMapping("/usr/member/doLogin")
