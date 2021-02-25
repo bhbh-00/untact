@@ -26,7 +26,7 @@ public class AdmArticleController {
 	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
 		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
-		int loginMemberId = (int)req.getAttribute("loginedMemberId");
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 		if (id == null) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
@@ -46,7 +46,7 @@ public class AdmArticleController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginMemberId);
+		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMemberId);
 
 		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
@@ -58,10 +58,10 @@ public class AdmArticleController {
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 		if (id == null) {
-			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+			return new ResultData("F-1", "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
@@ -70,7 +70,7 @@ public class AdmArticleController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginMemberId);
+		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMemberId);
 
 		if (actorCanDeleteRd.isFail()) {
 			return actorCanDeleteRd;

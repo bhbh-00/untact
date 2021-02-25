@@ -27,7 +27,7 @@ public class UsrReplyController {
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 		// 선생님은 replyId로만!
 		if (id == null) {
@@ -40,7 +40,7 @@ public class UsrReplyController {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = replyService.getActorCanDelete(reply, loginMemberId);
+		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMemberId);
 		// articleService 말고 이제는 reply서비스에게!
 
 		if (actorCanDeleteRd.isFail()) {
@@ -53,7 +53,7 @@ public class UsrReplyController {
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 		// 선생님은 replyId로만!
 		if (id == null) {
@@ -66,11 +66,11 @@ public class UsrReplyController {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = replyService.getActorCanDelete(reply, loginMemberId);
+		ResultData actorCanModifyRd = replyService.getActorCanModifyRd(reply, loginedMemberId);
 		// articleService 말고 이제는 reply서비스에게!
 
-		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+		if (actorCanModifyRd.isFail()) {
+			return actorCanModifyRd;
 		}
 
 		return replyService.doModify(id, body);

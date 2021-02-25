@@ -27,15 +27,15 @@ public class UsrArticleController {
 		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
 		}
 
 		if (title == null) {
-			return new ResultData("F-1", "title을 입력해주세요.");
+			return new ResultData("F-1", "제목을 입력해주세요.");
 		}
 
 		if (body == null) {
-			return new ResultData("F-1", "body를 입력해주세요.");
+			return new ResultData("F-1", "내용을 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
