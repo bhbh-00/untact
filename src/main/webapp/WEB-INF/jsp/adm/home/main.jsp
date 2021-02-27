@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 메인 홈</title>
 </head>
 <body>
-
+관리자 메인 홈
 </body>
 </html>

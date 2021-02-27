@@ -56,7 +56,7 @@
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-							autofocus="autofocus" type="text" placeholder="비밀번호" name="loginId" maxlength="20" />
+							autofocus="autofocus" type="text" placeholder="비밀번호" name="loginPw" maxlength="20" />
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">

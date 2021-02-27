@@ -64,4 +64,26 @@ public class Util {
 		return defaultValue;
 	}
 
+	public static String msgAndBack(String msg) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<script>");
+		sb.append("alert('" + msg + "');");
+		sb.append("history.back();");
+		sb.append("</script>");
+		
+		// history.back(); = a -> b -> c c에서 뒤로가기를 하면 b로 가는 것
+		return sb.toString();
+	}
+
+	public static String msgAndReplace(String msg, String url) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<script>");
+		sb.append("alert('" + msg + "');");
+		sb.append("location.replace('" + url + "');");
+		sb.append("</script>");
+		
+		// location.replace(); = a -> b -> c c에서 뒤로가기를 하면 a로 가는 것
+		return sb.toString();
+	}
+
 }
