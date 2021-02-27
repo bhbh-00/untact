@@ -107,3 +107,17 @@ Caused by: java.lang.ClassNotFoundException: Map
 	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:144)
 	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:522)
 	... 30 common frames omitted
+2021-02-27 21:56:46 [ERROR] o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8024 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8024 or configure this application to listen on another port.
+
