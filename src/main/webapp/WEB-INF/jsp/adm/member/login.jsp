@@ -36,30 +36,38 @@
 	</script>
 <section class="section-login">
 	<div class="container mx-auto min-h-screen flex items-center justify-center">
-		<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
-			action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
-			<h1 class="p-1 md:w-36 md:flex md:items-center">LOGIN</h1>
-			<div class="flex flex-col mb-4 md:flex-row">
-				<div class="p-1 md:flex-grow">
-					<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-						autofocus="autofocus" type="text" placeholder="아이디"
-						name="loginId" maxlength="20" />
-				</div>
+		<div class="w-full">
+			<div class="logo-bar flex justify-center mt-3">
+				<a href="#" class="logo">
+					<span>
+						<i class="fas fa-people-arrows"></i>
+					</span>
+					<span>UNTACT ADMIN</span>
+				</a>
 			</div>
-			<div class="flex flex-col mb-4 md:flex-row">
-				<div class="p-1 md:flex-grow">
-					<input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-						autofocus="autofocus" type="text" placeholder="비밀번호"
-						name="loginId" maxlength="20" />
+			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doLogin" method="POST"
+				onsubmit="LoginForm__checkAndSubmit(this); return false;">
+				<div class="flex flex-col mb-4 md:flex-row">
+					<div class="p-1 md:flex-grow">
+						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="text" placeholder="아이디" name="loginId" maxlength="20" />
+					</div>
 				</div>
-			</div>
-			<div class="flex flex-col mb-4 md:flex-row">
-				<div class="p-1 md:flex-grow">
-					<input class="w-full bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
-						type="submit" value="로그인" />
+				<div class="flex flex-col mb-4 md:flex-row">
+					<div class="p-1 md:flex-grow">
+						<input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
+							autofocus="autofocus" type="text" placeholder="비밀번호" name="loginId" maxlength="20" />
+					</div>
 				</div>
-			</div>			
-		</form>
+				<div class="flex flex-col mb-4 md:flex-row">
+					<div class="p-1 md:flex-grow">
+						<input class="w-full bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
+							type="submit" value="로그인" />
+					</div>
+				</div>
+			</form>
+
+		</div>
 	</div>
 </section>
 

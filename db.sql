@@ -92,6 +92,17 @@ FROM article;
 # 멤버 테이블에 authKey 칼럼 추가
 ALTER TABLE `member` ADD COLUMN authKey CHAR(80) NOT NULL AFTER loginPw;
 
+# 기존 회원의 authKey 데이터 채우기
+UPDATE `member`
+SET authKey = 'authKey1__1'
+WHERE id = 1;
+
+UPDATE `member`
+SET authKey = 'authKey1__2'
+WHERE id = 2;
+
+# authKey 칼럼에 유니크 인덱스 추가
+ALTER TABLE `member` ADD UNIQUE INDEX (`authKey`);
 # ============================================== board
 
 # 게시판 별 리스팅(board) 테이블 생성
@@ -157,3 +168,14 @@ SELECT * FROM reply;
 UPDATE reply
 SET `body` = "새로운 댓글입니다."
 WHERE articleId = 1;
+
+# 게시물 전용 댓글에서 범용 댓글로 바꾸기 위해 relTypeCode 추가
+ALTER TABLE reply ADD COLUMN `relTypeCode` CHAR(20) NOT NULL AFTER updateDate;
+
+# 고속 검색을 위해서 인덱스 걸기
+ALTER TABLE reply ADD KEY (relTypeCode, relId); 
+
+# 현재는 게시물 댓글 밖에 없기 때문에 모든 행의 relTypeCode 값을 article 로 지정
+UPDATE reply
+SET relTypeCode = 'article'
+WHERE relTypeCode = '';

@@ -15,5 +15,11 @@
 <link rel="stylesheet" href="/resource/adm/common.css" />
 <!-- 공통 css 파일 경로 -->
 
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+<!-- 제이쿼리 불러오기 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body class="bg-gray-200">
