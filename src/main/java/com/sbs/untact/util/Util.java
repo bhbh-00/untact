@@ -1,10 +1,19 @@
 package com.sbs.untact.util;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
 
@@ -70,7 +79,7 @@ public class Util {
 		sb.append("alert('" + msg + "');");
 		sb.append("history.back();");
 		sb.append("</script>");
-		
+
 		// history.back(); = a -> b -> c c에서 뒤로가기를 하면 b로 가는 것
 		return sb.toString();
 	}
@@ -81,9 +90,43 @@ public class Util {
 		sb.append("alert('" + msg + "');");
 		sb.append("location.replace('" + url + "');");
 		sb.append("</script>");
-		
+
 		// location.replace(); = a -> b -> c c에서 뒤로가기를 하면 a로 가는 것
 		return sb.toString();
 	}
+	
+	//param를 Json형식으로 만들어주는 함수
+	public static String toJsonStr(Map<String, Object> param) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(param);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 
+		return "";
+	}
+
+	public static Map<String, Object> getParamMap(HttpServletRequest request) {
+		Map<String, Object> param = new HashMap<>();
+
+		Enumeration<String> parameterNames = request.getParameterNames();
+
+		while (parameterNames.hasMoreElements()) {
+			String paramName = parameterNames.nextElement();
+			Object paramValue = request.getParameter(paramName);
+
+			param.put(paramName, paramValue);
+		}
+
+		return param;
+	}
+
+	public static String getUrlEncoded(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return str;
+		}
+	}
 }

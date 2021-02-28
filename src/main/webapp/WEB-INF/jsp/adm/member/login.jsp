@@ -47,6 +47,7 @@
 			</div>
 			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doLogin" method="POST"
 				onsubmit="LoginForm__checkAndSubmit(this); return false;">
+				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
