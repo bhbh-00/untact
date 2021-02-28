@@ -32,7 +32,11 @@ public class UsrMemberController {
 
 		return memberService.modifyMember(param);
 	}
-
+	@RequestMapping("/usr/member/Logout")
+	public String Logout() {
+		return ("/usr/member/Logout");
+	}
+	
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
 	public ResultData doLogout(HttpSession session) {

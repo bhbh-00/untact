@@ -19,12 +19,21 @@ import com.sbs.untact.util.Util;
 public class AdmMemberController {
 	@Autowired
 	private MemberService memberService;
+
+	@RequestMapping("/adm/member/doLogout")
+	@ResponseBody
+	public String doLogout(HttpSession session) {
+
+		session.removeAttribute("loginedMemberId");
+
+		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
+	}
 	
 	@RequestMapping("/adm/member/login")
 	public String login() {
-		return "adm/member/login";
+		return ("/adm/member/login");
 	}
-	
+
 	@RequestMapping("/adm/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, HttpSession session) {
@@ -54,7 +63,7 @@ public class AdmMemberController {
 		session.setAttribute("loginedMemberId", existingMember.getId());
 
 		String msg = String.format("%s님! 환영합니다.", existingMember.getNickname());
-		
+
 		return Util.msgAndReplace(msg, "../home/main");
 	}
 
