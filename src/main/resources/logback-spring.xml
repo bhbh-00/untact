@@ -126,4 +126,5 @@
 	<logger name="jdbc.resultsettable" level="DEBUG" />
 	<logger name="jdbc.connection" level="OFF" />
 
+
 </configuration>
