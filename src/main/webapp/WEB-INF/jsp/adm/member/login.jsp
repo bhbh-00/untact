@@ -62,7 +62,7 @@
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
-						<input class="w-full bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
+						<input class="w-full bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
 							type="submit" value="로그인" />
 					</div>
 				</div>
