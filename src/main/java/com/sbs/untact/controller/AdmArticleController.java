@@ -17,7 +17,7 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 
 @Controller
-public class AdmArticleController {
+public class AdmArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
 
@@ -124,15 +124,15 @@ public class AdmArticleController {
 	}
 
 	@RequestMapping("/adm/article/list")
-	@ResponseBody
-	public ResultData showList(@RequestParam(defaultValue = "1") int boardId, String searchKeywordType,
-			String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+	// @ResponseBody가 없으면 return /adm/article/list.jps로 가야함
+	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
+			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 		// @RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
 
 		Board board = articleService.getBoard(boardId);
 
 		if (board == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		if (searchKeywordType != null) {
@@ -160,8 +160,10 @@ public class AdmArticleController {
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
 				itemsInAPage);
+		req.setAttribute("articles", articles);
+		// 이게 있어야지 jsp에서 뜸!
 
-		return new ResultData("S-1", "성공", "articles", articles);
+		return "/adm/article/list";
 	}
 
 }
