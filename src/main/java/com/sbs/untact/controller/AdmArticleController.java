@@ -79,6 +79,13 @@ public class AdmArticleController extends BaseController {
 		return articleService.deleteArticle(id);
 	}
 
+	@RequestMapping("/adm/article/add")
+	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+
+		return ("/adm/article/add");
+
+	}
+
 	@RequestMapping("/adm/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
