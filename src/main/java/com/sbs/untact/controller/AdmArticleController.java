@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
@@ -82,14 +84,23 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/add")
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 
-		return ("/adm/article/add");
+		return "/adm/article/add";
 
 	}
 
 	@RequestMapping("/adm/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			MultipartRequest multipartRequest) {
 		// String title, String body이 null이면 내용이 없는 거!!
+
+		// 파일첨부
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		if (true) {
+			return new ResultData("S-1", "테스트", "fileMap.keySet", fileMap.keySet());
+		}
+
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 		/*
 		 * HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 Util.getAsInt 필요 없음 (int로 형변환 필요함)
@@ -107,11 +118,6 @@ public class AdmArticleController extends BaseController {
 		param.put("memberId", loginMemberId);
 
 		return articleService.doAdd(param);
-
-		/*
-		 * 0221 코멘트 게시물 추가를 할 때 boardId도 추가를 해주어야지 오류가 발생하지 않음! 그에 대한 해결책을 적용해서 만들기!
-		 */
-
 	}
 
 	@RequestMapping("/adm/article/detail")

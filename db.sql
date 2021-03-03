@@ -180,11 +180,11 @@ UPDATE reply
 SET relTypeCode = 'article'
 WHERE relTypeCode = '';
 
-# ============================================== genFile
+# ============================================== getFile
 
 # 파일 테이블 추가
 
-CREATE TABLE genFile (
+CREATE TABLE getFile (
   id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
   regDate DATETIME DEFAULT NULL, # 작성날짜
   updateDate DATETIME DEFAULT NULL, # 갱신날짜

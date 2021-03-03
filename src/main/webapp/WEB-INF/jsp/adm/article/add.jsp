@@ -8,8 +8,10 @@
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<span class="text-3xl text-black font-bold">게시물 추가</span>
-		<form action="doAdd" method="POST">
+		<form action="doAdd" method="POST" enctype="multipart/form-data">
+
 			<input type="hidden" name="boardId" value="${ param.boardId }" />
+
 			<div class="form-row flex flex-col lg:flex-row mt-8">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>제목</span>
@@ -21,6 +23,7 @@
 						name="title" maxlength="20" />
 				</div>
 			</div>
+
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
 					<span>내용</span>
@@ -32,12 +35,35 @@
 				</div>
 			</div>
 
-			<input type="submit"
-				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded"
-				value="작성" />
-			<input type="button"
-				class="btn-info bg-red-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded"
-				value="취소" onclick="history.back();" />
+			<div class="form-row flex flex-col lg:flex-row">
+				<div class="lg:flex lg:items-center lg:w-28">
+					<span>첨부파일1</span>
+				</div>
+				<div class="p-1 lg:flex-grow">
+					<input type="file" class="form-row-input w-full rounded-sm"
+						name="file__article__0__common__attachment__1" />
+				</div>
+			</div>
+
+			<div class="form-row flex flex-col lg:flex-row">
+				<div class="lg:flex lg:items-center lg:w-28">
+					<span>첨부파일2</span>
+				</div>
+				<div class="p-1 lg:flex-grow">
+					<input type="file" class="form-row-input w-full rounded-sm"
+						name="file__article__0__common__attachment__2" />
+				</div>
+			</div>
+			<div class="form-row flex flex-col lg:flex-row">
+				<div class="btus">
+					<input type="submit"
+						class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded"
+						value="작성" />
+					<input type="button"
+						class="btn-info bg-red-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded"
+						value="취소" onclick="history.back();" />
+				</div>
+			</div>
 		</form>
 	</div>
 
