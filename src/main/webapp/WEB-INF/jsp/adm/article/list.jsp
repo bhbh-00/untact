@@ -8,10 +8,28 @@
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<span class="text-3xl text-black font-bold">게시물 관리</span>
+		<div class="mt-5">
+			<select class="p-1 select-board-id">
+				<option value="1">공지사항</option>
+				<option value="2">자유</option>
+				<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->
+			</select>
+			<script>
+				$('.section-1 .select-board-id').val(param.boardId);
+
+				$('.section-1 .select-board-id').change(function() {
+					location.href = "?boardId=" + this.value;
+				});
+				/* change 바뀔 때 마다 뭔가 실행된다.*/
+			</script>
+		</div>
+		<div>
 			<c:forEach items="${articles}" var="article">
 				<div class="flex justify-between items-center mt-10">
 					<span class="font-light text-gray-600">${article.regDate}</span>
-					<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500"> ${article.extra__boardName} </a>
+					<br>
+					<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">
+						${article.extra__boardName} </a>
 				</div>
 				<div class="mt-2">
 					<a href="detail?id=${article.id}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
@@ -30,6 +48,7 @@
 				</div>
 				<hr>
 			</c:forEach>
+		</div>
 	</div>
 </section>
 
