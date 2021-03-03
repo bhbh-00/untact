@@ -17,11 +17,15 @@ import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
+import com.sbs.untact.service.GenFileService;
+import com.sbs.untact.util.Util;
 
 @Controller
 public class AdmArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private GenFileService genFileService;
 
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
@@ -94,13 +98,6 @@ public class AdmArticleController extends BaseController {
 			MultipartRequest multipartRequest) {
 		// String title, String body이 null이면 내용이 없는 거!!
 
-		// 파일첨부
-		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
-		if (true) {
-			return new ResultData("S-1", "테스트", "fileMap.keySet", fileMap.keySet());
-		}
-
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 		/*
 		 * HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 Util.getAsInt 필요 없음 (int로 형변환 필요함)
@@ -117,7 +114,44 @@ public class AdmArticleController extends BaseController {
 
 		param.put("memberId", loginMemberId);
 
-		return articleService.doAdd(param);
+		ResultData addArticleRd = articleService.doAdd(param);
+
+		int newArticleId = (int) addArticleRd.getBody().get("id");
+
+		// 파일첨부
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+			String[] fileInputNameBits = fileInputName.split("__");
+
+			if (fileInputNameBits[0].equals("file") == false) {
+				continue;
+			}
+
+			int fileSize = (int) multipartFile.getSize();
+
+			if (fileSize <= 0) {
+				continue;
+			}
+
+			String relTypeCode = fileInputNameBits[1];
+			int relId = newArticleId;
+			String typeCode = fileInputNameBits[3];
+			String type2Code = fileInputNameBits[4];
+			int fileNo = Integer.parseInt(fileInputNameBits[5]);
+			String originFileName = multipartFile.getOriginalFilename();
+			String fileExtTypeCode = Util.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
+			String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
+			String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
+			String fileDir = Util.getNowYearMonthDateStr();
+
+			genFileService.saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName, fileExtTypeCode,
+					fileExtType2Code, fileExt, fileSize, fileDir);
+			;
+		}
+
+		return addArticleRd;
 	}
 
 	@RequestMapping("/adm/article/detail")
