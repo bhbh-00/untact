@@ -21,6 +21,18 @@
 		fileSize = #{fileSize},
 		fileDir = #{fileDir}
 	</insert>
+	
+	<select id="getGenFile" resultType="GenFile">
+		SELECT *
+		FROM GenFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+		AND fileNo = #{fileNo}
+	</select>
+	
 
 
 </mapper>

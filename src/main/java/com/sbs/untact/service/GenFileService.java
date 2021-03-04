@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sbs.untact.dao.GenFileDao;
+import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -18,7 +19,7 @@ public class GenFileService {
 	@Value("${custom.genFileDirPath}")
 	private String genFileDirPath;
 	// 파일경로를 정해줌
-	
+
 	@Autowired
 	private GenFileDao genFileDao;
 
@@ -60,8 +61,8 @@ public class GenFileService {
 		String fileExtTypeCode = Util.getFileExtTypeCodeFromFileName(multipartFile.getOriginalFilename());
 		String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
 		String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
-		
-		//확장자명을 통일해주는
+
+		// 확장자명을 통일해주는
 		if (fileExt.equals("jpeg")) {
 			fileExt = "jpg";
 		} else if (fileExt.equals("htm")) {
@@ -77,7 +78,7 @@ public class GenFileService {
 		// 새 파일이 저장될 폴더(io파일) -> 객체 생성 C:/work/untact-teacher-file/article/년월/1.확장자명
 		String targetDirPath = genFileDirPath + "/" + relTypeCode + "/" + fileDir;
 		java.io.File targetDir = new java.io.File(targetDirPath);
-		
+
 		// 새 파일이 저장될 폴더가 존재하지 않는다면 생성
 		if (targetDir.exists() == false) {
 			targetDir.mkdirs();
@@ -95,6 +96,10 @@ public class GenFileService {
 
 		return new ResultData("S-1", "파일이 생성되었습니다.", "id", newGenFileId, "fileRealPath", targetFilePath, "fileName",
 				targetFileName);
+	}
+
+	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
+		return genFileDao.getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 	}
 
 }
