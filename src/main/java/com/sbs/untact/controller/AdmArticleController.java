@@ -156,7 +156,9 @@ public class AdmArticleController extends BaseController {
 		// @RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
 
 		Board board = articleService.getBoard(boardId);
-
+		
+		req.setAttribute("board", board);
+		
 		if (board == null) {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}

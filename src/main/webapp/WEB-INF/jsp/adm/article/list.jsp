@@ -5,11 +5,15 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<script>
+param.boardId = ${board.id};
+</script>
+
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<span class="text-3xl text-black font-bold">게시물 관리</span>
 		<div class="flex items-center mt-5">
-			<select class="select-board-id">
+			<select class="select-board-id py-1">
 				<option value="1">공지사항</option>
 				<option value="2">자유</option>
 				<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->
