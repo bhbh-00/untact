@@ -36,7 +36,7 @@
 		}
 
 		// 파일 용량 처리
-		var maxSizeMb = 0.1; // 용량
+		var maxSizeMb = 50; // 용량
 		var maxSize = maxSizeMb * 1024 * 1024; // 50MB
 
 		for (let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++) {
@@ -58,7 +58,7 @@
 			let genFileIdsStr = '';
 
 			if (data && data.body && data.body.genFileIdsStr) {
-				genFileIdsStr = data.body.genFileIdsStr;
+				form.genFileIdsStr.value = data.body.genFileIdsStr;
 			}
 
 			form.genFileIdsStr.value = genFileIdsStr;
