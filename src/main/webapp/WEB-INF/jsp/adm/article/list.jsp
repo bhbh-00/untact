@@ -46,7 +46,7 @@ param.boardId = ${board.id};
 				<div class="mt-2">
 					<a href="detail?id=${article.id}"
 						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
-					<div>
+					<div class="mt-2">
 						<!-- 썸네일 -->
 						<c:if test="${article.extra__thumbImg != null}">
 							<img src="${article.extra__thumbImg}" alt="" />

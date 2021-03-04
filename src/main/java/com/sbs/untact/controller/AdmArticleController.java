@@ -93,8 +93,7 @@ public class AdmArticleController extends BaseController {
 	}
 
 	@RequestMapping("/adm/article/doAdd")
-	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
+	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
 		// String title, String body이 null이면 내용이 없는 거!!
 
@@ -105,11 +104,11 @@ public class AdmArticleController extends BaseController {
 		 */
 
 		if (param.get("title") == null) {
-			return new ResultData("F-1", "제목을 입력해주세요.");
+			return msgAndBack(req, "제목을 입력해주세요.");
 		}
 
 		if (param.get("body") == null) {
-			return new ResultData("F-1", "내용을 입력해주세요.");
+			return msgAndBack(req, "제목을 입력해주세요.");
 		}
 
 		param.put("memberId", loginMemberId);
@@ -130,7 +129,7 @@ public class AdmArticleController extends BaseController {
 
 		}
 
-		return addArticleRd;
+		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId), "../article/detail?id=" + newArticleId);
 	}
 
 	@RequestMapping("/adm/article/detail")
