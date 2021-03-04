@@ -9,30 +9,34 @@
 		INSERT INTO genFile
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		relTypeCode = #{relTypeCode},
+		relTypeCode
+		= #{relTypeCode},
 		relId = #{relId},
 		typeCode = #{typeCode},
-		type2Code = #{type2Code},
+		type2Code =
+		#{type2Code},
 		fileNo = #{fileNo},
 		originFileName = #{originFileName},
 		fileExtTypeCode = #{fileExtTypeCode},
-		fileExtType2Code = #{fileExtType2Code},
+		fileExtType2Code =
+		#{fileExtType2Code},
 		fileExt = #{fileExt},
 		fileSize = #{fileSize},
 		fileDir = #{fileDir}
 	</insert>
-	
+
 	<select id="getGenFile" resultType="GenFile">
 		SELECT *
 		FROM GenFile
 		WHERE 1
 		AND relTypeCode = #{relTypeCode}
 		AND relId = #{relId}
-		AND typeCode = #{typeCode}
+		AND typeCode =
+		#{typeCode}
 		AND type2Code = #{type2Code}
 		AND fileNo = #{fileNo}
 	</select>
-	
+
 	<update id="changeRelId">
 		UPDATE genFile
 		<set>
@@ -41,5 +45,26 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+
+	<delete id="deleteFile">
+		DELETE FROM genFile
+		WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteFiles" >
+		DELETE FROM genFile
+		WHERE relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</delete>
+	
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM GenFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+	</select>
+
+	
 
 </mapper>

@@ -62,11 +62,11 @@
 						class="text-gray-700 mr-2 hover:underline">자세히 보기</a>
 					<a href="doModify?id=${article.id}"
 						class="text-blue-500 mr-2 hover:underline">수정</a>
-					<a href="doDelete?id=${article.id}"
+					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}"
 						class="text-red-500 hover:underline">삭제</a>
-						
+
 					<div class="flex-grow"></div>
-					
+
 					<div>
 						<a href="detail?id=${article.id}" class="flex items-center">
 							<img
@@ -76,12 +76,6 @@
 						</a>
 					</div>
 				</div>
-				<input type="button"
-					class="btn-info bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded mb-4"
-					value="수정" onclick="history.back();" />
-				<input type="button"
-					class="btn-info bg-red-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded mb-4"
-					value="삭제" onclick="history.back();" />
 				<hr>
 			</c:forEach>
 		</div>
