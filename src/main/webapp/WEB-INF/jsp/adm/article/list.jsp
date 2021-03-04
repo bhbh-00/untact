@@ -6,7 +6,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <script>
-param.boardId = parseInt("${board.id}");
+	param.boardId = parseInt("${board.id}");
 </script>
 
 <section class="section-1">
@@ -30,15 +30,19 @@ param.boardId = parseInt("${board.id}");
 			<div class="flex-grow"></div>
 
 			<a
-				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded"
+				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
 				href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
+		<hr>
 
 		<div>
 			<c:forEach items="${articles}" var="article">
-				<div class="flex justify-between items-center mt-10">
+				<div class="flex justify-between items-center mt-3">
+					<span class="font-bold mr-5">NO. ${article.id}</span>
 					<span class="font-light text-gray-600">${article.regDate}</span>
-					<br>
+
+					<div class="flex-grow"></div>
+
 					<a href="list?boardId=${article.boardId}"
 						class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">
 						${article.extra__boardName} </a>
@@ -53,9 +57,16 @@ param.boardId = parseInt("${board.id}");
 						</c:if>
 					</div>
 				</div>
-				<div class="flex justify-between items-center mt-4 mb-4">
+				<div class="flex items-center mt-4 mb-4">
 					<a href="detail?id=${article.id}"
-						class="text-blue-500 hover:underline">자세히 보기</a>
+						class="text-gray-700 mr-2 hover:underline">자세히 보기</a>
+					<a href="doModify?id=${article.id}"
+						class="text-blue-500 mr-2 hover:underline">수정</a>
+					<a href="doDelete?id=${article.id}"
+						class="text-red-500 hover:underline">삭제</a>
+						
+					<div class="flex-grow"></div>
+					
 					<div>
 						<a href="detail?id=${article.id}" class="flex items-center">
 							<img
@@ -65,6 +76,12 @@ param.boardId = parseInt("${board.id}");
 						</a>
 					</div>
 				</div>
+				<input type="button"
+					class="btn-info bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded mb-4"
+					value="수정" onclick="history.back();" />
+				<input type="button"
+					class="btn-info bg-red-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded mb-4"
+					value="삭제" onclick="history.back();" />
 				<hr>
 			</c:forEach>
 		</div>
