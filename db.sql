@@ -183,7 +183,6 @@ WHERE relTypeCode = '';
 # ============================================== getFile
 
 # 파일 테이블 추가
-
 CREATE TABLE genFile (
   id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
   regDate DATETIME DEFAULT NULL, # 작성날짜
