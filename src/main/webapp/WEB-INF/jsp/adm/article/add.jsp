@@ -5,10 +5,60 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<script>
+ArticleAdd__submited = false;
+function ArticleAdd__checkAndSubmit(form) {	
+	// 중복처리 안되게 하는
+	if ( ArticleAdd__submited ) {
+		alert('처리중입니다.');
+		return;
+	}
+	
+	// 기본적인 처리
+	form.title.value = form.title.value.trim();
+	if ( form.title.value.length == 0 ) {
+		alert('제목을 입력해주세요.');
+		form.title.focus();
+		return false;
+	}
+	form.body.value = form.body.value.trim();
+	if ( form.body.value.length == 0 ) {
+		alert('내용을 입력해주세요.');
+		form.body.focus();
+		return false;
+	}
+	
+	// 파일 용량 처리
+	var maxSizeMb = 50; // 용량
+	var maxSize = maxSizeMb * 1024 * 1024; // 50MB
+	if (form.file__article__0__common__attachment__1.value) {
+		if (form.file__article__0__common__attachment__1.files[0].size > maxSize) {
+			// form.file__article__0__common__attachment__1.files[0].size -> 사이즈 구하는 식
+			alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+			form.file__article__0__common__attachment__1.focus();
+			
+			return;
+		}
+	}
+	
+	if (form.file__article__0__common__attachment__2.value) {
+		if (form.file__article__0__common__attachment__2.files[0].size > maxSize) {
+			alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+			form.file__article__0__common__attachment__2.focus();
+			
+			return;
+		}
+	}
+	
+	form.submit();
+	ArticleAdd__submited = true;
+}
+</script>
+
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<span class="text-3xl text-black font-bold">게시물 추가</span>
-		<form action="doAdd" method="POST" enctype="multipart/form-data">
+		<form  onsubmit="ArticleAdd__checkAndSubmit(this); return false;" action="doAdd" method="POST" enctype="multipart/form-data">
 
 			<input type="hidden" name="boardId" value="${ param.boardId }" />
 

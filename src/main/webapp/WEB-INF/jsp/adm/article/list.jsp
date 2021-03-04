@@ -6,7 +6,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <script>
-param.boardId = ${board.id};
+param.boardId = parseInt("${board.id}");
 </script>
 
 <section class="section-1">
@@ -31,7 +31,7 @@ param.boardId = ${board.id};
 
 			<a
 				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded"
-				href="add?boardId=${ param.boardId }">글쓰기</a>
+				href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
 
 		<div>
