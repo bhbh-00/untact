@@ -148,13 +148,14 @@
 					</div>
 					<div class="lg:flex-grow">
 					
+					<input type="file" name="file__article__0__common__attachment__${inputNo}" class="form-row-input w-full rounded-sm" />
+					
 					<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
 					 <div class="img-box img-box-auto">
                                 <img src="${file.forPrintUrl}">
                             </div>
                         </c:if>
                         
-						<input type="file" name="file__article__0__common__attachment__${inputNo}" class="form-row-input w-full rounded-sm" />
 					</div>
 				</div>
 			</c:forEach>
