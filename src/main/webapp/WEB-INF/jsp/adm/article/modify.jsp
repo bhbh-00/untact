@@ -124,8 +124,8 @@
 					<span>제목</span>
 				</div>
 				<div class="p-1 lg:flex-grow">
-					<input value="${article.title}" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-						autofocus="autofocus" type="text" placeholder="제목을 입력해주세요." name="title" maxlength="20" />
+					<input value="${article.title}" class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="제목을 입력해주세요."
+						name="title" maxlength="20" />
 				</div>
 			</div>
 
@@ -134,40 +134,44 @@
 					<span>내용</span>
 				</div>
 				<div class="p-1 lg:flex-grow">
-					<textarea name="body" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-						autofocus="autofocus" placeholder="내용을 입력해주세요.">${article.body}</textarea>
+					<textarea name="body" class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" autofocus="autofocus" placeholder="내용을 입력해주세요.">${article.body}</textarea>
 				</div>
 			</div>
 
 			<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
-			<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
-                <c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
+				<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
+				<c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
 				<div class="form-row flex flex-col lg:flex-row">
 					<div class="lg:flex lg:items-center lg:w-28">
 						<span>첨부파일 ${inputNo}</span>
 					</div>
 					<div class="lg:flex-grow">
-					
-					<input type="file" name="file__article__0__common__attachment__${inputNo}" class="form-row-input w-full rounded-sm" />
-					
-					<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
-					 <div class="img-box img-box-auto">
-                                <img src="${file.forPrintUrl}">
-                            </div>
-                        </c:if>
-                        
+
+						<input type="file" name="file__article__0__common__attachment__${inputNo}" class="form-row-input w-full rounded-sm" />
+
+						<c:if test="${file != null}">
+							<div class="mb-2">${file.fileName}(${file.fileSize}byte)</div>
+							<div>
+								<label>
+									<input type="checkbox" name="deleteFile__article__${article.id}__common__attachment__${fileNo}" value="Y" />
+									<span>삭제</span>
+								</label>
+							</div>
+
+							<c:if test="${file.fileExtTypeCode == 'img'}">
+								<div class="img-box img-box-auto">
+									<img src="${file.forPrintUrl}">
+								</div>
+							</c:if>
+						</c:if>
 					</div>
 				</div>
 			</c:forEach>
 
 			<div class="form-row flex flex-col lg:flex-row">
 				<div class="btus">
-					<input type="submit"
-						class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded"
-						value="작성" />
-					<input type="button"
-						class="btn-info bg-red-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded"
-						value="취소" onclick="history.back();" />
+					<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded" value="작성" />
+					<input type="button" class="btn-info bg-red-500 hover:bg-blue-dark text-white font-bold py-1 px-4 rounded" value="취소" onclick="history.back();" />
 				</div>
 			</div>
 		</form>

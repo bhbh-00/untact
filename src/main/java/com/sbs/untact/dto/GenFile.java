@@ -34,11 +34,11 @@ public class GenFile {
 	}
 
 	@JsonIgnore
-	private String getBaseFileUri() {
+	public String getBaseFileUri() {
 		return "/" + relTypeCode + "/" + fileDir + "/" + getFileName();
 	}
 
-	private String getFileName() {
+	public String getFileName() {
 		return id + "." + fileExt;
 	}
 	
