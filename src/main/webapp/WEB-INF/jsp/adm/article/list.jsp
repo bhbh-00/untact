@@ -29,9 +29,7 @@
 
 			<div class="flex-grow"></div>
 
-			<a
-				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
-				href="add?boardId=${ board.id }">글쓰기</a>
+			<a class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5" href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
 		<hr>
 
@@ -43,13 +41,11 @@
 
 					<div class="flex-grow"></div>
 
-					<a href="list?boardId=${article.boardId}"
-						class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">
+					<a href="list?boardId=${article.boardId}" class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">
 						${article.extra__boardName} </a>
 				</div>
 				<div class="mt-2">
-					<a href="detail?id=${article.id}"
-						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
+					<a href="detail?id=${article.id}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 					<div class="mt-2">
 						<!-- 썸네일 -->
 						<c:if test="${article.extra__thumbImg != null}">
@@ -58,10 +54,8 @@
 					</div>
 				</div>
 				<div class="flex items-center mt-4 mb-4">
-					<a href="detail?id=${article.id}"
-						class="text-gray-700 mr-2 hover:underline">자세히 보기</a>
-					<a href="doModify?id=${article.id}"
-						class="text-blue-500 mr-2 hover:underline">수정</a>
+					<a href="detail?id=${article.id}" class="text-gray-700 mr-2 hover:underline">자세히 보기</a>
+					<a href="modify?id=${article.id}" class="text-blue-500 mr-2 hover:underline">수정</a>
 					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}"
 						class="text-red-500 hover:underline">삭제</a>
 
@@ -69,8 +63,7 @@
 
 					<div>
 						<a href="detail?id=${article.id}" class="flex items-center">
-							<img
-								src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
+							<img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
 								alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
 							<span class="text-gray-700 font-bold hover:underline">${article.extra__writer}</span>
 						</a>

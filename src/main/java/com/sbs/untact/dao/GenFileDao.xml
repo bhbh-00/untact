@@ -13,13 +13,11 @@
 		= #{relTypeCode},
 		relId = #{relId},
 		typeCode = #{typeCode},
-		type2Code =
-		#{type2Code},
+		type2Code = #{type2Code},
 		fileNo = #{fileNo},
 		originFileName = #{originFileName},
 		fileExtTypeCode = #{fileExtTypeCode},
-		fileExtType2Code =
-		#{fileExtType2Code},
+		fileExtType2Code = #{fileExtType2Code},
 		fileExt = #{fileExt},
 		fileSize = #{fileSize},
 		fileDir = #{fileDir}
@@ -31,10 +29,24 @@
 		WHERE 1
 		AND relTypeCode = #{relTypeCode}
 		AND relId = #{relId}
-		AND typeCode =
-		#{typeCode}
+		AND typeCode = #{typeCode}
 		AND type2Code = #{type2Code}
 		AND fileNo = #{fileNo}
+	</select>
+	
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM GenFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		<if test="typeCode != null">
+			AND typeCode = #{typeCode}
+		</if>
+		<if test="type2Code != null">
+			AND type2Code = #{type2Code}
+		</if>
+		ORDER BY typeCode, type2Code, fileNo
 	</select>
 
 	<update id="changeRelId">
@@ -57,14 +69,4 @@
 		AND relId = #{relId}
 	</delete>
 	
-	<select id="getGenFiles" resultType="GenFile">
-		SELECT *
-		FROM GenFile
-		WHERE 1
-		AND relTypeCode = #{relTypeCode}
-		AND relId = #{relId}
-	</select>
-
-	
-
 </mapper>

@@ -1,5 +1,6 @@
 package com.sbs.untact.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,32 @@ public class AdmArticleController extends BaseController {
 	private ArticleService articleService;
 	@Autowired
 	private GenFileService genFileService;
+
+	@RequestMapping("/adm/article/modify")
+	public String ShowModify(Integer id, HttpServletRequest req) {
+		if (id == null) {
+			return msgAndBack(req, "게시물을 입력해주세요.");
+		}
+
+		Article article = articleService.getForPrintArticle(id);
+
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("article", article);
+
+		if (article == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+
+		return "/adm/article/modify";
+	}
 
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
@@ -129,7 +156,8 @@ public class AdmArticleController extends BaseController {
 
 		}
 
-		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId), "../article/detail?id=" + newArticleId);
+		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId),
+				"../article/detail?id=" + newArticleId);
 	}
 
 	@RequestMapping("/adm/article/detail")
@@ -155,9 +183,9 @@ public class AdmArticleController extends BaseController {
 		// @RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
 
 		Board board = articleService.getBoard(boardId);
-		
+
 		req.setAttribute("board", board);
-		
+
 		if (board == null) {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
