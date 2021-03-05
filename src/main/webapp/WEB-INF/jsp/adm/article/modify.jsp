@@ -11,6 +11,8 @@
 <c:set var="fileInputMaxCount" value="5" />
 <script>
 	ArticleModify__fileInputMaxCount = parseInt("${fileInputMaxCount}");
+	const articleId = parseInt("${article.id}");
+	
 </script>
 
 <script>
@@ -41,7 +43,7 @@
 		var maxSize = maxSizeMb * 1024 * 1024; // 50MB
 
 		for (let inputNo = 1; inputNo <= ArticleModify__fileInputMaxCount; inputNo++) {
-			const input = form[file__article__0__common__attachment__" + inputNo];
+			const input = form["file__article__ " + articleId + " __common__attachment__" + inputNo];
 			// form.file__article__0__common__attachment__1.files[0].size -> 사이즈 구하는 식
 			
 			if (input.value) {
@@ -65,7 +67,7 @@
 			form.genFileIdsStr.value = genFileIdsStr;
 
 			for ( let inputNo = 1; inputNo <= ArticleModify__fileInputMaxCount; inputNo++ ) {
-				const input = form["file__article__0__common__attachment__" + inputNo];
+				const input = form["file__article__" + articleId + "__common__attachment__" + inputNo];
 				input.value = '';
 			}
 			
@@ -77,7 +79,7 @@
 			var needToUpload = false;
 			
 			for ( let inputNo = 1; inputNo <= ArticleModify__fileInputMaxCount; inputNo++ ) {
-				const input = form["file__article__0__common__attachment__" + inputNo];
+				const input = form["file__article__" + articleId + "__common__attachment__" + inputNo];
 			
 				if ( input.value.length > 0 ) {
 					needToUpload = true;
@@ -163,7 +165,7 @@
 
 					<div class="lg:flex-grow">
 						<input type="file"
-							name="file__article__0__common__attachment__${inputNo}"
+							name="file__article__${article.id}__common__attachment__${inputNo}"
 							class="form-row-input w-full rounded-sm" />
 
 						<c:if test="${file != null}">
