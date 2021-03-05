@@ -62,7 +62,7 @@
 
 					<!-- 썸네일 -->
 					<c:if test="${article.extra__thumbImg != null}">
-						<a class="block mt-2" href="detailUrl">
+						<a class="block mt-2" href="${detailUrl}">
 							<img class="max-w-lg" src="${article.extra__thumbImg}" alt="" />
 						</a>
 					</c:if>

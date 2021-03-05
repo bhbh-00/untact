@@ -22,9 +22,10 @@ public interface GenFileDao {
 	// Dao에서는 이름이 같지만, 타입이 다른 두개가 있어도 되지만, xml에서는 안됌!
 	List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
+	void deleteFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
+
 	void deleteFile(@Param("id") int id);
 	
-	void deleteFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
 
 }

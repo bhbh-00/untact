@@ -20,6 +20,7 @@ import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
+import com.sbs.untact.util.Util;
 
 @Controller
 public class AdmArticleController extends BaseController {
@@ -30,6 +31,7 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
+		
 		if (id == null) {
 			return msgAndBack(req, "게시물을 입력해주세요.");
 		}
@@ -56,22 +58,25 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body, HttpServletRequest req) {
+	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
 		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-
-		if (id == null) {
+		
+		int id = Util.getAsInt(param.get("id"), 0);
+		
+		if (id == 0) {
 			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
 		}
 
-		if (title == null) {
+		if (Util.isEmpty(param.get("title"))) {
 			return new ResultData("F-1", "제목을 입력해주세요.");
 		}
 
-		if (body == null) {
+		if (Util.isEmpty(param.get("body"))) {
 			return new ResultData("F-1", "내용을 입력해주세요.");
 		}
+		
 
 		Article article = articleService.getArticle(id);
 
@@ -85,7 +90,7 @@ public class AdmArticleController extends BaseController {
 			return actorCanModifyRd;
 		}
 
-		return articleService.modifyArticle(id, title, body);
+		return articleService.modifyArticle(param);
 	}
 
 	@RequestMapping("/adm/article/doDelete")

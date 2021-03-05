@@ -12,9 +12,9 @@ import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
-	// interface에서는 필요없음!
+	// interface에서는 public 필요없음!
 
-	void modifyArticle(@Param("id") Integer id, @Param(value = "title") String title, @Param(value = "body") String body);
+	void modifyArticle(Map<String, Object> param);
 
 	void deleteArticle(@Param("id") Integer id);
 

@@ -20,18 +20,22 @@ public class ArticleService {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
+		
+	public ResultData modifyArticle(Map<String, Object> param) {
+		articleDao.modifyArticle(param);
 
-	public ResultData modifyArticle(int id, String title, String body) {
-		articleDao.modifyArticle(id, title, body);
+		int id = Util.getAsInt(param.get("id"), 0);
+		
+		changeInputFileRelIds(param, id);
 
-		return new ResultData("s-1", "수정완료되었습니다.", "id", id);
+		return new ResultData("s-1", "수정완료 되었습니다.", "id", id);
 	}
 
 	public ResultData deleteArticle(int id) {
 		articleDao.deleteArticle(id);
-		
-		genFileService.deleteFiles("article",id);
-		
+
+		genFileService.deleteFiles("article", id);
+
 		return new ResultData("S-1", "삭제하였습니다.", "id", id);
 	}
 
@@ -44,17 +48,7 @@ public class ArticleService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
-
-		if (genFileIdsStr != null) {
-			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ",");
-
-			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
-			// 그것을 뒤늦게라도 이렇게 고처야 한다.
-			for (int genFileId : genFileIds) {
-				genFileService.changeRelId(genFileId, id);
-			}
-		}
+		changeInputFileRelIds(param, id);
 
 		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
 	}
@@ -97,6 +91,21 @@ public class ArticleService {
 
 	public ResultData getActorCanDeleteRd(Article article, int actorId) {
 		return getActorCanModifyRd(article, actorId);
+	}
+	
+	private void changeInputFileRelIds(Map<String, Object> param, int id) {
+		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
+
+		if (genFileIdsStr != null) {
+			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ",");
+
+			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
+			// 그것을 뒤늦게라도 이렇게 고처야 한다.
+			for (int genFileId : genFileIds) {
+				genFileService.changeRelId(genFileId, id);
+			}
+		}
+
 	}
 
 }
