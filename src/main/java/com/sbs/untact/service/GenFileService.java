@@ -76,6 +76,15 @@ public class GenFileService {
 		}
 
 		String fileDir = Util.getNowYearMonthDateStr();
+		
+		// 원래 있던 파일(oldGenFile)을 삭제
+		if (relId > 0) {
+			GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
+
+			if (oldGenFile != null) {
+				deleteGenFile(oldGenFile);
+			}
+		}
 
 		ResultData saveMetaRd = saveMeta(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
@@ -136,15 +145,15 @@ public class GenFileService {
 		genFileDao.changeRelId(id, relId);
 	}
 
-	public void deleteFiles(String relTypeCode, int relId) {
+	public void deleteGenFiles(String relTypeCode, int relId) {
 		List<GenFile> genFiles = genFileDao.getGenFiles(relTypeCode, relId);
 
 		for ( GenFile genFile : genFiles ) {
-			deleteFile(genFile);
+			deleteGenFile(genFile);
 		}
 	}
 
-	private void deleteFile(GenFile genFile) {
+	private void deleteGenFile(GenFile genFile) {
 		String filePath = genFile.getFilePath(genFileDirPath);
 		Util.delteFile(filePath);
 
