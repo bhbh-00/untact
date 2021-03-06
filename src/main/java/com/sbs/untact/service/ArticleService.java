@@ -2,6 +2,7 @@ package com.sbs.untact.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.sbs.untact.dao.ArticleDao;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -68,7 +70,19 @@ public class ArticleService {
 		// 한 페이지에 포함 되는 게시물의 갯수의 값
 		// LIMIT 20, 20 => 2page LIMIT 40, 20 => 3page
 
-		return articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
+		List<Article> articles = articleDao.getForPrintArticles(boardId, searchKeywordType, searchKeyword, limitStart, limitTake);
+		List<Integer> articleIds = articles.stream().map(article -> article.getId()).collect(Collectors.toList());
+		Map<Integer, Map<String, GenFile>> filesMap = genFileService.getFilesMapKeyRelIdAndFileNo("article", articleIds, "common", "attachment");
+
+		for (Article article : articles) {
+			Map<String, GenFile> mapByFileNo = filesMap.get(article.getId());
+
+			if (mapByFileNo != null) {
+				article.getExtraNotNull().put("file__common__attachment", mapByFileNo);
+			}
+		}
+
+		return articles;
 	}
 
 	public Board getBoard(int boardId) {

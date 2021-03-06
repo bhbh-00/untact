@@ -207,13 +207,6 @@ public class AdmArticleController extends BaseController {
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
 				itemsInAPage);
 
-		for (Article article : articles) {
-			GenFile genFile = genFileService.getGenFile("article", article.getId(), "common", "attachment", 1);
-
-			if (genFile != null) {
-				article.setExtra__thumbImg(genFile.getForPrintUrl());
-			}
-		}
 		req.setAttribute("articles", articles);
 		// 이게 있어야지 jsp에서 뜸!
 
