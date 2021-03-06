@@ -19,6 +19,53 @@ import com.sbs.untact.util.Util;
 public class AdmMemberController {
 	@Autowired
 	private MemberService memberService;
+	
+	@RequestMapping("/adm/member/join")
+	public String ShowJoin() {
+		return "/adm/member/join";
+	}
+	
+	@RequestMapping("/adm/member/doJoin")
+	@ResponseBody
+	public String doJoin(@RequestParam Map<String, Object> param) {
+
+		if (param.get("loginId") == null) {
+			return Util.msgAndBack("아이디를 입력해주세요.");
+		}
+
+		Member existingMember = memberService.getMemberByloginId((String) param.get("loginId"));
+
+		if (existingMember != null) {
+			return Util.msgAndBack("이미 사용 중인 아이디입니다.");
+		}
+
+		if (param.get("loginPw") == null) {
+			return Util.msgAndBack("비밀번호를 입력해주세요.");
+		}
+		if (param.get("name") == null) {
+			return Util.msgAndBack("이름을 입력해주세요.");
+		}
+
+		if (param.get("nickname") == null) {
+			return Util.msgAndBack("닉네임을 입력해주세요.");
+		}
+
+		if (param.get("cellphoneNo") == null) {
+			return Util.msgAndBack("핸드폰을 입력해주세요.");
+		}
+
+		if (param.get("email") == null) {
+			return Util.msgAndBack("이메일을 입력해주세요.");
+		}
+		
+		memberService.join(param);
+
+		String msg = String.format("%s님! 환영합니다.", existingMember.getNickname());
+		
+		String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "../member/login");
+
+		return Util.msgAndReplace(msg, redirectUrl);
+	}
 
 	@RequestMapping("/adm/member/doLogout")
 	@ResponseBody
@@ -30,7 +77,7 @@ public class AdmMemberController {
 	}
 	
 	@RequestMapping("/adm/member/login")
-	public String login() {
+	public String ShowLogin() {
 		return ("/adm/member/login");
 	}
 

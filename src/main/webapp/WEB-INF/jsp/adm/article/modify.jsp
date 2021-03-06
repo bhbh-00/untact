@@ -161,9 +161,6 @@ function ArticleModify__checkAndSubmit(form) {
 				</div>
 			</c:forEach>
 			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>수정</span>
-				</div>
 				<div class="lg:flex-grow">
 					<div class="btns">
 						<input type="submit" class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" value="수정">

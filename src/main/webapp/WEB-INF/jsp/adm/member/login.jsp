@@ -21,6 +21,7 @@
 				return;
 			}
 			
+			form.loginPw.value = form.loginPw.value.trim();
 			if ( form.loginPw.value.length == 0 ) {
 				alert('비밀번호를 입력해주세요.');
 				form.loginPw.focus();
@@ -45,25 +46,36 @@
 					<span>UNTACT ADMIN</span>
 				</a>
 			</div>
-			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doLogin" method="POST"
-				onsubmit="LoginForm__checkAndSubmit(this); return false;">
+			
+			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+				
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 							autofocus="autofocus" type="text" placeholder="아이디" name="loginId" maxlength="20" />
 					</div>
 				</div>
+				
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
 							autofocus="autofocus" type="text" placeholder="비밀번호" name="loginPw" maxlength="20" />
 					</div>
 				</div>
+				
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
-						<input class="w-full bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="로그인" />
+						<input class="w-full btn-primary bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
+							type="submit" value="로그인" />						
+					</div>
+				</div>
+				
+				<div class="flex flex-col md:flex-row">
+					<div class="p-1 text-center md:flex-grow">
+						<a href="join" class="text-gray-600 inline-block hover:underline">회원가입</a>
+						<a href="#" class="text-gray-600 mx-2 inline-block hover:underline">아이디찾기</a>
+						<a href="#" class="text-gray-600 inline-block hover:underline">비밀번호찾기</a>
 					</div>
 				</div>
 			</form>
