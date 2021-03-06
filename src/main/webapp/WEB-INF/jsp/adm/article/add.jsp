@@ -6,6 +6,7 @@
 
 <!-- 첨부파일 갯수 조절 -->
 <c:set var="fileInputMaxCount" value="10" />
+
 <script>
 ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
 </script>
