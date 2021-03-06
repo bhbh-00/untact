@@ -2,6 +2,7 @@ package com.sbs.untact.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,23 @@ import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
 @Controller
-public class AdmMemberController {
+public class AdmMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
+	
+	@RequestMapping("/adm/member/list")
+	public String ShowList(@RequestParam(defaultValue = "1") int id, HttpServletRequest req) {
+		
+		Member member = memberService.getMember(id);
+
+		req.setAttribute("member", member);
+
+		if (member == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+		
+		return "/adm/member/list";
+	}
 	
 	@RequestMapping("/adm/member/join")
 	public String ShowJoin() {
@@ -60,7 +75,7 @@ public class AdmMemberController {
 		
 		memberService.join(param);
 
-		String msg = String.format("%s님! 환영합니다.", existingMember.getNickname());
+		String msg = String.format("%s님! 환영합니다.", param.get("nickname"));
 		
 		String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "../member/login");
 

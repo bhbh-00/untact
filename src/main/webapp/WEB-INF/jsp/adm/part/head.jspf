@@ -25,6 +25,6 @@
 const param = ${paramJson};
 <!-- const : 변수의 값이 거의 바뀌지 않는다는 것을 뜻함 --> 
 <%="</script>"%>
-</head>
+
 </head>
 <body class="bg-gray-200">

@@ -32,7 +32,6 @@
 		WHERE
 		authKey = #{authKey}
 	</select>
-	
 
 	<select id="getMember" resultType="Member">
 		SELECT *
@@ -40,7 +39,7 @@
 		WHERE
 		id = #{id}
 	</select>
-
+	
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>
