@@ -1,6 +1,11 @@
 server:
   port: 8024
 spring:
+  # 파일 업로드 용량 제한 50mb 로 늘리기
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   mvc:
     view:
       prefix: /WEB-INF/jsp/

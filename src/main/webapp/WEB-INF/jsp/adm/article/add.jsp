@@ -4,6 +4,7 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<!-- 첨부파일 갯수 조절 -->
 <c:set var="fileInputMaxCount" value="10" />
 <script>
 ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
@@ -12,27 +13,34 @@ ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
 <script>
 ArticleAdd__submited = false;
 function ArticleAdd__checkAndSubmit(form) {
+	// 중복처리 안되게 하는
 	if ( ArticleAdd__submited ) {
 		alert('처리중입니다.');
 		return;
 	}
 	
+	// 기본적인 처리
 	form.title.value = form.title.value.trim();
 	if ( form.title.value.length == 0 ) {
 		alert('제목을 입력해주세요.');
 		form.title.focus();
 		return false;
 	}
+	
 	form.body.value = form.body.value.trim();
 	if ( form.body.value.length == 0 ) {
 		alert('내용을 입력해주세요.');
 		form.body.focus();
 		return false;
 	}
-	var maxSizeMb = 50;
-	var maxSize = maxSizeMb * 1024 * 1024;
+	
+	// 파일 용량 처리
+	var maxSizeMb = 50;  // 용량
+	var maxSize = maxSizeMb * 1024 * 1024; // 50MB
+	
 	for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
 		const input = form["file__article__0__common__attachment__" + inputNo];
+		// form.file__article__0__common__attachment__1.files[0].size -> 사이즈 구하는 식
 		
 		if (input.value) {
 			if (input.files[0].size > maxSize) {
@@ -43,7 +51,9 @@ function ArticleAdd__checkAndSubmit(form) {
 			}
 		}
 	}
+	
 	const startSubmitForm = function(data) {
+		
 		if (data && data.body && data.body.genFileIdsStr) {
 			form.genFileIdsStr.value = data.body.genFileIdsStr;
 		}
@@ -55,13 +65,17 @@ function ArticleAdd__checkAndSubmit(form) {
 		
 		form.submit();
 	};
+	
 	const startUploadFiles = function(onSuccess) {
 		var needToUpload = false;
+		
 		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
 			const input = form["file__article__0__common__attachment__" + inputNo];
+		
 			if ( input.value.length > 0 ) {
 				needToUpload = true;
 				break;
+				// 들어온게 0보다 크면 멈춰라
 			}
 		}
 		
@@ -82,7 +96,9 @@ function ArticleAdd__checkAndSubmit(form) {
 			success : onSuccess
 		});
 	}
+	
 	ArticleAdd__submited = true;
+	
 	startUploadFiles(startSubmitForm);
 }
 </script>

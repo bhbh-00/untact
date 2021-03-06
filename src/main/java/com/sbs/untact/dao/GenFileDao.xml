@@ -48,6 +48,16 @@
 		</if>
 		ORDER BY typeCode, type2Code, fileNo
 	</select>
+	
+		<select id="getGenFilesByRelTypeCodeAndRelId" resultType="GenFile">
+		SELECT *
+		FROM GenFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		ORDER BY typeCode, type2Code, fileNo
+	</select>
+	
 
 	<update id="changeRelId">
 		UPDATE genFile

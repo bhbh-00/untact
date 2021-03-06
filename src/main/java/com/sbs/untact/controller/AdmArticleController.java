@@ -32,7 +32,7 @@ public class AdmArticleController extends BaseController {
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
 		if (id == null) {
-			return msgAndBack(req, "게시물을 입력해주세요.");
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
@@ -77,7 +77,7 @@ public class AdmArticleController extends BaseController {
 		}
 
 		Article article = articleService.getArticle(id);
-
+	
 		if (article == null) {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
