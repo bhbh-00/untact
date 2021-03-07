@@ -1,6 +1,7 @@
 package com.sbs.untact.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sbs.untact.service.MemberService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Member {
 	@JsonIgnore
 	// @JsonIgnore -> 보여지지 않게하기 위함
 	private String loginPw;
+	private String loginPwConfirm;
 	private int authLevel;
 	@JsonIgnore
 	private String authKey;
@@ -25,5 +27,14 @@ public class Member {
 	private String nickname;
 	private String cellphoneNo;
 	private String email;
+	
+	public String getAuthLevelName() {
+		return MemberService.getAuthLevelName(this);
+	}
+	
+	public String getAuthLevelNameColor() {
+		return MemberService.getAuthLevelNameColor(this);
+	}
+	
 
 }

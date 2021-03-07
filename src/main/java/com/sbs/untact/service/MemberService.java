@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dao.MemberDao;
 import com.sbs.untact.dto.Member;
@@ -54,10 +55,46 @@ public class MemberService {
 		return memberDao.getMember(authLevel);
 	}
 
-	public List<Member> getForPrintMembers(String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
+	public List<Member> getForPrintMembers(String searchKeywordType, String searchKeyword, int page, int itemsInAPage,
+			@RequestParam Map<String, Object> param) {
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 
-		return memberDao.getForPrintMembers(searchKeywordType, searchKeyword, limitStart, limitTake);
+		param.put("searchKeywordType", searchKeywordType);
+		param.put("searchKeyword", searchKeyword);
+		param.put("page", page);
+		param.put("itemsInAPage", itemsInAPage);
+
+		return memberDao.getForPrintMembers(param);
 	}
+
+	public Member getForPrintMember(int id) {
+		return memberDao.getForPrintMember(id);
+	}
+
+	// static이여야함!
+	// static 시작
+	public static String getAuthLevelName(Member member) {
+		switch (member.getAuthLevel()) {
+		case 7:
+			return "관리자";
+		case 3:
+			return "일반";
+		default:
+			return "유형정보없음";
+		}
+	}
+
+	public static String getAuthLevelNameColor(Member member) {
+		switch (member.getAuthLevel()) {
+		case 7:
+			return "blue";
+		case 3:
+			return "yellow";
+		default:
+			return "";
+		}
+	}
+	// static 끝
+
 }

@@ -23,8 +23,12 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 
 	@RequestMapping("/adm/member/list")
-	public String showList(HttpServletRequest req,String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
-		if (searchKeywordType != null) {
+	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param) {
+		
+		String searchKeywordType = (String) param.get("searchKeywordType");
+		String searchKeyword = (String) param.get("searchKeyword");
+				
+		if ( searchKeywordType != null) {			
 			searchKeywordType = searchKeywordType.trim();
 		}
 
@@ -46,7 +50,7 @@ public class AdmMemberController extends BaseController {
 
 		int itemsInAPage = 20;
 
-		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, page, itemsInAPage);
+		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, itemsInAPage, itemsInAPage, param);
 
 		req.setAttribute("members", members);		
 
@@ -150,7 +154,20 @@ public class AdmMemberController extends BaseController {
 	}
 	
 	@RequestMapping("/adm/member/modify")
-	public String Modify() {
+	public String Modify(int id, HttpServletRequest req) {
+		
+		if (id == 0) {
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
+		}
+
+		Member member = memberService.getForPrintMember(id);
+		
+		if (member == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+
+		req.setAttribute("member", member);
+		
 		return "/adm/member/modify";
 	}
 

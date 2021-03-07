@@ -9,19 +9,28 @@
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<span class="text-3xl text-black font-bold">회원 관리</span>
 		<div class="flex items-center mt-7 mb-5">
-			<select class="select-member-authLevel py-1">
+			<select class="select-auth-level py-1">
+				<option value="">권한전체</option>
 				<option value="3">일반회원</option>
 				<option value="7">관리자</option>
 				<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->
 			</select>
 			<script>
-				$('.section-1 .select-member-authLevel').val(member.authLevel);
+				if( !param.authLevel ) {
+					param.authLevel = '';
+				}
+				
+				$('.section-1 .select-auth-level').val(param.authLevel);
 
-				$('.section-1 .select-member-authLevel').change(function() {
-					location.href = "?member.authLevel=" + this.value;
+				$('.section-1 .select-auth-level').change(function() {
+					location.href = "?authLevel=" + this.value;
 				});
 				/* change 바뀔 때 마다 뭔가 실행된다.*/
 			</script>
+			
+			<div class="flex-grow"></div>
+			
+			<a href="join" class="text-gray-600 inline-block hover:underline">회원가입</a>
 		</div>
 		<hr>
 
@@ -34,7 +43,9 @@
 				<div class="flex justify-between items-center mt-3">
 
 					<!-- 회원 번호 -->
-					<a href="${detailUrl}" class="font-bold mr-5">NO. ${member.id}</a>
+					<a href="${detailUrl}" class="font-bold mr-5"><span
+						class="inline-flex justify-center items-center px-3 py-1 rounded-full bg-${member.authLevelNameColor}-500 text-white">NO. ${member.id}</span>
+					<span></span></a>
 
 					<!-- 등록날짜 -->
 					<span class="font-light text-gray-600">${member.regDate}</span>
@@ -43,27 +54,27 @@
 
 					<!-- authLevel 일반/관리자-->
 					<a href="list?authLevel=${member.authLevel}"
-						class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500"></a>
+						class="cursor-pointer px-2 py-1 bg-${member.authLevelNameColor}-500 text-white font-bold rounded">${member.authLevelName}</a>
 				</div>
 
 				<!-- 회원 아아디 -->
 				<div class="mt-2">
 					<span
-						class="inline-flex justify-center items-center px-2 rounded-full bg-green-500 text-white">아이디</span>
+						class="inline-flex justify-center items-center px-3 py-1 rounded-full bg-${member.authLevelNameColor}-500 text-white">아이디</span>
 					<span>${member.loginId}</span>
 				</div>
 
 				<!-- 회원 이름 -->
 				<div class="mt-2">
 					<span
-						class="inline-flex justify-center items-center px-2 rounded-full bg-green-500 text-white">이름</span>
+						class="inline-flex justify-center items-center px-3 py-1 rounded-full bg-${member.authLevelNameColor}-500 text-white">이름</span>
 					<span>${member.name}</span>
 				</div>
 
 				<!-- 회원 닉네임 -->
 				<div class="mt-2">
 					<span
-						class="inline-flex justify-center items-center px-2 rounded-full bg-green-500 text-white">닉네임</span>
+						class="inline-flex justify-center items-center px-3 py-1 rounded-full bg-${member.authLevelNameColor}-500 text-white">닉네임</span>
 					<span>${member.nickname}</span>
 				</div>
 

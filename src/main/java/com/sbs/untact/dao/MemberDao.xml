@@ -28,6 +28,13 @@
 		WHERE
 		loginId = #{loginId}
 	</select>
+	
+	<select id= "getForPrintMember" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE
+		id = #{id}
+	</select>
 
 	<select id="getForPrintMembers" resultType="Member">
 		SELECT *
@@ -46,6 +53,9 @@
 		<if test="searchKeywordType == 'loginId'">
 			AND loginId LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
+		<if test=" authLevel != null and authLevel != '' ">
+			AND authLevel = #{authLevel}
+		</if>		
 		ORDER BY id DESC
 		<if test="limitStart != null and limitTake != null">
 			LIMIT #{limitStart}, #{limitTake}
@@ -73,27 +83,29 @@
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>
-			<if
-				test="loginPw != null || name != null || nickname != null || cellphoneNo != null || email != null">
+			<if test="loginPw != null and loginPwConfirm != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
 				updateDate = NOW(),
 			</if>
 			<if test="loginPw != null">
 				loginPw = #{loginPw},
 			</if>
+			<if test="loginPwConfirm != null and loginPw == loginPwConfirm">
+				loginPwConfirm = #{loginPwConfirm},
+			</if>			
 			<if test="authLevel != null">
-				authLevel = #{authLevel}
+				authLevel = #{authLevel},
 			</if>
 			<if test="name != null">
-				`name` = #{name}
+				`name` = #{name},
 			</if>
 			<if test="nickname != null">
-				nickname = #{nickname}
+				nickname = #{nickname},
 			</if>
 			<if test="cellphoneNo != null">
-				cellphoneNo = #{cellphoneNo}
+				cellphoneNo = #{cellphoneNo},
 			</if>
 			<if test="email != null">
-				email = #{email}
+				email = #{email},
 			</if>
 		</set>
 		WHERE id = #{id}
