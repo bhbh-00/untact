@@ -40,6 +40,9 @@
 
 				<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
 				<c:set var="detailUrl" value="detail?id=${article.id}" />
+				<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
+				<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
+				<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
 				<div class="flex justify-between items-center mt-3">
 
@@ -47,7 +50,7 @@
 					<a href="${detailUrl}" class="font-bold mr-5">NO. ${article.id}</a>
 
 					<!-- 등록날짜 -->
-					<span class="font-light text-gray-600">${article.regDate}</span>
+					<a class="font-light text-gray-600">${article.regDate}</a>
 
 					<div class="flex-grow"></div>
 
@@ -61,9 +64,9 @@
 					<a href="${detailUrl}" class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
 
 					<!-- 썸네일 -->
-					<c:if test="${article.extra__thumbImg != null}">
-						<a class="block mt-2" href="${detailUrl}">
-							<img class="max-w-lg" src="${article.extra__thumbImg}" alt="" />
+					<c:if test="${thumbUrl != null}">
+						<a class="block" href="${detailUrl}" >
+							<img class="max-w-sm" src="${thumbUrl}" alt="" />
 						</a>
 					</c:if>
 				</div>
