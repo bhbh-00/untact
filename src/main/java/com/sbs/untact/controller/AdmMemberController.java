@@ -1,5 +1,6 @@
 package com.sbs.untact.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +23,34 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 
 	@RequestMapping("/adm/member/list")
-	public String ShowList(@RequestParam(defaultValue = "1") int id, HttpServletRequest req) {
-		Member member = memberService.getMember(id);
+	public String showList(HttpServletRequest req,String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+		if (searchKeywordType != null) {
+			searchKeywordType = searchKeywordType.trim();
+		}
 
-		req.setAttribute("member", member);
+		if (searchKeywordType == null || searchKeywordType.length() == 0) {
+			searchKeywordType = "name";
+		}
 
-		return "/adm/member/list";
+		if (searchKeyword != null && searchKeyword.length() == 0) {
+			searchKeyword = null;
+		}
 
+		if (searchKeyword != null) {
+			searchKeyword = searchKeyword.trim();
+		}
+
+		if (searchKeyword == null) {
+			searchKeywordType = null;
+		}
+
+		int itemsInAPage = 20;
+
+		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, page, itemsInAPage);
+
+		req.setAttribute("members", members);		
+
+		return "adm/member/list";
 	}
 
 	@RequestMapping("/adm/member/join")

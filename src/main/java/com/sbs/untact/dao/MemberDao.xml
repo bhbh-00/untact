@@ -10,12 +10,15 @@
 		INTO `member`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId = #{loginId},
+		loginId =
+		#{loginId},
 		loginPw = #{loginPw},
-		authKey = CONCAT("authKey1__", UUID(), "__",  RAND()),
+		authKey = CONCAT("authKey1__", UUID(),
+		"__", RAND()),
 		`name` = #{name},
 		nickname = #{nickname},
-		cellphoneNo = #{cellphoneNo},
+		cellphoneNo =
+		#{cellphoneNo},
 		email = #{email}
 	</insert>
 
@@ -25,29 +28,48 @@
 		WHERE
 		loginId = #{loginId}
 	</select>
-	
-	<select id="getMemberByAuthKey" resultType="Member">
-		SELECT *
-		FROM `member`
-		WHERE
-		authKey = #{authKey}
+
+	<select id="getForPrintMembers" resultType="Member">
+		SELECT M.*
+		FROM `member` AS M
+		WHERE 1
+		<if test="searchKeywordType == 'name'">
+			AND M.name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nickname'">
+			AND M.`nickname` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nameAndNickname'">
+			AND (M.name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			M.nickname LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		<if test="searchKeywordType == 'loginId'">
+			AND M.loginId LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY M.id DESC
+		<if test="limitStart != null and limitTake != null">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
 	</select>
+
+
 
 	<select id="getMember" resultType="Member">
 		SELECT *
 		FROM `member`
 		WHERE
-		id = #{id}
+		id =
+		#{id}
 	</select>
-	
+
 	<select id="getMembers" resultType="Member">
 		SELECT *
 		FROM `member`
-		WHERE 
+		WHERE
 		authLevel = #{authLevel}
 	</select>
-	
-	
+
+
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>

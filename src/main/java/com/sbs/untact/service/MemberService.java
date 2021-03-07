@@ -55,4 +55,10 @@ public class MemberService {
 		return memberDao.getMember(authLevel);
 	}
 
+	public List<Member> getForPrintMembers(String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+
+		return memberDao.getForPrintMembers(searchKeywordType, searchKeyword, limitStart, limitTake);
+	}
 }

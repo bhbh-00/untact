@@ -6,6 +6,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <section class="section-1">
+<c:forEach items="${members}" var="member">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<span class="text-3xl text-black font-bold">멤버 관리</span>
 		<hr>
@@ -76,6 +77,7 @@
 				value="취소">
 		</div>
 	</div>
+	</c:forEach>
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
