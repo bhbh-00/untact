@@ -2,7 +2,6 @@ package com.sbs.untact.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,13 +38,13 @@ public class MemberService {
 		return new ResultData("s-1", "회원정보 수정이 완료되었습니다.");
 	}
 
-	public boolean isAdmin(int actorId) {
-		return actorId == 1;
+	public boolean isAdmin(Member actor) {
+		return actor.getAuthLevel() == 7;
 	}
 
-	public boolean isAdmin(Member actor) {
-		return isAdmin(actor.getId());
-	}
+//	public boolean isAdmin(Member actor) {
+//		return isAdmin(actor.getId());
+//	}
 
 	public Member getMemberByAuthKey(String authKey) {
 		return memberDao.getMemberByAuthKey(authKey);

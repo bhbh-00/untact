@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
@@ -27,7 +28,7 @@ public class AdmReplyController {
 	@RequestMapping("/adm/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		// 선생님은 replyId로만!
 		if (id == null) {
@@ -40,7 +41,7 @@ public class AdmReplyController {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMemberId);
+		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMember);
 		// articleService 말고 이제는 reply서비스에게!
 
 		if (actorCanDeleteRd.isFail()) {
@@ -53,7 +54,7 @@ public class AdmReplyController {
 	@RequestMapping("/adm/reply/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
-		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		// 선생님은 replyId로만!
 		if (id == null) {
@@ -66,7 +67,7 @@ public class AdmReplyController {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = replyService.getActorCanModifyRd(reply, loginedMemberId);
+		ResultData actorCanDeleteRd = replyService.getActorCanModifyRd(reply, loginedMember);
 		// articleService 말고 이제는 reply서비스에게!
 
 		if (actorCanDeleteRd.isFail()) {

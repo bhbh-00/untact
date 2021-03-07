@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
+import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
@@ -60,7 +61,7 @@ public class AdmArticleController extends BaseController {
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
 		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
-		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
@@ -82,7 +83,7 @@ public class AdmArticleController extends BaseController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMemberId);
+		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
 
 		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
@@ -94,7 +95,7 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
@@ -106,7 +107,7 @@ public class AdmArticleController extends BaseController {
 			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMemberId);
+		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
 			return actorCanDeleteRd;

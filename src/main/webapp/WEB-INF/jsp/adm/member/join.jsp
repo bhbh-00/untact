@@ -95,7 +95,7 @@ function JoinForm__checkAndSubmit(form) {
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" name="loginId" maxlength="20" />
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
 					</div>
 				</div>
 
@@ -120,7 +120,7 @@ function JoinForm__checkAndSubmit(form) {
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
-					<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="password" name="loginPwConfirm" maxlength="20" />
+					<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="password" placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm" maxlength="20" />
 					</div>
 
 				</div>
@@ -147,7 +147,7 @@ function JoinForm__checkAndSubmit(form) {
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder=""
+							autofocus="autofocus" type="text" placeholder="영문과 한글만 입력해주세요."
 							name="nickname" maxlength="20" />
 					</div>
 				</div>
@@ -185,7 +185,7 @@ function JoinForm__checkAndSubmit(form) {
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded" type="submit" value="회원가입" />	
-						<input onclick="history.back();" type="button" class="btn-info bg-red-500 text-white font-bold py-2 px-4 rounded" value="취소">	
+						<input onclick="history.back();" type="button" class="btn-info bg-gray-600 text-white font-bold py-2 px-4 rounded" value="취소">	
 					</div>
 				</div>
 			</form>
