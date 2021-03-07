@@ -20,26 +20,22 @@ import com.sbs.untact.util.Util;
 public class AdmMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
-	
+
 	@RequestMapping("/adm/member/list")
 	public String ShowList(@RequestParam(defaultValue = "1") int id, HttpServletRequest req) {
-		
 		Member member = memberService.getMember(id);
 
 		req.setAttribute("member", member);
 
-		if (member == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
-		}
-		
 		return "/adm/member/list";
+
 	}
-	
+
 	@RequestMapping("/adm/member/join")
 	public String ShowJoin() {
 		return "/adm/member/join";
 	}
-	
+
 	@RequestMapping("/adm/member/doJoin")
 	@ResponseBody
 	public String doJoin(@RequestParam Map<String, Object> param) {
@@ -72,12 +68,12 @@ public class AdmMemberController extends BaseController {
 		if (param.get("email") == null) {
 			return Util.msgAndBack("이메일을 입력해주세요.");
 		}
-		
+
 		memberService.join(param);
 
 		String msg = String.format("%s님! 환영합니다.", param.get("nickname"));
-		
-		String redirectUrl = Util.ifEmpty((String)param.get("redirectUrl"), "../member/login");
+
+		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "../member/login");
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
@@ -90,7 +86,7 @@ public class AdmMemberController extends BaseController {
 
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
 	}
-	
+
 	@RequestMapping("/adm/member/login")
 	public String ShowLogin() {
 		return ("/adm/member/login");
@@ -125,11 +121,17 @@ public class AdmMemberController extends BaseController {
 		session.setAttribute("loginedMemberId", existingMember.getId());
 
 		String msg = String.format("%s님! 환영합니다.", existingMember.getNickname());
-		
+
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
+	
+	@RequestMapping("/adm/member/modify")
+	public String Modify() {
+		return "/adm/member/modify";
+	}
+
 
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody

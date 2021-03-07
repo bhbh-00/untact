@@ -40,6 +40,14 @@
 		id = #{id}
 	</select>
 	
+	<select id="getMembers" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE 
+		authLevel = #{authLevel}
+	</select>
+	
+	
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>
@@ -49,6 +57,9 @@
 			</if>
 			<if test="loginPw != null">
 				loginPw = #{loginPw},
+			</if>
+			<if test="authLevel != null">
+				authLevel = #{authLevel}
 			</if>
 			<if test="name != null">
 				`name` = #{name}

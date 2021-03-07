@@ -2,6 +2,7 @@ package com.sbs.untact.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,10 @@ public class MemberService {
 
 	public Member getMemberByAuthKey(String authKey) {
 		return memberDao.getMemberByAuthKey(authKey);
+	}
+
+	public Member getMembers(int authLevel) {
+		return memberDao.getMember(authLevel);
 	}
 
 }

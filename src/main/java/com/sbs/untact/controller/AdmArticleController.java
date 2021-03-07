@@ -36,6 +36,10 @@ public class AdmArticleController extends BaseController {
 		}
 
 		Article article = articleService.getForPrintArticle(id);
+		
+		if (article == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
 
 		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
 
@@ -47,10 +51,6 @@ public class AdmArticleController extends BaseController {
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
-
-		if (article == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
-		}
 
 		return "/adm/article/modify";
 	}

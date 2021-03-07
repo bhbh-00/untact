@@ -18,6 +18,7 @@ public class Member {
 	@JsonIgnore
 	// @JsonIgnore -> 보여지지 않게하기 위함
 	private String loginPw;
+	private int authLevel;
 	@JsonIgnore
 	private String authKey;
 	private String name;
