@@ -14,21 +14,31 @@ function MemberModify__checkAndSubmit(form) {
 		return;
 	}
 	
-	form.loginPw.value = form.loginPw.value.trim();
-	if ( form.loginPw.value.length == 0 ) {
-		alert('비밀번호를 입력해주세요.');
-		form.loginPw.focus();
-		
-		return;
-	}
 	
-	form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-	if ( form.loginPwConfirm.value.length == 0 ) {
-		alert('비밀번호를 확인해주세요.');
-		form.loginPwConfirm.focus();
+	if (form.loginPw.value) {
+		form.loginPw.value = form.loginPw.value.trim();
+		if ( form.loginPw.value.length == 0 ) {
+			alert('비밀번호를 입력해주세요.');
+			form.loginPw.focus();
+			
+			return;
+		}
 		
-		return;
+		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+		if ( form.loginPwConfirm.value.length == 0 ) {
+			alert('비밀번호를 확인해주세요.');
+			form.loginPwConfirm.focus();
+			
+			return;
+		}
+		
+		if (form.loginPw.value != form.loginPwConfirm.value) {
+			alert('로그인비번이 일치하지 않습니다.');
+			form.loginPwConfirm.focus();
+			return;
+		}
 	}
+
 	
 	form.name.value = form.name.value.trim();
 	if ( form.name.value.length == 0 ) {
@@ -166,18 +176,17 @@ function MemberModify__checkAndSubmit(form) {
 					<span>권한 레벨</span>
 				</div>
 				<div class="lg:flex-grow">
-					<select class="select-auth-level w-full  py-2 px-3">
+					<select class="select-auth-level w-full py-2 px-3">
 						<option value="3">일반회원</option>
 						<option value="7">관리자</option>
 						<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->						
 					</select>
 					<script>
-					$('.section-1 .select-auth-level').val(member.authLevel);
-					$('.section-1 .select-auth-level').change(function() {
-						location.href = "?member.authLevel=" + this.value;
-					});
-					/* change 바뀔 때 마다 뭔가 실행된다.*/
-				</script>
+					const memberAuthLevel = parseInt("${member.authLevel}");
+					</script>
+					<script>
+						$('.section-1 .select-auth-level').val(memberAuthLevel);
+					</script>						
 				</div>
 			</div>
 

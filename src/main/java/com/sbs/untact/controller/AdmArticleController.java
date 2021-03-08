@@ -151,21 +151,22 @@ public class AdmArticleController extends BaseController {
 		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId),
 				"../article/detail?id=" + newArticleId);
 	}
-
+	
 	@RequestMapping("/adm/article/detail")
-	@ResponseBody
-	public ResultData showDetail(Integer id) {
+	public String showDetail(HttpServletRequest req, Integer id) {
 		if (id == null) {
-			return new ResultData("F-1", "제목을 입력해주세요.");
+			return msgAndBack(req, "제목을 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
+		
+		req.setAttribute("article", article);
 
-		return new ResultData("S-1", "게시물을 상세보기 입니다.", "article", article);
+		return "/adm/article/detail";
 	}
 
 	@RequestMapping("/adm/article/list")
