@@ -21,6 +21,42 @@ import com.sbs.untact.util.Util;
 public class AdmMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
+	
+	@RequestMapping("/adm/member/doDelete")
+	@ResponseBody
+	public ResultData doDelete(Integer id, HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (id == null) {
+			return new ResultData("F-1", "id를 입력해주세요.");
+		}
+
+		Member member = memberService.getMember(id);
+
+		if (member == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+
+		return memberService.deleteMember(id);
+	}
+	
+	@RequestMapping("/adm/member/detail")
+	public String showDetail(HttpServletRequest req, Integer id) {
+		if (id == null) {
+			return msgAndBack(req, "제목을 입력해주세요.");
+		}
+
+		Member member = memberService.getForPrintMember(id);
+
+		if (member == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+		
+		req.setAttribute("member", member);
+
+		return "/adm/member/detail";
+	}
+
 
 	@RequestMapping("/adm/member/list")
 	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param) {

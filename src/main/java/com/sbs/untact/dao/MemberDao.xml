@@ -5,6 +5,11 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
+	<delete id="deleteMember">
+		DELETE FROM `member`
+		WHERE id = #{id}
+	</delete>
+
 	<insert id="join" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO `member`
@@ -28,8 +33,8 @@
 		WHERE
 		loginId = #{loginId}
 	</select>
-	
-	<select id= "getForPrintMember" resultType="Member">
+
+	<select id="getForPrintMember" resultType="Member">
 		SELECT *
 		FROM `member`
 		WHERE
@@ -55,7 +60,7 @@
 		</if>
 		<if test=" authLevel != null and authLevel != '' ">
 			AND authLevel = #{authLevel}
-		</if>		
+		</if>
 		ORDER BY id DESC
 		<if test="limitStart != null and limitTake != null">
 			LIMIT #{limitStart}, #{limitTake}
@@ -83,7 +88,8 @@
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>
-			<if test="loginPw != null and loginPwConfirm != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
+			<if
+				test="loginPw != null and loginPwConfirm != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
 				updateDate = NOW(),
 			</if>
 			<if test="loginPw != null">
@@ -91,7 +97,7 @@
 			</if>
 			<if test="loginPwConfirm != null and loginPw == loginPwConfirm">
 				loginPwConfirm = #{loginPwConfirm},
-			</if>			
+			</if>
 			<if test="authLevel != null">
 				authLevel = #{authLevel},
 			</if>

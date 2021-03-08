@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.ResultData;
 
 @Mapper
 public interface MemberDao {
@@ -26,4 +27,6 @@ public interface MemberDao {
 	List<Member> getForPrintMembers(Map<String, Object> param);
 
 	Member getForPrintMember(@Param("id") int id);
+
+	void deleteMember(@Param("id") Integer id);
 }

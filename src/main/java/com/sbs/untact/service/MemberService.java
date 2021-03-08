@@ -97,4 +97,9 @@ public class MemberService {
 	}
 	// static 끝
 
+	public ResultData deleteMember(Integer id) {
+		memberDao.deleteMember(id);
+		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+	}
+
 }
