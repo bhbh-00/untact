@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +25,7 @@ public class UsrArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	@RequestMapping("/usr/article/doModify")
+	@PostMapping("/usr/article/doModify")
 	@ResponseBody
 	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
@@ -60,7 +62,7 @@ public class UsrArticleController {
 		return articleService.modifyArticle(param);
 	}
 
-	@RequestMapping("/usr/article/doDelete")
+	@PostMapping("/usr/article/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
@@ -84,7 +86,7 @@ public class UsrArticleController {
 		return articleService.deleteArticle(id);
 	}
 
-	@RequestMapping("/usr/article/doAdd")
+	@PostMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// String title, String body이 null이면 내용이 없는 거!!
@@ -112,7 +114,7 @@ public class UsrArticleController {
 
 	}
 
-	@RequestMapping("/usr/article/detail")
+	@GetMapping("/usr/article/detail")
 	@ResponseBody
 	public ResultData showDetail(Integer id) {
 		if (id == null) {
@@ -128,7 +130,7 @@ public class UsrArticleController {
 		return new ResultData("S-1", "게시물을 상세보기 입니다.", "article", article);
 	}
 
-	@RequestMapping("/usr/article/list")
+	@GetMapping("/usr/article/list")
 	@ResponseBody
 	public ResultData showList(@RequestParam(defaultValue = "1") int boardId, String searchKeywordType,
 			String searchKeyword, @RequestParam(defaultValue = "1") int page) {
