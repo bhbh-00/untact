@@ -16,11 +16,15 @@ import com.sbs.untact.util.Util;
 public class MemberService {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private GenFileService genFileService;
 
 	public ResultData join(Map<String, Object> param) {
 		memberDao.join(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
+		
+		genFileService.changeInputFileRelIds(param, id);
 
 		return new ResultData("s-1", String.format("%s님! 반갑습니다.", param.get("nickname")));
 	}
