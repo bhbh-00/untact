@@ -47,10 +47,10 @@
 				<div class="flex justify-between items-center mt-3">
 
 					<!-- 게시물 번호 -->
-					<a href="${detailUrl}" class="font-bold mr-5">NO. ${article.id}</a>
+					<a href="${detailUrl}" class="inline-flex justify-center items-center px-3 py-1 rounded-full bg-gray-500 text-white">NO. ${article.id}</a>
 
 					<!-- 등록날짜 -->
-					<a class="font-light text-gray-600">${article.regDate}</a>
+					<a class="font-light text-gray-600 ml-4">${article.regDate}</a>
 
 					<div class="flex-grow"></div>
 
@@ -65,29 +65,42 @@
 
 					<!-- 썸네일 -->
 					<c:if test="${thumbUrl != null}">
-						<a class="block" href="${detailUrl}" >
+						<a class="block mt-4" href="${detailUrl}" >
 							<img class="max-w-sm" src="${thumbUrl}" alt="" />
 						</a>
 					</c:if>
 				</div>
-
+				
 				<div class="flex items-center mt-4 mb-4">
 					<!-- 자세히 보기 -->
-					<a href="${detailUrl}" class="text-gray-700 mr-2 hover:underline">자세히
-						보기</a>
+					
+					<a href="${detailUrl}" class="text-gray-700 mr-2 hover:underline"><span>
+							<i class="fas fa-info"></i>
+							<span class="hidden sm:inline">자세히 보기</span>
+						</span></a>
 
 					<!-- 수정 -->
-					<a href="modify?id=${article.id}" class="text-blue-500 mr-2 hover:underline">수정</a>
+					<a href="modify?id=${article.id}"
+						class="text-blue-500 mr-2 hover:underline">
+						<span>
+							<i class="fas fa-edit"></i>
+							<span class="hidden sm:inline">수정</span>
+						</span>
+					</a>
 
 					<!-- 삭제 -->
-					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}" class="text-red-500 hover:underline">삭제</a>
-
+					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}" class="text-red-500 hover:underline"><span>
+							<i class="fas fa-trash"></i>
+							<span class="hidden sm:inline">삭제</span>
+						</span></a>
+											
 					<div class="flex-grow"></div>
 
 					<!-- 작성자 -->
 					<div>
 						<a class="flex items-center">
-							<img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
+							<img
+								src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
 								alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
 							<span class="text-gray-700 font-bold hover:underline">${article.extra__writer}</span>
 						</a>

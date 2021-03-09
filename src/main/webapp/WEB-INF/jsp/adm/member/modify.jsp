@@ -193,7 +193,7 @@ function MemberModify__checkAndSubmit(form) {
 			<div class="flex flex-col my-3 md:flex-row">
 				<div class="p-1 md:flex-grow">
 					<input
-						class="btn-primary bg-blue-400 text-white font-bold py-2 px-4 rounded"
+						class="btn-primary bg-blue-500 text-white font-bold py-2 px-4 rounded"
 						type="submit" value="수정" />
 					<input onclick="history.back();" type="button"
 						class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"

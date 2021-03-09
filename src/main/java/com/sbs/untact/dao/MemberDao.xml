@@ -15,15 +15,15 @@
 		INTO `member`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId =
-		#{loginId},
+		loginId = #{loginId},
 		loginPw = #{loginPw},
-		authKey = CONCAT("authKey1__", UUID(),
-		"__", RAND()),
+		<if test="loginPw == loginPwConfirm">
+		loginPwConfirm = #{loginPwConfirm},
+		</if>
+		authKey = CONCAT("authKey1__", UUID(), "__", RAND()),
 		`name` = #{name},
 		nickname = #{nickname},
-		cellphoneNo =
-		#{cellphoneNo},
+		cellphoneNo = #{cellphoneNo},
 		email = #{email}
 	</insert>
 

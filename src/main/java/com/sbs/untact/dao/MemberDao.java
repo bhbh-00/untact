@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Member;
-import com.sbs.untact.dto.ResultData;
 
 @Mapper
 public interface MemberDao {

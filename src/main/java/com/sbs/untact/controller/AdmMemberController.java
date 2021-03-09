@@ -193,13 +193,13 @@ public class AdmMemberController extends BaseController {
 	public String Modify(int id, HttpServletRequest req) {
 		
 		if (id == 0) {
-			return msgAndBack(req, "게시물 번호를 입력해주세요.");
+			return msgAndBack(req, "회원 번호를 입력해주세요.");
 		}
 
 		Member member = memberService.getForPrintMember(id);
 		
 		if (member == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
 		req.setAttribute("member", member);
