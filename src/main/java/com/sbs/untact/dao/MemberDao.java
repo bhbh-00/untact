@@ -29,4 +29,6 @@ public interface MemberDao {
 	Member getForPrintMember(@Param("id") int id);
 
 	void deleteMember(@Param("id") Integer id);
+
+	Member getMemberByLoginId(@Param("loginId") String loginId);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dao.MemberDao;
+import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
@@ -23,7 +24,7 @@ public class MemberService {
 		memberDao.join(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
-		
+
 		genFileService.changeInputFileRelIds(param, id);
 
 		return new ResultData("s-1", String.format("%s님! 반갑습니다.", param.get("nickname")));
@@ -104,6 +105,31 @@ public class MemberService {
 	public ResultData deleteMember(Integer id) {
 		memberDao.deleteMember(id);
 		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+	}
+
+	public Member getForPrintMemberByAuthKey(String authKey) {
+		Member member = memberDao.getMemberByAuthKey(authKey);
+
+		updateForPrint(member);
+
+		return member;
+	}
+
+	private void updateForPrint(Member member) {
+		GenFile genFile = genFileService.getGenFile("member", member.getId(), "common", "attachment", 1);
+
+		if (genFile != null) {
+			String imgUrl = genFile.getForPrintUrl();
+			member.setExtra__thumbImg(imgUrl);
+		}
+	}
+
+	public Member getForPrintMemberByLoginId(String loginId) {
+		Member member = memberDao.getMemberByLoginId(loginId);
+
+		updateForPrint(member);
+
+		return member;
 	}
 
 }

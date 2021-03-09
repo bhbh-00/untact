@@ -28,6 +28,8 @@ public class Member {
 	private String cellphoneNo;
 	private String email;
 	
+	private String Extra__thumbImg;
+	
 	public String getAuthLevelName() {
 		return MemberService.getAuthLevelName(this);
 	}
