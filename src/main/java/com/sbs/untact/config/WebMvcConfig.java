@@ -59,8 +59,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			.excludePathPatterns("/adm/member/doJoin");
 		
 		// 로그인 필요
-		registry.addInterceptor(needLoginInterceptor)
+		registry.addInterceptor(needLoginInterceptor)		
 			.addPathPatterns("/**")
+			.excludePathPatterns("/swagger-ui/**")
+			.excludePathPatterns("/swagger-resources/**")
+			.excludePathPatterns("/v2/api-docs")
+			.excludePathPatterns("/webjars/**")
 			.excludePathPatterns("/")
 			.excludePathPatterns("/adm/**")
 			.excludePathPatterns("/resource/**")
