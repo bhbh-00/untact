@@ -264,6 +264,7 @@ public class Util {
 		return numberFormat(Integer.parseInt(numStr));
 	}
 
+	// 숫자만으로의 구성은 안됌
 	public static boolean allNumberString(String str) {
 		if (str == null) {
 			return false;
@@ -281,7 +282,8 @@ public class Util {
 
 		return true;
 	}
-
+	
+	// 
 	public static boolean startsWithNumberString(String str) {
 		if (str == null) {
 			return false;
@@ -295,6 +297,7 @@ public class Util {
 	}
 
 	public static boolean isStandardLoginIdString(String str) {
+		
 		if (str == null) {
 			return false;
 		}
@@ -303,6 +306,7 @@ public class Util {
 			return false;
 		}
 
+		// 정규표현식
 		// 조건
 		// 5자 이상, 20자 이하로 구성
 		// 숫자로 시작 금지

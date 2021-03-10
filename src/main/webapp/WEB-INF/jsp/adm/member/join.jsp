@@ -6,6 +6,41 @@
 <script>
 const JoinForm__checkAndSubmitDone = false;
 <!--  const = var / 중복 방지를 위한.  -->
+
+//로그인 아이디 중복체크 함수 ajax
+function JoinForm__checkLoginIdDup(obj) {
+	const form = $(obj).closest('form').get(0);
+	form.loginId.value = form.loginId.value.trim();
+	if (form.loginId.value.length == 0) {
+		alert('로그인아이디를 입력해주세요.');
+		form.loginId.focus();
+		return;
+	}
+	// 편지라고 생각하면 됌!
+	$.get(
+		'getLoginIdDup',
+		// url
+		{
+			loginId:form.loginId.value
+		},
+		function(data) {
+			alert(data.msg);
+			if ( data.fail ) {
+				form.loginId.focus();
+			}
+			else {
+				form.loginPw.focus();
+			}
+		},
+		'json'
+		/* 형식
+		(html -> html)
+		(json -> json)
+		*/
+	);
+}
+
+
 function JoinForm__checkAndSubmit(form) {
 	if ( JoinForm__checkAndSubmitDone ) {
 		return;
@@ -92,10 +127,13 @@ function JoinForm__checkAndSubmit(form) {
 						<span>아이디</span>
 					</div>
 				</div>
+				
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
+					<div class="loginIdInputMsg"></div>
+					<input onclick="" type="button" class="btn-primary bg-white text-gray-600 px-2 rounded" value="중복체크">	
 					</div>
 				</div>
 
