@@ -3,6 +3,10 @@
 
 <%@ include file="../part/head.jspf"%>
 
+<!-- lodash -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+
 <script>
 const JoinForm__checkAndSubmitDone = false;
 <!--  const = var / 중복 방지를 위한.  -->
@@ -12,12 +16,11 @@ let JoinForm__validLoginId = '';
 //로그인 아이디 중복체크 함수 ajax
 function JoinForm__checkLoginIdDup(obj) {
 	
-	const form = $(obj).closest('form').get(0);
+	const form = $('.formLogin').get(0);
 	
 	form.loginId.value = form.loginId.value.trim();
+	
 	if (form.loginId.value.length == 0) {
-		alert('로그인아이디를 입력해주세요.');
-		form.loginId.focus();
 		return;
 	}
 	
@@ -31,6 +34,7 @@ function JoinForm__checkLoginIdDup(obj) {
 		function(data) {
 			
 			let colorClass = 'text-green-500';
+			
 			if ( data.fail ) {	
 				colorClass = 'text-red-500';
 			}
@@ -38,7 +42,6 @@ function JoinForm__checkLoginIdDup(obj) {
 			$('.loginIdInputMsg').html("<span class='" + colorClass + "'>" + data.msg + "</span>");
 			
 			if ( data.fail ) {
-				JoinForm__validLoginId = data.body.loginId;
 				form.loginId.focus();
 			}
 		
@@ -52,11 +55,12 @@ function JoinForm__checkLoginIdDup(obj) {
 
 }
 
-
 function JoinForm__checkAndSubmit(form) {
+	
 	if ( JoinForm__checkAndSubmitDone ) {
 		return;
 	}
+	
 	form.loginId.value = form.loginId.value.trim();
 	if ( form.loginId.value.length == 0 ) {
 		alert('아이디를 입력해주세요.');
@@ -64,14 +68,7 @@ function JoinForm__checkAndSubmit(form) {
 		
 		return;
 	}
-	
-	if ( form.loginId.value != JoinForm__validLoginId ) {
-		alert('로그인아이디 중복체크를해주세요.');
-		$('.btnCheckLoginIdDup').focus();
-		return;
-	}
-
-	
+		
 	form.loginPw.value = form.loginPw.value.trim();
 	if ( form.loginPw.value.length == 0 ) {
 		alert('비밀번호를 입력해주세요.');
@@ -123,6 +120,21 @@ function JoinForm__checkAndSubmit(form) {
 	form.submit();
 	JoinForm__checkAndSubmitDone = true;
 }
+
+$(function() {
+	$('.inputLoginId').change(function() {
+		JoinForm__checkLoginIdDup();
+		// change() -> 해당하는 요소의 value에 변화가 생길 경우 이를 감지하여 등록된 callback함수를 동작시킴.
+	});
+	$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
+	// keyup() -> 키 입력 후 발생되는 이벤트
+	
+	/* debounce() -> 이벤트를 그룹화하여 특정시간이 지난 후 하나의 이벤트만 발생하도록 하는 기술입니다.
+				   순차적 호출을 하나의 그룹으로 "그룹화"할 수 있습니다.
+				   연이어 호출되는 함수들 중 마지막 함수(또는 제일 처음)만 호출하도록 하는 것
+
+	*/
+});
 </script>
 
 <section class="section-Join">
@@ -138,7 +150,8 @@ function JoinForm__checkAndSubmit(form) {
 				</a>
 			</div>
 
-			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+			<form
+				class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
 				action="doJoin" method="POST"
 				onsubmit="JoinForm__checkAndSubmit(this); return false;">
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
@@ -153,16 +166,14 @@ function JoinForm__checkAndSubmit(form) {
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							class="inputLoginId shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 							autofocus="autofocus" type="text"
 							placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
 					</div>
 				</div>
-
-				<div class="loginIdInputMsg"></div>
-				<input onclick="JoinForm__checkLoginIdDup(this);" type="button"
-					class="btnCheckLoginIdDup btn-primary bg-white text-gray-600 px-2 rounded"
-					value="중복체크">
+				
+				<!-- 아이디 중복여부를 ajax로 물어봄 -->
+				<div class="loginIdInputMsg ml-2 mb-2"></div>
 
 				<!-- loginPw -->
 				<div class="flex flex-col ml-4 md:flex-row">
