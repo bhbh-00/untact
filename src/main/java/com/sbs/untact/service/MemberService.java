@@ -30,8 +30,8 @@ public class MemberService {
 		return new ResultData("s-1", String.format("%s님! 반갑습니다.", param.get("nickname")));
 	}
 
-	public Member getMemberByloginId(String loginId) {
-		return memberDao.getMemberByloginId(loginId);
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
 	}
 
 	public Member getMember(int id) {
@@ -131,5 +131,4 @@ public class MemberService {
 
 		return member;
 	}
-
 }

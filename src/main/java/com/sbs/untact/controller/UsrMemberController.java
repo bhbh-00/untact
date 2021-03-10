@@ -93,7 +93,7 @@ public class UsrMemberController {
 			return new ResultData("F-1", "아이디를 입력해주세요.");
 		}
 
-		Member existingMember = memberService.getMemberByloginId(loginId);
+		Member existingMember = memberService.getMemberByLoginId(loginId);
 
 		if (existingMember == null) {
 			return new ResultData("F-2", "존재하지 않는 아이디입니다.", "loginId", loginId);
@@ -120,7 +120,7 @@ public class UsrMemberController {
 			return new ResultData("F-1", "아이디를 입력해주세요.");
 		}
 
-		Member existingMember = memberService.getMemberByloginId((String) param.get("loginId"));
+		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 
 		if (existingMember != null) {
 			return new ResultData("F-2", String.format("이미 사용 중인 아이디입니다.", param.get("loginId")));
