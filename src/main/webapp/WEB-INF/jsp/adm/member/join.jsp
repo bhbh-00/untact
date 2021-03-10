@@ -7,15 +7,20 @@
 const JoinForm__checkAndSubmitDone = false;
 <!--  const = var / 중복 방지를 위한.  -->
 
+let JoinForm__validLoginId = '';
+
 //로그인 아이디 중복체크 함수 ajax
 function JoinForm__checkLoginIdDup(obj) {
+	
 	const form = $(obj).closest('form').get(0);
+	
 	form.loginId.value = form.loginId.value.trim();
 	if (form.loginId.value.length == 0) {
 		alert('로그인아이디를 입력해주세요.');
 		form.loginId.focus();
 		return;
 	}
+	
 	// 편지라고 생각하면 됌!
 	$.get(
 		'getLoginIdDup',
@@ -24,13 +29,19 @@ function JoinForm__checkLoginIdDup(obj) {
 			loginId:form.loginId.value
 		},
 		function(data) {
-			alert(data.msg);
+			
+			let colorClass = 'text-green-500';
+			if ( data.fail ) {	
+				colorClass = 'text-red-500';
+			}
+			
+			$('.loginIdInputMsg').html("<span class='" + colorClass + "'>" + data.msg + "</span>");
+			
 			if ( data.fail ) {
+				JoinForm__validLoginId = data.body.loginId;
 				form.loginId.focus();
 			}
-			else {
-				form.loginPw.focus();
-			}
+		
 		},
 		'json'
 		/* 형식
@@ -38,6 +49,7 @@ function JoinForm__checkLoginIdDup(obj) {
 		(json -> json)
 		*/
 	);
+
 }
 
 
@@ -52,6 +64,13 @@ function JoinForm__checkAndSubmit(form) {
 		
 		return;
 	}
+	
+	if ( form.loginId.value != JoinForm__validLoginId ) {
+		alert('로그인아이디 중복체크를해주세요.');
+		$('.btnCheckLoginIdDup').focus();
+		return;
+	}
+
 	
 	form.loginPw.value = form.loginPw.value.trim();
 	if ( form.loginPw.value.length == 0 ) {
@@ -107,7 +126,8 @@ function JoinForm__checkAndSubmit(form) {
 </script>
 
 <section class="section-Join">
-	<div class="container mx-auto min-h-screen flex items-center justify-center">
+	<div
+		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
 				<a href="#" class="logo">
@@ -118,66 +138,80 @@ function JoinForm__checkAndSubmit(form) {
 				</a>
 			</div>
 
-			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doJoin" method="POST" onsubmit="JoinForm__checkAndSubmit(this); return false;">
+			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+				action="doJoin" method="POST"
+				onsubmit="JoinForm__checkAndSubmit(this); return false;">
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 
 				<!-- loginId -->
 				<div class="flex flex-col mt-4 ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">						
+					<div class="md:w-36 md:flex md:items-center">
 						<span>아이디</span>
 					</div>
 				</div>
-				
+
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
-					<div class="loginIdInputMsg"></div>
-					<input onclick="" type="button" class="btn-primary bg-white text-gray-600 px-2 rounded" value="중복체크">	
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="text"
+							placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
+						<div class="loginIdInputMsg"></div>
+						<input onclick="" type="button"
+							class="btnCheckLoginIdDup btn-primary bg-white text-gray-600 px-2 rounded"
+							value="중복체크">
 					</div>
 				</div>
 
 				<!-- loginPw -->
 				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">	
+					<div class="md:w-36 md:flex md:items-center">
 						<span>비밀번호</span>
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
 						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="password" placeholder="영문+숫자 조합으로 입력해주세요." name="loginPw" maxlength="20" />
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="password"
+							placeholder="영문+숫자 조합으로 입력해주세요." name="loginPw" maxlength="20" />
 					</div>
 				</div>
 
 				<!-- loginPw 확인 -->
 				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">	
+					<div class="md:w-36 md:flex md:items-center">
 						<span>비밀번호 확인</span>
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
-					<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="password" placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm" maxlength="20" />
+						<input
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="password"
+							placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm" maxlength="20" />
 					</div>
 
 				</div>
 
 				<!-- name -->
 				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">	
+					<div class="md:w-36 md:flex md:items-center">
 						<span>이름</span>
 					</div>
 				</div>
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="ex) 홍길동" name="name" maxlength="20" />
+						<input
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="text" placeholder="ex) 홍길동"
+							name="name" maxlength="20" />
 					</div>
 				</div>
 
 				<!-- nickname -->
 				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">	
+					<div class="md:w-36 md:flex md:items-center">
 						<span>닉네임</span>
 					</div>
 				</div>
@@ -192,7 +226,7 @@ function JoinForm__checkAndSubmit(form) {
 
 				<!-- email -->
 				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">	
+					<div class="md:w-36 md:flex md:items-center">
 						<span>이메일</span>
 					</div>
 				</div>
@@ -207,7 +241,7 @@ function JoinForm__checkAndSubmit(form) {
 
 				<!-- cellphoneNo -->
 				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">	
+					<div class="md:w-36 md:flex md:items-center">
 						<span>전화번호</span>
 					</div>
 				</div>
@@ -215,15 +249,20 @@ function JoinForm__checkAndSubmit(form) {
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="tel" placeholder="-는 제외해주세요. ex) 01000000000"
-							name="cellphoneNo" maxlength="11" />
+							autofocus="autofocus" type="tel"
+							placeholder="-는 제외해주세요. ex) 01000000000" name="cellphoneNo"
+							maxlength="11" />
 					</div>
 				</div>
 
 				<div class="flex flex-col mb-4 md:flex-row">
 					<div class="p-1 md:flex-grow">
-						<input class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded" type="submit" value="회원가입" />	
-						<input onclick="history.back();" type="button" class="btn-info bg-gray-600 text-white font-bold py-2 px-4 rounded" value="취소">	
+						<input
+							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
+							type="submit" value="회원가입" />
+						<input onclick="history.back();" type="button"
+							class="btn-info bg-gray-600 text-white font-bold py-2 px-4 rounded"
+							value="취소">
 					</div>
 				</div>
 			</form>

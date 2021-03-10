@@ -105,7 +105,7 @@ public class AdmMemberController extends BaseController {
 			return new ResultData("F-3", "로그인아이디는 숫자만으로 구성될 수 없습니다.");
 		}
 
-		if (Util.allNumberString(loginId)) {
+		if (Util.startsWithNumberString(loginId)) {
 			return new ResultData("F-4", "로그인아이디는 숫자로 시작할 수 없습니다.");
 		}
 

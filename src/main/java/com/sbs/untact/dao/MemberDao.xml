@@ -17,9 +17,7 @@
 		updateDate = NOW(),
 		loginId = #{loginId},
 		loginPw = #{loginPw},
-		<if test="loginPw == loginPwConfirm">
 		loginPwConfirm = #{loginPwConfirm},
-		</if>
 		authKey = CONCAT("authKey1__", UUID(), "__", RAND()),
 		`name` = #{name},
 		nickname = #{nickname},
@@ -27,7 +25,7 @@
 		email = #{email}
 	</insert>
 
-	<select id="getMemberByloginId" resultType="Member">
+	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
 		FROM `member`
 		WHERE
@@ -66,8 +64,6 @@
 			LIMIT #{limitStart}, #{limitTake}
 		</if>
 	</select>
-
-
 
 	<select id="getMember" resultType="Member">
 		SELECT *
