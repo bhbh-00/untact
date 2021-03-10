@@ -156,12 +156,13 @@ function JoinForm__checkAndSubmit(form) {
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 							autofocus="autofocus" type="text"
 							placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
-						<div class="loginIdInputMsg"></div>
-						<input onclick="" type="button"
-							class="btnCheckLoginIdDup btn-primary bg-white text-gray-600 px-2 rounded"
-							value="중복체크">
 					</div>
 				</div>
+
+				<div class="loginIdInputMsg"></div>
+				<input onclick="JoinForm__checkLoginIdDup(this);" type="button"
+					class="btnCheckLoginIdDup btn-primary bg-white text-gray-600 px-2 rounded"
+					value="중복체크">
 
 				<!-- loginPw -->
 				<div class="flex flex-col ml-4 md:flex-row">
