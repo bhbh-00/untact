@@ -14,6 +14,8 @@ ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
 <script>
 ArticleAdd__submited = false;
 function ArticleAdd__checkAndSubmit(form) {
+	// 이게 끝나면 폼 전송완료
+	
 	// 중복처리 안되게 하는
 	if ( ArticleAdd__submited ) {
 		alert('처리중입니다.');
@@ -65,9 +67,12 @@ function ArticleAdd__checkAndSubmit(form) {
 		}
 		
 		form.submit();
+		// 폼 전송
 	};
 	
+	// 파일 업로드가 끝나 있는 상태 => 파일 업로드이다.
 	const startUploadFiles = function(onSuccess) {
+		// onSuccess 변수라고 생각하면 됌
 		var needToUpload = false;
 		
 		for ( let inputNo = 1; inputNo <= ArticleAdd__fileInputMaxCount; inputNo++ ) {
@@ -85,8 +90,10 @@ function ArticleAdd__checkAndSubmit(form) {
 			return;
 		}
 		
+		// 파일 업로드를 해야할 시
 		var fileUploadFormData = new FormData(form);
 		
+		// 구조는 무조건 외우면 됌!
 		$.ajax({
 			url : '/common/genFile/doUpload',
 			data : fileUploadFormData,
@@ -101,6 +108,7 @@ function ArticleAdd__checkAndSubmit(form) {
 	ArticleAdd__submited = true;
 	
 	startUploadFiles(startSubmitForm);
+	//startUploadFiles만 실행 => ()는 변수라고 생각하면 됌
 }
 </script>
 
