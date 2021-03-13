@@ -44,6 +44,11 @@ function JoinForm__checkLoginIdDup(obj) {
 			if ( data.fail ) {
 				form.loginId.focus();
 			}
+			
+			else {
+				JoinForm__validLoginId = data.body.loginId;
+			}
+			
 		
 		},
 		'json'
@@ -64,6 +69,13 @@ function JoinForm__checkAndSubmit(form) {
 	form.loginId.value = form.loginId.value.trim();
 	if ( form.loginId.value.length == 0 ) {
 		alert('아이디를 입력해주세요.');
+		form.loginId.focus();
+		
+		return;
+	}
+	
+	if ( form.loginId.value != JoinForm__validLoginId ) {
+		alert('로그인아이디 중복체크를해주세요.');
 		form.loginId.focus();
 		
 		return;
@@ -116,9 +128,45 @@ function JoinForm__checkAndSubmit(form) {
 		
 		return;
 	}
-				
-	form.submit();
-	JoinForm__checkAndSubmitDone = true;
+	
+	// 파일 업로드
+	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
+	const submitForm = function(data) {
+		if (data) {
+			// data가 있다면 
+			form.genFileIdsStr.value = data.body.genFileIdsStr;
+		}
+		
+		form.submit();
+		JoinForm__checkAndSubmitDone = true;
+	}
+	
+	function startUpload(onSuccess) {
+		// 성공 했을 때 실행 되어야할 함수
+		if (!form.file__member__0__common__attachment__1.value) {
+			onSuccess();
+			return;
+		}
+		
+		const formData = new FormData(form);
+		
+		$.ajax({
+			url : '/common/genFile/doUpload',
+			data : formData,
+			processData : false,
+			contentType : false,
+			dataType : "json",
+			type : 'POST',
+			success : onSuccess
+		});
+		
+		// 파일을 업로드 한 후
+		// 기다린다.
+		// 응답을 받는다.
+		// onSuccess를 실행한다.
+	}
+	
+	startUpload(submitForm);
 }
 
 $(function() {
@@ -154,6 +202,8 @@ $(function() {
 				class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
 				action="doJoin" method="POST"
 				onsubmit="JoinForm__checkAndSubmit(this); return false;">
+				<!-- 첨부파일 -->
+				<input type="hidden" name="genFileIdsStr" value="" />
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 
 				<!-- loginId -->
@@ -171,7 +221,7 @@ $(function() {
 							placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
 					</div>
 				</div>
-				
+
 				<!-- 아이디 중복여부를 ajax로 물어봄 -->
 				<div class="loginIdInputMsg ml-2 mb-2"></div>
 
@@ -203,7 +253,22 @@ $(function() {
 							autofocus="autofocus" type="password"
 							placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm" maxlength="20" />
 					</div>
+				</div>
 
+				<!-- 프로필 -->
+				<div class="flex flex-col ml-4 md:flex-row">
+					<div class="md:w-36 md:flex md:items-center">
+						<span>프로필</span>
+					</div>
+				</div>
+				<div class="flex flex-col mb-4 md:flex-row">
+					<div class="p-1 md:flex-grow">
+						<input accept="image/gif, image/jpeg, image/png"
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
+							name="file__member__0__common__attachment__1" maxlength="20" />
+						<!-- accept 내가 원하는 특정 확장자만 받겠다는 의미 -->
+					</div>
 				</div>
 
 				<!-- name -->
