@@ -205,10 +205,13 @@ public class AdmArticleController extends BaseController {
 
 		int itemsInAPage = 20;
 		// 한 페이지에 포함 되는 게시물의 갯수
+		
+		int totleItemsCount = articleService.getArticlesTotleCount(boardId, searchKeywordType, searchKeyword);
 
 		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
 				itemsInAPage);
-
+		
+		req.setAttribute("totleItemsCount", totleItemsCount);
 		req.setAttribute("articles", articles);
 		// 이게 있어야지 jsp에서 뜸!
 

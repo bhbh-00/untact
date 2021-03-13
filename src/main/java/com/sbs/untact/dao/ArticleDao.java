@@ -33,4 +33,6 @@ public interface ArticleDao {
 
 	Board getBoard(int boardId);
 
+	int getArticlesTotleCount(@Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
+
 }

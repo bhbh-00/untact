@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.sbs.untact.util.Util"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -28,13 +29,19 @@
 			</script>
 
 			<div class="flex-grow"></div>
-
+			
+			<!-- 게시물 추가 -->
 			<a
 				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
 				href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
 		<hr>
-
+		
+		<div class="flex justify-between items-center my-3">
+		<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
+		</div>
+		<hr>
+		
 		<div>
 			<c:forEach items="${articles}" var="article">
 

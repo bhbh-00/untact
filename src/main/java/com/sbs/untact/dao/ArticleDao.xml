@@ -5,6 +5,23 @@
 
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
+	<select id="getArticlesTotleCount" resultType="int">
+		SELECT count(*)
+		FROM article
+		WHERE 1
+		<if test="searchKeywordType == 'title'">
+			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'body'">
+			AND `body` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'titleAndBody'">
+			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+	</select>
+
 	<select id="getBoard" resultType="Board">
 		SELECT *
 		FROM board
