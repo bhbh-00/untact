@@ -11,7 +11,7 @@
 </script>
 
 <section class="section-1">
-	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
+	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8 mb-8">
 		<span class="text-3xl text-black font-bold">게시물 관리</span>
 		<div class="flex items-center mt-5">
 			<select class="select-board-id py-1">
@@ -129,47 +129,48 @@
 		</div>
 
 		<!-- 페이징 -->
-		<div class="flex justify-center mt-5">
-			<nav class="flex rounded-md shadow-sm" aria-label="Pagination">
+		<nav class="flex justify-center mt-5 rounded-md shadow-sm"
+			aria-label="Pagination">
 
-				<!-- 이전 페이지 -->
-				<a href="#"
-					class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-					<span class="sr-only">Previous</span>
-					<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd"
-							d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-							clip-rule="evenodd" />
-          </svg>
-				</a>
+			<!-- 시작 페이지 -->
+			<a href="?page=1"
+				class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+				<span class="sr-only">Previous</span>
+				<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            		<path fill-rule="evenodd"
+						d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+						clip-rule="evenodd" />
+          			</svg>
+			</a>
 
-				<!-- 페이지 번호 -->
-				<c:forEach var="i" begin="1" end="${totlePage}">
-					<c:set var="aClassStr"
-						value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
-					<c:set var="aClassStr" value="${aClassStr} active" />
-					<c:if test="${i == page}">
-						<a href="?page=${i}" class="${aClassStr} text-red-700 hover:bg-red-50">${i}</a>
-					</c:if>
-					<c:if test="${i != page}">
-						<a href="?page=${i}" class="${aClassStr} text-gray-700 hover:bg-gray-50">${i}</a>
-					</c:if>
-				</c:forEach>
+			<!-- 페이지 번호 -->
+			<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
+				<c:set var="aClassStr"
+					value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+				<c:set var="aClassStr" value="${aClassStr} active" />
+				<c:if test="${i == page}">
+					<a href="?page=${i}"
+						class="${aClassStr} text-red-700 hover:bg-red-50">${i}</a>
+				</c:if>
+				<c:if test="${i != page}">
+					<a href="?page=${i}"
+						class="${aClassStr} text-gray-700 hover:bg-gray-50">${i}</a>
+				</c:if>
+			</c:forEach>
 
-				<!-- 다음 페이지 -->
-				<a href="#"
-					class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-					<span class="sr-only">Next</span>
-					<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd"
-							d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-							clip-rule="evenodd" />
-          </svg>
-				</a>
-			</nav>
-		</div>
+			<!-- 마지막 페이지 -->
+			<a href="?page=${pageMenuEnd}"
+				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+				<span class="sr-only">Next</span>
+				<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            		<path fill-rule="evenodd"
+						d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+						clip-rule="evenodd" />
+          			</svg>
+			</a>
+		</nav>
 	</div>
 </section>
 
