@@ -31,19 +31,21 @@
 	</select>
 
 	<select id="getForPrintBoards" resultType="Board">
-		SELECT *
-		FROM `board`
+		SELECT B.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
+		FROM `board` AS B
+		LEFT JOIN `member` AS M
+		ON B.memberId = M.id
 		WHERE 1
 		<if test="searchKeywordType == 'name'">
-			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND B.name LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		<if test="searchKeywordType == 'code'">
-			AND `code` LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND B.`code` LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		<if test="searchKeywordType == 'nameAndCode'">
-			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			code
-			LIKE CONCAT('%', #{searchKeyword}, '%'))
+			AND (B.name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			B.code LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
 		ORDER BY id DESC
 		<if test="limitStart != null and limitTake != null">
