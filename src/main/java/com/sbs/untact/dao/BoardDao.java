@@ -17,4 +17,7 @@ public interface BoardDao {
 
 	Board getForPrintBoard(@Param("id") int id);
 
+	int getBoardsTotleCount(@Param("searchKeywordType") String searchKeywordType,
+			@Param("searchKeyword") String searchKeyword);
+
 }

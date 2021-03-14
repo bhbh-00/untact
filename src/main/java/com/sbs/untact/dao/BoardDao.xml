@@ -5,16 +5,9 @@
 
 <mapper namespace="com.sbs.untact.dao.BoardDao">
 
-	<select id="getForPrintBoard" resultType="Board">
-		SELECT *
-		FROM `Board`
-		WHERE
-		id = #{id}
-	</select>
-
-	<select id="getForPrintBoards" resultType="Board">
-		SELECT *
-		FROM `Board`
+	<select id="getBoardsTotleCount" resultType="int">
+		SELECT count(*)
+		FROM `board`
 		WHERE 1
 		<if test="searchKeywordType == 'name'">
 			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
@@ -24,7 +17,33 @@
 		</if>
 		<if test="searchKeywordType == 'nameAndCode'">
 			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			code LIKE CONCAT('%', #{searchKeyword}, '%'))
+			code
+			LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+	</select>
+
+	<select id="getForPrintBoard" resultType="Board">
+		SELECT *
+		FROM `board`
+		WHERE
+		id = #{id}
+	</select>
+
+	<select id="getForPrintBoards" resultType="Board">
+		SELECT *
+		FROM `board`
+		WHERE 1
+		<if test="searchKeywordType == 'name'">
+			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'code'">
+			AND `code` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nameAndCode'">
+			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			code
+			LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
 		ORDER BY id DESC
 		<if test="limitStart != null and limitTake != null">
@@ -36,7 +55,8 @@
 		SELECT *
 		FROM `Board`
 		WHERE
-		id = #{id}
+		id =
+		#{id}
 	</select>
 
 </mapper>

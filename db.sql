@@ -1,4 +1,4 @@
-﻿# 데이터베이스 생성
+# 데이터베이스 생성
 DROP DATABASE IF EXISTS untact;
 CREATE DATABASE untact;
 USE untact;
@@ -212,4 +212,7 @@ DEFAULT 3 NOT NULL COMMENT '(3=일반,7=관리자)' AFTER `loginPw`;
 # 1번 회원을 관리자로 지정한다.
 UPDATE `member`
 SET authLevel = 7
-WHERE id = 1; 
+WHERE id = 1;
+
+# 게시판 테이블에 회원번호 칼럼 추가
+ALTER TABLE board ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;

@@ -85,6 +85,40 @@
 				<hr>
 			</c:forEach>
 		</div>
+		
+		<!-- 페이징 -->
+		<nav class="flex justify-center my-5 rounded-md shadow-sm"
+			aria-label="Pagination">
+
+			<!-- 시작 페이지 -->
+			<a href="?page=1"
+				class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+				<span class="sr-only">Previous</span>
+				<i class="fas fa-chevron-left"></i>
+			</a>
+
+			<!-- 페이지 번호 -->
+			<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
+				<c:set var="aClassStr"
+					value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+				<c:set var="aClassStr" value="${aClassStr} active" />
+				<c:if test="${i == page}">
+					<a href="?page=${i}"
+						class="${aClassStr} text-red-700 hover:bg-red-50">${i}</a>
+				</c:if>
+				<c:if test="${i != page}">
+					<a href="?page=${i}"
+						class="${aClassStr} text-gray-700 hover:bg-gray-50">${i}</a>
+				</c:if>
+			</c:forEach>
+
+			<!-- 마지막 페이지 -->
+			<a href="?page=${totlePage}"
+				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+				<span class="sr-only">Next</span>
+				<i class="fas fa-chevron-right"></i>
+			</a>
+		</nav>
 	</div>
 </section>
 

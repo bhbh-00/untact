@@ -36,4 +36,8 @@ public class BoardService {
 		return boardDao.getForPrintBoard(id);
 	}
 
+	public int getBoardsTotleCount(String searchKeywordType, String searchKeyword) {
+		return boardDao.getBoardsTotleCount(searchKeywordType, searchKeyword);
+	}
+
 }
