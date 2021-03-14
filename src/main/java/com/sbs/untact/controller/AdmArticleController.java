@@ -165,6 +165,8 @@ public class AdmArticleController extends BaseController {
 		}
 
 		req.setAttribute("article", article);
+		
+		// 수정을 응용
 
 		return "/adm/article/detail";
 	}
