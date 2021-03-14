@@ -14,5 +14,6 @@ public class Board {
 	private String updateDate;
 	private String code;
 	private String name;
-
+	
+	private String extra__writer;
 }

@@ -31,14 +31,15 @@
 			<div class="flex-grow"></div>
 
 			<!-- 게시물 추가 -->
-			<a
-				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
+			<a class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
 				href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
 		<hr>
 
 		<div class="flex justify-between items-center my-3">
 			<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
+			
+			<!-- 검색부분을 git에 올리지 않았음. -->
 		</div>
 		<hr>
 
@@ -160,7 +161,7 @@
 			</c:forEach>
 
 			<!-- 마지막 페이지 -->
-			<a href="?page=${pageMenuEnd}"
+			<a href="?page=${totlePage}"
 				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 				<span class="sr-only">Next</span>
 				<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg"
