@@ -85,8 +85,8 @@ email = "bbb4321@gmail.com";
 
 # 테스트 게시물 생성, memberId 랜덤, 제목, 내용 랜덤
 INSERT INTO article
-(regDate, updateDate, memberId, title, `body`)
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1)
+(regDate, updateDate, memberId, title, `body`, boardId)
+SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1), FLOOR(RAND() * 2) + 1
 FROM article;
 
 # 멤버 테이블에 authKey 칼럼 추가
@@ -216,3 +216,10 @@ WHERE id = 1;
 
 # 게시판 테이블에 회원번호 칼럼 추가
 ALTER TABLE board ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# 게시판 memberId 1로 하기
+UPDATE `board`
+SET memberId = 1
+WHERE memberId = 0;
+
+SELECT * FROM article;

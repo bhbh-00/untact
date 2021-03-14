@@ -27,7 +27,7 @@ public class AdmBoardController extends BaseController {
 		}
 
 		if (searchKeywordType == null || searchKeywordType.length() == 0) {
-			searchKeywordType = "name";
+			searchKeywordType = "codeAndName";
 		}
 
 		if (searchKeyword != null && searchKeyword.length() == 0) {
@@ -41,7 +41,7 @@ public class AdmBoardController extends BaseController {
 		if (searchKeyword == null) {
 			searchKeywordType = null;
 		}
-
+		
 		// 한 페이지에 포함 되는 게시물의 갯수
 		int itemsInAPage = 30;
 

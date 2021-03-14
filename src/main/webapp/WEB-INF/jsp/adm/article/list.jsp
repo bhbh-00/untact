@@ -31,15 +31,42 @@
 			<div class="flex-grow"></div>
 
 			<!-- 게시물 추가 -->
-			<a class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
+			<a
+				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded mb-5"
 				href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
 		<hr>
-
-		<div class="flex justify-between items-center my-3">
+		
+		<!-- 총 게시물 수 -->
+		<div class="flex items-center my-3">
 			<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
+
+			<div class="flex-grow"></div>
 			
-			<!-- 검색부분을 git에 올리지 않았음. -->
+			<!-- 검색 -->
+			<form class="flex">
+				<select name="searchKeywordType">
+					<option value="titleAndBody">전체</option>
+					<option value="title">제목</option>
+					<option value="body">내용</option>
+				</select>
+
+				<script>
+					if (param.searchKeywordType) {
+						$('.section-1 select[name="searchKeywordType"]').val(
+								param.searchKeywordType);
+					}
+				</script>
+
+				<input
+					class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+					autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
+					name="searchKeyword" maxlength="20" value="${param.searchKeyword}" />
+				<input
+					class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
+					type="submit" value="검색" />
+
+			</form>
 		</div>
 		<hr>
 
@@ -130,37 +157,46 @@
 		</div>
 
 		<!-- 페이징 -->
-		<nav class="flex justify-center my-5 rounded-md shadow-sm"
+		<c:set var="pageBtnAddiQueryStr" value="&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
+		<nav class="flex justify-center py-5 rounded-md shadow-sm"
 			aria-label="Pagination">
-
+			
 			<!-- 시작 페이지 -->
+			<c:if test="${pageMenuStart != 1}">
 			<a href="?page=1"
 				class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 				<span class="sr-only">Previous</span>
 				<i class="fas fa-chevron-left"></i>
 			</a>
+			</c:if>
 
 			<!-- 페이지 번호 -->
 			<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
-				<c:set var="aClassStr"
-					value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+				<c:set var="aClassStr" value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+				
 				<c:set var="aClassStr" value="${aClassStr} active" />
+				
+				<!-- 현재 페이지 -->
 				<c:if test="${i == page}">
-					<a href="?page=${i}"
-						class="${aClassStr} text-red-700 hover:bg-red-50">${i}</a>
+					<c:set var="aClassStr" value="${aClassStr} text-red-700 hover:bg-red-50" />
 				</c:if>
+				
+				<!-- 현재 페이지가 아닌 -->
 				<c:if test="${i != page}">
-					<a href="?page=${i}"
-						class="${aClassStr} text-gray-700 hover:bg-gray-50">${i}</a>
+					<c:set var="aClassStr" value="${aClassStr} text-gray-700 hover:bg-gray-50" />
 				</c:if>
+				
+				<a href="?page=${i}${pageBtnAddiQueryStr}" class="${aClassStr}">${i}</a>
 			</c:forEach>
 
 			<!-- 마지막 페이지 -->
-			<a href="?page=${totlePage}"
+			<c:if test="${pageMenuEnd != totalPage}">
+			<a href="?page=${totalPage}${pageBtnAddiQueryStr}"
 				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 				<span class="sr-only">Next</span>
 				<i class="fas fa-chevron-right"></i>
 			</a>
+			</c:if>
 		</nav>
 	</div>
 </section>

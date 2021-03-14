@@ -211,8 +211,7 @@ public class AdmArticleController extends BaseController {
 		// 총 게시물의 갯수를 구하는
 		int totleItemsCount = articleService.getArticlesTotleCount(boardId, searchKeywordType, searchKeyword);
 
-		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
-				itemsInAPage);
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,itemsInAPage);
 
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
 		int totlePage = (int)Math.ceil(totleItemsCount / (double) itemsInAPage);
