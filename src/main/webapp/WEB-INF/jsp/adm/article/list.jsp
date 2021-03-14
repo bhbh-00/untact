@@ -163,7 +163,7 @@
 			
 			<!-- 시작 페이지 -->
 			<c:if test="${pageMenuStart != 1}">
-			<a href="?page=1"
+			<a href="${Util.getNewUrl(requestUrl, 'page', 1)}"
 				class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 				<span class="sr-only">Previous</span>
 				<i class="fas fa-chevron-left"></i>
@@ -186,12 +186,12 @@
 					<c:set var="aClassStr" value="${aClassStr} text-gray-700 hover:bg-gray-50" />
 				</c:if>
 				
-				<a href="?page=${i}${pageBtnAddiQueryStr}" class="${aClassStr}">${i}</a>
+				<a href="${Util.getNewUrl(requestUrl, 'page', i)}" class="${aClassStr}">${i}</a>
 			</c:forEach>
 
 			<!-- 마지막 페이지 -->
 			<c:if test="${pageMenuEnd != totalPage}">
-			<a href="?page=${totalPage}${pageBtnAddiQueryStr}"
+			<a href="${Util.getNewUrl(requestUrl, 'page', totalPage)}"
 				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 				<span class="sr-only">Next</span>
 				<i class="fas fa-chevron-right"></i>
