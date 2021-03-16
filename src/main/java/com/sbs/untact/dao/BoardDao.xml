@@ -5,13 +5,35 @@
 
 <mapper namespace="com.sbs.untact.dao.BoardDao">
 
+	<delete id="deleteBoard">
+		DELETE FROM `board`
+		WHERE id = #{id}
+	</delete>
+
+	<select id="getBoardByName" resultType="Board">
+		SELECT *
+		FROM `board`
+		WHERE
+		`name` = #{name}
+	</select>
+	
+	<update id="modifyBoard">
+		UPDATE `board`
+		<set>
+			<if test="name != null">
+				`name` = #{name}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `board`
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		memberId = #{memberId},
 		code = #{code},
-		name = #{name}
+		`name` = #{name}
 	</insert>
 
 	<select id="getBoardsTotleCount" resultType="int">
@@ -19,13 +41,13 @@
 		FROM `board`
 		WHERE 1
 		<if test="searchKeywordType == 'name'">
-			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND `name` LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		<if test="searchKeywordType == 'code'">
 			AND `code` LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		<if test="searchKeywordType == 'nameAndCode'">
-			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			AND (`name` LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			code
 			LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
@@ -48,7 +70,7 @@
 		ON B.memberId = M.id
 		WHERE 1
 		<if test="searchKeywordType == 'name'">
-			AND B.name LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND B.'name' LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		<if test="searchKeywordType == 'code'">
 			AND B.`code` LIKE CONCAT('%', #{searchKeyword}, '%')
@@ -67,8 +89,7 @@
 		SELECT *
 		FROM `Board`
 		WHERE
-		id =
-		#{id}
+		id = #{id}
 	</select>
 
 </mapper>

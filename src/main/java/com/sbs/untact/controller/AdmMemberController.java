@@ -39,7 +39,7 @@ public class AdmMemberController extends BaseController {
 		Member member = memberService.getMember(id);
 
 		if (member == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return new ResultData("F-1", "해당 회원은 존재하지 않습니다.");
 		}
 
 		return memberService.deleteMember(id);

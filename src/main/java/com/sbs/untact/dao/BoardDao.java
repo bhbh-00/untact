@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.ResultData;
 
 @Mapper
 public interface BoardDao {
@@ -21,5 +22,11 @@ public interface BoardDao {
 			@Param("searchKeyword") String searchKeyword);
 
 	void addBoard(Map<String, Object> param);
+
+	void modifyBoard(Map<String, Object> param);
+
+	Board getBoardByName(@Param("name") String name);
+
+	void deleteBoard(@Param("id") int id);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dao.BoardDao;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.util.Util;
 
@@ -16,6 +17,8 @@ import com.sbs.untact.util.Util;
 public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
+	@Autowired
+	private MemberService memberService;
 
 	public Board getBoard(int id) {
 		return boardDao.getBoard(id);
@@ -48,6 +51,40 @@ public class BoardService {
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
+	}
+
+	public ResultData getActorCanModifyRd(Board board, Member actor) {
+		if (board.getMemberId() == actor.getId()) {
+			return new ResultData("S-1", "가능합니다.");
+		}
+
+		if (memberService.isAdmin(actor)) {
+			return new ResultData("S-2", "가능합니다.");
+		}
+
+		return new ResultData("F-1", "권한이 없습니다.");
+	}
+
+	public ResultData getActorCanDeleteRd(Board board, Member actor) {
+		return getActorCanModifyRd(board, actor);
+	}
+
+	public ResultData modifyBoard(Map<String, Object> param) {
+		boardDao.modifyBoard(param);
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		return new ResultData("s-1", "수정완료 되었습니다.", "id", id);
+	}
+
+	public Board getBoardByName(String name) {
+		return boardDao.getBoardByName(name);
+	}
+
+	public ResultData deleteBoard(int id) {
+		boardDao.deleteBoard(id);
+
+		return new ResultData("s-1", "삭제 되었습니다.", "id", id);
 	}
 
 }
