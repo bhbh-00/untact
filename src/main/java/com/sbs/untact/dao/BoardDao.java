@@ -20,4 +20,6 @@ public interface BoardDao {
 	int getBoardsTotleCount(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
 
+	void addBoard(Map<String, Object> param);
+
 }

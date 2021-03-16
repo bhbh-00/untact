@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Member extends EntityDto {
 
 	private int id;
 	private String regDate;
@@ -19,7 +19,6 @@ public class Member {
 	@JsonIgnore
 	// @JsonIgnore -> 보여지지 않게하기 위함
 	private String loginPw;
-	private String loginPwConfirm;
 	private int authLevel;
 	@JsonIgnore
 	private String authKey;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenFile {
+public class GenFile extends EntityDto {
 
 	private int id;
 	private String regDate;
@@ -49,6 +49,10 @@ public class GenFile {
 	
 	public String getDownloadUrl() {
 		return "/common/genFile/doDownload?id=" + id;
+	}
+	
+	public String getMediaHtml() {
+		return "<img src=\"" + getForPrintUrl() + "\">";
 	}
 
 }

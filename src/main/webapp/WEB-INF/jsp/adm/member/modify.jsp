@@ -38,7 +38,6 @@ function MemberModify__checkAndSubmit(form) {
 			return;
 		}
 	}
-
 	
 	form.name.value = form.name.value.trim();
 	if ( form.name.value.length == 0 ) {
@@ -71,16 +70,47 @@ function MemberModify__checkAndSubmit(form) {
 		
 		return;
 	}
-				
-	form.submit();
-	MemberModify__checkAndSubmitDone = true;
+	
+	const submitForm = function(data) {
+		if (data) {
+			form.genFileIdsStr.value = data.body.genFileIdsStr;
+		}
+		
+		form.submit();
+		MemberModify__checkAndSubmitDone = true;
+	}
+	function startUpload(onSuccess) {
+		if (!form.file__member__0__common__attachment__1.value) {
+			onSuccess();
+			return;
+		}
+		
+		const formData = new FormData(form);
+		
+		$.ajax({
+			url : '/common/genFile/doUpload',
+			data : formData,
+			processData : false,
+			contentType : false,
+			dataType : "json",
+			type : 'POST',
+			success : onSuccess
+		});
+		
+		// 파일을 업로드 한 후
+		// 기다린다.
+		// 응답을 받는다.
+		// onSuccess를 실행한다.
+	}
+	
+	startUpload(submitForm);
 }
 </script>
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
 		<form onsubmit="MemberModify__checkAndSubmit(this); return false;"
-			action="doModify" method="GET">
+			action="doModify" method="POST">
 			<input type="hidden" name="id" value="${member.id}" />
 			<span class="text-3xl text-black font-bold">회원 정보 수정</span>
 			<!-- loginId -->
@@ -116,6 +146,21 @@ function MemberModify__checkAndSubmit(form) {
 						name="loginPwConfirm" maxlength="20" />
 				</div>
 			</div>
+			
+			<!-- 프로필 -->
+				<div class="form-row flex flex-col my-5 lg:flex-row">
+					<div class="lg:flex lg:items-center lg:w-28">
+						<span>프로필</span>
+					</div>
+				<div class="lg:flex-grow">
+						<input accept="image/gif, image/jpeg, image/png"
+							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
+							name="file__member__${member.id}__common__attachment__1" maxlength="20" />
+						<c:set var="fileNo" value="${String.valueOf(1)}" />
+						${member.extra.file__common__attachment[fileNo].mediaHtml}
+					</div>
+				</div>
 
 			<!-- name -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
@@ -178,14 +223,13 @@ function MemberModify__checkAndSubmit(form) {
 				<div class="lg:flex-grow">
 					<select class="select-auth-level w-full py-2 px-3">
 						<option value="3">일반회원</option>
-						<option value="7">관리자</option>
-						<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->						
+						<option value="7">관리자</option>					
 					</select>
 					<script>
 					const memberAuthLevel = parseInt("${member.authLevel}");
 					</script>
 					<script>
-						$('.section-1 .select-auth-level').val(memberAuthLevel);
+						$('.select-auth-level').val(memberAuthLevel);
 					</script>						
 				</div>
 			</div>

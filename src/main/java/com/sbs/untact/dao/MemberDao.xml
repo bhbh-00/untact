@@ -17,7 +17,6 @@
 		updateDate = NOW(),
 		loginId = #{loginId},
 		loginPw = #{loginPw},
-		loginPwConfirm = #{loginPwConfirm},
 		authKey = CONCAT("authKey1__", UUID(), "__", RAND()),
 		`name` = #{name},
 		nickname = #{nickname},
@@ -85,14 +84,11 @@
 		UPDATE `member`
 		<set>
 			<if
-				test="loginPw != null and loginPwConfirm != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
+				test="loginPw != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
 				updateDate = NOW(),
 			</if>
 			<if test="loginPw != null">
 				loginPw = #{loginPw},
-			</if>
-			<if test="loginPwConfirm != null and loginPw == loginPwConfirm">
-				loginPwConfirm = #{loginPwConfirm},
 			</if>
 			<if test="authLevel != null">
 				authLevel = #{authLevel},
@@ -107,7 +103,7 @@
 				cellphoneNo = #{cellphoneNo},
 			</if>
 			<if test="email != null">
-				email = #{email},
+				email = #{email}
 			</if>
 		</set>
 		WHERE id = #{id}

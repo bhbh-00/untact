@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dao.BoardDao;
 import com.sbs.untact.dto.Board;
+import com.sbs.untact.dto.ResultData;
+import com.sbs.untact.util.Util;
 
 @Service
 public class BoardService {
@@ -38,6 +40,14 @@ public class BoardService {
 
 	public int getBoardsTotleCount(String searchKeywordType, String searchKeyword) {
 		return boardDao.getBoardsTotleCount(searchKeywordType, searchKeyword);
+	}
+
+	public ResultData doAdd(Map<String, Object> param) {
+		boardDao.addBoard(param);
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
 	}
 
 }

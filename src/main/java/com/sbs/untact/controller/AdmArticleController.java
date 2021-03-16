@@ -155,7 +155,7 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 		if (id == null) {
-			return msgAndBack(req, "제목을 입력해주세요.");
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
 
 		Article article = articleService.getForPrintArticle(id);
@@ -164,10 +164,17 @@ public class AdmArticleController extends BaseController {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
+		List<GenFile> files = genFileService.getGenFiles("article", article.getId(), "common", "attachment");
+
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
 		
-		// 수정을 응용
-
 		return "/adm/article/detail";
 	}
 

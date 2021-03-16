@@ -5,6 +5,15 @@
 
 <mapper namespace="com.sbs.untact.dao.BoardDao">
 
+	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `board`
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{memberId},
+		code = #{code},
+		name = #{name}
+	</insert>
+
 	<select id="getBoardsTotleCount" resultType="int">
 		SELECT count(*)
 		FROM `board`
@@ -33,7 +42,8 @@
 	<select id="getForPrintBoards" resultType="Board">
 		SELECT B.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM `board` AS B
+		FROM `board` AS
+		B
 		LEFT JOIN `member` AS M
 		ON B.memberId = M.id
 		WHERE 1

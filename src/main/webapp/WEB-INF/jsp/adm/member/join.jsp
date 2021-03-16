@@ -51,7 +51,9 @@ function JoinForm__checkLoginIdDup(obj) {
 			
 		
 		},
+		
 		'json'
+		
 		/* 형식
 		(html -> html)
 		(json -> json)
@@ -67,6 +69,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	form.loginId.value = form.loginId.value.trim();
+	
 	if ( form.loginId.value.length == 0 ) {
 		alert('아이디를 입력해주세요.');
 		form.loginId.focus();
@@ -82,14 +85,14 @@ function JoinForm__checkAndSubmit(form) {
 	}
 		
 	form.loginPw.value = form.loginPw.value.trim();
+	
 	if ( form.loginPw.value.length == 0 ) {
 		alert('비밀번호를 입력해주세요.');
 		form.loginPw.focus();
 		
 		return;
 	}
-	
-	form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+		
 	if ( form.loginPwConfirm.value.length == 0 ) {
 		alert('비밀번호를 확인해주세요.');
 		form.loginPwConfirm.focus();
@@ -97,7 +100,15 @@ function JoinForm__checkAndSubmit(form) {
 		return;
 	}
 	
+	if (form.loginPw.value != form.loginPwConfirm.value) {
+		alert('로그인비번이 일치하지 않습니다.');
+		form.loginPwConfirm.focus();
+		
+		return;
+	}
+	
 	form.name.value = form.name.value.trim();
+	
 	if ( form.name.value.length == 0 ) {
 		alert('이름을 입력해주세요.');
 		form.name.focus();
@@ -106,6 +117,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	form.nickname.value = form.nickname.value.trim();
+	
 	if ( form.nickname.value.length == 0 ) {
 		alert('닉네임를 입력해주세요.');
 		form.nickname.focus();
@@ -114,6 +126,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	form.email.value = form.email.value.trim();
+	
 	if ( form.email.value.length == 0 ) {
 		alert('이메일를 입력해주세요.');
 		form.email.focus();
@@ -122,6 +135,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	form.cellphoneNo.value = form.cellphoneNo.value.trim();
+	
 	if ( form.cellphoneNo.value.length == 0 ) {
 		alert('전화번호를 입력해주세요.');
 		form.cellphoneNo.focus();
@@ -133,16 +147,13 @@ function JoinForm__checkAndSubmit(form) {
 	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
 	const submitForm = function(data) {
 		if (data) {
-			// data가 있다면 
 			form.genFileIdsStr.value = data.body.genFileIdsStr;
 		}
 		
 		form.submit();
 		JoinForm__checkAndSubmitDone = true;
 	}
-	
 	function startUpload(onSuccess) {
-		// 성공 했을 때 실행 되어야할 함수
 		if (!form.file__member__0__common__attachment__1.value) {
 			onSuccess();
 			return;
@@ -174,6 +185,7 @@ $(function() {
 		JoinForm__checkLoginIdDup();
 		// change() -> 해당하는 요소의 value에 변화가 생길 경우 이를 감지하여 등록된 callback함수를 동작시킴.
 	});
+	
 	$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
 	// keyup() -> 키 입력 후 발생되는 이벤트
 	
@@ -186,8 +198,7 @@ $(function() {
 </script>
 
 <section class="section-Join">
-	<div
-		class="container mx-auto min-h-screen flex items-center justify-center">
+	<div class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
 				<a href="#" class="logo">
@@ -198,12 +209,12 @@ $(function() {
 				</a>
 			</div>
 
-			<form
-				class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+			<form class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
 				action="doJoin" method="POST"
 				onsubmit="JoinForm__checkAndSubmit(this); return false;">
+				
 				<!-- 첨부파일 -->
-				<input type="hidden" name="genFileIdsStr" value="" />
+				<input type="hidden" name="genFileIdsStr" value=""/>
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 
 				<!-- loginId -->
@@ -311,7 +322,7 @@ $(function() {
 					<div class="p-1 md:flex-grow">
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="@untact.com"
+							autofocus="autofocus" type="email" placeholder="@untact.com"
 							name="email" maxlength="100" />
 					</div>
 				</div>
@@ -337,11 +348,10 @@ $(function() {
 						<input
 							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
 							type="submit" value="회원가입" />
-						<input onclick="history.back();" type="button"
-							class="btn-info bg-gray-600 text-white font-bold py-2 px-4 rounded"
-							value="취소">
+						<a onclick="history.back();"class="btn-info bg-gray-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded inline-block">취소</a>
 					</div>
 				</div>
+				
 			</form>
 
 		</div>

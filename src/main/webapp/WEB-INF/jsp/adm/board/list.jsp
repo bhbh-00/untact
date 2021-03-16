@@ -13,7 +13,18 @@
 			<span class="text-3xl text-black font-bold">게시판 관리</span>
 		</div>
 		<hr>
+		
+		<div class="flex items-center my-2">
 
+			<div class="flex-grow"></div>
+
+			<!-- 게시물 추가 -->
+			<a
+				class="btn-primary bg-blue-500 hover:bg-blue-dark text-white font-bold py-1 px-2 rounded"
+				href="add?id=${ board.id }">글쓰기</a>
+		</div>
+		<hr>
+	
 		<!-- 총 게시물 수 -->
 		<div class="flex items-center my-3">
 			<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>

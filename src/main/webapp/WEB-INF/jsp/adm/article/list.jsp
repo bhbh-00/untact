@@ -52,6 +52,7 @@
 				</select>
 
 				<script>
+				/* 값이 있다면 */
 					if (param.searchKeywordType) {
 						$('.section-1 select[name="searchKeywordType"]').val(
 								param.searchKeywordType);
@@ -59,7 +60,7 @@
 				</script>
 
 				<input
-					class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+					class="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 					autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
 					name="searchKeyword" maxlength="20" value="${param.searchKeyword}" />
 				<input
@@ -157,11 +158,11 @@
 		</div>
 
 		<!-- 페이징 -->
-		<c:set var="pageBtnAddiQueryStr" value="&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
 		<nav class="flex justify-center py-5 rounded-md shadow-sm"
 			aria-label="Pagination">
 			
 			<!-- 시작 페이지 -->
+			<!-- 내가 보고 있는 페이지 챕터가 첫번째이면 < 표시 안보이게 -->
 			<c:if test="${pageMenuStart != 1}">
 			<a href="${Util.getNewUrl(requestUrl, 'page', 1)}"
 				class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
@@ -190,6 +191,7 @@
 			</c:forEach>
 
 			<!-- 마지막 페이지 -->
+			<!-- 내가 보고 있는 페이지 챕터가 마지막이면 > 표시 안보이게 -->
 			<c:if test="${pageMenuEnd != totalPage}">
 			<a href="${Util.getNewUrl(requestUrl, 'page', totalPage)}"
 				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">

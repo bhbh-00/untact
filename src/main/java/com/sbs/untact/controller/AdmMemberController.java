@@ -1,5 +1,6 @@
 package com.sbs.untact.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
+import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
@@ -21,6 +24,8 @@ import com.sbs.untact.util.Util;
 public class AdmMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private GenFileService genFileService;
 
 	@RequestMapping("/adm/member/doDelete")
 	@ResponseBody
@@ -239,7 +244,16 @@ public class AdmMemberController extends BaseController {
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
+		
+		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
 
+		Map<String, GenFile> filesMap = new HashMap<>();
+
+		for (GenFile file : files) {
+			filesMap.put(file.getFileNo() + "", file);
+		}
+
+		member.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("member", member);
 
 		return "/adm/member/modify";
@@ -247,16 +261,14 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-
-		if (param.isEmpty()) {
-			return new ResultData("F-2", "수정할 정보를 입력해주세요.");
-		}
-
+	public String doModify(@RequestParam Map<String, Object> param, HttpSession session) {
 		int loginedMember = (int) session.getAttribute("loginedMemberId");
 		param.put("id", loginedMember);
 
-		return memberService.modifyMember(param);
+		ResultData modifyMemberRd = memberService.modifyMember(param);
+		String redirectUrl = "/adm/member/list";
+		
+		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}
 
 }
