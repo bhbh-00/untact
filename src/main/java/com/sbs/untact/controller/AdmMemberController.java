@@ -244,7 +244,7 @@ public class AdmMemberController extends BaseController {
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
-		
+
 		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
 
 		Map<String, GenFile> filesMap = new HashMap<>();
@@ -267,7 +267,7 @@ public class AdmMemberController extends BaseController {
 
 		ResultData modifyMemberRd = memberService.modifyMember(param);
 		String redirectUrl = "/adm/member/list";
-		
+
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}
 

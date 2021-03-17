@@ -14,6 +14,7 @@
 		<div class="w-full">
 			<div class="flex flex-row mt-2 py-3">
 				<div class="rounded-full border-2 border-pink-500">
+					<!-- 프로필 -->
 					<img
 						class="w-12 h-12 object-cover rounded-full shadow cursor-pointer"
 						alt="User avatar" src="${article.writerThumbImgUrl}">

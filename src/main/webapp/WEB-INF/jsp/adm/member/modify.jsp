@@ -7,110 +7,118 @@
 <%@ page import="com.sbs.untact.util.Util"%>
 
 <script>
-const MemberModify__checkAndSubmitDone = false;
-<!--  const = var / 중복 방지를 위한.  -->
-function MemberModify__checkAndSubmit(form) {
-	if ( MemberModify__checkAndSubmitDone ) {
-		return;
-	}
-	
-	
-	if (form.loginPw.value) {
-		form.loginPw.value = form.loginPw.value.trim();
-		if ( form.loginPw.value.length == 0 ) {
-			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
-			
+	const ModifyMember_checkAndSubmitDone = false;
+
+	function ModifyMember_checkAndSubmit(form) {
+
+		if (ModifyMember_checkAndSubmitDone) {
 			return;
 		}
-		
-		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-		if ( form.loginPwConfirm.value.length == 0 ) {
-			alert('비밀번호를 확인해주세요.');
-			form.loginPwConfirm.focus();
-			
+
+		if (form.loginPw.value) {
+			form.loginPw.value = form.loginPw.value.trim();
+			if (form.loginPw.value.length == 0) {
+				alert('비밀번호를 입력해주세요.');
+				form.loginPw.focus();
+
+				return;
+			}
+
+			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+			if (form.loginPwConfirm.value.length == 0) {
+				alert('비밀번호를 확인해주세요.');
+				form.loginPwConfirm.focus();
+
+				return;
+			}
+
+			if (form.loginPw.value != form.loginPwConfirm.value) {
+				alert('로그인비번이 일치하지 않습니다.');
+				form.loginPwConfirm.focus();
+				return;
+			}
+		}
+
+		form.name.value = form.name.value.trim();
+
+		if (form.name.value.length == 0) {
+			alert('이름을 입력해주세요.');
+			form.name.focus();
+
 			return;
 		}
-		
-		if (form.loginPw.value != form.loginPwConfirm.value) {
-			alert('로그인비번이 일치하지 않습니다.');
-			form.loginPwConfirm.focus();
+
+		form.nickname.value = form.nickname.value.trim();
+
+		if (form.nickname.value.length == 0) {
+			alert('nickname을 입력해주세요.');
+			form.nickname.focus();
+
 			return;
 		}
-	}
-	
-	form.name.value = form.name.value.trim();
-	if ( form.name.value.length == 0 ) {
-		alert('이름을 입력해주세요.');
-		form.name.focus();
-		
-		return;
-	}
-	
-	form.nickname.value = form.nickname.value.trim();
-	if ( form.nickname.value.length == 0 ) {
-		alert('닉네임를 입력해주세요.');
-		form.nickname.focus();
-		
-		return;
-	}
-	
-	form.email.value = form.email.value.trim();
-	if ( form.email.value.length == 0 ) {
-		alert('이메일를 입력해주세요.');
-		form.email.focus();
-		
-		return;
-	}
-	
-	form.cellphoneNo.value = form.cellphoneNo.value.trim();
-	if ( form.cellphoneNo.value.length == 0 ) {
-		alert('전화번호를 입력해주세요.');
-		form.cellphoneNo.focus();
-		
-		return;
-	}
-	
-	const submitForm = function(data) {
-		if (data) {
-			form.genFileIdsStr.value = data.body.genFileIdsStr;
-		}
-		
-		form.submit();
-		MemberModify__checkAndSubmitDone = true;
-	}
-	function startUpload(onSuccess) {
-		if (!form.file__member__0__common__attachment__1.value) {
-			onSuccess();
+
+		form.cellphoneNo.value = form.cellphoneNo.value.trim();
+
+		if (form.cellphoneNo.value.length == 0) {
+			alert('핸드폰번호를 입력해주세요.');
+			form.cellphoneNo.focus();
+
 			return;
 		}
-		
-		const formData = new FormData(form);
-		
-		$.ajax({
-			url : '/common/genFile/doUpload',
-			data : formData,
-			processData : false,
-			contentType : false,
-			dataType : "json",
-			type : 'POST',
-			success : onSuccess
-		});
-		
-		// 파일을 업로드 한 후
-		// 기다린다.
-		// 응답을 받는다.
-		// onSuccess를 실행한다.
+
+		form.email.value = form.email.value.trim();
+
+		if (form.email.value.length == 0) {
+			alert('이메일을 입력해주세요.');
+			form.email.focus();
+
+			return;
+		}
+
+		// 파일 업로드
+		// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
+		function startUpload(onSuccess) {
+			if (!form["file__member__" + param.id + "__common__attachment__1"].value) {
+				onSuccess();
+				return;
+			}
+
+			const formData = new FormData(form);
+
+			$.ajax({
+				url : '/common/genFile/doUpload',
+				data : formData,
+				processData : false,
+				contentType : false,
+				dataType : "json",
+				type : 'POST',
+				success : onSuccess
+			});
+
+			// 파일을 업로드 한 후
+			// 기다린다.
+			// 응답을 받는다.
+			// onSuccess를 실행한다.
+
+			const submitForm = function(data) {
+				if (data) {
+					form.genFileIdsStr.value = data.body.genFileIdsStr;
+				}
+
+				form.submit();
+				ModifyMember_checkAndSubmitDone = true;
+
+		}
+
+		startUpload(submitForm);
 	}
-	
-	startUpload(submitForm);
-}
 </script>
 
 <section class="section-1">
 	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form onsubmit="MemberModify__checkAndSubmit(this); return false;"
+		<form onsubmit="ModifyMember_checkAndSubmit(this); return false;"
 			action="doModify" method="POST">
+			<input type="hidden" name="genFileIdsStr" value="" />
 			<input type="hidden" name="id" value="${member.id}" />
 			<span class="text-3xl text-black font-bold">회원 정보 수정</span>
 			<!-- loginId -->
@@ -146,21 +154,22 @@ function MemberModify__checkAndSubmit(form) {
 						name="loginPwConfirm" maxlength="20" />
 				</div>
 			</div>
-			
+
 			<!-- 프로필 -->
-				<div class="form-row flex flex-col my-5 lg:flex-row">
-					<div class="lg:flex lg:items-center lg:w-28">
-						<span>프로필</span>
-					</div>
-				<div class="lg:flex-grow">
-						<input accept="image/gif, image/jpeg, image/png"
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
-							name="file__member__${member.id}__common__attachment__1" maxlength="20" />
-						<c:set var="fileNo" value="${String.valueOf(1)}" />
-						${member.extra.file__common__attachment[fileNo].mediaHtml}
-					</div>
+			<div class="form-row flex flex-col my-5 lg:flex-row">
+				<div class="lg:flex lg:items-center lg:w-28">
+					<span>프로필</span>
 				</div>
+				<div class="lg:flex-grow">
+					<input accept="image/gif, image/jpeg, image/png"
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
+						name="file__member__${member.id}__common__attachment__1"
+						maxlength="20" />
+					<c:set var="fileNo" value="${String.valueOf(1)}" />
+					${member.extra.file__common__attachment[fileNo].mediaHtml}
+				</div>
+			</div>
 
 			<!-- name -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
@@ -218,21 +227,16 @@ function MemberModify__checkAndSubmit(form) {
 			<!-- 권한 레벨 -->
 			<div class="form-row flex flex-col mt-5 mb-7 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>권한 레벨</span>
+					<span>권한레벨</span>
 				</div>
 				<div class="lg:flex-grow">
-					<select class="select-auth-level w-full py-2 px-3">
-						<option value="3">일반회원</option>
-						<option value="7">관리자</option>					
-					</select>
-					<script>
-					const memberAuthLevel = parseInt("${member.authLevel}");
-					</script>
-					<script>
-						$('.select-auth-level').val(memberAuthLevel);
-					</script>						
+					<input
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						autofocus="autofocus" type="text" name="authLevel" maxlength="5"
+						value="${member.authLevel}" />
 				</div>
 			</div>
+
 
 			<div class="flex flex-col my-3 md:flex-row">
 				<div class="p-1 md:flex-grow">

@@ -143,17 +143,20 @@ function JoinForm__checkAndSubmit(form) {
 		return;
 	}
 	
-	// 파일 업로드
+	/// 파일 업로드
 	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
 	const submitForm = function(data) {
 		if (data) {
+			// data가 있다면 
 			form.genFileIdsStr.value = data.body.genFileIdsStr;
 		}
 		
 		form.submit();
 		JoinForm__checkAndSubmitDone = true;
 	}
+	
 	function startUpload(onSuccess) {
+		// 성공 했을 때 실행 되어야할 함수
 		if (!form.file__member__0__common__attachment__1.value) {
 			onSuccess();
 			return;
@@ -198,7 +201,8 @@ $(function() {
 </script>
 
 <section class="section-Join">
-	<div class="container mx-auto min-h-screen flex items-center justify-center">
+	<div
+		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
 				<a href="#" class="logo">
@@ -209,12 +213,13 @@ $(function() {
 				</a>
 			</div>
 
-			<form class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+			<form
+				class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
 				action="doJoin" method="POST"
 				onsubmit="JoinForm__checkAndSubmit(this); return false;">
-				
+
 				<!-- 첨부파일 -->
-				<input type="hidden" name="genFileIdsStr" value=""/>
+				<input type="hidden" name="genFileIdsStr" value="" />
 				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 
 				<!-- loginId -->
@@ -348,10 +353,11 @@ $(function() {
 						<input
 							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
 							type="submit" value="회원가입" />
-						<a onclick="history.back();"class="btn-info bg-gray-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded inline-block">취소</a>
+						<a onclick="history.back();"
+							class="btn-info bg-gray-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded inline-block">취소</a>
 					</div>
 				</div>
-				
+
 			</form>
 
 		</div>
