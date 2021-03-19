@@ -77,36 +77,6 @@ public class AdmReplyController {
 		return replyService.doModify(id, body);
 	}
 
-	@RequestMapping("/adm/reply/doAdd")
-	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-
-		if (param.get("relTypeCode") == null) {
-			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
-		}
-		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId을 입력해주세요.");
-		}
-
-		/*
-		 * if (param.get("relTypeCode") == "article") { Article article =
-		 * articleService.getArticle(param.get("relId"));
-		 * 
-		 * if (article == null) { return new ResultData("F-1", "해당 게시물은 존재하지 않습니다."); }
-		 * 
-		 * }
-		 */
-
-		if (param.get("body") == null) {
-			return new ResultData("F-1", "댓글을 입력해주세요.");
-		}
-
-		param.put("memberId", loginMemberId);
-
-		return replyService.doAdd(param);
-	}
-
 	@RequestMapping("/adm/reply/list")
 	@ResponseBody
 	public ResultData showList(String relTypeCode, Integer relId) {

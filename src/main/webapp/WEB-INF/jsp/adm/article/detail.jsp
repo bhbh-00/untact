@@ -77,6 +77,12 @@
 					</div>
 				</div>
 				<div class="mt-3 w-full flex justify-end">
+					<c:if test="${ like.id == null}">
+					<a href="AddLike?relTypeCode=article"><i class="far fa-thumbs-up"></i></a>
+					</c:if>
+					<c:if test="${ like.id != null}">
+					<a href="deleteLike?"><i class="far fa-thumbs-up"></i></a>
+					</c:if>	
 					<div class="flex text-gray-700 font-normal text-sm rounded-md mb-2 items-center whitespace-nowrap">
 						좋아요:
 						<div class="ml-1 text-gray-400 font-thin text-ms">120k</div>

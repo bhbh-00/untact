@@ -30,7 +30,8 @@
 		INSERT INTO reply
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		articleId = #{articleId},
+		relTypeCode = #{relTypeCode},
+		relId = #{relId},
 		`body` = #{body},
 		memberId= #{memberId};
 	</insert>

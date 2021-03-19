@@ -16,10 +16,13 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
+import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
+import com.sbs.untact.service.LikeService;
+import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 @Controller
@@ -28,6 +31,87 @@ public class AdmArticleController extends BaseController {
 	private ArticleService articleService;
 	@Autowired
 	private GenFileService genFileService;
+	@Autowired
+	private LikeService likeService;
+	@Autowired
+	private ReplyService replyService;
+
+	@RequestMapping("/adm/article/deleteLike")
+	@ResponseBody
+	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (id == null) {
+			return new ResultData("F-1", "id를 입력해주세요.");
+		}
+
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
+
+		return likeService.deleteLike(id);
+	}
+
+	@RequestMapping("/adm/article/AddLike")
+	@ResponseBody
+	public ResultData doAddLike(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		// /adm/article/doLike?relTypeCode=article&relId=1&memberId=1
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		if (param.get("relTypeCode") == null) {
+			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
+		}
+
+		if (param.get("relId") == null) {
+			return new ResultData("F-1", "relId을 입력해주세요.");
+		}
+
+		if (param.get("relTypeCode") == "article") {
+			Article article = articleService.getArticle((int) param.get("relId"));
+
+			if (article == null) {
+				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			}
+		}
+
+		param.put("memberId", loginedMember);
+
+		return likeService.doAdd(param);
+	}
+
+	@RequestMapping("/adm/article/doAddReply")
+	@ResponseBody
+	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+
+		if (param.get("relTypeCode") == null) {
+			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
+		}
+		if (param.get("relId") == null) {
+			return new ResultData("F-1", "relId을 입력해주세요.");
+		}
+
+		if (param.get("relTypeCode") == "article") {
+			Article article = articleService.getArticle((int) param.get("relId"));
+
+			if (article == null) {
+				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			}
+
+		}
+
+		if (param.get("body") == null) {
+			return new ResultData("F-1", "댓글을 입력해주세요.");
+		}
+
+		param.put("memberId", loginMemberId);
+
+		return replyService.doAdd(param);
+	}
 
 	@RequestMapping("/adm/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
@@ -174,7 +258,7 @@ public class AdmArticleController extends BaseController {
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
-		
+
 		return "/adm/article/detail";
 	}
 
@@ -218,10 +302,11 @@ public class AdmArticleController extends BaseController {
 		// 총 게시물의 갯수를 구하는
 		int totleItemsCount = articleService.getArticlesTotleCount(boardId, searchKeywordType, searchKeyword);
 
-		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,itemsInAPage);
+		List<Article> articles = articleService.getForPrintArticles(boardId, searchKeywordType, searchKeyword, page,
+				itemsInAPage);
 
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
-		int totlePage = (int)Math.ceil(totleItemsCount / (double) itemsInAPage);
+		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
 
 		/*
 		 * 반지름이라고 생각하면 됌. 현재 페이지가 10일 때 pageMenuArmSize가 5이면 10을 기준으로 왼쪽은 4 5 6 7 8 9 10
@@ -244,7 +329,7 @@ public class AdmArticleController extends BaseController {
 			pageMenuEnd = totlePage;
 		}
 
-		// req.setAttribute( "" ,  ) -> 이게 있어야지 jsp에서 뜸!
+		// req.setAttribute( "" , ) -> 이게 있어야지 jsp에서 뜸!
 		req.setAttribute("totleItemsCount", totleItemsCount);
 		req.setAttribute("totlePage", totlePage);
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
