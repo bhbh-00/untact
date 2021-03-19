@@ -10,9 +10,7 @@
 <script>
 const JoinForm__checkAndSubmitDone = false;
 <!--  const = var / 중복 방지를 위한.  -->
-
 let JoinForm__validLoginId = '';
-
 //로그인 아이디 중복체크 함수 ajax
 function JoinForm__checkLoginIdDup(obj) {
 	
@@ -59,9 +57,7 @@ function JoinForm__checkLoginIdDup(obj) {
 		(json -> json)
 		*/
 	);
-
 }
-
 function JoinForm__checkAndSubmit(form) {
 	
 	if ( JoinForm__checkAndSubmitDone ) {
@@ -182,7 +178,6 @@ function JoinForm__checkAndSubmit(form) {
 	
 	startUpload(submitForm);
 }
-
 $(function() {
 	$('.inputLoginId').change(function() {
 		JoinForm__checkLoginIdDup();
@@ -195,7 +190,6 @@ $(function() {
 	/* debounce() -> 이벤트를 그룹화하여 특정시간이 지난 후 하나의 이벤트만 발생하도록 하는 기술입니다.
 				   순차적 호출을 하나의 그룹으로 "그룹화"할 수 있습니다.
 				   연이어 호출되는 함수들 중 마지막 함수(또는 제일 처음)만 호출하도록 하는 것
-
 	*/
 });
 </script>

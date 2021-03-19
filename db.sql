@@ -66,7 +66,7 @@ ALTER TABLE `member` ADD UNIQUE INDEX (`loginId`);
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = "aaa",
+loginId = "aaa111",
 loginPw = "1234",
 `name` = "신짱구",
 nickname = "짱구",
@@ -76,7 +76,7 @@ email = "aaa1234@gmail.com";
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = "bbb",
+loginId = "bbb222",
 loginPw = "4321",
 `name` = "김철수",
 nickname = "촬스",
@@ -223,3 +223,16 @@ SET memberId = 1
 WHERE memberId = 0;
 
 SELECT * FROM article;
+
+# 좋아요 테이블 생성
+CREATE TABLE `like` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    relTypeCode CHAR(20) NOT NULL,
+    relId INT(10) UNSIGNED NOT NULL,
+    memberId INT(10) UNSIGNED NOT NULL
+);
+
+# 고속 검색을 위해서 인덱스 걸기
+ALTER TABLE `like` ADD KEY (relTypeCode, relId);
