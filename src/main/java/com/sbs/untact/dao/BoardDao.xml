@@ -64,8 +64,7 @@
 	<select id="getForPrintBoards" resultType="Board">
 		SELECT B.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM `board` AS
-		B
+		FROM `board` AS B
 		LEFT JOIN `member` AS M
 		ON B.memberId = M.id
 		WHERE 1
@@ -75,9 +74,9 @@
 		<if test="searchKeywordType == 'code'">
 			AND B.`code` LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
-		<if test="searchKeywordType == 'nameAndCode'">
-			AND (B.name LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			B.code LIKE CONCAT('%', #{searchKeyword}, '%'))
+		<if test="searchKeywordType == 'codeAndName'">
+			AND (B.`code` LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			B.`name` LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
 		ORDER BY id DESC
 		<if test="limitStart != null and limitTake != null">

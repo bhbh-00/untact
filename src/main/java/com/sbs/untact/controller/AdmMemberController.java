@@ -262,9 +262,10 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		int loginedMember = (int) session.getAttribute("loginedMemberId");
-		param.put("id", loginedMember);
-
+		/* 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐)
+		 * 이러한 오류를 해결? 발생이 안되게 하기 위해서는
+		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		 * param.put("id", loginedMemberId); -> 이게 없으면 됌! */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
 		String redirectUrl = "/adm/member/list";
 

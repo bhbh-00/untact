@@ -181,29 +181,20 @@ function JoinForm__checkAndSubmit(form) {
 $(function() {
 	$('.inputLoginId').change(function() {
 		JoinForm__checkLoginIdDup();
-		// change() -> 해당하는 요소의 value에 변화가 생길 경우 이를 감지하여 등록된 callback함수를 동작시킴.
 	});
 	
 	$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
-	// keyup() -> 키 입력 후 발생되는 이벤트
-	
-	/* debounce() -> 이벤트를 그룹화하여 특정시간이 지난 후 하나의 이벤트만 발생하도록 하는 기술입니다.
-				   순차적 호출을 하나의 그룹으로 "그룹화"할 수 있습니다.
-				   연이어 호출되는 함수들 중 마지막 함수(또는 제일 처음)만 호출하도록 하는 것
-	*/
 });
 </script>
 
-<section class="section-Join">
+<section class="section">
 	<div
 		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
-				<a href="#" class="logo">
-					<span>
-						<i class="fas fa-people-arrows"></i>
-					</span>
-					<span>UNTACT ADMIN</span>
+				<a href="#" class="logo"> <span> <i
+						class="fas fa-people-arrows"></i>
+				</span> <span>UNTACT ADMIN</span>
 				</a>
 			</div>
 
@@ -213,8 +204,8 @@ $(function() {
 				onsubmit="JoinForm__checkAndSubmit(this); return false;">
 
 				<!-- 첨부파일 -->
-				<input type="hidden" name="genFileIdsStr" value="" />
-				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+				<input type="hidden" name="genFileIdsStr" /> <input type="hidden"
+					name="redirectUrl" value="${param.redirectUrl}" />
 
 				<!-- loginId -->
 				<div class="flex flex-col mt-4 ml-4 md:flex-row">
@@ -271,14 +262,12 @@ $(function() {
 						<span>프로필</span>
 					</div>
 				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input accept="image/gif, image/jpeg, image/png"
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
-							name="file__member__0__common__attachment__1" maxlength="20" />
-						<!-- accept 내가 원하는 특정 확장자만 받겠다는 의미 -->
-					</div>
+				<div class="p-1 md:flex-grow">
+					<input accept="image/gif, image/jpeg, image/png"
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
+						name="file__member__0__common__attachment__1" maxlength="20" />
+					<!-- accept 내가 원하는 특정 확장자만 받겠다는 의미 -->
 				</div>
 
 				<!-- name -->
@@ -346,8 +335,7 @@ $(function() {
 					<div class="p-1 md:flex-grow">
 						<input
 							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="회원가입" />
-						<a onclick="history.back();"
+							type="submit" value="회원가입" /> <a onclick="history.back();"
 							class="btn-info bg-gray-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded inline-block">취소</a>
 					</div>
 				</div>

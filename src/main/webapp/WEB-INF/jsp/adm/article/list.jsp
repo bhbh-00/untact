@@ -103,6 +103,10 @@
 					<!-- 제목 -->
 					<a href="${detailUrl}"
 						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
+					
+					<div class="my-3">
+					<span>${article.body}</span>	
+					</div>	
 
 					<!-- 썸네일 -->
 					<c:if test="${thumbUrl != null}">

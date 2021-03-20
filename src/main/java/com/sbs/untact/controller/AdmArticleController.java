@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
-import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
