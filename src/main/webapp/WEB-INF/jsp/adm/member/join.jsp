@@ -198,14 +198,12 @@ $(function() {
 				</a>
 			</div>
 
-			<form
-				class="formLogin bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
-				action="doJoin" method="POST"
-				onsubmit="JoinForm__checkAndSubmit(this); return false;">
-
+			<form class="formLogin bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4"
+				action="doJoin" method="POST" onsubmit="JoinForm__checkAndSubmit(this); return false;">
+				
 				<!-- 첨부파일 -->
-				<input type="hidden" name="genFileIdsStr" /> <input type="hidden"
-					name="redirectUrl" value="${param.redirectUrl}" />
+				<input type="hidden" name="genFileIdsStr" />
+				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 
 				<!-- loginId -->
 				<div class="flex flex-col mt-4 ml-4 md:flex-row">
