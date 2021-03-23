@@ -74,7 +74,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	if ( form.loginId.value != JoinForm__validLoginId ) {
-		alert('로그인아이디 중복체크를해주세요.');
+		alert('아이디 중복체크를해주세요.');
 		form.loginId.focus();
 		
 		return;
@@ -97,7 +97,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	if (form.loginPw.value != form.loginPwConfirm.value) {
-		alert('로그인비번이 일치하지 않습니다.');
+		alert('비밀번호가 일치하지 않습니다.');
 		form.loginPwConfirm.focus();
 		
 		return;
@@ -142,24 +142,27 @@ function JoinForm__checkAndSubmit(form) {
 	/// 파일 업로드
 	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
 	const submitForm = function(data) {
-		if (data) {
-			// data가 있다면 
-			form.genFileIdsStr.value = data.body.genFileIdsStr;
-		}
 		
+		if (data) {
+			
+			form.genFileIdsStr.value = data.body.genFileIdsStr;
+			
+		}
+
 		form.submit();
 		JoinForm__checkAndSubmitDone = true;
+		
 	}
 	
 	function startUpload(onSuccess) {
-		// 성공 했을 때 실행 되어야할 함수
+		
 		if (!form.file__member__0__common__attachment__1.value) {
 			onSuccess();
 			return;
 		}
-		
+
 		const formData = new FormData(form);
-		
+
 		$.ajax({
 			url : '/common/genFile/doUpload',
 			data : formData,
@@ -169,15 +172,17 @@ function JoinForm__checkAndSubmit(form) {
 			type : 'POST',
 			success : onSuccess
 		});
-		
+
 		// 파일을 업로드 한 후
 		// 기다린다.
 		// 응답을 받는다.
 		// onSuccess를 실행한다.
 	}
 	
+	
 	startUpload(submitForm);
 }
+
 $(function() {
 	$('.inputLoginId').change(function() {
 		JoinForm__checkLoginIdDup();

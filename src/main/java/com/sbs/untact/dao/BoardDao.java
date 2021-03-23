@@ -29,4 +29,6 @@ public interface BoardDao {
 
 	void deleteBoard(@Param("id") int id);
 
+	Board getBoardByCode(@Param("code") String code);
+
 }

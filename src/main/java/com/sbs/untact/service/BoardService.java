@@ -87,4 +87,8 @@ public class BoardService {
 		return new ResultData("s-1", "삭제 되었습니다.", "id", id);
 	}
 
+	public Board getBoardByCode(String code) {
+		return boardDao.getBoardByCode(code);
+	}
+
 }

@@ -9,7 +9,14 @@
 		DELETE FROM `board`
 		WHERE id = #{id}
 	</delete>
-
+	
+	<select id="getBoardByCode" resultType="Board">
+		SELECT *
+		FROM `board`
+		WHERE
+		`code` = #{code}
+	</select>
+	
 	<select id="getBoardByName" resultType="Board">
 		SELECT *
 		FROM `board`

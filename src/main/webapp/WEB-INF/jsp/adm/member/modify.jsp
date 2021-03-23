@@ -8,55 +8,70 @@
 <script>
 const ModifyMember_checkAndSubmitDone = false;
 
-	function ModifyMember_checkAndSubmit(form) {
-				
+function ModifyMember_checkAndSubmit(form) {
+	
 		if (ModifyMember_checkAndSubmitDone) {
+			
+				return;
+			}
+		
+		form.loginPw.value = form.loginPw.value.trim();
+		
+		if ( form.loginPw.value.length == 0 ) {
+			alert('비밀번호를 입력해주세요.');
+			form.loginPw.focus();
+			
+			return;
+		}
+			
+		if ( form.loginPwConfirm.value.length == 0 ) {
+			alert('비밀번호를 확인해주세요.');
+			form.loginPwConfirm.focus();
+			
 			return;
 		}
 		
-		if (form.loginPw.value) {
-			form.loginPw.value = form.loginPw.value.trim();
-			if (form.loginPw.value.length == 0) {
-				alert('로그인비번을 입력해주세요.');
-				form.loginPw.focus();
-				return;
-			}
-			if (form.loginPwConfirm.value.length == 0) {
-				alert('로그인비번 확인을 입력해주세요.');
-				form.loginPwConfirm.focus();
-				return;
-			}
-			if (form.loginPw.value != form.loginPwConfirm.value) {
-				alert('로그인비번이 일치하지 않습니다.');
-				form.loginPwConfirm.focus();
-				return;
-			}
+		if (form.loginPw.value != form.loginPwConfirm.value) {
+			alert('로그인비번이 일치하지 않습니다.');
+			form.loginPwConfirm.focus();
+			
+			return;
 		}
+		
 		form.name.value = form.name.value.trim();
+		
 		if (form.name.value.length == 0) {
 			alert('이름을 입력해주세요.');
 			form.name.focus();
 			return;
 		}
+		
 		form.nickname.value = form.nickname.value.trim();
+		
 		if (form.nickname.value.length == 0) {
-			alert('별명을 입력해주세요.');
+			alert('닉네임을 입력해주세요.');
 			form.nickname.focus();
 			return;
 		}
+		
 		form.email.value = form.email.value.trim();
+		
 		if (form.email.value.length == 0) {
 			alert('이메일을 입력해주세요.');
 			form.email.focus();
 			return;
 		}
+		
 		form.cellphoneNo.value = form.cellphoneNo.value.trim();
+		
 		if (form.cellphoneNo.value.length == 0) {
 			alert('휴대전화번호를 입력해주세요.');
 			form.cellphoneNo.focus();
 			return;
 		}
+		
 		function startUpload(onSuccess) {
+			
 			if (!form["file__member__" + param.id + "__common__attachment__1"].value) {
 				onSuccess();
 				return;
@@ -79,14 +94,20 @@ const ModifyMember_checkAndSubmitDone = false;
 			// 응답을 받는다.
 			// onSuccess를 실행한다.
 		}
+		
 		const submitForm = function(data) {
+			
 			if (data) {
+				
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
+				
 			}
 
 			form.submit();
 			ModifyMember_checkAndSubmitDone = true;
+			
 		}
+		
 		startUpload(submitForm);
 	}
 </script>
@@ -97,8 +118,9 @@ const ModifyMember_checkAndSubmitDone = false;
 			action="doModify" method="POST">
 			<input type="hidden" name="genFileIdsStr" />
 			<input type="hidden" name="id" value="${member.id}" />
-			<span class="text-3xl text-black font-bold">${member.nickname}님의 정보 수정</span>
-			
+			<span class="text-3xl text-black font-bold">${member.nickname}님의
+				정보 수정</span>
+
 			<!-- loginId -->
 			<div class="form-row flex flex-col mt-7 mb-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -106,8 +128,8 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">${member.loginId}</div>
 			</div>
-			
-			
+
+
 			<!-- loginPw -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -115,12 +137,12 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">
 					<input type="password" name="loginPw" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm"
-						placeholder="로그인비밀번호를 입력해주세요." />
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						placeholder="비밀번호를 입력해주세요." />
 				</div>
 			</div>
-			
-			
+
+
 			<!-- loginPw 확인 -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -128,16 +150,16 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">
 					<input type="password" name="loginPwConfirm" autofocus="autofocus"
-						class="form-row-input w-full rounded-sm"
-						placeholder="로그인비밀번호 확인을 입력해주세요." />
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						placeholder="비밀번호확인을 입력해주세요." />
 				</div>
 			</div>
-			
-			
+
+
 			<!-- 프로필 -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
-					<span>프로필</span>
+					<span>프로필이미지</span>
 				</div>
 				<div class="lg:flex-grow">
 					<input accept="image/gif, image/jpeg, image/png"
@@ -149,8 +171,8 @@ const ModifyMember_checkAndSubmitDone = false;
 					${member.extra.file__common__attachment[fileNo].mediaHtml}
 				</div>
 			</div>
-			
-			
+
+
 			<!-- name -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -158,12 +180,13 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${member.name}" type="text" name="name"
-						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						autofocus="autofocus"
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 						placeholder="이름을 입력해주세요." />
 				</div>
 			</div>
-			
-			
+
+
 			<!-- nickname -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -171,12 +194,13 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${member.nickname}" type="text" name="nickname"
-						autofocus="autofocus" class="form-row-input w-full rounded-sm"
-						placeholder="별명을 입력해주세요." />
+						autofocus="autofocus"
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						placeholder="닉네임을 입력해주세요." />
 				</div>
 			</div>
-			
-			
+
+
 			<!-- email -->
 			<div class="form-row flex flex-col my-5 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -184,12 +208,13 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${member.email}" type="email" name="email"
-						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						autofocus="autofocus"
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 						placeholder="이메일을 입력해주세요." />
 				</div>
 			</div>
-			
-			
+
+
 			<!-- cellphoneNo -->
 			<div class="form-row flex flex-col mt-5 mb-7 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -197,12 +222,13 @@ const ModifyMember_checkAndSubmitDone = false;
 				</div>
 				<div class="lg:flex-grow">
 					<input value="${member.cellphoneNo}" type="text" name="cellphoneNo"
-						autofocus="autofocus" class="form-row-input w-full rounded-sm"
+						autofocus="autofocus"
+						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 						placeholder="전화번호를 입력해주세요." />
 				</div>
 			</div>
-			
-			
+
+
 			<!-- 권한 레벨 -->
 			<div class="form-row flex flex-col mt-5 mb-7 lg:flex-row">
 				<div class="lg:flex lg:items-center lg:w-28">
@@ -221,8 +247,8 @@ const ModifyMember_checkAndSubmitDone = false;
 					</script>
 				</div>
 			</div>
-			
-			
+
+
 			<div class="flex flex-col my-3 md:flex-row">
 				<div class="p-1 md:flex-grow">
 					<input

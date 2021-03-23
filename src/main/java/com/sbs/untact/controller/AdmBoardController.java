@@ -48,6 +48,32 @@ public class AdmBoardController extends BaseController {
 		return boardService.deleteBoard(id);
 	}
 
+	@RequestMapping("/adm/board/getCodeAndNameDup")
+	@ResponseBody
+	public ResultData getCodeAndNameDup(String code, String name) {
+		if (code == null) {
+			return new ResultData("F-1", "name를 입력해주세요.");
+		}
+
+		Board existingBoardCode = boardService.getBoardByCode(code);
+
+		if (existingBoardCode != null) {
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 code 입니다.", code));
+		}
+		
+		if (name == null) {
+			return new ResultData("F-1", "name를 입력해주세요.");
+		}
+
+		Board existingBoardName = boardService.getBoardByName(name);
+
+		if (existingBoardName != null) {
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 name 입니다.", name));
+		}
+
+		return new ResultData("S-1", String.format("%s(은)는 사용가능한 name 입니다.", name), "name", name);
+	}
+	
 	@RequestMapping("/adm/board/getNameDup")
 	@ResponseBody
 	public ResultData getNameDup(String name) {
@@ -63,7 +89,6 @@ public class AdmBoardController extends BaseController {
 		}
 
 		return new ResultData("S-1", String.format("%s(은)는 사용가능한 name 입니다.", name), "name", name);
-
 	}
 
 	@RequestMapping("/adm/board/modify")
