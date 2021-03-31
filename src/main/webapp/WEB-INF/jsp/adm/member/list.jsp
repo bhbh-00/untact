@@ -6,7 +6,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <section class="section-1">
-	<div class="flex component-title-bar container mx-auto bg-white">
+	<div class="component-title-bar container mx-auto bg-white">
 		<span class="text-lg ml-2 py-1">회원리스트</span>
 	</div>
 
