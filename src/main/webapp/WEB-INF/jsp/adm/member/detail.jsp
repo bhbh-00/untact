@@ -6,57 +6,64 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <section class="section-1">
-	<div class="component-title-bar container mx-auto bg-white">
-		<span class="text-lg ml-2 py-1">회원 프로필</span>
-	</div>
 
 	<div class="section-member-detail">
 		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg bg-white">
-				<div class="px-4 py-8">
+			<div class="card bordered shadow-lg bg-white px-4 py-2">
+			
+				<div class="component-title-bar container mx-auto bg-white">
+					<span class="font-black text-lg ml-2 py-1">회원 프로필</span>
+				</div>
 
-					<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
+				<div class="px-4 py-3">
+
 					<c:set var="detailUrl" value="detail?id=${member.id}" />
 
-					<div
-						class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+					<!-- 프로필 이미지 -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						<a href="#" class="row-span-3 order-1">
 							<img class="rounded-full" src="https://i.pravatar.cc/100?img=37"
 								alt="">
 						</a>
-
+						
+						<!-- 번호 -->
 						<a href="${detailUrl}" class="order-2">
-							<span class="badge badge-primary">번호</span>
+							<span class="badge badge-warning">번호</span>
 							<span>${member.id}</span>
 						</a>
-
+						
+						<!-- 회원타입 -->
 						<a href="list?authLevel=${member.authLevel}"
 							class="cursor-pointer order-3">
-							<span class="badge badge-accent">회원타입</span>
+							<span class="badge badge-info">회원타입</span>
 							<span>${member.authLevelName}</span>
 						</a>
-
+						
+						<!-- 등록날짜 -->
 						<a href="${detailUrl}" class="order-4">
 							<span class="badge">등록날짜</span>
 							<span class="text-gray-600 text-light">${member.regDate}</span>
 						</a>
-
+						
+						<!-- 수정날짜 -->
 						<a href="${detailUrl}" class="order-5">
 							<span class="badge">수정날짜</span>
 							<span class="text-gray-600 text-light">${member.updateDate}</span>
 						</a>
-
+						
+						<!-- 로그인아이디 -->
 						<a href="${detailUrl}" class="order-6">
-							<span class="badge">로그인아이디</span>
+							<span class="badge">아이디</span>
 							<span class="text-gray-600">${member.loginId}</span>
 						</a>
-
+						
+						<!-- 이름 -->
 						<a href="${detailUrl}" class="order-7">
 							<span class="badge">이름</span>
 							<span class="text-gray-600">${member.name}</span>
 						</a>
-
+						
+						<!-- 닉네임 -->
 						<a href="${detailUrl}" class="order-8 sm:order-4 md:order-8">
 							<span class="badge">닉네임</span>
 							<span class="text-gray-600">${member.nickname}</span>
@@ -64,12 +71,7 @@
 					</div>
 
 					<div class="grid grid-item-float gap-3 mt-4">
-						<a href="${detailUrl}" class="text-blue-500" title="자세히 보기">
-							<span>
-								<i class="fas fa-info"></i>
-								<span>자세히 보기</span>
-							</span>
-						</a>
+						
 						<a href="modify?id=${member.id}" class="text-blue-500 ">
 							<span>
 								<i class="fas fa-edit"></i>

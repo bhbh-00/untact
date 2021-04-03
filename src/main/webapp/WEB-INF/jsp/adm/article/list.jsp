@@ -21,7 +21,6 @@
 			</select>
 			<script>
 				$('.section-1 .select-board-id').val(param.boardId);
-
 				$('.section-1 .select-board-id').change(function() {
 					location.href = "?boardId=" + this.value;
 				});
