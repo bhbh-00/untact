@@ -35,13 +35,13 @@
 				href="add?boardId=${ board.id }">글쓰기</a>
 		</div>
 		<hr>
-		
+
 		<!-- 총 게시물 수 -->
 		<div class="flex items-center my-3">
 			<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
 
 			<div class="flex-grow"></div>
-			
+
 			<!-- 검색 -->
 			<form class="flex">
 				<select name="searchKeywordType">
@@ -51,10 +51,9 @@
 				</select>
 
 				<script>
-				/* 값이 있다면 */
+					/* 값이 있다면 */
 					if (param.searchKeywordType) {
-						$('.section-1 select[name="searchKeywordType"]').val(
-								param.searchKeywordType);
+						$('.section-1 select[name="searchKeywordType"]').val(param.searchKeywordType);
 					}
 				</script>
 
@@ -70,137 +69,136 @@
 		</div>
 		<hr>
 
-		<div>
-			<c:forEach items="${articles}" var="article">
+		<c:forEach items="${articles}" var="article">
 
-				<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
-				<c:set var="detailUrl" value="detail?id=${article.id}" />
-				<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
-				<c:set var="thumbFile"
-					value="${article.extra.file__common__attachment[thumbFileNo]}" />
-				<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
+			<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
+			<c:set var="detailUrl" value="detail?id=${article.id}" />
+			<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
+			<c:set var="thumbFile"
+				value="${article.extra.file__common__attachment[thumbFileNo]}" />
+			<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
-				<div class="flex justify-between items-center mt-3">
+			<div class="px-4 py-8">
+			
+			<!-- 제목 -->
+				<a class="hover:underline cursor-pointer">
+					<span class="badge badge-outline">제목</span>
+					<span class="line-clamp-3"> ${article.title} </span>
+				</a>
+
+				<!-- 썸네일 -->
+				<div
+					class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+					<a href="${detailUrl}" class="row-span-7">
+						<img class="rounded" src="${thumbUrl}" alt="">
+					</a>
 
 					<!-- 게시물 번호 -->
-					<a href="${detailUrl}"
-						class="inline-flex justify-center items-center px-3 py-1 rounded-full bg-gray-500 text-white">NO.
-						${article.id}</a>
+					<a href="${detailUrl}" class="hover:underline">
+						<span class="badge badge-primary">번호</span>
+						<span>${article.id}</span>
+					</a>
+
+					<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<span class="badge badge-accent">작성자</span>
+						<span>${article.extra__writer}</span>
+					</a>
 
 					<!-- 등록날짜 -->
-					<a class="font-light text-gray-600 ml-4">${article.regDate}</a>
+					<a href="${detailUrl}" class="hover:underline">
+						<span class="badge">등록날짜</span>
+						<span class="text-gray-600 text-light">${article.regDate}</span>
+					</a>
 
-					<div class="flex-grow"></div>
+					<!-- 수정날짜 -->
+					<a href="${detailUrl}" class="hover:underline">
+						<span class="badge">수정날짜</span>
+						<span class="text-gray-600 text-light">${article.updateDate}</span>
+					</a>
 
-					<!-- boardName 공지사항/자유-->
-					<a href="list?boardId=${article.boardId}"
-						class="px-2 py-1 bg-gray-600 text-gray-100 font-bold rounded hover:bg-gray-500">
-						${article.extra__boardName} </a>
+					<!-- 본문 -->
+					<a
+						class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+						<span class="badge badge-outline">본문</span>
+						<span class="line-clamp-3"> ${article.body} </span>
+					</a>
 				</div>
 
-				<div class="mt-2">
-					<!-- 제목 -->
-					<a href="${detailUrl}"
-						class="text-2xl text-gray-700 font-bold hover:underline">${article.title}</a>
-					
-					<div class="my-3">
-					<span>${article.body}</span>	
-					</div>	
-
-					<!-- 썸네일 -->
-					<c:if test="${thumbUrl != null}">
-						<a class="block mt-4" href="${detailUrl}">
-							<img class="max-w-sm" src="${thumbUrl}" alt="" />
-						</a>
-					</c:if>
-				</div>
-
-				<div class="flex items-center mt-4 mb-4">
+				<div class="plain-link-wrap gap-3 mt-4">
 					<!-- 자세히 보기 -->
-
-					<a href="${detailUrl}" class="text-gray-700 mr-2 hover:underline">
+					<a href="${detailUrl}" class="plain-link" title="자세히 보기">
 						<span>
 							<i class="fas fa-info"></i>
-							<span class="hidden sm:inline">자세히 보기</span>
 						</span>
+						<span>자세히 보기</span>
 					</a>
 
 					<!-- 수정 -->
-					<a href="modify?id=${article.id}"
-						class="text-blue-500 mr-2 hover:underline">
+					<a href="modify?id=${article.id}" class="plain-link">
 						<span>
 							<i class="fas fa-edit"></i>
-							<span class="hidden sm:inline">수정</span>
 						</span>
+						<span>수정</span>
 					</a>
 
 					<!-- 삭제 -->
 					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-						href="doDelete?id=${article.id}"
-						class="text-red-500 hover:underline">
+						href="doDelete?id=${article.id}" class="plain-link">
 						<span>
 							<i class="fas fa-trash"></i>
-							<span class="hidden sm:inline">삭제</span>
+							<span>삭제</span>
 						</span>
 					</a>
 
-					<div class="flex-grow"></div>
-
-					<!-- 작성자 -->
-					<div>
-						<a class="flex items-center">
-							<img
-								src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=731&amp;q=80"
-								alt="avatar" class="mx-4 w-10 h-10 object-cover rounded-full">
-							<span class="text-gray-700 font-bold hover:underline">${article.extra__writer}</span>
-						</a>
-					</div>
 				</div>
-				<hr>
-			</c:forEach>
-		</div>
+			</div>
+		</c:forEach>
 
 		<!-- 페이징 -->
 		<nav class="flex justify-center py-5 rounded-md shadow-sm"
 			aria-label="Pagination">
-			
+
 			<!-- 시작 페이지 -->
 			<!-- 내가 보고 있는 페이지 챕터가 첫번째이면 < 표시 안보이게 -->
 			<c:if test="${pageMenuStart != 1}">
-			<a href="${Util.getNewUrl(requestUrl, 'page', 1)}"
-				class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-				<span class="sr-only">Previous</span>
-				<i class="fas fa-chevron-left"></i>
-			</a>
+				<a href="${Util.getNewUrl(requestUrl, 'page', 1)}"
+					class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+					<span class="sr-only">Previous</span>
+					<i class="fas fa-chevron-left"></i>
+				</a>
 			</c:if>
 
 			<!-- 페이지 번호 -->
 			<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
-				<c:set var="aClassStr" value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
-				
+				<c:set var="aClassStr"
+					value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+
 				<c:set var="aClassStr" value="${aClassStr} active" />
-				
+
 				<!-- 현재 페이지 -->
 				<c:if test="${i == page}">
-					<c:set var="aClassStr" value="${aClassStr} text-red-700 hover:bg-red-50" />
+					<c:set var="aClassStr"
+						value="${aClassStr} text-red-700 hover:bg-red-50" />
 				</c:if>
-				
+
 				<!-- 현재 페이지가 아닌 -->
 				<c:if test="${i != page}">
-					<c:set var="aClassStr" value="${aClassStr} text-gray-700 hover:bg-gray-50" />
+					<c:set var="aClassStr"
+						value="${aClassStr} text-gray-700 hover:bg-gray-50" />
 				</c:if>
-				
-				<a href="${Util.getNewUrl(requestUrl, 'page', i)}" class="${aClassStr}">${i}</a>
+
+				<a href="${Util.getNewUrl(requestUrl, 'page', i)}"
+					class="${aClassStr}">${i}</a>
 			</c:forEach>
 
 			<!-- 마지막 페이지 -->
 			<!-- 내가 보고 있는 페이지 챕터가 마지막이면 > 표시 안보이게 -->
 			<c:if test="${pageMenuEnd != totalPage}">
-			<a href="${Util.getNewUrl(requestUrl, 'page', totalPage)}"
-				class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-				<span class="sr-only">Next</span>
-				<i class="fas fa-chevron-right"></i>
-			</a>
+				<a href="${Util.getNewUrl(requestUrl, 'page', totalPage)}"
+					class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+					<span class="sr-only">Next</span>
+					<i class="fas fa-chevron-right"></i>
+				</a>
 			</c:if>
 		</nav>
 	</div>
