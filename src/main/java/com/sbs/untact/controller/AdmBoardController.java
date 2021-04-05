@@ -48,30 +48,21 @@ public class AdmBoardController extends BaseController {
 		return boardService.deleteBoard(id);
 	}
 
-	@RequestMapping("/adm/board/getCodeAndNameDup")
+	@RequestMapping("/adm/board/getCodeDup")
 	@ResponseBody
-	public ResultData getCodeAndNameDup(String code, String name) {
+	public ResultData getCodeDup(String code) {
+
 		if (code == null) {
-			return new ResultData("F-1", "name를 입력해주세요.");
+			return new ResultData("F-1", "code를 입력해주세요.");
 		}
 
-		Board existingBoardCode = boardService.getBoardByCode(code);
+		Board existingBoard = boardService.getBoardByCode(code);
 
-		if (existingBoardCode != null) {
+		if (existingBoard != null) {
 			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 code 입니다.", code));
 		}
-		
-		if (name == null) {
-			return new ResultData("F-1", "name를 입력해주세요.");
-		}
 
-		Board existingBoardName = boardService.getBoardByName(name);
-
-		if (existingBoardName != null) {
-			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 name 입니다.", name));
-		}
-
-		return new ResultData("S-1", String.format("%s(은)는 사용가능한 name 입니다.", name), "name", name);
+		return new ResultData("S-1", String.format("%s(은)는 사용가능한 code 입니다.", code), "code", code);
 	}
 	
 	@RequestMapping("/adm/board/getNameDup")

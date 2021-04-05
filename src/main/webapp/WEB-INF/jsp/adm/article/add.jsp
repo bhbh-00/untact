@@ -13,6 +13,7 @@
 
 <script>
 	ArticleAdd__submited = false;
+	
 	function ArticleAdd__checkAndSubmit(form) {
 		// 이게 끝나면 폼 전송완료
 

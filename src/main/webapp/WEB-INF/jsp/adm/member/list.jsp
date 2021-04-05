@@ -11,9 +11,14 @@
 		<div class="container mx-auto">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 				
-				<div class="flex px-4 py-2">
+				<div class="card-title">
+					<a href="javascript:history.back();" class="cursor-pointer">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+					<span>회원 관리</span>
+				</div>
 				
-					<span class="text-2xl ml-2 py-1 font-black">회원 관리</span>
+				<div class="flex px-4 py-2">
 				
 					<div class="flex-grow"></div>
 					

@@ -54,6 +54,7 @@
 		);
 
 	}
+	
 	function BoardModify_checkAndSubmit(form) {
 
 		if (BoardModify_checkAndSubmitDone) {

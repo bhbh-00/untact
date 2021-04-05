@@ -9,10 +9,13 @@
 
 	<div class="section-member-detail">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg bg-white px-4 py-2">
+			<div class="card bordered shadow-lg bg-white">
 			
-				<div class="component-title-bar container mx-auto bg-white">
-					<span class="font-black text-lg ml-2 py-1">회원 프로필</span>
+				<div class="card-title bg-gray-400 text-white">
+					<a href="javascript:history.back();" class="cursor-pointer">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+					<span>회원 프로필</span>
 				</div>
 
 				<div class="px-4 py-3">
