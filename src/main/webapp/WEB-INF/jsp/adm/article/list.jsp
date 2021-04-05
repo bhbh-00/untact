@@ -87,12 +87,10 @@
 					<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
 					<c:set var="detailUrl" value="detail?id=${article.id}" />
 					<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
-					<c:set var="thumbFile"
-						value="${article.extra.file__common__attachment[thumbFileNo]}" />
+					<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
 					<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
 					<div class="px-5 py-8">
-
 
 						<!-- 제목 -->
 						<a class="hover:underline cursor-pointer">

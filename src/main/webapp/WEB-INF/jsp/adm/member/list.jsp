@@ -7,7 +7,6 @@
 
 <section class="section-1">
 
-
 	<div class="section-member-list">
 		<div class="container mx-auto">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
