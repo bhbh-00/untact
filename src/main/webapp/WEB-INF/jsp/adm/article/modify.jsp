@@ -116,7 +116,7 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>게시물 작성</span>
+					<span>게시물 수정</span>
 				</div>
 
 				<div class="px-4 py-8">
