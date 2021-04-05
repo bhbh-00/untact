@@ -108,83 +108,97 @@
 </script>
 
 <section class="section-1">
-	<div class="bg-white shadow-md rounded container mx-auto p-8 mt-8">
-		<form onsubmit="ArticleModify__checkAndSubmit(this); return false;"
-			action="doModify" method="POST" enctype="multipart/form-data">
-			<input type="hidden" name="genFileIdsStr" value="" />
-			<input type="hidden" name="id" value="${article.id}" />
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>제목</span>
+
+	<div class="section-article-write">
+		<div class="container mx-auto">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+				<div class="card-title bg-gray-400 text-white">
+					<a href="javascript:history.back();" class="cursor-pointer">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+					<span>게시물 작성</span>
 				</div>
-				<div class="lg:flex-grow">
-					<input value="${article.title}" type="text" name="title"
-						autofocus="autofocus" class="form-row-input w-full rounded-sm"
-						placeholder="제목을 입력해주세요." />
-				</div>
-			</div>
-			<div class="form-row flex flex-col lg:flex-row">
-				<div class="lg:flex lg:items-center lg:w-28">
-					<span>내용</span>
-				</div>
-				<div class="lg:flex-grow">
-					<textarea name="body" class="form-row-input w-full rounded-sm"
-						placeholder="내용을 입력해주세요.">${article.body}</textarea>
-				</div>
-			</div>
-			<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
-				<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
-				<c:set var="file"
-					value="${article.extra.file__common__attachment[fileNo]}" />
-				<div class="form-row flex flex-col lg:flex-row">
-					<div class="lg:flex lg:items-center lg:w-28">
-						<span>첨부파일 ${inputNo}</span>
-					</div>
-					<div class="lg:flex-grow input-file-wrap">
-						<input type="file"
-							name="file__article__${article.id}__common__attachment__${inputNo}"
-							class="form-row-input w-full rounded-sm" />
-						<c:if test="${file != null}">
-							<div>
-								<a href="${file.downloadUrl}" target="_blank"
-									class="text-blue-500 hover:underline" href="#">${file.originFileName}</a>
-								( ${Util.numberFormat(file.fileSize)} Byte )
-							</div>
-							<div>
-								<label>
-									<input
-										onclick="$(this).closest('.input-file-wrap').find(' > input[type=file]').val('')"
-										type="checkbox"
-										name="deleteFile__article__${article.id}__common__attachment__${fileNo}"
-										value="Y" />
-									<span>삭제</span>
+
+				<div class="px-4 py-8">
+					<form onsubmit="ArticleModify__checkAndSubmit(this); return false;"
+						action="doModify" method="POST" enctype="multipart/form-data">
+						<input type="hidden" name="genFileIdsStr" value="" />
+						<input type="hidden" name="id" value="${article.id}" />
+						
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">제목</span>
+							</label>
+							<input value="${article.title}" name="title" type="text" placeholder="제목 입력해주세요."
+								class="input input-bordered">
+						</div>
+						
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">본문</span>
+							</label>
+							<textarea name="body" placeholder="내용을 입력해주세요."
+								class="h-80 textarea textarea-bordered">${article.body}</textarea>
+						</div>
+						
+						<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
+						
+							<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
+							<c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
+							
+							<div class="form-control">
+								<label class="label">
+									<span class="label-text">본문 이미지 ${inputNo}</span>
 								</label>
-							</div>
-							<c:if test="${file.fileExtTypeCode == 'img'}">
-								<div class="img-box img-box-auto">
-									<a class="inline-block" href="${file.forPrintUrl}"
-										target="_blank" title="자세히 보기">
-										<img class="max-w-sm" src="${file.forPrintUrl}">
-									</a>
+							
+								<div>
+									<input class="thumb-available" type="file"
+										name="file__article__${article.id}__common__attachment__${inputNo}"
+										class="form-row-input w-full rounded-sm" placeholder="본문 이미지 ${inputNo}"/>
+									<c:if test="${file != null}">
+										<div>
+											<a href="${file.downloadUrl}" target="_blank"
+												class="text-blue-500 hover:underline" href="#">${file.originFileName}</a>
+											( ${Util.numberFormat(file.fileSize)} Byte )
+										</div>
+										<div>
+											<label>
+												<input
+													onclick="$(this).closest('.input-file-wrap').find(' > input[type=file]').val('')"
+													type="checkbox"
+													name="deleteFile__article__${article.id}__common__attachment__${fileNo}"
+													value="Y" />
+												<span>삭제</span>
+											</label>
+										</div>
+										<c:if test="${file.fileExtTypeCode == 'img'}">
+											<div class="img-box img-box-auto">
+												<a class="inline-block" href="${file.forPrintUrl}"
+													target="_blank" title="자세히 보기">
+													<img class="max-w-sm" src="${file.forPrintUrl}">
+												</a>
+											</div>
+										</c:if>
+									</c:if>
 								</div>
-							</c:if>
-						</c:if>
-					</div>
-				</div>
-			</c:forEach>
-			<div class="flex flex-col my-3 md:flex-row">
-				<div class="p-1 md:flex-grow">
-					<div class="btns">
-						<input type="submit"
-							class="btn-primary bg-blue-500 text-white font-bold py-2 px-4 rounded"
-							value="수정">
-						<input onclick="history.back();" type="button"
-							class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"
-							value="취소">
-					</div>
+							</div>
+						</c:forEach>
+
+						<div class="flex flex-col my-3 md:flex-row">
+							<div class="p-1 md:flex-grow">
+								<div class="btns">
+									<input type="submit" class="btn-primary bg-blue-500 text-white font-bold py-2 px-4 rounded"
+										value="수정">
+									<input onclick="history.back();" type="button" class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"
+										value="취소">
+								</div>
+							</div>
+						</div>
+
+					</form>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
 </section>
 

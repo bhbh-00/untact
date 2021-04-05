@@ -22,7 +22,6 @@
 						<span>게시물 작성</span>
 					</div>
 
-
 					<div class="px-4 py-8">
 						<div class="flex">
 							<span>

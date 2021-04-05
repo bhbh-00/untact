@@ -138,8 +138,6 @@ textarea.form-row-input {
 }
 
 .card-title {
-  background-color:rgb(153, 153, 153);
-  color:white;
   text-align:center;
   height:var(--card-title_height);
   position:absolute;

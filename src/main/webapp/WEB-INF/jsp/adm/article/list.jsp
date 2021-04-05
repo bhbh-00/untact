@@ -14,16 +14,20 @@
 
 	<div class="section-article-list">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+
+				<div class="card-title bg-white">
+					<a href="javascript:history.back();" class="cursor-pointer">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+					<span>게시물 관리</span>
+				</div>
 
 				<div class="flex px-4 py-2">
 
-					<span class="text-2xl ml-2 py-1 font-black">게시물 관리</span>
-
-					<div class="flex-grow"></div>
-
 					<!-- 게시판별로 보기 -->
-					<select class="select-board-id mr-4 py-1">
+					<select class="select-board-id">
 						<option value="1">공지사항</option>
 						<option value="2">자유</option>
 						<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->
@@ -36,10 +40,14 @@
 						/* change 바뀔 때 마다 뭔가 실행된다.*/
 					</script>
 
+					<div class="flex-grow"></div>
+
+					<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
+
 				</div>
 
 				<!-- 총 게시물 수 -->
-				<div class="flex items-center py-1 px-6">
+				<div class="flex items-center py-2 px-4">
 
 					<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
 
@@ -68,14 +76,11 @@
 						<input
 							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
 							type="submit" value="검색" />
-
 					</form>
 
 				</div>
 
-				<div class="p-2">
-					<a class="btn btn-block btn-sm" href="add?boardId=${ board.id }">글쓰기</a>
-				</div>
+
 
 				<c:forEach items="${articles}" var="article">
 

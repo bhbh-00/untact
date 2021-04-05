@@ -117,7 +117,7 @@
 	<div class="section-article-write">
 		<div class="container mx-auto">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title">
+				<div class="card-title bg-gray-400 text-white">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -163,7 +163,7 @@
 									<input class="thumb-available"
 										data-thumb-selector="next().next()" type="file"
 										name="file__article__0__common__attachment__${inputNo}"
-										placeholder="본문 이미지 1"
+										placeholder="본문 이미지 ${inputNo}"
 										accept="image/png, image/jpeg, image/png">
 									<div class="mt-2"></div>
 								</div>
