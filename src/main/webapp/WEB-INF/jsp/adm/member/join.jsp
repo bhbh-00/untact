@@ -193,158 +193,123 @@ $(function() {
 </script>
 
 <section class="section">
-	<div
-		class="container mx-auto min-h-screen flex items-center justify-center">
-		<div class="w-full">
-			<div class="logo-bar flex justify-center mt-3">
-				<a href="#" class="logo"> <span> <i
-						class="fas fa-people-arrows"></i>
-				</span> <span>UNTACT ADMIN</span>
-				</a>
+
+	<div class="section-member-join">
+		<div class="container mx-auto">
+			<div class="card bordered shadow-lg bg-white">
+
+				<div class="card-title bg-gray-400 text-white">
+					<a href="javascript:history.back();" class="cursor-pointer">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+					<span>회원가입</span>
+				</div>
+
+				<div class="px-4 py-8">
+
+					<form class="formLogin grid form-type-1" action="doJoin"
+						method="POST"
+						onsubmit="JoinForm__checkAndSubmit(this); return false;">
+
+						<input type="hidden" name="genFileIdsStr" />
+						<input type="hidden" name="redirectUrl"
+							value="${param.redirectUrl}" />
+
+						<!-- loginId -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">아이디</span>
+							</label>
+							<input type="text" name="loginId" placeholder="영문 혹은 영문+숫자만 입력해주세요."
+								class="inputLoginId input input-bordered">
+						</div>
+
+						<!-- 아이디 중복여부를 ajax로 물어봄 -->
+						<div class="form-control">
+							<div class="loginIdInputMsg"></div>
+						</div>
+
+						<!-- 비밀번호 -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">비밀번호</span>
+							</label>
+							<input autofocus="autofocus" type="password"
+								placeholder="영문+숫자 조합으로 입력해주세요." name="loginPw" maxlength="20"
+								class="input input-bordered">
+						</div>
+
+						<!-- 비밀번호 확인 -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">비밀번호 확인</span>
+							</label>
+							<input autofocus="autofocus" type="password"
+								placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm"
+								maxlength="20" class="input input-bordered">
+						</div>
+
+
+						<!-- 프로필이미지 -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">프로필 이미지</span>
+							</label>
+							<div class="mt-2">
+								<input accept="image/gif, image/jpeg, image/png"
+									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
+									name="file__member__0__common__attachment__1" maxlength="20">
+								<div class="mt-2"></div>
+							</div>
+						</div>
+
+						<!-- name -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">이름</span>
+							</label>
+							<input tautofocus="autofocus" type="text" placeholder="ex) 홍길동"
+								name="name" maxlength="20" class="input input-bordered">
+						</div>
+
+						<!-- nickname -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">닉네임</span>
+							</label>
+							<input autofocus="autofocus" type="text"
+								placeholder="영문과 한글만 입력해주세요." name="nickname" maxlength="20"
+								class="input input-bordered">
+						</div>
+
+						<!-- email -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">email</span>
+							</label>
+							<input autofocus="autofocus" type="email"
+								placeholder="@untact.com" name="email" maxlength="100"
+								class="input input-bordered">
+						</div>
+
+						<!-- cellphoneNo -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">전화번호</span>
+							</label>
+							<input autofocus="autofocus" type="tel"
+								placeholder="-는 제외해주세요. ex) 01000000000" name="cellphoneNo"
+								maxlength="11" class="input input-bordered">
+						</div>
+
+						<div class="mt-4 btn-wrap gap-1">
+							<input type="submit" class="btn btn-sm mb-1" value="회원가입">
+						</div>
+
+					</form>
+
+				</div>
 			</div>
-
-			<form class="formLogin bg-white shadow-md rounded px-8 pt-6 pb-8 mt-4"
-				action="doJoin" method="POST" onsubmit="JoinForm__checkAndSubmit(this); return false;">
-				
-				<!-- 첨부파일 -->
-				<input type="hidden" name="genFileIdsStr" />
-				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
-
-				<!-- loginId -->
-				<div class="flex flex-col mt-4 ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>아이디</span>
-					</div>
-				</div>
-
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="inputLoginId shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text"
-							placeholder="영문 혹은 영문+숫자만 입력해주세요." name="loginId" maxlength="20" />
-					</div>
-				</div>
-
-				<!-- 아이디 중복여부를 ajax로 물어봄 -->
-				<div class="loginIdInputMsg ml-2 mb-2"></div>
-
-				<!-- loginPw -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>비밀번호</span>
-					</div>
-				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="password"
-							placeholder="영문+숫자 조합으로 입력해주세요." name="loginPw" maxlength="20" />
-					</div>
-				</div>
-
-				<!-- loginPw 확인 -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>비밀번호 확인</span>
-					</div>
-				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="password"
-							placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm" maxlength="20" />
-					</div>
-				</div>
-
-				<!-- 프로필 -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>프로필</span>
-					</div>
-				</div>
-				<div class="p-1 md:flex-grow">
-					<input accept="image/gif, image/jpeg, image/png"
-						class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-						autofocus="autofocus" type="file" placeholder="프로필을 선택해주세요."
-						name="file__member__0__common__attachment__1" maxlength="20" />
-					<!-- accept 내가 원하는 특정 확장자만 받겠다는 의미 -->
-				</div>
-
-				<!-- name -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>이름</span>
-					</div>
-				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="ex) 홍길동"
-							name="name" maxlength="20" />
-					</div>
-				</div>
-
-				<!-- nickname -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>닉네임</span>
-					</div>
-				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="영문과 한글만 입력해주세요."
-							name="nickname" maxlength="20" />
-					</div>
-				</div>
-
-				<!-- email -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>이메일</span>
-					</div>
-				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="email" placeholder="@untact.com"
-							name="email" maxlength="100" />
-					</div>
-				</div>
-
-				<!-- cellphoneNo -->
-				<div class="flex flex-col ml-4 md:flex-row">
-					<div class="md:w-36 md:flex md:items-center">
-						<span>전화번호</span>
-					</div>
-				</div>
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="tel"
-							placeholder="-는 제외해주세요. ex) 01000000000" name="cellphoneNo"
-							maxlength="11" />
-					</div>
-				</div>
-
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input
-							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="회원가입" /> <a onclick="history.back();"
-							class="btn-info bg-gray-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded inline-block">취소</a>
-					</div>
-				</div>
-
-			</form>
-
 		</div>
 	</div>
 </section>
