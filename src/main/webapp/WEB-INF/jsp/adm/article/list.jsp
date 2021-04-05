@@ -14,8 +14,7 @@
 
 	<div class="section-article-list">
 		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<div class="flex px-4 py-2">
 

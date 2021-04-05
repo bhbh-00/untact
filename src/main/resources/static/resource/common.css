@@ -138,7 +138,7 @@ textarea.form-row-input {
 }
 
 .card-title {
-  background-color:rgb(87, 13, 248);
+  background-color:rgb(153, 153, 153);
   color:white;
   text-align:center;
   height:var(--card-title_height);
@@ -285,7 +285,6 @@ box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #
   position:fixed;
 }
 /* 탑바 끝 */
-
 /* 유틸 - 끝 */
 
 /* 기타 - 시작 */
@@ -295,6 +294,7 @@ box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #
   margin-top:20px;
   margin-bottom:10px;
 }
+
 /* 기타 - 끝 */
 
 @media ( max-width: 640px ) {

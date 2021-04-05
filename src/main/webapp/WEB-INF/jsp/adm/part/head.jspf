@@ -30,6 +30,9 @@
 <link rel="stylesheet" href="/resource/common.css" />
 <link rel="stylesheet" href="/resource/adm/common.css" />
 
+<!-- vue -->
+<script src="https://unpkg.com/vue@next"></script>
+
 <%="<script>"%>
 const param = ${paramJson};
 <!-- const : 변수의 값이 거의 바뀌지 않는다는 것을 뜻함 -->
