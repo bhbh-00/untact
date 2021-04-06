@@ -21,7 +21,7 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>게시물 관리</span>
+					<span>공지사항 게시판</span>
 				</div>
 
 				<div class="flex px-4 py-2">
