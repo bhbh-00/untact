@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,7 +25,7 @@ public class UsrReplyController {
 	@Autowired
 	private ArticleService articleService;
 
-	@PostMapping("/usr/reply/doDelete")
+	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
@@ -52,7 +51,7 @@ public class UsrReplyController {
 		return replyService.delete(id);
 	}
 
-	@PostMapping("/usr/reply/doModify")
+	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
@@ -68,47 +67,17 @@ public class UsrReplyController {
 			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
 		}
 
-		ResultData actorCanModifyRd = replyService.getActorCanModifyRd(reply, loginedMember);
+		ResultData actorCanDeleteRd = replyService.getActorCanModifyRd(reply, loginedMember);
 		// articleService 말고 이제는 reply서비스에게!
 
-		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+		if (actorCanDeleteRd.isFail()) {
+			return actorCanDeleteRd;
 		}
 
 		return replyService.doModify(id, body);
 	}
 
-	@PostMapping("/usr/reply/doAdd")
-	@ResponseBody
-	public ResultData doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-
-		if (param.get("relTypeCode") == null) {
-			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
-		}
-		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId을 입력해주세요.");
-		}
-
-		/*
-		 * if (param.get("relTypeCode") == "article") { Article article =
-		 * articleService.getArticle(param.get("relId"));
-		 * 
-		 * if (article == null) { return new ResultData("F-1", "해당 게시물은 존재하지 않습니다."); }
-		 * 
-		 * }
-		 */
-
-		if (param.get("body") == null) {
-			return new ResultData("F-1", "댓글을 입력해주세요.");
-		}
-
-		param.put("memberId", loginMemberId);
-
-		return replyService.doAdd(param);
-	}
-
-	@GetMapping("/usr/reply/list")
+	@RequestMapping("/usr/reply/list")
 	@ResponseBody
 	public ResultData showList(String relTypeCode, Integer relId) {
 		/*
