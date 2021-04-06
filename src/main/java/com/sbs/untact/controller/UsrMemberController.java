@@ -44,10 +44,10 @@ public class UsrMemberController extends BaseController {
 		Member member = memberService.getMemberByLoginPw(loginPw);
 
 		if (member == null) {
-			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
+			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
 		
-		ResultData ConfirmPasswordMemberRd = memberService.ConfirmPasswordMember(loginPw);
+		req.setAttribute("member", member);
 		
 		return msgAndReplace(req, String.format("마이페이지입니다.", loginMemberId),
 				"../member/detail?id=" + loginMemberId);
