@@ -196,9 +196,7 @@ public class UsrArticleController extends BaseController {
 
 	@RequestMapping("/usr/article/add")
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-
 		return "/usr/article/add";
-
 	}
 
 	@RequestMapping("/usr/article/doAdd")

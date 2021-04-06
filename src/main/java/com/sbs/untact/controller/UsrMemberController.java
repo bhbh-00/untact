@@ -289,7 +289,7 @@ public class UsrMemberController extends BaseController {
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌! */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
-		String redirectUrl = "/usr/member/list";
+		String redirectUrl = "/usr/member/detail";
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}

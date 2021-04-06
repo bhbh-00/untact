@@ -175,20 +175,6 @@
 							</div>
 						</div>
 						
-						<!-- 회원타입 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">회원타입</span>
-							</label>
-							<select class="select select-bordered">
-								<option disabled="disabled" selected="selected">회원타입을
-									선택해주세요.</option>
-								<option value="0">미승인</option>
-								<option value="3">일반</option>
-								<option value="7">관리자</option>
-							</select>
-						</div>
-						
 						<!-- 비밀번호 -->
 						<div class="form-control">
 							<label class="label">

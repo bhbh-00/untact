@@ -45,11 +45,6 @@
 						method="POST"
 						onsubmit="ConfirmPasswordForm__checkAndSubmit(this); return false;">
 
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">${member.loginId}<span>
-							</label>
-						</div>
 						<div class="form-control py-4">
 							<input name="loginPw" type="password" placeholder="비밀번호를 입력해주세요."
 								class="input input-bordered" maxlength="20">

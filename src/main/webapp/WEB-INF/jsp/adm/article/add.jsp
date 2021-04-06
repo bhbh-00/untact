@@ -135,7 +135,7 @@
 
 						<div class="form-control">
 							<label class="cursor-pointer label"> 작성자 </label>
-							<div class="plain-text">${param.extra__boardName}</div>
+							<div class="plain-text">${param.nickname}</div>
 						</div>
 
 						<div class="form-control">
