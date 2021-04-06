@@ -5,6 +5,14 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
+	<select id="getMemberByLoginPw" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE
+		loginPw = #{loginPw}
+	</select>
+
+
 	<delete id="deleteMember">
 		DELETE FROM `member`
 		WHERE id = #{id}
@@ -68,8 +76,7 @@
 		SELECT *
 		FROM `member`
 		WHERE
-		id =
-		#{id}
+		id = #{id}
 	</select>
 
 	<select id="getMembers" resultType="Member">

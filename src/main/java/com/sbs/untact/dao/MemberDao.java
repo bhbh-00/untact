@@ -28,4 +28,6 @@ public interface MemberDao {
 	void deleteMember(@Param("id") Integer id);
 
 	Member getMemberByLoginId(@Param("loginId") String loginId);
+
+	Member getMemberByLoginPw(@Param("loginPw") String loginPw);
 }

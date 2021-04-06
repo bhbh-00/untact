@@ -38,6 +38,7 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/deleteLike")
 	@ResponseBody
 	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {
+		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
@@ -196,7 +197,6 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/add")
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-
 		return "/adm/article/add";
 
 	}
@@ -232,6 +232,7 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
+		
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}

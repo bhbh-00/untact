@@ -26,6 +26,32 @@ public class UsrMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
+	
+	@RequestMapping("/usr/member/ConfirmPassword")
+	public String ShowConfirmPassword() {
+		return "/usr/member/ConfirmPassword";
+	}
+	
+	@RequestMapping("/usr/member/doConfirmPassword")
+	public String doConfirmPassword(String loginPw, @RequestParam Map<String, Object> param, HttpServletRequest req) {
+		
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+
+		if (loginPw == null) {
+			return msgAndBack(req, "loginPw를 입력해주세요.");
+		}
+
+		Member member = memberService.getMemberByLoginPw(loginPw);
+
+		if (member == null) {
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
+		}
+		
+		ResultData ConfirmPasswordMemberRd = memberService.ConfirmPasswordMember(loginPw);
+		
+		return msgAndReplace(req, String.format("마이페이지입니다.", loginMemberId),
+				"../member/detail?id=" + loginMemberId);
+	}
 
 	@RequestMapping("/usr/member/doDelete")
 	@ResponseBody
@@ -48,7 +74,7 @@ public class UsrMemberController extends BaseController {
 	@RequestMapping("/usr/member/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 		if (id == null) {
-			return msgAndBack(req, "제목을 입력해주세요.");
+			return msgAndBack(req, "id을 입력해주세요.");
 		}
 
 		Member member = memberService.getForPrintMember(id);

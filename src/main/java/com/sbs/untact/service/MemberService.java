@@ -48,10 +48,6 @@ public class MemberService {
 		return actor.getAuthLevel() == 7;
 	}
 
-//	public boolean isAdmin(Member actor) {
-//		return isAdmin(actor.getId());
-//	}
-
 	public Member getMemberByAuthKey(String authKey) {
 		return memberDao.getMemberByAuthKey(authKey);
 	}
@@ -131,5 +127,15 @@ public class MemberService {
 
 		return member;
 	}
+
+	public Member getMemberByLoginPw(String loginPw) {
+		return memberDao.getMemberByLoginPw(loginPw);
+	}
+
+	public ResultData ConfirmPasswordMember(String loginPw) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

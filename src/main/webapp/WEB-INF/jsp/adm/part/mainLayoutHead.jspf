@@ -22,6 +22,8 @@
     
     <nav class="menu-box-1">
       <ul class="flex h-full">
+      
+      <!-- 관리자 사이트 홈 -->
         <li>
           <a href="/adm/home/main" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="fas fa-house-user"></i></span>
@@ -29,6 +31,8 @@
           </a>
           <div></div>
         </li>
+        
+        <!-- 사용자 사이트 홈 -->
         <li>
           <a href="/usr/home/main" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="fas fa-home"></i></span>
@@ -36,6 +40,8 @@
           </a>
           <div></div>
         </li>
+        
+        <!-- 회원관리 -->
         <li>
           <a href="/adm/member/list" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="fas fa-user"></i></span>
@@ -43,6 +49,8 @@
           </a>
           <div></div>
         </li>
+        
+        <!-- 게시판 관리 -->
         <li>
           <a href="/adm/board/list" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="far fa-clipboard"></i></span>
@@ -50,6 +58,8 @@
           </a>
           <div></div>
         </li>
+        
+        <!-- 게시물 관리 -->
         <li>
           <a href="/adm/article/list?boardId=1" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="far fa-newspaper"></i></span>
@@ -84,6 +94,8 @@
             </ul>
           </div>
         </li>
+        
+        <!-- 로그아웃 -->
         <li>
           <a href="/adm/member/doLogout" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="fas fa-sign-out-alt"></i></span>
