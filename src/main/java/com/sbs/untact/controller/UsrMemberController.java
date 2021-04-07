@@ -33,7 +33,9 @@ public class UsrMemberController extends BaseController {
 	}
 	
 	@RequestMapping("/usr/member/doConfirmPassword")
-	public String doConfirmPassword(String loginPw, @RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doConfirmPassword(String loginPw, HttpServletRequest req) {
+		
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 
@@ -43,7 +45,7 @@ public class UsrMemberController extends BaseController {
 
 		Member member = memberService.getMemberByLoginPw(loginPw);
 
-		if (member == null) {
+		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
 		
@@ -80,7 +82,7 @@ public class UsrMemberController extends BaseController {
 		Member member = memberService.getForPrintMember(id);
 
 		if (member == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
 		}
 
 		req.setAttribute("member", member);
@@ -289,7 +291,7 @@ public class UsrMemberController extends BaseController {
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌! */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
-		String redirectUrl = "/usr/member/detail";
+		String redirectUrl = "/usr/home/main";
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}

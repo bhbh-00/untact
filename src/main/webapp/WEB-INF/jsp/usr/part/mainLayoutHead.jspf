@@ -47,21 +47,9 @@
                 </a>
               </li>
               <li>
-                <a href="/usr/article/list?boardId=2"  class="inline-block text-lg">
+                <a href="/usr/article/list?boardId=2" class="inline-block text-lg">
                   <span><i class="far fa-newspaper"></i></span>
                   <span>&nbsp;자유 게시판</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="inline-block text-lg">
-                  <span><i class="far fa-newspaper"></i></span>
-                  <span>&nbsp;신고 게시판</span>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="inline-block text-lg">
-                  <span><i class="far fa-newspaper"></i></span>
-                  <span>&nbsp;QNA 게시판</span>
                 </a>
               </li>
             </ul>
