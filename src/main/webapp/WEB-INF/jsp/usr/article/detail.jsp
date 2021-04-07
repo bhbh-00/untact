@@ -56,7 +56,7 @@
 							<!-- 작성자 -->
 							<div>
 								<span class="badge badge-accent">작성자</span>
-								<span>${article.extra__boardName}</span>
+								<span>${article.extra__writer}</span>
 							</div>
 
 							<!-- 등록날짜 -->

@@ -86,21 +86,21 @@ public class UsrArticleController extends BaseController {
 	@ResponseBody
 	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-		
+
 		if (param.get("relId") == null) {
 			return new ResultData("F-1", "relId을 입력해주세요.");
 		}
-		
+
 		Article article = articleService.getArticle((int) param.get("relId"));
 
 		if (article == null) {
-				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-			}
+			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+		}
 
 		if (param.get("body") == null) {
 			return new ResultData("F-1", "댓글을 입력해주세요.");
 		}
-		
+
 		req.setAttribute("article", article);
 		param.put("memberId", loginMemberId);
 
@@ -166,6 +166,8 @@ public class UsrArticleController extends BaseController {
 		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
 		}
+
+		req.setAttribute("loginedMember", loginedMember);
 
 		return articleService.modifyArticle(param);
 	}
@@ -252,6 +254,26 @@ public class UsrArticleController extends BaseController {
 		req.setAttribute("article", article);
 
 		return "/usr/article/detail";
+	}
+
+	@RequestMapping("/usr/article/myList")
+	public String showMyList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId) {
+
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+
+		Board board = articleService.getBoard(boardId);
+
+		req.setAttribute("board", board);
+
+		if (board == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+
+		List<Article> article = articleService.getForPrintArticleByMemberId(loginMemberId);
+
+		req.setAttribute("article", article);
+
+		return "/usr/article/myList";
 	}
 
 	@RequestMapping("/usr/article/list")

@@ -112,4 +112,8 @@ public class ArticleService {
 		return articleDao.getArticlesTotleCount(boardId, searchKeywordType, searchKeyword);
 	}
 
+	public List<Article> getForPrintArticleByMemberId(int id) {
+		return articleDao.getForPrintArticleByMemberId(id);
+	}
+
 }

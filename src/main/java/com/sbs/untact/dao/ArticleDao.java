@@ -35,4 +35,6 @@ public interface ArticleDao {
 
 	int getArticlesTotleCount(@Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
 
+	List<Article> getForPrintArticleByMemberId(@Param("id") int id);
+
 }

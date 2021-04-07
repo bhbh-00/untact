@@ -37,7 +37,7 @@ public class UsrMemberController extends BaseController {
 		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		int id = (int) req.getAttribute("id");
 
 		if (loginPw == null) {
 			return msgAndBack(req, "loginPw를 입력해주세요.");
@@ -51,8 +51,8 @@ public class UsrMemberController extends BaseController {
 		
 		req.setAttribute("member", member);
 		
-		return msgAndReplace(req, String.format("마이페이지입니다.", loginMemberId),
-				"../member/detail?id=" + loginMemberId);
+		return msgAndReplace(req, String.format("마이페이지입니다.", id),
+				"../member/detail?id=" + id);
 	}
 
 	@RequestMapping("/usr/member/doDelete")
@@ -69,7 +69,7 @@ public class UsrMemberController extends BaseController {
 		if (member == null) {
 			return new ResultData("F-1", "해당 회원은 존재하지 않습니다.");
 		}
-
+		
 		return memberService.deleteMember(id);
 	}
 

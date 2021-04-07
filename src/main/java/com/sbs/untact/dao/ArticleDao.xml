@@ -5,6 +5,12 @@
 
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
+	<select id="getForPrintArticleByMemberId" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE memberId = #{id}
+	</select>
+
 	<select id="getArticlesTotleCount" resultType="int">
 		SELECT count(*)
 		FROM article
