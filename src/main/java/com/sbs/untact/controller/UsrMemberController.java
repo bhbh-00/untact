@@ -34,11 +34,8 @@ public class UsrMemberController extends BaseController {
 	
 	@RequestMapping("/usr/member/doConfirmPassword")
 	public String doConfirmPassword(String loginPw, HttpServletRequest req) {
-		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		
-		int id = (int) req.getAttribute("id");
-
 		if (loginPw == null) {
 			return msgAndBack(req, "loginPw를 입력해주세요.");
 		}
@@ -51,8 +48,8 @@ public class UsrMemberController extends BaseController {
 		
 		req.setAttribute("member", member);
 		
-		return msgAndReplace(req, String.format("마이페이지입니다.", id),
-				"../member/detail?id=" + id);
+		return msgAndReplace(req, String.format("마이페이지입니다.", member.getId()),
+				"../member/detail?id=" + member.getId());
 	}
 
 	@RequestMapping("/usr/member/doDelete")
@@ -292,7 +289,7 @@ public class UsrMemberController extends BaseController {
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌! */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
 		String redirectUrl = "/usr/home/main";
-
+		
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}
 

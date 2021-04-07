@@ -80,8 +80,6 @@
 
 				</div>
 
-
-
 				<c:forEach items="${articles}" var="article">
 
 					<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
@@ -104,13 +102,20 @@
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
-
+							
+							<!-- 게시판 번호 -->
+							<a href="${detailUrl}" class="cursor-pointer hover:underline">
+								<span class="badge badge-info">${article.extra__boardName}</span>
+								<span></span>
+							</a>
+							
 							<!-- 게시물 번호 -->
 							<a href="${detailUrl}" class="hover:underline">
 								<span class="badge badge-primary">번호</span>
 								<span>${article.id}</span>
 							</a>
-
+							
+							<!-- 작성자 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-accent">작성자</span>
 								<span>${article.extra__writer}</span>

@@ -6,9 +6,15 @@
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
 	<select id="getForPrintArticleByMemberId" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE memberId = #{id}
+		SELECT A.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
+		B.name AS extra__boardName
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		LEFT JOIN `board` AS B
+		ON A.boardId = B.id
+		WHERE A.memberId = #{id}
 	</select>
 
 	<select id="getArticlesTotleCount" resultType="int">

@@ -269,9 +269,9 @@ public class UsrArticleController extends BaseController {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
-		List<Article> article = articleService.getForPrintArticleByMemberId(loginMemberId);
+		List<Article> articles = articleService.getForPrintArticleByMemberId(loginMemberId);
 
-		req.setAttribute("article", article);
+		req.setAttribute("articles", articles);
 
 		return "/usr/article/myList";
 	}

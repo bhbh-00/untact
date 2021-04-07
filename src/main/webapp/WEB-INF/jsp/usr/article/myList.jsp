@@ -8,11 +8,9 @@
 
 <section class="section-1">
 
-	<div class="section-article-list">
+	<div class="section-article-myList">
 		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 				<div class="card-title bg-white">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
@@ -42,13 +40,20 @@
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
+							
+							<!-- 게시판 번호 -->
+							<a href="${detailUrl}" class="cursor-pointer hover:underline">
+								<span class="badge badge-info">${article.extra__boardName}</span>
+								<span></span>
+							</a>
 
 							<!-- 게시물 번호 -->
 							<a href="${detailUrl}" class="hover:underline">
 								<span class="badge badge-primary">번호</span>
 								<span>${article.id}</span>
 							</a>
-
+							
+							<!-- 작성자 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-accent">작성자</span>
 								<span>${article.extra__writer}</span>
@@ -105,8 +110,7 @@
 				</c:forEach>
 
 				<!-- 페이징 -->
-				<nav class="flex justify-center py-3 rounded-md shadow-sm"
-					aria-label="Pagination">
+				<nav class="flex justify-center py-3 rounded-md shadow-sm" aria-label="Pagination">
 
 					<!-- 시작 페이지 -->
 					<!-- 내가 보고 있는 페이지 챕터가 첫번째이면 < 표시 안보이게 -->

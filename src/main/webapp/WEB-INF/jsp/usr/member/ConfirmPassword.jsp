@@ -42,10 +42,15 @@
 				<div class="px-4 py-8">
 
 					<form class="grid form-type-1" action="doConfirmPassword"
-						method="POST"
-						onsubmit="ConfirmPasswordForm__checkAndSubmit(this); return false;">
-
-						<div class="form-control py-4">
+						method="POST" onsubmit="ConfirmPasswordForm__checkAndSubmit(this); return false;">
+						
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">${member.loginId} id</span>
+							</label>
+						</div>
+						
+						<div class="form-control">
 							<input name="loginPw" type="password" placeholder="비밀번호를 입력해주세요."
 								class="input input-bordered" maxlength="20">
 						</div>
