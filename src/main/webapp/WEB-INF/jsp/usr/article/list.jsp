@@ -13,7 +13,7 @@
 <section class="section-1">
 
 	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
-		<span class="text-2xl font-bold text-center">${param.extra__boardName} 게시물</span>
+		<span class="text-2xl font-bold text-center">${board.name} 게시물</span>
 	</div>
 
 	<div class="section-use-article-list">
