@@ -12,44 +12,18 @@
 
 <section class="section-1">
 
-	<div class="section-article-list">
-		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
+		<span class="text-2xl font-bold text-center">${param.extra__boardName} 게시물</span>
+	</div>
 
-				<div class="card-title bg-white">
-					<a href="javascript:history.back();" class="cursor-pointer">
-						<i class="fas fa-chevron-left"></i>
-					</a>
-					<span>공지사항 게시판</span>
-				</div>
+	<div class="section-use-article-list">
 
-				<div class="flex px-4 py-2">
+		<div class="container mx-auto mb-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child pt-1 pb-1 bg-white">
 
-					<!-- 게시판별로 보기 -->
-					<select class="select-board-id">
-						<option value="1">공지사항</option>
-						<option value="2">자유</option>
-						<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->
-					</select>
-					<script>
-						$('.section-1 .select-board-id').val(param.boardId);
-						$('.section-1 .select-board-id').change(function() {
-							location.href = "?boardId=" + this.value;
-						});
-						/* change 바뀔 때 마다 뭔가 실행된다.*/
-					</script>
-
-					<div class="flex-grow"></div>
-
-					<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
-
-				</div>
-
-				<!-- 총 게시물 수 -->
 				<div class="flex items-center py-2 px-4">
 
-					<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
+					<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
 
 					<div class="flex-grow"></div>
 
@@ -80,14 +54,19 @@
 
 				</div>
 
+			</div>
+		</div>
 
+		<div class="container mx-auto mb-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<c:forEach items="${articles}" var="article">
 
 					<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
 					<c:set var="detailUrl" value="detail?id=${article.id}" />
 					<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
-					<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
+					<c:set var="thumbFile"
+						value="${article.extra.file__common__attachment[thumbFileNo]}" />
 					<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
 					<div class="px-5 py-8">
@@ -99,12 +78,11 @@
 						</a>
 
 						<!-- 썸네일 -->
-						<div
-							class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
-							
+
 							<!-- 게시판 번호 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-info">${article.extra__boardName}</span>
@@ -116,7 +94,7 @@
 								<span class="badge badge-primary">번호</span>
 								<span>${article.id}</span>
 							</a>
-							
+
 							<!-- 작성자 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-accent">작성자</span>
@@ -220,8 +198,7 @@
 						</a>
 					</c:if>
 				</nav>
-
-
+				
 			</div>
 		</div>
 	</div>

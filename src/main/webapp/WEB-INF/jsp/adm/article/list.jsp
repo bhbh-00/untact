@@ -12,17 +12,14 @@
 
 <section class="section-1">
 
+	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
+		<span class="text-2xl font-bold text-center">게시물 관리</span>
+	</div>
+	
 	<div class="section-article-list">
-		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-
-				<div class="card-title bg-white">
-					<a href="javascript:history.back();" class="cursor-pointer">
-						<i class="fas fa-chevron-left"></i>
-					</a>
-					<span>게시물 관리</span>
-				</div>
+	
+		<div class="container mx-auto mt-4 mb-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<div class="flex px-4 py-2">
 
@@ -48,9 +45,9 @@
 
 				<!-- 총 게시물 수 -->
 				<div class="flex items-center py-2 px-4">
-
-					<span>총 게시물 수 : ${Util.numberFormat(totleItemsCount)}</span>
-
+					
+					<span>Total : ${Util.numberFormat(totleItemsCount)}</span>
+					
 					<div class="flex-grow"></div>
 
 					<!-- 검색 -->
@@ -68,24 +65,30 @@
 							}
 						</script>
 
-						<input
-							class="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+						<input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 							autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
 							name="searchKeyword" maxlength="20"
 							value="${param.searchKeyword}" />
-						<input
-							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
+						<input class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
 							type="submit" value="검색" />
 					</form>
 
 				</div>
+
+			</div>
+		</div>
+
+
+		<div class="container mx-auto">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<c:forEach items="${articles}" var="article">
 
 					<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
 					<c:set var="detailUrl" value="detail?id=${article.id}" />
 					<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
-					<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
+					<c:set var="thumbFile"
+						value="${article.extra.file__common__attachment[thumbFileNo]}" />
 					<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
 					<div class="px-5 py-8">
@@ -102,19 +105,19 @@
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
-							
+
 							<!-- 게시판 번호 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-info">${article.extra__boardName}</span>
 								<span></span>
 							</a>
-							
+
 							<!-- 게시물 번호 -->
 							<a href="${detailUrl}" class="hover:underline">
 								<span class="badge badge-primary">번호</span>
 								<span>${article.id}</span>
 							</a>
-							
+
 							<!-- 작성자 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-accent">작성자</span>
