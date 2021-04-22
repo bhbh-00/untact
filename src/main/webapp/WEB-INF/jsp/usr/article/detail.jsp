@@ -10,108 +10,117 @@
 <section class="section-1">
 
 	<div class="section-article-detail">
+
 		<div class="container mx-auto">
 			<div
 				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
-				<div>
-					<div class="card-title">
-						<a href="javascript:history.back();" class="cursor-pointer">
-							<i class="fas fa-chevron-left"></i>
-						</a>
-						<span>게시물 작성</span>
+				<div class="card-title bg-white">
+					<a href="javascript:history.back();" class="cursor-pointer">
+						<i class="fas fa-chevron-left"></i>
+					</a>
+					<span>${article.id}번 게시물</span>
+				</div>
+
+				<div class="p-5">
+
+					<div class="flex">
+						<span>
+							<span class="text-gray-600">Comments :</span>
+							<span class="text-gray-400 text-light">30</span>
+						</span>
+						<span class="ml-3">
+							<span class="text-gray-600">Views :</span>
+							<span class="text-gray-400 text-light">60k</span>
+						</span>
+						<div class="flex-grow"></div>
+						<span>
+							<span class="text-gray-600">Likes :</span>
+							<span class="text-gray-400 text-light">120k</span>
+						</span>
 					</div>
 
-					<div class="px-4 py-8">
-						<div class="flex">
-							<span>
-								<span>Comments:</span>
-								<span class="text-gray-400 text-light">30</span>
-							</span>
-							<span class="ml-3">
-								<span>Views:</span>
-								<span class="text-gray-400 text-light">60k</span>
-							</span>
-							<div class="flex-grow"></div>
-							<span>
-								<span>Likes:</span>
-								<span class="text-gray-400 text-light">120k</span>
-							</span>
+					<!-- 제목 -->
+					<div class="mt-7">
+						<span class="badge badge-outline">제목</span>
+						<div class="break-all mt-1 ml-1">${article.title}</div>
+					</div>
+
+					<!-- 번호 -->
+					<div
+						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<div>
+							<span class="badge badge-primary">번호</span>
+							<span>${article.id}</span>
 						</div>
 
-						<!-- 제목 -->
-						<div class="mt-4">
-							<span class="badge badge-outline">제목</span>
-							<div class="break-all mt-1 ml-1">${article.title}</div>
+						<!-- 작성자 -->
+						<div>
+							<span class="badge badge-accent">작성자</span>
+							<span>${article.extra__writer}</span>
 						</div>
 
-						<!-- 번호 -->
-						<div
-							class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-							<div>
-								<span class="badge badge-primary">번호</span>
-								<span>${article.id}</span>
-							</div>
-
-							<!-- 작성자 -->
-							<div>
-								<span class="badge badge-accent">작성자</span>
-								<span>${article.extra__writer}</span>
-							</div>
-
-							<!-- 등록날짜 -->
-							<div>
-								<span class="badge">등록날짜</span>
-								<span class="text-gray-600 text-light">${article.regDate}</span>
-							</div>
-
-							<!-- 수정날짜 -->
-							<div>
-								<span class="badge">수정날짜</span>
-								<span class="text-gray-600 text-light">${article.updateDate}</span>
-							</div>
+						<!-- 등록날짜 -->
+						<div>
+							<span class="badge">등록날짜</span>
+							<span class="text-gray-600 text-light">${article.regDate}</span>
 						</div>
 
-						<!-- 본문 -->
-						<div class="mt-6">
-							<span class="badge badge-outline">본문</span>
-							<div class="mt-3">
-								<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
-									<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
-									<c:set var="file"
-										value="${article.extra.file__common__attachment[fileNo]}" />
+						<!-- 수정날짜 -->
+						<div>
+							<span class="badge">수정날짜</span>
+							<span class="text-gray-600 text-light">${article.updateDate}</span>
+						</div>
+					</div>
+
+					<!-- 본문 -->
+					<div class="mt-6">
+						<span class="badge badge-outline">본문</span>
+						<div class="mt-3">
+							<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
+								<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
+								<c:set var="file"
+									value="${article.extra.file__common__attachment[fileNo]}" />
 									${file.mediaHtml}
 							</c:forEach>
-							</div>
-							<div class="mt-3 break-all ml-1">${article.body}</div>
 						</div>
+						<div class="mt-3 break-all ml-1">${article.body}</div>
+					</div>
 
-						<div class="plain-link-wrap gap-3 mt-4">
-							<a href="#" class="plain-link" title="자세히 보기">
-								<span>
-									<i class="fas fa-info"></i>
-								</span>
-								<span>자세히 보기</span>
-							</a>
-							<a href="#" class="plain-link">
-								<span>
-									<i class="fas fa-edit"></i>
-								</span>
-								<span>수정</span>
-							</a>
-							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="#"
-								class="plain-link">
-								<span>
-									<i class="fas fa-trash"></i>
-									<span>삭제</span>
-								</span>
-							</a>
-						</div>
+					<div class="flex plain-link-wrap gap-3 mt-4">
+
+						<div class="flex"></div>
+
+						<div class="flex-grow"></div>
+
+						<a href="#" class="flex plain-link">
+							<span>
+								<i class="fas fa-edit"></i>
+							</span>
+							<span>수정</span>
+						</a>
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="#"
+							class="flex plain-link">
+							<span>
+								<i class="fas fa-trash"></i>
+								<span>삭제</span>
+							</span>
+						</a>
 					</div>
 				</div>
 
+
+
+			</div>
+		</div>
+
+		<div class="container mx-auto mt-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 				<div id="vue-app__reply-box">
-					<h1 class="title-bar px-4">댓글</h1>
+					<div class="card-title bg-white">
+						<i class="far fa-comments"></i>		
+						<span class="text-lg">댓글</span>
+					</div>
 					<div>
 						<!-- 댓글 입력 시작 -->
 						<form @submit.prevent="writeReply"
@@ -169,7 +178,10 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
+
+
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

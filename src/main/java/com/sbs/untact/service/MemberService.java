@@ -132,10 +132,4 @@ public class MemberService {
 		return memberDao.getMemberByLoginPw(loginPw);
 	}
 
-	public ResultData ConfirmPasswordMember(String loginPw) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }

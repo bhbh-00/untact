@@ -9,16 +9,15 @@
 
 	<div class="section-member-detail">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg bg-white">
-			
-				<div class="card-title bg-gray-400 text-white">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+				<div class="card-title bg-white">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>회원 프로필</span>
+					<span>내 프로필</span>
 				</div>
 
-				<div class="px-4 py-3">
+				<div class="px-4 py-3 pt-7 pb-7">
 
 					<c:set var="detailUrl" value="detail?id=${member.id}" />
 

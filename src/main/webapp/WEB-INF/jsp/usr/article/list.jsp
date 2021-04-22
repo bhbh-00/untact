@@ -12,13 +12,13 @@
 
 <section class="section-1">
 
-	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
-		<span class="text-2xl font-bold text-center">${board.name} 게시물</span>
+	<div class="component-title-bar container mx-auto pt-1 pb-1">
+		<span class="text-xl font-bold text-center">${board.name} 게시물</span>
 	</div>
 
 	<div class="section-use-article-list">
 
-		<div class="container mx-auto mb-4">
+		<div class="container mx-auto mt-4 mb-5">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child pt-1 pb-1 bg-white">
 
 				<div class="flex items-center py-2 px-4">

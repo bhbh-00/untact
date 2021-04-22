@@ -8,22 +8,21 @@
 
 <section class="section-1">
 
+	<div class="component-title-bar container mx-auto pt-1 pb-1">
+		<span class="text-xl font-bold text-center">내 게시물</span>
+	</div>
+
 	<div class="section-article-myList">
-		<div class="container mx-auto">
+		<div class="container mx-auto mt-4 mb-5">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title bg-white">
-					<a href="javascript:history.back();" class="cursor-pointer">
-						<i class="fas fa-chevron-left"></i>
-					</a>
-					<span>내 게시물 게시판</span>
-				</div>
 
 				<c:forEach items="${articles}" var="article">
 
 					<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
 					<c:set var="detailUrl" value="detail?id=${article.id}" />
 					<c:set var="thumbFileNo" value="${String.valueOf(1)}" />
-					<c:set var="thumbFile" value="${article.extra.file__common__attachment[thumbFileNo]}" />
+					<c:set var="thumbFile"
+						value="${article.extra.file__common__attachment[thumbFileNo]}" />
 					<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
 					<div class="px-5 py-8">
@@ -35,12 +34,11 @@
 						</a>
 
 						<!-- 썸네일 -->
-						<div
-							class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
-							
+
 							<!-- 게시판 번호 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-info">${article.extra__boardName}</span>
@@ -52,7 +50,7 @@
 								<span class="badge badge-primary">번호</span>
 								<span>${article.id}</span>
 							</a>
-							
+
 							<!-- 작성자 -->
 							<a href="${detailUrl}" class="cursor-pointer hover:underline">
 								<span class="badge badge-accent">작성자</span>
@@ -72,8 +70,7 @@
 							</a>
 
 							<!-- 본문 -->
-							<a
-								class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+							<a class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
 								<span class="badge badge-outline mb-1">본문</span>
 								<span class="line-clamp-3 ml-1"> ${article.body} </span>
 							</a>
@@ -131,18 +128,15 @@
 
 						<!-- 현재 페이지 -->
 						<c:if test="${i == page}">
-							<c:set var="aClassStr"
-								value="${aClassStr} text-red-700 hover:bg-red-50" />
+							<c:set var="aClassStr" value="${aClassStr} text-red-700 hover:bg-red-50" />
 						</c:if>
 
 						<!-- 현재 페이지가 아닌 -->
 						<c:if test="${i != page}">
-							<c:set var="aClassStr"
-								value="${aClassStr} text-gray-700 hover:bg-gray-50" />
+							<c:set var="aClassStr" value="${aClassStr} text-gray-700 hover:bg-gray-50" />
 						</c:if>
 
-						<a href="${Util.getNewUrl(requestUrl, 'page', i)}"
-							class="${aClassStr}">${i}</a>
+						<a href="${Util.getNewUrl(requestUrl, 'page', i)}" class="${aClassStr}">${i}</a>
 					</c:forEach>
 
 					<!-- 마지막 페이지 -->
@@ -155,10 +149,10 @@
 						</a>
 					</c:if>
 				</nav>
-
+				
+				</div>
 			</div>
 		</div>
-	</div>
 
 </section>
 
