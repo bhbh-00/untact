@@ -13,7 +13,7 @@
 <section class="section-1">
 
 	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
-		<span class="text-2xl font-bold text-center">게시물 관리</span>
+		<span class="text-lg font-bold text-center">${ board.name } 게시물 관리</span>
 	</div>
 	
 	<div class="section-article-list">
@@ -42,6 +42,12 @@
 					<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
 
 				</div>
+
+			</div>
+		</div>
+		
+		<div class="container mx-auto mt-4 mb-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<!-- 총 게시물 수 -->
 				<div class="flex items-center py-2 px-4">

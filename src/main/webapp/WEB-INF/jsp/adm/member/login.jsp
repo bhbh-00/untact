@@ -35,7 +35,8 @@
 		
 	
 	</script>
-<section class="section-login">
+<section class="section-adm-login">
+
 	<div class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
@@ -47,41 +48,52 @@
 				</a>
 			</div>
 			
-			<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
-				<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
-				
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="아이디" name="loginId" maxlength="20" />
+			
+			<div class="section-member-login">
+				<div class="container mx-auto mt-4">
+					<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+
+							<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+								action="doLogin" method="POST"
+								onsubmit="LoginForm__checkAndSubmit(this); return false;">
+								<input type="hidden" name="redirectUrl"
+									value="${param.redirectUrl}" />
+
+
+								<div class="form-control">
+									<input name="loginId" autofocus="autofocus" type="text"
+										placeholder="아이디를 입력해주세요." class="input input-bordered"
+										maxlength="20">
+								</div>
+
+								<div class="form-control mt-3 mb-4">
+									<input name="loginPw" autofocus="autofocus" type="password"
+										placeholder="비밀번호를 입력해주세요." class="input input-bordered"
+										maxlength="20">
+								</div>
+								
+								<div class="form-control mb-2">
+									<input type="submit" class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full" value="회원가입">
+								</div>
+								
+								<div class="flex flex-col md:flex-row">
+									<div class="p-1 text-center md:flex-grow">
+										<a href="join" class="text-gray-600 inline-block hover:underline">회원가입</a>
+										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
+										<a href="#" class="text-gray-600 inline-block hover:underline">아이디찾기</a>
+										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
+										<a href="#" class="text-gray-600 inline-block hover:underline">비밀번호찾기</a>
+									</div>
+								</div>
+							</form>
+
+						</div>
 					</div>
 				</div>
-				
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3"
-							autofocus="autofocus" type="password" placeholder="비밀번호" name="loginPw" maxlength="20" />
-					</div>
-				</div>
-				
-				<div class="flex flex-col mb-4 md:flex-row">
-					<div class="p-1 md:flex-grow">
-						<input class="w-full btn-primary bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="로그인" />						
-					</div>
-				</div>
-				
-				<div class="flex flex-col md:flex-row">
-					<div class="p-1 text-center md:flex-grow">
-						<a href="join" class="text-gray-600 inline-block hover:underline">회원가입</a>
-						<a href="#" class="text-gray-600 mx-2 inline-block hover:underline">아이디찾기</a>
-						<a href="#" class="text-gray-600 inline-block hover:underline">비밀번호찾기</a>
-					</div>
-				</div>
-			</form>
 
 		</div>
 	</div>
+	
 </section>
 
 <%@ include file="../part/foot.jspf"%>

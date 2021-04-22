@@ -7,16 +7,15 @@
 
 <section class="section-1">
 
-	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
-		<span class="text-2xl font-bold text-center">회원 관리</span>
+	<div class="component-title-bar container mx-auto pt-1 pb-1">
+		<span class="text-lg font-bold text-center">회원 관리</span>
 	</div>
 
 	<div class="section-member-list">
-
-		<div class="container mx-auto mt-4 mb-4">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child pt-1 pb-1 bg-white">
-
-				<div class="flex px-4 py-2">
+		<div class="container mx-auto mt-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			
+			<div class="flex px-4 py-2">
 
 					<div></div>
 
@@ -42,11 +41,6 @@
 						/* change 바뀔 때 마다 뭔가 실행된다.*/
 					</script>
 				</div>
-			</div>
-		</div>
-
-		<div class="container mx-auto">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<c:forEach items="${members}" var="member">
 
@@ -103,7 +97,7 @@
 								<span class="text-gray-600">${member.nickname}</span>
 							</a>
 						</div>
-
+							
 						<div class="grid grid-item-float gap-3 mt-4">
 							<a href="${detailUrl}" class="text-blue-500" title="자세히 보기">
 								<span>

@@ -35,7 +35,7 @@
 		
 	
 	</script>
-<section class="section-login">
+<section class="section-usr-login">
 
 	<div class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">

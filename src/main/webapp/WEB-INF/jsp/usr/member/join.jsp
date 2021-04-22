@@ -291,8 +291,8 @@ $(function() {
 									<input autofocus="autofocus" type="tel" placeholder="-는 제외해주세요. ex) 01000000000" name="cellphoneNo" maxlength="11" class="input input-bordered">
 								</div>
 								
-								<div class="mt-4 btn-wrap gap-1">
-									<input type="submit" class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full" value="회원가입">					
+								<div class="form-control mt-4">
+									<input type="submit" class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full text-base" value="회원가입">					
 								</div>
 
 							</form>
