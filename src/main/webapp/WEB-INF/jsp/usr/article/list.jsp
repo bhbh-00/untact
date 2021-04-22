@@ -13,7 +13,7 @@
 <section class="section-1">
 
 	<div class="component-title-bar container mx-auto pt-1 pb-1">
-		<span class="text-xl font-bold text-center">${board.name} 게시물</span>
+		<span class="text-lg font-bold text-center">${board.name} 게시물</span>
 	</div>
 
 	<div class="section-use-article-list">
@@ -78,7 +78,8 @@
 						</a>
 
 						<!-- 썸네일 -->
-						<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<div
+							class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
@@ -129,24 +130,6 @@
 								</span>
 								<span>자세히 보기</span>
 							</a>
-
-							<!-- 수정 -->
-							<a href="modify?id=${article.id}" class="plain-link">
-								<span>
-									<i class="fas fa-edit"></i>
-								</span>
-								<span>수정</span>
-							</a>
-
-							<!-- 삭제 -->
-							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-								href="doDelete?id=${article.id}" class="plain-link">
-								<span>
-									<i class="fas fa-trash"></i>
-									<span>삭제</span>
-								</span>
-							</a>
-
 						</div>
 					</div>
 				</c:forEach>
@@ -198,7 +181,7 @@
 						</a>
 					</c:if>
 				</nav>
-				
+
 			</div>
 		</div>
 	</div>

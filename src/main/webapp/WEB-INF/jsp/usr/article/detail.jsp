@@ -93,13 +93,13 @@
 
 						<div class="flex-grow"></div>
 
-						<a href="#" class="flex plain-link">
+						<a href="modify?id=${article.id}" class="flex plain-link">
 							<span>
 								<i class="fas fa-edit"></i>
 							</span>
 							<span>수정</span>
 						</a>
-						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="#"
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}"
 							class="flex plain-link">
 							<span>
 								<i class="fas fa-trash"></i>
