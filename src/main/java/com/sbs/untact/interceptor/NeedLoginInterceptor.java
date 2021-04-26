@@ -44,8 +44,7 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 				// 리턴 false;를 이후에 실행될 인터셉터와 액션이 실행되지 않음
 			} else {
 				response.setContentType("application/json; charset=UTF-8");
-				response.getWriter()
-						.append("{\"resultCode\":\" " + resultCode + " \",\"msg\":\" " + resultMsg + " \"}");
+				response.getWriter().append("{\"resultCode\":\" " + resultCode + " \",\"msg\":\" " + resultMsg + " \"}");
 			}
 
 			return false;

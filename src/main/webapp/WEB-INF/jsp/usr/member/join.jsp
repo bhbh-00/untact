@@ -4,8 +4,11 @@
 <%@ include file="../part/head.jspf"%>
 
 <!-- lodash -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+	
+<!-- sha256 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+	
 
 <script>
 const JoinForm__checkAndSubmitDone = false;
@@ -74,17 +77,17 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	if ( form.loginId.value != JoinForm__validLoginId ) {
-		alert('아이디 중복체크를해주세요.');
+		alert('아이디 중복체크를 해주세요.');
 		form.loginId.focus();
 		
 		return;
 	}
 		
-	form.loginPw.value = form.loginPw.value.trim();
+	form.loginPwInput.value = form.loginPwInput.value.trim();
 	
-	if ( form.loginPw.value.length == 0 ) {
+	if ( form.loginPwInput.value.length == 0 ) {
 		alert('비밀번호를 입력해주세요.');
-		form.loginPw.focus();
+		form.loginPwInput.focus();
 		
 		return;
 	}
@@ -96,7 +99,7 @@ function JoinForm__checkAndSubmit(form) {
 		return;
 	}
 	
-	if (form.loginPw.value != form.loginPwConfirm.value) {
+	if (form.loginPwInput.value != form.loginPwConfirm.value) {
 		alert('비밀번호가 일치하지 않습니다.');
 		form.loginPwConfirm.focus();
 		
@@ -180,6 +183,10 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	
+	form.loginPw.value = sha256(form.loginPwInput.value);
+	form.loginPwInput.value = '';
+	form.loginPwConfirm.value = '';
+	
 	startUpload(submitForm);
 }
 
@@ -216,6 +223,7 @@ $(function() {
 
 								<input type="hidden" name="genFileIdsStr" />
 								<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+								<input type="hidden" name="loginPw" />
 
 								<!-- loginId -->
 								<div class="form-control">
@@ -228,14 +236,14 @@ $(function() {
 								<!-- 아이디 중복여부를 ajax로 물어봄 -->
 								<div class="form-control">
 									<div class="loginIdInputMsg"></div>
-								</div>
-
+								</div>	
+									
 								<!-- 비밀번호 -->
 								<div class="form-control">
 									<label class="label">
 										<span class="label-text">비밀번호</span>
 									</label>
-									<input autofocus="autofocus" type="password" placeholder="영문+숫자 조합으로 입력해주세요." name="loginPw" maxlength="20" class="input input-bordered">
+									<input autofocus="autofocus" type="password" placeholder="영문+숫자 조합으로 입력해주세요." name="loginPwInput" maxlength="20" class="input input-bordered">
 								</div>
 
 								<!-- 비밀번호 확인 -->

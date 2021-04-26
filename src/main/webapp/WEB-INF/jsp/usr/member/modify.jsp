@@ -5,6 +5,9 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<!-- sha256 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <script>
 	const ModifyMember_checkAndSubmitDone = false;
 
@@ -15,11 +18,11 @@
 			return;
 		}
 
-		form.loginPw.value = form.loginPw.value.trim();
+		form.loginPwInput.value = form.loginPwInput.value.trim();
 
-		if (form.loginPw.value.length == 0) {
+		if (form.loginPwInput.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
+			form.loginPwInput.focus();
 
 			return;
 		}
@@ -31,7 +34,7 @@
 			return;
 		}
 
-		if (form.loginPw.value != form.loginPwConfirm.value) {
+		if (form.loginPwInput.value != form.loginPwConfirm.value) {
 			alert('로그인비번이 일치하지 않습니다.');
 			form.loginPwConfirm.focus();
 
@@ -102,12 +105,16 @@
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
 
 			}
-
+				
 			form.submit();
 			ModifyMember_checkAndSubmitDone = true;
 
 		}
 
+		form.loginPw.value = sha256(form.loginPwInput.value);
+		form.loginPwInput.value = '';
+		form.loginPwConfirm.value = '';
+		
 		startUpload(submitForm);
 	}
 </script>
@@ -132,6 +139,7 @@
 
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
+						<input type="hidden" name="loginPw" />
 						
 						<!-- 번호 -->
 						<div class="form-control">
@@ -180,8 +188,8 @@
 							<label class="label">
 								<span class="label-text">비밀번호</span>
 							</label>
-							<input type="password" name="loginPw" placeholder="비밀번호"
-								class="input input-bordered" value="">
+							<input type="password" name="loginPwInput" placeholder="비밀번호" maxlength="30"
+								class="input input-bordered">
 						</div>
 						
 						<!-- 비밀번호 확인 -->
