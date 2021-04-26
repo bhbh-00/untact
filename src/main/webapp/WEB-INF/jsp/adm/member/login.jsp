@@ -86,7 +86,7 @@
 									<div class="p-1 text-center md:flex-grow">
 										<a href="join" class="text-gray-600 inline-block hover:underline">회원가입</a>
 										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
-										<a href="#" class="text-gray-600 inline-block hover:underline">아이디찾기</a>
+										<a href="findLoginId" class="text-gray-600 inline-block hover:underline">아이디찾기</a>
 										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
 										<a href="#" class="text-gray-600 inline-block hover:underline">비밀번호찾기</a>
 									</div>

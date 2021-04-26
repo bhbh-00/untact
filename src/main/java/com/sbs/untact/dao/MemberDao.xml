@@ -5,6 +5,14 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
+	<select id="getMemberByNameAndEmail" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE
+		`name` = #{name}
+		AND email = #{email}
+	</select>
+
 	<select id="getMemberByLoginPw" resultType="Member">
 		SELECT *
 		FROM `member`

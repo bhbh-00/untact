@@ -26,16 +26,39 @@ public class UsrMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
+
+	@RequestMapping("/usr/member/findLoginId")
+	public String ShowfindLoginId() {
+		return ("/usr/member/findLoginId");
+	}
+
+	@RequestMapping("/usr/member/doFindLoginId")
+	@ResponseBody
+	public String dofindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
+		
+		if (Util.isEmpty(redirectUrl)) {
+			redirectUrl = "/";
+        }
+
+        Member member = memberService.getMemberByNameAndEmail(name, email);
+
+        if (member == null) {
+            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+        }
+
+        return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
+	}
+
 	@RequestMapping("/usr/member/ConfirmPassword")
 	public String ShowConfirmPassword() {
 		return "/usr/member/ConfirmPassword";
 	}
-	
+
 	@RequestMapping("/usr/member/doConfirmPassword")
 	public String doConfirmPassword(String loginPw, HttpServletRequest req) {
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		
+
 		if (loginPw == null) {
 			return msgAndBack(req, "loginPw를 입력해주세요.");
 		}
@@ -45,18 +68,15 @@ public class UsrMemberController extends BaseController {
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
-		
+
 		req.setAttribute("member", member);
-		
-		return msgAndReplace(req, String.format("마이페이지입니다.", member.getId()),
-				"../member/detail?id=" + member.getId());
+
+		return msgAndReplace(req, String.format("마이페이지입니다.", member.getId()), "../member/detail?id=" + member.getId());
 	}
 
 	@RequestMapping("/usr/member/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
@@ -66,7 +86,7 @@ public class UsrMemberController extends BaseController {
 		if (member == null) {
 			return new ResultData("F-1", "해당 회원은 존재하지 않습니다.");
 		}
-		
+
 		return memberService.deleteMember(id);
 	}
 
@@ -283,13 +303,14 @@ public class UsrMemberController extends BaseController {
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		/* 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐)
-		 * 이러한 오류를 해결? 발생이 안되게 하기 위해서는
+		/*
+		 * 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐) 이러한 오류를 해결? 발생이 안되게 하기 위해서는
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		 * param.put("id", loginedMemberId); -> 이게 없으면 됌! */
+		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
+		 */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
 		String redirectUrl = "/usr/home/main";
-		
+
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}
 

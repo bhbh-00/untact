@@ -132,4 +132,8 @@ public class MemberService {
 		return memberDao.getMemberByLoginPw(loginPw);
 	}
 
+	public Member getMemberByNameAndEmail(String name, String email) {
+		return memberDao.getMemberByNameAndEmail(name, email);
+	}
+
 }

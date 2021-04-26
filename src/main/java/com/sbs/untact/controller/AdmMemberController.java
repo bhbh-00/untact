@@ -26,7 +26,29 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
+	
+	@RequestMapping("/adm/member/findLoginId")
+	public String ShowfindLoginId() {
+		return ("/adm/member/findLoginId");
+	}
 
+	@RequestMapping("/adm/member/doFindLoginId")
+	@ResponseBody
+	public String dofindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
+		
+		if (Util.isEmpty(redirectUrl)) {
+			redirectUrl = "/";
+        }
+
+        Member member = memberService.getMemberByNameAndEmail(name, email);
+
+        if (member == null) {
+            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+        }
+
+        return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
+	}
+	
 	@RequestMapping("/adm/member/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
