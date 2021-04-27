@@ -5,6 +5,14 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
+	<select id="getMemberByLoginIdAndEmail" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE
+		loginId = #{loginId}
+		AND email = #{email}
+	</select>
+
 	<select id="getMemberByNameAndEmail" resultType="Member">
 		SELECT *
 		FROM `member`
@@ -93,8 +101,36 @@
 		WHERE
 		authLevel = #{authLevel}
 	</select>
-
-
+	
+	<update id="modifyUserMember">
+		UPDATE `member`
+		<set>
+			<if
+				test="loginPw != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
+				updateDate = NOW(),
+			</if>
+			<if test="loginPw != null">
+				loginPw = #{loginPw},
+			</if>
+			<if test="authLevel != null">
+				authLevel = #{authLevel},
+			</if>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="nickname != null">
+				nickname = #{nickname},
+			</if>
+			<if test="cellphoneNo != null">
+				cellphoneNo = #{cellphoneNo},
+			</if>
+			<if test="email != null">
+				email = #{email}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 	<update id="modifyMember">
 		UPDATE `member`
 		<set>

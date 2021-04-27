@@ -62,7 +62,7 @@
 
 								
 								<div class="container mx-auto flex mb-4 text-xl">
-								<span class="flex items-center mr-2"><i class="fas fa-search"></i></span>
+								<span class="flex items-center mr-1"><i class="fas fa-search"></i></span>
 								<span class="font-bold"> 아이디 찾기 </span>
 								</div>
 								
@@ -84,11 +84,11 @@
 								
 								<div class="flex flex-col md:flex-row">
 									<div class="p-1 text-center md:flex-grow">
+										<a href="login" class="text-gray-600 inline-block hover:underline">로그인</a>
+										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
 										<a href="join" class="text-gray-600 inline-block hover:underline">회원가입</a>
 										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
-										<a href="#" class="text-gray-600 inline-block hover:underline">아이디찾기</a>
-										<a href="#" class="text-gray-600 inline-block hover:underline"> | </a>
-										<a href="#" class="text-gray-600 inline-block hover:underline">비밀번호찾기</a>
+										<a href="findLoginPw" class="text-gray-600 inline-block hover:underline">비밀번호찾기</a>
 									</div>
 								</div>
 							</form>

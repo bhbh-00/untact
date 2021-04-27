@@ -224,6 +224,11 @@ $(function() {
 								<input type="hidden" name="genFileIdsStr" />
 								<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 								<input type="hidden" name="loginPw" />
+								
+								<div class="container mx-auto flex text-xl ml-1">
+								<span class="flex items-center mr-1"><i class="fas fa-user-edit"></i></span>
+								<span class="font-bold"> 회원가입 </span>
+								</div>
 
 								<!-- loginId -->
 								<div class="form-control">

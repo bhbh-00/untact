@@ -27,6 +27,35 @@ public class AdmMemberController extends BaseController {
 	@Autowired
 	private GenFileService genFileService;
 	
+	
+	@RequestMapping("/adm/member/findLoginPw")
+	public String ShowfindLoginPw() {
+		return ("/adm/member/findLoginPw");
+	}
+
+	@RequestMapping("/adm/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
+		
+		if (Util.isEmpty(redirectUrl)) {
+			redirectUrl = "/adm/member/login";
+        }
+
+        Member member = memberService.getMemberByLoginId(loginId);
+
+        if (member == null) {
+            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+        }
+        
+        if (member.getEmail().equals(email) == false) {
+            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+        }
+
+        ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+
+        return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
+	}
+	
 	@RequestMapping("/adm/member/findLoginId")
 	public String ShowfindLoginId() {
 		return ("/adm/member/findLoginId");

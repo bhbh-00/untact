@@ -119,7 +119,7 @@
 	}
 </script>
 
-<section class="section-1">
+<section class="section-usr-modify">
 
 	<div class="section-member-modify">
 		<div class="container mx-auto">
@@ -198,7 +198,7 @@
 								<span class="label-text">비밀번호 확인</span>
 							</label>
 							<input type="password" name="loginPwConfirm"
-								placeholder="비밀번호 확인" class="input input-bordered" value="">
+								placeholder="비밀번호 확인" class="input input-bordered" maxlength="30">
 						</div>
 						
 						<!-- 이름 -->

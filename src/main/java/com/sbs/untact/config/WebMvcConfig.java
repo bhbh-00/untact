@@ -99,10 +99,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(needLogoutInterceptor)
 			.addPathPatterns("/adm/member/login")
 			.addPathPatterns("/adm/member/doLogin")
+			.addPathPatterns("/adm/member/join")
+			.addPathPatterns("/adm/member/doJoin")
+			.addPathPatterns("/adm/member/findLoginId")
+			.addPathPatterns("/adm/member/doFindLoginId")
+			.addPathPatterns("/adm/member/findLoginPw")
+			.addPathPatterns("/adm/member/doFindLoginPw")
 			.addPathPatterns("/usr/member/login")
 			.addPathPatterns("/usr/member/doLogin")
 			.addPathPatterns("/usr/member/join")
-			.addPathPatterns("/usr/member/doJoin");
+			.addPathPatterns("/usr/member/doJoin")
+			.addPathPatterns("/usr/member/findLoginId")
+			.addPathPatterns("/usr/member/doFindLoginId")
+			.addPathPatterns("/usr/member/findLoginPw")
+			.addPathPatterns("/usr/member/doFindLoginPw");
 	}
 	
 	@Override

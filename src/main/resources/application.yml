@@ -1,6 +1,17 @@
 server:
   port: 8024
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bhbh89900@gmail.com
+    password: jbbwogheqiaejvqm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   # 파일 업로드 용량 제한 50mb 로 늘리기
   servlet:
     multipart:
@@ -19,6 +30,10 @@ spring:
 mybatis:
   type-aliases-package: com.sbs.untact.dto
 custom:
+  siteMainUri: http://localhost:8024/
+  siteName: Untact
+  emailFrom: Untact@localhost
+  emailFromName: Untact
   genFileDirPath: C:/work/untact-file
   logging:
     dir: log

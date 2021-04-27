@@ -26,7 +26,35 @@ public class UsrMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
+	
+	@RequestMapping("/usr/member/findLoginPw")
+	public String ShowfindLoginPw() {
+		return ("/usr/member/findLoginPw");
+	}
 
+	@RequestMapping("/usr/member/doFindLoginPw")
+	@ResponseBody
+	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
+		
+		if (Util.isEmpty(redirectUrl)) {
+			redirectUrl = "/usr/member/login";
+        }
+
+        Member member = memberService.getMemberByLoginId(loginId);
+
+        if (member == null) {
+            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+        }
+        
+        if (member.getEmail().equals(email) == false) {
+            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+        }
+
+        ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+
+        return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
+	}
+	
 	@RequestMapping("/usr/member/findLoginId")
 	public String ShowfindLoginId() {
 		return ("/usr/member/findLoginId");

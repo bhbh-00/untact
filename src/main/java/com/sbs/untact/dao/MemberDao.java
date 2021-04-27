@@ -33,4 +33,8 @@ public interface MemberDao {
 
 	Member getMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
 
+	Member getMemberByLoginIdAndEmail(@Param("loginId") String loginId, @Param("email") String email);
+
+	void modifyUserMember(@Param("id") int id, @Param("loginPw") String loginPw, @Param("authLevel") String authLevel, @Param("name") String name, @Param("nickname") String nickname, @Param("cellphoneNo") String cellphoneNo, @Param("email") String email);
+
 }
