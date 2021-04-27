@@ -159,16 +159,15 @@ public class MemberService {
 		if (sendResultData.isFail()) {
 			return sendResultData;
 		}
+		
+		tempPassword = Util.sha256(tempPassword);
 
 		setTempPassword(actor, tempPassword);
 
 		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
 	}
 
-	private void setTempPassword(Member actor, String tempPassword) {
-		
-		tempPassword = Util.sha256(tempPassword);
-		
+	private void setTempPassword(Member actor, String tempPassword) {		
 		memberDao.modifyUserMember(actor.getId(), tempPassword, null, null, null, null, null);
 	}
 
