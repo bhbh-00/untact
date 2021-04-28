@@ -62,7 +62,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doFindLoginId")
 	@ResponseBody
-	public String dofindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
+	public String doFindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
 		
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/";
@@ -77,13 +77,13 @@ public class UsrMemberController extends BaseController {
         return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
 	}
 
-	@RequestMapping("/usr/member/ConfirmPassword")
-	public String ShowConfirmPassword() {
-		return "/usr/member/ConfirmPassword";
+	@RequestMapping("/usr/member/checkPassword")
+	public String ShowCheckPassword() {
+		return "/usr/member/checkPassword";
 	}
 
-	@RequestMapping("/usr/member/doConfirmPassword")
-	public String doConfirmPassword(String loginPw, HttpServletRequest req) {
+	@RequestMapping("/usr/member/doCheckPassword")
+	public String doCheckPassword(String loginPw, HttpServletRequest req) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -91,15 +91,13 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, "loginPw를 입력해주세요.");
 		}
 
-		Member member = memberService.getMemberByLoginPw(loginPw);
-
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
+		
+		req.setAttribute("member", loginedMember);
 
-		req.setAttribute("member", member);
-
-		return msgAndReplace(req, String.format("마이페이지입니다.", member.getId()), "../member/detail?id=" + member.getId());
+		return msgAndReplace(req, String.format("", loginedMember.getId()), "../member/myPage?id=" + loginedMember.getId());
 	}
 
 	@RequestMapping("/usr/member/doDelete")
@@ -118,8 +116,8 @@ public class UsrMemberController extends BaseController {
 		return memberService.deleteMember(id);
 	}
 
-	@RequestMapping("/usr/member/detail")
-	public String showDetail(HttpServletRequest req, Integer id) {
+	@RequestMapping("/usr/member/myPage")
+	public String showMyPage(HttpServletRequest req, Integer id) {
 		if (id == null) {
 			return msgAndBack(req, "id을 입력해주세요.");
 		}
@@ -132,7 +130,7 @@ public class UsrMemberController extends BaseController {
 
 		req.setAttribute("member", member);
 
-		return "/usr/member/detail";
+		return "/usr/member/myPage";
 	}
 
 	@RequestMapping("/usr/member/list")

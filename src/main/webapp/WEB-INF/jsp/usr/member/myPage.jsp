@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.sbs.untact.util.Util" %>
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 

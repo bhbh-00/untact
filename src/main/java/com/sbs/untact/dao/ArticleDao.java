@@ -37,4 +37,10 @@ public interface ArticleDao {
 
 	List<Article> getForPrintArticleByMemberId(@Param("id") int id);
 
+	List<Article> getForPrintArticlesByMyList(@Param("id") int id, @Param("boardId") int boardId,
+			@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword,
+			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
+
+	int getArticlesTotleCountByMyList(@Param("id") int id, @Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
+
 }

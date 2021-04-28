@@ -59,8 +59,7 @@
 					<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 							<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
-								action="doLogin" method="POST"
-								onsubmit="LoginForm__checkAndSubmit(this); return false;">
+								action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
 								<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 								<input type="hidden" name="loginPw" />		
 

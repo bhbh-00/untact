@@ -13,6 +13,75 @@
 	</div>
 
 	<div class="section-article-myList">
+
+		<div class="container mx-auto mt-4 mb-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+
+				<div class="flex px-4 py-2">
+
+					<!-- 게시판별로 보기 -->
+					<select class="select-board-id">
+						<option value="1">공지사항</option>
+						<option value="2">자유</option>
+						<!-- selected="selected" : 기본적으로 이 친구로 되어있다. -->
+					</select>
+					<script>
+						$('.section-1 .select-board-id').val(param.boardId);
+						$('.section-1 .select-board-id').change(function() {
+							location.href = "?boardId=" + this.value;
+						});
+						/* change 바뀔 때 마다 뭔가 실행된다.*/
+					</script>
+
+					<div class="flex-grow"></div>
+
+					<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="container mx-auto mt-4 mb-4">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+
+				<!-- 총 게시물 수 -->
+				<div class="flex items-center py-2 px-4">
+
+					<span>Total : ${Util.numberFormat(totleItemsCount)}</span>
+
+					<div class="flex-grow"></div>
+
+					<!-- 검색 -->
+					<form class="flex">
+						<select name="searchKeywordType">
+							<option value="titleAndBody">전체</option>
+							<option value="title">제목</option>
+							<option value="body">내용</option>
+						</select>
+
+						<script>
+							/* 값이 있다면 */
+							if (param.searchKeywordType) {
+								$('.section-1 select[name="searchKeywordType"]').val(param.searchKeywordType);
+							}
+						</script>
+
+						<input
+							class="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+							autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
+							name="searchKeyword" maxlength="20"
+							value="${param.searchKeyword}" />
+						<input
+							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
+							type="submit" value="검색" />
+					</form>
+
+				</div>
+
+			</div>
+		</div>
+
 		<div class="container mx-auto mt-4 mb-5">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
@@ -34,7 +103,8 @@
 						</a>
 
 						<!-- 썸네일 -->
-						<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<div
+							class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
@@ -128,15 +198,18 @@
 
 						<!-- 현재 페이지 -->
 						<c:if test="${i == page}">
-							<c:set var="aClassStr" value="${aClassStr} text-red-700 hover:bg-red-50" />
+							<c:set var="aClassStr"
+								value="${aClassStr} text-red-700 hover:bg-red-50" />
 						</c:if>
 
 						<!-- 현재 페이지가 아닌 -->
 						<c:if test="${i != page}">
-							<c:set var="aClassStr" value="${aClassStr} text-gray-700 hover:bg-gray-50" />
+							<c:set var="aClassStr"
+								value="${aClassStr} text-gray-700 hover:bg-gray-50" />
 						</c:if>
 
-						<a href="${Util.getNewUrl(requestUrl, 'page', i)}" class="${aClassStr}">${i}</a>
+						<a href="${Util.getNewUrl(requestUrl, 'page', i)}"
+							class="${aClassStr}">${i}</a>
 					</c:forEach>
 
 					<!-- 마지막 페이지 -->
@@ -149,10 +222,10 @@
 						</a>
 					</c:if>
 				</nav>
-				
-				</div>
+
 			</div>
 		</div>
+	</div>
 
 </section>
 
