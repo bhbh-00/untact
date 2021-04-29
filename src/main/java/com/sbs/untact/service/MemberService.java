@@ -48,7 +48,7 @@ public class MemberService {
 	public ResultData modifyMember(Map<String, Object> param) {
 		memberDao.modifyMember(param);
 
-		return new ResultData("s-1", "수정완료 되었습니다.");
+		return new ResultData("s-1", "회원님의 정보가 수정되었습니다.");
 	}
 
 	public boolean isAdmin(Member actor) {

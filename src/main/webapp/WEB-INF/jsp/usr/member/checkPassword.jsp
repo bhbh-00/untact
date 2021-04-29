@@ -3,30 +3,31 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<!-- sha256 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <script>
-	<!--  자바스크립트  -->
-		const checkPasswordForm__checkAndSubmitDone = false;
-		<!--  const = var / 중복 방지를 위한.  -->
-		function checkPasswordForm__checkAndSubmit(form) {
-			if ( checkPasswordForm__checkAndSubmitDone ) {
-				return;
-			}
-			
-			form.loginPwInput.value = form.loginPwInput.value.trim();
-			if ( form.loginPwInput.value.length == 0 ) {
-				alert('비밀번호를 입력해주세요.');
-				form.loginPwInput.focus();
-				
-				return;
-			}
-			
-			form.loginPw.value = sha256(form.loginPwInput.value);
-			form.loginPwInput.value = '';
-			
-			form.submit();
-			checkPasswordForm__checkAndSubmitDone = true;
+	const checkPasswordForm__checkAndSubmitDone = false;
+
+	function checkPasswordForm__checkAndSubmit(form) {
+		if (checkPasswordForm__checkAndSubmitDone) {
+			return;
 		}
-		
+
+		form.loginPwInput.value = form.loginPwInput.value.trim();
+		if (form.loginPwInput.value.length == 0) {
+			alert('비밀번호를 입력해주세요.');
+			form.loginPwInput.focus();
+
+			return;
+		}
+
+		form.loginPw.value = sha256(form.loginPwInput.value);
+		form.loginPwInput.value = '';
+
+		form.submit();
+		checkPasswordForm__checkAndSubmitDone = true;
+	}
 </script>
 
 <section class="section-checkPassword">
@@ -42,11 +43,11 @@
 						<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 						<input type="hidden" name="loginPw" />
 
-						<div class="container mx-auto flex mb-2 text-xl">
+						<div class="container mx-auto flex mb-2 ml-2 text-xl">
 							<span class="flex items-center mr-1">
-								<i class="fas fa-search"></i>
+								<i class="fas fa-user-cog"></i>
 							</span>
-							<span class="font-bold"> 비밀번호 찾기 </span>
+							<span class="font-bold"> 마이페이지 </span>
 						</div>
 
 						<div class="form-control">
@@ -55,15 +56,13 @@
 
 						<div class="flex flex-col mb-2 md:flex-row">
 							<div class="p-1 md:flex-grow">
-								<input class="w-full btn-primary bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
-									type="submit" value="확인" />
+								<input class="w-full btn-primary bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded" type="submit" value="확인" />
 							</div>
 						</div>
 
 						<div class="flex flex-col md:flex-row">
 							<div class="p-1 text-center md:flex-grow">
-								<a href="findLoginPw"
-									class="text-gray-600 inline-block hover:underline">비밀번호 찾기</a>
+								<a href="findLoginPw" class="text-gray-600 inline-block hover:underline">비밀번호 찾기</a>
 							</div>
 						</div>
 					</form>

@@ -92,11 +92,9 @@ public class UsrMemberController extends BaseController {
 		}
 
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
-			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+			return msgAndBack(req, "비밀번호가 일치하지 않습니다." + loginPw + "zzzz");
 		}
 		
-		req.setAttribute("member", loginedMember);
-
 		return msgAndReplace(req, String.format("", loginedMember.getId()), "../member/myPage?id=" + loginedMember.getId());
 	}
 
@@ -131,42 +129,6 @@ public class UsrMemberController extends BaseController {
 		req.setAttribute("member", member);
 
 		return "/usr/member/myPage";
-	}
-
-	@RequestMapping("/usr/member/list")
-	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param) {
-
-		String searchKeywordType = (String) param.get("searchKeywordType");
-		String searchKeyword = (String) param.get("searchKeyword");
-
-		if (searchKeywordType != null) {
-			searchKeywordType = searchKeywordType.trim();
-		}
-
-		if (searchKeywordType == null || searchKeywordType.length() == 0) {
-			searchKeywordType = "name";
-		}
-
-		if (searchKeyword != null && searchKeyword.length() == 0) {
-			searchKeyword = null;
-		}
-
-		if (searchKeyword != null) {
-			searchKeyword = searchKeyword.trim();
-		}
-
-		if (searchKeyword == null) {
-			searchKeywordType = null;
-		}
-
-		int itemsInAPage = 20;
-
-		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, itemsInAPage,
-				itemsInAPage, param);
-
-		req.setAttribute("members", members);
-
-		return "usr/member/list";
 	}
 
 	@RequestMapping("/usr/member/getLoginIdDup")
@@ -335,7 +297,7 @@ public class UsrMemberController extends BaseController {
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
 		 */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
-		String redirectUrl = "/usr/home/main";
+		String redirectUrl = "/usr/member/checkPassword";
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}

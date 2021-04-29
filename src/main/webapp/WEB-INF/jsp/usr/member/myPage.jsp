@@ -82,10 +82,10 @@
 							</span>
 						</a>
 						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-							href="doDelete?id=${member.id}" class="text-blue-500 ">
+							href="doDelete?id=${member.id}" class="text-red-500 ">
 							<span>
 								<i class="fas fa-trash"></i>
-								<span>삭제</span>
+								<span>회원탈퇴</span>
 							</span>
 						</a>
 					</div>
