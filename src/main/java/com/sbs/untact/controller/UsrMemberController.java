@@ -108,7 +108,7 @@ public class UsrMemberController extends BaseController {
 		Member member = memberService.getMember(id);
 
 		if (member == null) {
-			return  msgAndBack(req, "해당 회원은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
 		}
 
 		return "/usr/member/delete";

@@ -81,8 +81,7 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
+		
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
@@ -98,6 +97,7 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
+		
 		if (id == null) {
 			return msgAndBack(req, "제목을 입력해주세요.");
 		}

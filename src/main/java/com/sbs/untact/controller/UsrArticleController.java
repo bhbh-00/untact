@@ -171,31 +171,51 @@ public class UsrArticleController extends BaseController {
 
 		return articleService.modifyArticle(param);
 	}
-
-	@RequestMapping("/usr/article/doDelete")
-	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
+	
+	@RequestMapping("/usr/article/delete")
+	public String delete(Integer id, HttpServletRequest req) {
+		
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
 		}
 
+		return "/usr/article/delete";
+	}
+	
+	@RequestMapping("/usr/article/doDelete")
+	@ResponseBody
+	public String doDelete(Integer id, HttpServletRequest req) {
+		
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+		
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "/usr/article/detail?id="+ article.getId());
 		}
-
-		return articleService.deleteArticle(id);
+		
+		ResultData deleteMemberRd = articleService.deleteArticle(id);
+		String redirectUrl = "/usr/article/list";
+		
+		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
-
+	
 	@RequestMapping("/usr/article/add")
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		return "/usr/article/add";

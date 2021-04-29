@@ -99,9 +99,8 @@
 							</span>
 							<span>수정</span>
 						</a>
-						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}"
-							class="flex plain-link">
-							<span>
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="doDelete?id=${article.id}" class="flex plain-link">
+							<span class="text-red-500">
 								<i class="fas fa-trash"></i>
 								<span>삭제</span>
 							</span>
