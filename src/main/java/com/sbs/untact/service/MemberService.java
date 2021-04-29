@@ -107,7 +107,7 @@ public class MemberService {
 
 	public ResultData deleteMember(Integer id) {
 		memberDao.deleteMember(id);
-		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+		return new ResultData("S-1", "탈퇴 완료 되었습니다.", "id", id);
 	}
 
 	public Member getForPrintMemberByAuthKey(String authKey) {
