@@ -34,7 +34,8 @@ public class AdmArticleController extends BaseController {
 	private LikeService likeService;
 	@Autowired
 	private ReplyService replyService;
-
+	
+	
 	@RequestMapping("/adm/article/deleteLike")
 	@ResponseBody
 	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {

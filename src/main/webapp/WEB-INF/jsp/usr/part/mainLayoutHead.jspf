@@ -34,7 +34,7 @@
         
         <!-- 게시판 -->
         <li>
-          <a href="/usr/article/list?boardId=1" class="h-full flex items-center px-5">
+          <a href="#" class="h-full flex items-center px-5">
             <span class="text-xl"><i class="far fa-newspaper"></i></span>
             <span class="hidden md:block text-lg">&nbsp;게시물 보기</span>
           </a>
