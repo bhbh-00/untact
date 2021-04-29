@@ -253,6 +253,9 @@ public class UsrArticleController extends BaseController {
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
+		
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
@@ -273,6 +276,7 @@ public class UsrArticleController extends BaseController {
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
+		req.setAttribute("loginMemberId",loginMemberId);
 
 		return "/usr/article/detail";
 	}

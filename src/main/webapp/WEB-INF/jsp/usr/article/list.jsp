@@ -42,14 +42,9 @@
 							}
 						</script>
 
-						<input
-							class="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
-							name="searchKeyword" maxlength="20"
-							value="${param.searchKeyword}" />
-						<input
-							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="검색" />
+						<input class="appearance-none border rounded w-full py-2 px-3 text-grey-darker" autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
+							name="searchKeyword" maxlength="20" value="${param.searchKeyword}" />
+						<input class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded" type="submit" value="검색" />
 					</form>
 
 				</div>
@@ -78,8 +73,7 @@
 						</a>
 
 						<!-- 썸네일 -->
-						<div
-							class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 							<a href="${detailUrl}" class="row-span-7">
 								<img class="rounded" src="${thumbUrl}" alt="">
 							</a>
@@ -115,8 +109,7 @@
 							</a>
 
 							<!-- 본문 -->
-							<a
-								class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+							<a class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
 								<span class="badge badge-outline mb-1">본문</span>
 								<span class="line-clamp-3 ml-1"> ${article.body} </span>
 							</a>
@@ -141,8 +134,7 @@
 					<!-- 시작 페이지 -->
 					<!-- 내가 보고 있는 페이지 챕터가 첫번째이면 < 표시 안보이게 -->
 					<c:if test="${pageMenuStart != 1}">
-						<a href="${Util.getNewUrl(requestUrl, 'page', 1)}"
-							class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+						<a href="${Util.getNewUrl(requestUrl, 'page', 1)}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
 							<span class="sr-only">Previous</span>
 							<i class="fas fa-chevron-left"></i>
 						</a>
@@ -150,15 +142,13 @@
 
 					<!-- 페이지 번호 -->
 					<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
-						<c:set var="aClassStr"
-							value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+						<c:set var="aClassStr" value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
 
 						<c:set var="aClassStr" value="${aClassStr} active" />
 
 						<!-- 현재 페이지 -->
 						<c:if test="${i == page}">
-							<c:set var="aClassStr"
-								value="${aClassStr} text-red-700 hover:bg-red-50" />
+							<c:set var="aClassStr" value="${aClassStr} text-red-700 hover:bg-red-50" />
 						</c:if>
 
 						<!-- 현재 페이지가 아닌 -->
