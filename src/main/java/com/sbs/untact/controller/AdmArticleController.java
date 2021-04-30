@@ -81,7 +81,7 @@ public class AdmArticleController extends BaseController {
 
 		param.put("memberId", loginedMember);
 
-		return likeService.doAdd(param);
+		return likeService.doLike(param);
 	}
 
 	@RequestMapping("/adm/article/doAddReply")

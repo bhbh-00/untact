@@ -53,33 +53,40 @@ public class UsrArticleController extends BaseController {
 		return likeService.deleteLike(id);
 	}
 
-	@RequestMapping("/usr/article/AddLike")
+	@RequestMapping("/usr/article/like")
+	public String like(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+
+		if (param.get("relTypeCode") == null) {
+			return msgAndBack(req, "relTypeCode를 입력해주세요.");
+		}
+		
+		if (param.get("relId") == null) {
+			return msgAndBack(req, "relId을 입력해주세요.");
+		}
+
+		Article article = articleService.getArticle((int) param.get("relId"));
+		
+		if (article == null) {
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+		}
+		
+		req.setAttribute("article", article);
+
+		return "/usr/article/like";
+	}
+	
+	@RequestMapping("/usr/article/doLike")
 	@ResponseBody
-	public ResultData doAddLike(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doLike(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		// /usr/article/doLike?relTypeCode=article&relId=1&memberId=1
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		int id = Util.getAsInt(param.get("id"), 0);
+		req.setAttribute("loginedMember", loginedMember);
 
-		if (param.get("relTypeCode") == null) {
-			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
-		}
-
-		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId을 입력해주세요.");
-		}
-
-		if (param.get("relTypeCode") == "article") {
-			Article article = articleService.getArticle((int) param.get("relId"));
-
-			if (article == null) {
-				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-			}
-		}
-
-		param.put("memberId", loginedMember);
-
-		return likeService.doAdd(param);
+		ResultData doLikeRd = likeService.doLike(param);
+		String redirectUrl = "/usr/home/main";
+		
+		return Util.msgAndReplace(doLikeRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/article/doAddReply")

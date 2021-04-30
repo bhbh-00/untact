@@ -44,6 +44,12 @@ UPDATE article
 SET memberId = 1
 WHERE memberId = 0;
 
+# 테스트 게시물 생성, memberId = 2, 제목, 내용 랜덤
+INSERT INTO article
+(regDate, updateDate, memberId, title, `body`, boardId)
+SELECT NOW(), NOW(), 2, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1), 2
+FROM article;
+
 # ============================================== `member`
 
 # 회원 테이블 생성
@@ -66,28 +72,22 @@ ALTER TABLE `member` ADD UNIQUE INDEX (`loginId`);
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = "aaa111",
-loginPw = "1234",
-`name` = "신짱구",
-nickname = "짱구",
+loginId = "adm001",
+loginPw = "adm001",
+`name` = "adm001",
+nickname = "adm001",
 cellphoneNo = "01012341234",
-email = "aaa1234@gmail.com";
+email = "bhbh89900@gmail.com";
 
 INSERT INTO `member`
 SET regDate = NOW(),
 updateDate = NOW(),
-loginId = "bbb222",
-loginPw = "4321",
-`name` = "김철수",
-nickname = "촬스",
+loginId = "user001",
+loginPw = "user001",
+`name` = "user001",
+nickname = "user001",
 cellphoneNo = "01077778888",
-email = "bbb4321@gmail.com";
-
-# 테스트 게시물 생성, memberId 랜덤, 제목, 내용 랜덤
-INSERT INTO article
-(regDate, updateDate, memberId, title, `body`, boardId)
-SELECT NOW(), NOW(), FLOOR(RAND() * 2) + 1, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1), FLOOR(RAND() * 2) + 1
-FROM article;
+email = "bhbh89900@gmail.com";
 
 # 멤버 테이블에 authKey 칼럼 추가
 ALTER TABLE `member` ADD COLUMN authKey CHAR(80) NOT NULL AFTER loginPw;
@@ -230,6 +230,8 @@ SET memberId = 1
 WHERE memberId = 0;
 
 SELECT * FROM article;
+
+# ============================================== `like`
 
 # 좋아요 테이블 생성
 CREATE TABLE `like` (

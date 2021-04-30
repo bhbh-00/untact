@@ -26,8 +26,8 @@ public class LikeService {
 		return likeDao.getLikeTotleCount(id);
 	}
 
-	public ResultData doAdd(@RequestParam Map<String, Object> param) {
-		likeDao.addLike(param);
+	public ResultData doLike(@RequestParam Map<String, Object> param) {
+		likeDao.doLike(param);
 		
 		int id = Util.getAsInt(param.get("id"), 0);
 

@@ -7,11 +7,11 @@
 
 	<select id="getLikeTotleCount" resultType="int">
 		SELECT count(*)
-		FROM like
+		FROM `like`
 	</select>
 	
-	<insert id="addLike" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO like
+	<insert id="doLike" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `like`
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		relTypeCode = #{relTypeCode},
@@ -20,7 +20,7 @@
 	</insert>
 
 	<delete id="deleteLike">
-		DELETE FROM like
+		DELETE FROM `like`
 		WHERE id = #{id}
 	</delete>
 
