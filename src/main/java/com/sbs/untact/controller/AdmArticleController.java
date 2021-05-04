@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
+import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
@@ -234,6 +235,8 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 		
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
@@ -251,9 +254,15 @@ public class AdmArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
+		
+		Like like = likeService.getLikeByArticle(id);
+		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
+		req.setAttribute("like", like);
+		req.setAttribute("totleItemsCountByLike", totleItemsCountByLike);
+		req.setAttribute("loginMemberId", loginMemberId);
 
 		return "/adm/article/detail";
 	}

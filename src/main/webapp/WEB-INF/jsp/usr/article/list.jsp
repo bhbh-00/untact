@@ -22,9 +22,12 @@
 			<div class="card bordered shadow-lg item-bt-1-not-last-child pt-1 pb-1 bg-white">
 
 				<div class="flex items-center py-2 px-4">
-
-					<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
-
+					
+					<!-- 글쓰기 -->
+					<c:if test="${board.id == 2}">
+						<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
+					</c:if>
+					
 					<div class="flex-grow"></div>
 
 					<!-- 검색 -->

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.sbs.untact.util.Util"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -87,19 +88,31 @@
 						<!-- 좋아요 -->
 
 						<div title="좋아요">
-							<a
-								href="doLike?relTypeCode=article&relId=${article.id}&memberId=${loginedMember.id}"
-								onclick="if ( !confirm('`좋아요` 처리 하시겠습니까?') ) return false;"
+							<a href="doLike?relTypeCode=article&relId=${article.id}&memberId=${loginedMember.id}"
 								class="flex plain-link">
-								<span class="text-pink-500">
-									<i class="far fa-heart"></i>
-								</span>
+
+								<c:choose>
+									<c:when test="${like.memberId == loginMemberId}">
+										<span class="text-pink-500">
+											<i class="fas fa-heart"></i>
+											${Util.numberFormat(totleItemsCountByLike)}
+										</span>
+									</c:when>
+
+									<c:otherwise>
+										<span class="text-pink-500">
+											<i class="far fa-heart"></i>
+											${Util.numberFormat(totleItemsCountByLike)}
+										</span>
+									</c:otherwise>
+
+								</c:choose>
+
 							</a>
 						</div>
-
+						<!-- 만약에 좋아요의 멤버아이디와 아이디가 같으면 채우진 하트 아니면 빈하트 -->
 
 						<c:if test="${article.memberId == loginMemberId}">
-
 							<!-- 수정 -->
 							<a href="modify?id=${article.id}" class="flex plain-link">
 								<span>
@@ -116,9 +129,9 @@
 									<span>삭제</span>
 								</span>
 							</a>
-
 						</c:if>
 					</div>
+
 				</div>
 			</div>
 		</div>

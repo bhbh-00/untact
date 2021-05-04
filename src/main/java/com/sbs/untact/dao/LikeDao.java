@@ -17,4 +17,8 @@ public interface LikeDao {
 	void doLike(Map<String, Object> param);
 
 	Like getLike(@Param("id")Integer id);
+
+	Like getLikeByArticle(@Param("id")Integer id);
+
+	int getLikeTotleCountByArticle(@Param("id")Integer id);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
+import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
@@ -59,34 +60,37 @@ public class UsrArticleController extends BaseController {
 		if (param.get("relTypeCode") == null) {
 			return msgAndBack(req, "relTypeCode를 입력해주세요.");
 		}
-		
+
 		if (param.get("relId") == null) {
 			return msgAndBack(req, "relId을 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle((int) param.get("relId"));
-		
+
 		if (article == null) {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
-		
+
 		req.setAttribute("article", article);
 
 		return "/usr/article/like";
 	}
-	
+
 	@RequestMapping("/usr/article/doLike")
 	@ResponseBody
-	public String doLike(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		// /usr/article/doLike?relTypeCode=article&relId=1&memberId=1
+	public String doLike(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (Util.isEmpty(redirectUrl)) {
+			redirectUrl = "/";
+		}
 
 		req.setAttribute("loginedMember", loginedMember);
 
 		ResultData doLikeRd = likeService.doLike(param);
-		String redirectUrl = "/usr/home/main";
-		
-		return Util.msgAndReplace(doLikeRd.getMsg(), redirectUrl);
+
+		return Util.msgAndBack(doLikeRd.getMsg());
 	}
 
 	@RequestMapping("/usr/article/doAddReply")
@@ -140,7 +144,7 @@ public class UsrArticleController extends BaseController {
 
 		return "/usr/article/modify";
 	}
-	
+
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
@@ -171,18 +175,18 @@ public class UsrArticleController extends BaseController {
 		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
 
 		if (actorCanModifyRd.isFail()) {
-			return Util.msgAndReplace(actorCanModifyRd.getMsg(), "/usr/article/detail?id="+ article.getId());
+			return Util.msgAndReplace(actorCanModifyRd.getMsg(), "/usr/article/detail?id=" + article.getId());
 		}
 
 		ResultData modifyMemberRd = articleService.modifyArticle(param);
-		String redirectUrl = "/usr/article/detail?id="+ article.getId();
-		
+		String redirectUrl = "/usr/article/detail?id=" + article.getId();
+
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}
-	
+
 	@RequestMapping("/usr/article/delete")
 	public String delete(Integer id, HttpServletRequest req) {
-		
+
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -195,11 +199,11 @@ public class UsrArticleController extends BaseController {
 
 		return "/usr/article/delete";
 	}
-	
+
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
-		
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
@@ -211,19 +215,19 @@ public class UsrArticleController extends BaseController {
 		if (article == null) {
 			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
-		
+
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
-			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "/usr/article/detail?id="+ article.getId());
+			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "/usr/article/detail?id=" + article.getId());
 		}
-		
+
 		ResultData deleteMemberRd = articleService.deleteArticle(id);
 		String redirectUrl = "/usr/article/list";
-		
+
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
-	
+
 	@RequestMapping("/usr/article/add")
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		return "/usr/article/add";
@@ -260,9 +264,9 @@ public class UsrArticleController extends BaseController {
 
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
-		
+
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-		
+
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
@@ -280,10 +284,15 @@ public class UsrArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
-
+		
+		Like like = likeService.getLikeByArticle(id);
+		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
+		
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
-		req.setAttribute("loginMemberId",loginMemberId);
+		req.setAttribute("like", like);
+		req.setAttribute("totleItemsCountByLike", totleItemsCountByLike);
+		req.setAttribute("loginMemberId", loginMemberId);
 
 		return "/usr/article/detail";
 	}
@@ -308,9 +317,11 @@ public class UsrArticleController extends BaseController {
 		int itemsInAPage = 20;
 
 		// 총 게시물의 갯수를 구하는
-		int totleItemsCount = articleService.getArticlesTotleCountByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword);
+		int totleItemsCount = articleService.getArticlesTotleCountByMyList(loginMemberId, boardId, searchKeywordType,
+				searchKeyword);
 
-		articles = articleService.getForPrintArticlesByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword, page, itemsInAPage);
+		articles = articleService.getForPrintArticlesByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword,
+				page, itemsInAPage);
 
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
 		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
@@ -353,6 +364,7 @@ public class UsrArticleController extends BaseController {
 	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
 			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
 		// @RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 
 		Board board = articleService.getBoard(boardId);
 
@@ -423,6 +435,7 @@ public class UsrArticleController extends BaseController {
 		req.setAttribute("pageMenuEnd", pageMenuEnd);
 		req.setAttribute("page", page);
 		req.setAttribute("articles", articles);
+		req.setAttribute("loginMemberId", loginMemberId);
 
 		return "/usr/article/list";
 	}

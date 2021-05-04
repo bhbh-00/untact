@@ -38,4 +38,14 @@ public class LikeService {
 		return likeDao.getLike(id);
 	}
 
+	public Like getLikeByArticle(Integer id) {
+		return likeDao.getLikeByArticle(id);
+	}
+
+	public int getLikeTotleCountByArticle(Integer id) {
+		return likeDao.getLikeTotleCountByArticle(id);
+	}
+	
+	
+
 }
