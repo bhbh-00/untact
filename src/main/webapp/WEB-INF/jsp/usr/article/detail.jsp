@@ -25,14 +25,6 @@
 
 				<div class="p-5">
 
-					<div class="flex">
-						<div class="flex-grow"></div>
-						<span>
-							<span class="text-gray-600">Likes :</span>
-							<span class="text-gray-400 text-light">120k</span>
-						</span>
-					</div>
-
 					<!-- 제목 -->
 					<div class="mt-7">
 						<span class="badge badge-outline">제목</span>

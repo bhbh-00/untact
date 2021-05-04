@@ -14,6 +14,7 @@
 const JoinForm__checkAndSubmitDone = false;
 <!--  const = var / 중복 방지를 위한.  -->
 let JoinForm__validLoginId = '';
+
 //로그인 아이디 중복체크 함수 ajax
 function JoinForm__checkLoginIdDup(obj) {
 	
