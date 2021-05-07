@@ -209,6 +209,7 @@ public class AdmArticleController extends BaseController {
 		// String title, String body이 null이면 내용이 없는 거!!
 
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		
 		/*
 		 * HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 Util.getAsInt 필요 없음 (int로 형변환 필요함)
 		 * !!로그인과 회원가입은 세션이 필요함

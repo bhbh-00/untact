@@ -138,48 +138,45 @@
 					</div>
 					<div>
 						<!-- 댓글 입력 시작 -->
-						<form @submit.prevent="writeReply"
-							class="relative flex py-5 px-4 text-gray-600 focus-within:text-gray-400">
-
-							<span class="absolute inset-y-0 right-0 flex items-center pr-6">
-								<button type="submit"
-									class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
-									<i class="fas fa-comment-dots"></i>
-								</button>
-							</span>
-
-							<input v-model="newReplyBody" type="text"
-								class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
-								style="border-radius: 25px" placeholder="댓글을 입력해주세요."
-								autocomplete="off">
+						<form class="grid form-type-1" action="doReply" method="POST"
+							enctype="multipart/form-data">
+							<div class="form-control">
+								<input name="body" type="text" 
+									class="input input-bordered">
+							<input type="submit" class="btn mb-1"
+								value="작성">
+							</div>
 						</form>
-						<!-- 댓글 입력 끝 -->
 
-						<div class="item-bt-1">
-							<div v-for="reply in filteredReplies">
-								<div class="flex py-5 px-4">
-									<div class="flex-shrink-0">
-										<img
-											class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
-											alt="User avatar"
-											src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
-									</div>
-									<div class="flex-grow px-1">
-										<div class="flex text-gray-400 text-light text-sm">
-											<spqn>{{reply.extra__writer}}</spqn>
-											<span class="mx-1">·</span>
-											<spqn>{{reply.updateDate}}</spqn>
+						<div class="mt-4 btn-wrap gap-1">
+							<!-- 댓글 입력 끝 -->
+
+							<div class="item-bt-1">
+								<div v-for="reply in filteredReplies">
+									<div class="flex py-5 px-4">
+										<div class="flex-shrink-0">
+											<img
+												class="w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer"
+												alt="User avatar"
+												src="https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=200">
 										</div>
-										<div class="break-all">{{reply.body}}</div>
-										<div class="mt-1">
-											<span>
-												<span>업</span>
-												<span>5,600</span>
-											</span>
-											<span class="ml-1">
-												<span>다</span>
-												<span>5,600</span>
-											</span>
+										<div class="flex-grow px-1">
+											<div class="flex text-gray-400 text-light text-sm">
+												<spqn>{{reply.extra__writer}}</spqn>
+												<span class="mx-1">·</span>
+												<spqn>{{reply.updateDate}}</spqn>
+											</div>
+											<div class="break-all">{{reply.body}}</div>
+											<div class="mt-1">
+												<span>
+													<span>업</span>
+													<span>5,600</span>
+												</span>
+												<span class="ml-1">
+													<span>다</span>
+													<span>5,600</span>
+												</span>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -189,9 +186,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

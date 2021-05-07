@@ -148,7 +148,7 @@ CREATE TABLE reply (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    articleId INT(10) UNSIGNED NOT NULL,
+    relId INT(10) UNSIGNED NOT NULL,
     memberId INT(10) UNSIGNED NOT NULL,
     `body` TEXT NOT NULL
 );
@@ -231,8 +231,6 @@ WHERE memberId = 0;
 
 SELECT * FROM article;
 
-# ============================================== `like`
-
 # 좋아요 테이블 생성
 CREATE TABLE `like` (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -242,6 +240,8 @@ CREATE TABLE `like` (
     relId INT(10) UNSIGNED NOT NULL,
     memberId INT(10) UNSIGNED NOT NULL
 );
+
+SELECT * FROM `like`;
 
 # 고속 검색을 위해서 인덱스 걸기
 ALTER TABLE `like` ADD KEY (relTypeCode, relId);

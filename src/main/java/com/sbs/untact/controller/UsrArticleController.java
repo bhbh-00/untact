@@ -93,29 +93,39 @@ public class UsrArticleController extends BaseController {
 		return Util.msgAndBack(doLikeRd.getMsg());
 	}
 
-	@RequestMapping("/usr/article/doAddReply")
+	@RequestMapping("/usr/article/reply")
+	public String reply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		return "/usr/article/reply";
+	}
+
+	@RequestMapping("/usr/article/doReply")
 	@ResponseBody
-	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 
 		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId을 입력해주세요.");
+			return msgAndBack(req, "relId을 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle((int) param.get("relId"));
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req,"해당 게시물은 존재하지 않습니다.");
 		}
 
 		if (param.get("body") == null) {
-			return new ResultData("F-1", "댓글을 입력해주세요.");
+			return msgAndBack(req, "댓글을 입력해주세요.");
 		}
 
 		req.setAttribute("article", article);
 		param.put("memberId", loginMemberId);
-
-		return replyService.doAdd(param);
+		
+		ResultData addReplyRd = replyService.doAdd(param);
+		
+		int newReplyId = (int) addReplyRd.getBody().get("id");
+		
+		return msgAndBack(req, newReplyId + "번의 댓글이 작성되었습니다.");
 	}
 
 	@RequestMapping("/usr/article/modify")
@@ -284,10 +294,10 @@ public class UsrArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
-		
+
 		Like like = likeService.getLikeByArticle(id);
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
-		
+
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
 		req.setAttribute("like", like);
