@@ -63,4 +63,8 @@ public class ReplyService {
 		return getActorCanModifyRd(reply, actor);
 	}
 
+	public List<Reply> getReplyByArticle(Integer id, String relTypeCode) {
+		return getReplyByArticle(id, relTypeCode);
+	}
+
 }

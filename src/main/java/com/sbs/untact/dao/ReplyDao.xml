@@ -5,6 +5,20 @@
 
 <mapper namespace="com.sbs.untact.dao.ReplyDao">
 
+	<select id="getReplyByArticle" resultType="Reply">
+		SELECT R.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
+		FROM reply AS R
+		LEFT JOIN
+		`member` AS M
+		ON R.memberId = M.id
+		LEFT JOIN
+		article AS A
+		ON R.relId = A.id
+		WHERE R.relId = #{id}
+		And R.relTypeCode = #{relTypeCode}
+	</select>
+
 	<delete id="delete">
 		DELETE FROM reply
 		WHERE id = #{id};

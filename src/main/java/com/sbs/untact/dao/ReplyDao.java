@@ -20,5 +20,7 @@ public interface ReplyDao {
 	Reply getReply(@Param("id") Integer id);
 
 	void delete(@Param("id") Integer id);
+	
+	List<Reply> getReplyByArticle(@Param("id") Integer id, @Param("relTypeCode") String relTypeCode);
 
 }
