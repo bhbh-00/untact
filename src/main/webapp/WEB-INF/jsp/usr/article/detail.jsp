@@ -138,11 +138,12 @@
 					</div>
 					<div>
 						<!-- 댓글 입력 시작 -->
-						<form class="grid form-type-1" action="doReply" method="POST" enctype="multipart/form-data">
+						<form class="grid form-type-1" action="../reply/doAdd" method="POST" enctype="multipart/form-data">
 							
 							<input type="hidden" name="relTypeCode" value="article" />
 							<input type="hidden" name="relId" value="${article.id}" />
 							<input type="hidden" name="memberId" value="${loginedMember.id}" />
+							<input type="hidden" name="redirectUrl" value="${loginedMember.id}" />
 							
 							<div class="form-control">
 								<input name="body" type="text" 

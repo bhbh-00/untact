@@ -17,9 +17,10 @@ import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.ReplyService;
+import com.sbs.untact.util.Util;
 
 @Controller
-public class UsrReplyController {
+public class UsrReplyController extends BaseController {
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
@@ -75,6 +76,36 @@ public class UsrReplyController {
 		}
 
 		return replyService.doModify(id, body);
+	}
+
+	@RequestMapping("/usr/reply/doAdd")
+	@ResponseBody
+	public String doReply(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
+
+		if (param.get("relTypeCode") == "article") {
+			Article article = articleService.getArticle((int) param.get("relId"));
+
+			if (article == null) {
+				return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			}
+
+			if (param.get("relTypeCode") == null) {
+				return msgAndBack(req, "relTypeCode를 입력해주세요.");
+			}
+
+		}
+
+		if (param.get("body") == null) {
+			return msgAndBack(req, "댓글을 입력해주세요.");
+		}
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		req.setAttribute("loginedMember", loginedMember);
+
+		ResultData doAddRd = replyService.doAdd(param);
+
+		return Util.msgAndReplace(doAddRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/reply/list")

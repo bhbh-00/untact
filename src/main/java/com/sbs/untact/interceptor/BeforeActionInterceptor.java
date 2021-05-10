@@ -139,6 +139,32 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		request.setAttribute("isLogined", isLogined);
 		request.setAttribute("isAdmin", isAdmin);
 		request.setAttribute("loginedMember", loginedMember);
+		
+		// 현재페이지
+		HttpSession session = request.getSession();
+		
+		Map<String, Object> paramMap = Util.getParamMap(request);
+		
+		String currentUrl = request.getRequestURI();
+        queryString = request.getQueryString();
+
+        if (queryString != null && queryString.length() > 0) {
+            currentUrl += "?" + queryString;
+        }
+
+        boolean needToChangePassword = false;
+        if (loginedMember != null) {
+            if (session.getAttribute("needToChangePassword") == null) {
+                // needToChangePassword = memberService.needToChangePassword(loginedMember.getId());
+                
+                session.setAttribute("needToChangePassword", needToChangePassword);
+            }
+            needToChangePassword = (boolean) session.getAttribute("needToChangePassword");
+        }
+
+        request.setAttribute("currentUrl", currentUrl);
+        request.setAttribute("paramMap", paramMap);
+        request.setAttribute("needToChangePassword", needToChangePassword);
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}

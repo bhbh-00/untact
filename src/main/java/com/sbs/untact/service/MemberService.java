@@ -48,7 +48,7 @@ public class MemberService {
 	public ResultData modifyMember(Map<String, Object> param) {
 		memberDao.modifyMember(param);
 
-		return new ResultData("s-1", "회원님의 정보가 수정되었습니다.");
+		return new ResultData("s-1", "회원님의 정보가 수정 완료되었습니다");
 	}
 
 	public boolean isAdmin(Member actor) {
@@ -107,7 +107,7 @@ public class MemberService {
 
 	public ResultData deleteMember(Integer id) {
 		memberDao.deleteMember(id);
-		return new ResultData("S-1", "탈퇴 완료 되었습니다.", "id", id);
+		return new ResultData("S-1", "탈퇴 완료되었습니다.", "id", id);
 	}
 
 	public Member getForPrintMemberByAuthKey(String authKey) {
@@ -164,7 +164,7 @@ public class MemberService {
 
 		setTempPassword(actor, tempPassword);
 
-		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+		return new ResultData("S-1", "계정의 이메일로 임시 패스워드가 발송되었습니다.");
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {		

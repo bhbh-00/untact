@@ -29,7 +29,7 @@ public class ArticleService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		return new ResultData("s-1", "수정완료 되었습니다.", "id", id);
+		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
 	}
 
 	public ResultData deleteArticle(int id) {
@@ -37,7 +37,7 @@ public class ArticleService {
 
 		genFileService.deleteGenFiles("article", id);
 
-		return new ResultData("S-1", "삭제하였습니다.", "id", id);
+		return new ResultData("S-1", "삭제되었습니다.", "id", id);
 	}
 
 	public Article getArticle(int id) {

@@ -47,7 +47,7 @@
 		relTypeCode = #{relTypeCode},
 		relId = #{relId},
 		`body` = #{body},
-		memberId= #{memberId};
+		memberId= #{memberId}
 	</insert>
 
 	<select id="getForPrintReplies" resultType="Reply">

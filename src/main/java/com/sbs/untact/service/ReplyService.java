@@ -24,13 +24,13 @@ public class ReplyService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
+		return new ResultData("s-1", "댓글이 추가되었습니다.", "id", id);
 	}
 
 	public ResultData doModify(Integer id, String body) {
 		replyDao.doModify(id, body);
 
-		return new ResultData("s-1", "수정완료되었습니다.", "id", id);
+		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
 	}
 
 	public List<Reply> getForPrintReplies(Integer id) {

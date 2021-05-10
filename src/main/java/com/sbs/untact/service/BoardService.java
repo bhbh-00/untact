@@ -74,7 +74,7 @@ public class BoardService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		return new ResultData("s-1", "수정완료 되었습니다.", "id", id);
+		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
 	}
 
 	public Board getBoardByName(String name) {
@@ -84,7 +84,7 @@ public class BoardService {
 	public ResultData deleteBoard(int id) {
 		boardDao.deleteBoard(id);
 
-		return new ResultData("s-1", "삭제 되었습니다.", "id", id);
+		return new ResultData("s-1", "삭제되었습니다.", "id", id);
 	}
 
 	public Board getBoardByCode(String code) {
