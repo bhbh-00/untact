@@ -171,4 +171,9 @@ public class MemberService {
 		memberDao.modifyUserMember(actor.getId(), tempPassword, null, null, null, null, null);
 	}
 
+	public ResultData checkValidModifyPrivateAuthCode(int id, String modifyPrivateAuthCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

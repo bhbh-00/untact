@@ -26,7 +26,7 @@ public class UsrMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
+
 	@RequestMapping("/usr/member/findLoginPw")
 	public String ShowfindLoginPw() {
 		return ("/usr/member/findLoginPw");
@@ -35,26 +35,26 @@ public class UsrMemberController extends BaseController {
 	@RequestMapping("/usr/member/doFindLoginPw")
 	@ResponseBody
 	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
-		
+
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/usr/member/login";
-        }
+		}
 
-        Member member = memberService.getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 
-        if (member == null) {
-            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
-        }
-        
-        if (member.getEmail().equals(email) == false) {
-            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
-        }
+		if (member == null) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
 
-        ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+		if (member.getEmail().equals(email) == false) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
 
-        return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
+		ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+
+		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
 	}
-	
+
 	@RequestMapping("/usr/member/findLoginId")
 	public String ShowfindLoginId() {
 		return ("/usr/member/findLoginId");
@@ -63,18 +63,18 @@ public class UsrMemberController extends BaseController {
 	@RequestMapping("/usr/member/doFindLoginId")
 	@ResponseBody
 	public String doFindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
-		
+
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/";
-        }
+		}
 
-        Member member = memberService.getMemberByNameAndEmail(name, email);
+		Member member = memberService.getMemberByNameAndEmail(name, email);
 
-        if (member == null) {
-            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
-        }
+		if (member == null) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
 
-        return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
+		return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
 	}
 
 	@RequestMapping("/usr/member/checkPassword")
@@ -94,13 +94,14 @@ public class UsrMemberController extends BaseController {
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다." + loginPw + "zzzz");
 		}
-		
-		return msgAndReplace(req, String.format("", loginedMember.getId()), "../member/myPage?id=" + loginedMember.getId());
+
+		return msgAndReplace(req, String.format("", loginedMember.getId()),
+				"../member/myPage?id=" + loginedMember.getId());
 	}
-	
+
 	@RequestMapping("/usr/member/delete")
 	public String delete(Integer id, HttpServletRequest req) {
-		
+
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -113,14 +114,14 @@ public class UsrMemberController extends BaseController {
 
 		return "/usr/member/delete";
 	}
-	
+
 	@RequestMapping("/usr/member/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
-		
+
 		ResultData deleteMemberRd = memberService.deleteMember(id);
 		String redirectUrl = "/usr/member/login";
-		
+
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
 
@@ -271,8 +272,18 @@ public class UsrMemberController extends BaseController {
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
+	// checkPasswordAuthCode : 체크비밀번호인증코드
 	@RequestMapping("/usr/member/modify")
-	public String Modify(int id, HttpServletRequest req) {
+	public String Modify(int id, HttpServletRequest req, String modifyPrivateAuthCode) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		ResultData checkValidModifyPrivateAuthCodeResultData = memberService
+				.checkValidModifyPrivateAuthCode(loginedMember.getId(), modifyPrivateAuthCode);
+
+		if (checkValidModifyPrivateAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidModifyPrivateAuthCodeResultData.getMsg());
+		}
 
 		if (id == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
