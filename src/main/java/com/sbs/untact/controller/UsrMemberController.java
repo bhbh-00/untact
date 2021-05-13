@@ -78,23 +78,31 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/checkPassword")
-	public String ShowCheckPassword() {
+	public String ShowCheckPassword(HttpServletRequest req) {
 		return "/usr/member/checkPassword";
 	}
-
+	
+	// checkPasswordAuthCode : 체크비밀번호인증코드
 	@RequestMapping("/usr/member/doCheckPassword")
-	public String doCheckPassword(String loginPw, HttpServletRequest req) {
+	public String doCheckPassword(HttpServletRequest req, String loginPw, String checkPasswordAuthCode) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+		
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
+		
 		if (loginPw == null) {
 			return msgAndBack(req, "loginPw를 입력해주세요.");
 		}
 
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
-			return msgAndBack(req, "비밀번호가 일치하지 않습니다." + loginPw + "zzzz");
+			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
-
+		
 		return msgAndReplace(req, String.format("", loginedMember.getId()),
 				"../member/myPage?id=" + loginedMember.getId());
 	}
@@ -126,7 +134,10 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/myPage")
-	public String showMyPage(HttpServletRequest req, Integer id) {
+	public String showMyPage(HttpServletRequest req, Integer id, String redirectUrl) {
+		
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		
 		if (id == null) {
 			return msgAndBack(req, "id을 입력해주세요.");
 		}
@@ -136,6 +147,10 @@ public class UsrMemberController extends BaseController {
 		if (member == null) {
 			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
 		}
+
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+		
+		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
 
 		req.setAttribute("member", member);
 
@@ -272,20 +287,12 @@ public class UsrMemberController extends BaseController {
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
-	// checkPasswordAuthCode : 체크비밀번호인증코드
 	@RequestMapping("/usr/member/modify")
-	public String Modify(int id, HttpServletRequest req, String modifyPrivateAuthCode) {
+	public String Modify(Integer id, HttpServletRequest req, String checkPasswordAuthCode, String redirectUrl) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		ResultData checkValidModifyPrivateAuthCodeResultData = memberService
-				.checkValidModifyPrivateAuthCode(loginedMember.getId(), modifyPrivateAuthCode);
-
-		if (checkValidModifyPrivateAuthCodeResultData.isFail()) {
-			return msgAndBack(req, checkValidModifyPrivateAuthCodeResultData.getMsg());
-		}
-
-		if (id == 0) {
+		if (id == null) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
 		}
 
@@ -303,6 +310,10 @@ public class UsrMemberController extends BaseController {
 			filesMap.put(file.getFileNo() + "", file);
 		}
 
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+
+		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
+
 		member.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("member", member);
 
@@ -311,14 +322,25 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		/*
-		 * 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐) 이러한 오류를 해결? 발생이 안되게 하기 위해서는
-		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
-		 */
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		
+		if (loginedMember.getId() == 0) {
+			return msgAndBack(req, "회원 번호를 입력해주세요.");
+		}
+
+		Member member = memberService.getForPrintMember(loginedMember.getId());
+
+		if (member == null) {
+			return msgAndBack(req, "존재하지 않는 회원입니다.");
+		}
+
 		ResultData modifyMemberRd = memberService.modifyMember(param);
-		String redirectUrl = "/usr/member/checkPassword";
+
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+
+		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}

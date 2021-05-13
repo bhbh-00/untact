@@ -1,6 +1,5 @@
 package com.sbs.untact.util;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -22,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
-
+	// untact
 	public static String getCurrenDate() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
@@ -283,8 +282,8 @@ public class Util {
 
 		return true;
 	}
-	
-	// 
+
+	//
 	public static boolean startsWithNumberString(String str) {
 		if (str == null) {
 			return false;
@@ -298,7 +297,7 @@ public class Util {
 	}
 
 	public static boolean isStandardLoginIdString(String str) {
-		
+
 		if (str == null) {
 			return false;
 		}
@@ -314,7 +313,7 @@ public class Util {
 		// _, 알파벳, 숫자로만 구성
 		return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,19}$", str);
 	}
-	
+
 	public static String getNewUrlRemoved(String url, String paramName) {
 		String deleteStrStarts = paramName + "=";
 		int delStartPos = url.indexOf(deleteStrStarts);
@@ -356,44 +355,53 @@ public class Util {
 	}
 	
 	// 비밀번호 암호화
-    public static String sha256(String base) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
+	public static String sha256(String base) {
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(base.getBytes("UTF-8"));
+			StringBuffer hexString = new StringBuffer();
 
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if (hex.length() == 1)
-                    hexString.append('0');
-                hexString.append(hex);
-            }
+			for (int i = 0; i < hash.length; i++) {
+				String hex = Integer.toHexString(0xff & hash[i]);
+				if (hex.length() == 1)
+					hexString.append('0');
+				hexString.append(hex);
+			}
 
-            return hexString.toString();
+			return hexString.toString();
 
-        } catch (Exception ex) {
-            return "";
-        }
-    }
+		} catch (Exception ex) {
+			return "";
+		}
+	}
 
-	
 	// 메일보내기
 	public static String getNewUriAndEncoded(String url, String paramName, String pramValue) {
 		return getUrlEncoded(getNewUrl(url, paramName, pramValue));
 	}
-	
+
 	public static String getTempPassword(int length) {
-        int index = 0;
-        char[] charArr = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+		int index = 0;
+		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+				'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-        StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer();
 
-        for (int i = 0; i < length; i++) {
-            index = (int) (charArr.length * Math.random());
-            sb.append(charArr[index]);
-        }
+		for (int i = 0; i < length; i++) {
+			index = (int) (charArr.length * Math.random());
+			sb.append(charArr[index]);
+		}
 
-        return sb.toString();
-    }
-	
+		return sb.toString();
+	}
+
+	// 유효시간 설정 (1시간)
+	public static String getDateStrLater(int seconds) {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		String dateStr = format1.format(System.currentTimeMillis() + seconds * 1000);
+
+		return dateStr;
+	}
+	// untact 끝!
 }

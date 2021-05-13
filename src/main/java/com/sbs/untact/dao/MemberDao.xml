@@ -28,7 +28,6 @@
 		loginPw = #{loginPw}
 	</select>
 
-
 	<delete id="deleteMember">
 		DELETE FROM `member`
 		WHERE id = #{id}

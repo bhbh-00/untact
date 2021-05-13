@@ -155,7 +155,7 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
         boolean needToChangePassword = false;
         if (loginedMember != null) {
             if (session.getAttribute("needToChangePassword") == null) {
-                // needToChangePassword = memberService.needToChangePassword(loginedMember.getId());
+                needToChangePassword = memberService.needToChangePassword(loginedMember.getId());
                 
                 session.setAttribute("needToChangePassword", needToChangePassword);
             }
