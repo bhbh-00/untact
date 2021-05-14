@@ -50,7 +50,7 @@
 					<span>
 						<i class="fas fa-people-arrows"></i>
 					</span>
-					<span>UNTACT2</span>
+					<span>UNTACT</span>
 				</a>
 			</div>
 
