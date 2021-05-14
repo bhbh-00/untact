@@ -19,7 +19,7 @@
 				</div>
 
 				<div class="px-4 py-3 pt-7 pb-7">
-
+				
 					<c:set var="detailUrl" value="detail?id=${member.id}" />
 
 					<!-- 프로필 이미지 -->

@@ -15,7 +15,7 @@
   <div class="container mx-auto flex h-full">
     <a href="/usr/home/main" class="px-3 flex items-center">
       <span class="text-4xl"><i class="fas fa-people-arrows"></i></span>
-      <span class="hidden sm:block text-3xl font-black">&nbsp;UNTACT</span>
+      <span class="hidden sm:block text-3xl font-black">&nbsp;UNTACT2</span>
     </a>
     
     <div class="flex-grow"></div>
@@ -65,7 +65,7 @@
           <div>
             <ul>
               <li>
-                <a href="/usr/member/checkPassword" class="inline-block text-lg">
+                <a href="/usr/member/myPage" class="inline-block text-lg">
                   <span><i class="fas fa-user"></i></span>
                   <span>&nbsp;내 프로필 보기</span>
                 </a>

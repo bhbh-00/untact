@@ -81,7 +81,7 @@ public class UsrMemberController extends BaseController {
 	public String ShowCheckPassword(HttpServletRequest req) {
 		return "/usr/member/checkPassword";
 	}
-	
+
 	// checkPasswordAuthCode : 체크비밀번호인증코드
 	@RequestMapping("/usr/member/doCheckPassword")
 	public String doCheckPassword(HttpServletRequest req, String loginPw, String checkPasswordAuthCode) {
@@ -90,11 +90,11 @@ public class UsrMemberController extends BaseController {
 
 		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
 				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
-		
+
 		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
-		
+
 		if (loginPw == null) {
 			return msgAndBack(req, "loginPw를 입력해주세요.");
 		}
@@ -102,7 +102,7 @@ public class UsrMemberController extends BaseController {
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
-		
+
 		return msgAndReplace(req, String.format("", loginedMember.getId()),
 				"../member/myPage?id=" + loginedMember.getId());
 	}
@@ -134,26 +134,7 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/myPage")
-	public String showMyPage(HttpServletRequest req, Integer id, String redirectUrl) {
-		
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		
-		if (id == null) {
-			return msgAndBack(req, "id을 입력해주세요.");
-		}
-
-		Member member = memberService.getForPrintMember(id);
-
-		if (member == null) {
-			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
-		}
-
-		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
-		
-		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
-
-		req.setAttribute("member", member);
-
+	public String showMyPage(HttpServletRequest req) {
 		return "/usr/member/myPage";
 	}
 
@@ -288,7 +269,7 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(Integer id, HttpServletRequest req, String checkPasswordAuthCode, String redirectUrl) {
+	public String Modify(Integer id, HttpServletRequest req) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -310,10 +291,6 @@ public class UsrMemberController extends BaseController {
 			filesMap.put(file.getFileNo() + "", file);
 		}
 
-		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
-
-		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
-
 		member.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("member", member);
 
@@ -325,7 +302,7 @@ public class UsrMemberController extends BaseController {
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		
+
 		if (loginedMember.getId() == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
 		}
@@ -341,6 +318,8 @@ public class UsrMemberController extends BaseController {
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
 		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
+
+		System.out.println(redirectUrl);
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}

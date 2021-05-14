@@ -39,8 +39,7 @@
 				<div class="px-4 py-4">
 
 					<form class="grid form-type-1" action="doCheckPassword" method="POST" onsubmit="checkPasswordForm__checkAndSubmit(this); return false;">
-
-						<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+						
 						<input type="hidden" name="checkPasswordAuthCode" value="${param.checkPasswordAuthCode}">
 						<input type="hidden" name="loginPw" />
 
