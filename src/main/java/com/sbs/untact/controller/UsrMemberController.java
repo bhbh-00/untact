@@ -96,7 +96,7 @@ public class UsrMemberController extends BaseController {
 		}
 
 		if (loginPw == null) {
-			return msgAndBack(req, "loginPw를 입력해주세요.");
+			return msgAndBack(req, "비밀번호를 입력해주세요.");
 		}
 
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
@@ -117,7 +117,7 @@ public class UsrMemberController extends BaseController {
 		Member member = memberService.getMember(id);
 
 		if (member == null) {
-			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
+			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
 		return "/usr/member/delete";
@@ -128,13 +128,27 @@ public class UsrMemberController extends BaseController {
 	public String doDelete(Integer id, HttpServletRequest req) {
 
 		ResultData deleteMemberRd = memberService.deleteMember(id);
+		
 		String redirectUrl = "/usr/member/login";
 
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/member/myPage")
-	public String showMyPage(HttpServletRequest req) {
+	public String showMyPage(HttpServletRequest req, Integer id, HttpSession session) {
+		
+		if (id == null) {
+			return msgAndBack(req, "id를 입력해주세요.");
+		}
+				
+		Member member = memberService.getForPrintMember(id);
+
+		if (member == null) {
+			return msgAndBack(req, "존재하지 않는 회원입니다.");
+		}
+
+		req.setAttribute("member", member);
+		
 		return "/usr/member/myPage";
 	}
 
@@ -269,15 +283,11 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(Integer id, HttpServletRequest req) {
-
+	public String Modify(HttpServletRequest req) {
+		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		if (id == null) {
-			return msgAndBack(req, "회원 번호를 입력해주세요.");
-		}
-
-		Member member = memberService.getForPrintMember(id);
+		Member member = memberService.getForPrintMember(loginedMember.getId());
 
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
@@ -299,7 +309,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, HttpSession session) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -315,13 +325,7 @@ public class UsrMemberController extends BaseController {
 
 		ResultData modifyMemberRd = memberService.modifyMember(param);
 
-		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
-
-		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
-
-		System.out.println(redirectUrl);
-
-		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
+		return Util.msgAndReplace(modifyMemberRd.getMsg(), "../member/myPage");
 	}
 
 }

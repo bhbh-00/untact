@@ -105,7 +105,7 @@ public class AdmMemberController extends BaseController {
 		Member member = memberService.getForPrintMember(id);
 
 		if (member == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 회원은 존재하지 않습니다.");
 		}
 
 		req.setAttribute("member", member);

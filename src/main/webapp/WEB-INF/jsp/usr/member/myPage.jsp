@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -20,8 +21,6 @@
 
 				<div class="px-4 py-3 pt-7 pb-7">
 				
-					<c:set var="detailUrl" value="detail?id=${member.id}" />
-
 					<!-- 프로필 이미지 -->
 					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						<a href="#" class="row-span-3 order-1">
@@ -30,7 +29,7 @@
 						</a>
 						
 						<!-- 번호 -->
-						<a href="${detailUrl}" class="order-2">
+						<a href="#" class="order-2">
 							<span class="badge badge-warning">번호</span>
 							<span>${member.id}</span>
 						</a>
@@ -43,31 +42,31 @@
 						</a>
 						
 						<!-- 등록날짜 -->
-						<a href="${detailUrl}" class="order-4">
+						<a href="#" class="order-4">
 							<span class="badge">등록날짜</span>
 							<span class="text-gray-600 text-light">${member.regDate}</span>
 						</a>
 						
 						<!-- 수정날짜 -->
-						<a href="${detailUrl}" class="order-5">
+						<a href="#" class="order-5">
 							<span class="badge">수정날짜</span>
 							<span class="text-gray-600 text-light">${member.updateDate}</span>
 						</a>
 						
 						<!-- 로그인아이디 -->
-						<a href="${detailUrl}" class="order-6">
+						<a href="#" class="order-6">
 							<span class="badge">아이디</span>
 							<span class="text-gray-600">${member.loginId}</span>
 						</a>
 						
 						<!-- 이름 -->
-						<a href="${detailUrl}" class="order-7">
+						<a href="#" class="order-7">
 							<span class="badge">이름</span>
 							<span class="text-gray-600">${member.name}</span>
 						</a>
 						
 						<!-- 닉네임 -->
-						<a href="${detailUrl}" class="order-8 sm:order-4 md:order-8">
+						<a href="#" class="order-8 sm:order-4 md:order-8">
 							<span class="badge">닉네임</span>
 							<span class="text-gray-600">${member.nickname}</span>
 						</a>
