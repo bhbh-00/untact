@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
+import com.sbs.untact.dto.Rq;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
@@ -285,15 +286,13 @@ public class UsrMemberController extends BaseController {
 	@RequestMapping("/usr/member/modify")
 	public String Modify(HttpServletRequest req) {
 		
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
 
-		Member member = memberService.getForPrintMember(loginedMember.getId());
-
-		if (member == null) {
+		if (loginedMember == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
-		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
+		List<GenFile> files = genFileService.getGenFiles("member", loginedMember.getId(), "common", "attachment");
 
 		Map<String, GenFile> filesMap = new HashMap<>();
 
@@ -301,8 +300,8 @@ public class UsrMemberController extends BaseController {
 			filesMap.put(file.getFileNo() + "", file);
 		}
 
-		member.getExtraNotNull().put("file__common__attachment", filesMap);
-		req.setAttribute("member", member);
+		loginedMember.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("member", loginedMember);
 
 		return "/usr/member/modify";
 	}
@@ -311,7 +310,7 @@ public class UsrMemberController extends BaseController {
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, HttpSession session) {
 
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
 
 		if (loginedMember.getId() == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");

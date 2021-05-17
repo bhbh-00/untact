@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
-	// untact
+
 	public static String getCurrenDate() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
@@ -105,6 +105,17 @@ public class Util {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			return mapper.writeValueAsString(param);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	public static String toJsonStr(Object obj) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.writeValueAsString(obj);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -353,7 +364,7 @@ public class Util {
 
 		return url;
 	}
-	
+
 	// 비밀번호 암호화
 	public static String sha256(String base) {
 		try {
@@ -403,5 +414,4 @@ public class Util {
 
 		return dateStr;
 	}
-	// untact 끝!
 }

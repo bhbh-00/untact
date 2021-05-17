@@ -6,91 +6,128 @@
 <%@ include file="head.jspf"%>
 
 <style>
-  body {
-    margin-top:125px;
-  }
+body {
+	margin-top: 125px;
+}
 </style>
 
 <header class="top-bar h-10 top-bar--fly">
-  <div class="container mx-auto flex h-full">
-    <a href="/usr/home/main" class="px-3 flex items-center">
-      <span class="text-4xl"><i class="fas fa-people-arrows"></i></span>
-      <span class="hidden sm:block text-3xl font-black">&nbsp;UNTACT</span>
-    </a>
-    
-    <div class="flex-grow"></div>
-    
-    <nav class="menu-box-1">
-      <ul class="flex h-full">
-        
-        <!-- 사용자 사이트 홈 -->
-        <li>
-          <a href="/usr/home/main" class="h-full flex items-center px-5">
-            <span class="text-xl"><i class="fas fa-home"></i></span>
-            <span class="hidden sm:block text-lg">&nbsp;홈</span>
-          </a>
-          <div></div>
-        </li>
-        
-        <!-- 게시판 -->
-        <li>
-          <a href="#" class="h-full flex items-center px-5">
-            <span class="text-xl"><i class="far fa-newspaper"></i></span>
-            <span class="hidden md:block text-lg">&nbsp;게시물 보기</span>
-          </a>
-          <div>
-            <ul>
-              <li>
-                <a href="/usr/article/list?boardId=1" class="inline-block text-lg">
-                  <span><i class="far fa-newspaper"></i></span>
-                  <span>&nbsp;공지사항 게시판</span>
-                </a>
-              </li>
-              <li>
-                <a href="/usr/article/list?boardId=2" class="inline-block text-lg">
-                  <span><i class="far fa-newspaper"></i></span>
-                  <span>&nbsp;자유 게시판</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-       
-       <!-- 내 정보 -->
-        <li>
-          <a href="#" class="h-full flex items-center px-5">
-            <span class="text-xl"><i class="fas fa-user"></i></span>
-            <span class="hidden md:block text-lg">&nbsp;마이페이지</span>
-          </a>
-          <div>
-            <ul>
-              <li>
-                <a href="/usr/member/myPage" class="inline-block text-lg">
-                  <span><i class="fas fa-user"></i></span>
-                  <span>&nbsp;내 프로필 보기</span>
-                </a>
-              </li>
-              <li>
-                <a href="/usr/article/myList?boardId=2" class="inline-block text-lg">
-                  <span><i class="fas fa-user"></i></span>
-                  <span>&nbsp;내 게시물 보기</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-       
-       <!-- 로그아웃 -->
-        <li>
-          <a href="/usr/member/doLogout" class="h-full flex items-center px-5">
-            <span class="text-xl"><i class="fas fa-sign-out-alt"></i></span>
-            <span class="hidden md:block text-lg">&nbsp;로그아웃</span>
-          </a>
-          <div></div>
-        </li>
-        
-      </ul>
-    </nav>
-  </div>  
-  
+	<div class="container mx-auto flex h-full">
+		<a href="/usr/home/main" class="px-3 flex items-center">
+			<span class="text-4xl">
+				<i class="fas fa-people-arrows"></i>
+			</span>
+			<span class="hidden sm:block text-3xl font-black">&nbsp;UNTACT</span>
+		</a>
+
+		<div class="flex-grow"></div>
+
+		<nav class="menu-box-1">
+			<ul class="flex h-full">
+
+				<!-- 사용자 사이트 홈 -->
+				<li>
+					<a href="/usr/home/main" class="h-full flex items-center px-5">
+						<span class="text-xl">
+							<i class="fas fa-home"></i>
+						</span>
+						<span class="hidden sm:block text-lg">&nbsp;홈</span>
+					</a>
+					<div></div>
+				</li>
+
+				<!-- 게시판 -->
+				<li>
+					<a href="#" class="h-full flex items-center px-5">
+						<span class="text-xl">
+							<i class="far fa-newspaper"></i>
+						</span>
+						<span class="hidden md:block text-lg">&nbsp;게시물 보기</span>
+					</a>
+					<div>
+						<ul>
+							<li>
+								<a href="/usr/article/list?boardId=1"
+									class="inline-block text-lg">
+									<span>
+										<i class="far fa-newspaper"></i>
+									</span>
+									<span>&nbsp;공지사항 게시판</span>
+								</a>
+							</li>
+							<li>
+								<a href="/usr/article/list?boardId=2"
+									class="inline-block text-lg">
+									<span>
+										<i class="far fa-newspaper"></i>
+									</span>
+									<span>&nbsp;자유 게시판</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+
+				<!-- 내 정보 -->
+				<li>
+					<a href="#" class="h-full flex items-center px-5">
+						<span class="text-xl">
+							<i class="fas fa-user"></i>
+						</span>
+						<span class="hidden md:block text-lg">&nbsp;마이페이지</span>
+					</a>
+					<div>
+						<ul>
+							<li>
+								<a href="/usr/member/myPage?id=" class="inline-block text-lg">
+									<span>
+										<i class="fas fa-user"></i>
+									</span>
+									<span>&nbsp;내 프로필 보기</span>
+								</a>
+							</li>
+							<li>
+								<a href="/usr/article/myList?boardId=2"
+									class="inline-block text-lg">
+									<span>
+										<i class="fas fa-user"></i>
+									</span>
+									<span>&nbsp;내 게시물 보기</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+
+				<!-- 로그아웃 -->
+				<c:if test="${rq.logined}">
+					<li>
+						<a href="/usr/member/doLogout"
+							class="h-full flex items-center px-5">
+							<span class="text-xl">
+								<i class="fas fa-sign-out-alt"></i>
+							</span>
+							<span class="hidden md:block text-lg">&nbsp;로그아웃</span>
+						</a>
+						<div></div>
+					</li>
+				</c:if>
+
+				<!-- 로그인 -->
+				<c:if test="${rq.notLogined}">
+					<li>
+						<a href="/usr/member/login" class="h-full flex items-center px-5">
+							<span class="text-xl">
+								<i class="fas fa-sign-out-alt"></i>
+							</span>
+							<span class="hidden md:block text-lg">&nbsp;로그인</span>
+						</a>
+						<div></div>
+					</li>
+				</c:if>
+
+			</ul>
+		</nav>
+	</div>
+
 </header>
