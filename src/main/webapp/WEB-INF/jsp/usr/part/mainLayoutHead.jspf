@@ -99,33 +99,33 @@ body {
 					</div>
 				</li>
 
-				<!-- 로그아웃 -->
-				<c:if test="${rq.logined}">
-					<li>
-						<a href="/usr/member/doLogout"
-							class="h-full flex items-center px-5">
-							<span class="text-xl">
-								<i class="fas fa-sign-out-alt"></i>
-							</span>
-							<span class="hidden md:block text-lg">&nbsp;로그아웃</span>
-						</a>
-						<div></div>
-					</li>
-				</c:if>
+				<c:choose>
+					<c:when test="${loginedMember.id == null}">
+						<li>
+							<a href="/usr/member/login" class="h-full flex items-center px-5">
+								<span class="text-xl">
+									<i class="fas fa-sign-out-alt"></i>
+								</span>
+								<span class="hidden md:block text-lg">&nbsp;로그인</span>
+							</a>
+							<div></div>
+						</li>
+					</c:when>
 
-				<!-- 로그인 -->
-				<c:if test="${rq.notLogined}">
-					<li>
-						<a href="/usr/member/login" class="h-full flex items-center px-5">
-							<span class="text-xl">
-								<i class="fas fa-sign-out-alt"></i>
-							</span>
-							<span class="hidden md:block text-lg">&nbsp;로그인</span>
-						</a>
-						<div></div>
-					</li>
-				</c:if>
-
+					<c:otherwise>
+						<li>
+							<a href="/usr/member/doLogout"
+								class="h-full flex items-center px-5">
+								<span class="text-xl">
+									<i class="fas fa-sign-out-alt"></i>
+								</span>
+								<span class="hidden md:block text-lg">&nbsp;로그아웃</span>
+							</a>
+							<div></div>
+						</li>
+					</c:otherwise>
+				</c:choose>
+				
 			</ul>
 		</nav>
 	</div>

@@ -33,10 +33,10 @@
 <!-- vue -->
 <script src="https://unpkg.com/vue@next"></script>
 
-<%="<script>"%>
-const param = ${paramJson};
+<script>
+const param = ${rq.paramJsonStr};
 <!-- const : 변수의 값이 거의 바뀌지 않는다는 것을 뜻함 -->
-<%="</script>"%>
+</script>
 
 </head>
 <body class=bg-indigo-50>

@@ -13,7 +13,7 @@ public class Rq {
 
 	@Getter
 	private boolean isAdmin;
-
+	
 	private String currentUrl;
 	@Getter
 	private String currentUri;
