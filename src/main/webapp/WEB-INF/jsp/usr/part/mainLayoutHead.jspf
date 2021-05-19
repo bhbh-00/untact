@@ -99,6 +99,21 @@ body {
 					</div>
 				</li>
 
+				<!-- 관리자 홈 -->
+				<c:if test="${loginedMember.authLevel == 7 }">
+					<li>
+						<a href="/adm/home/main" class="h-full flex items-center px-5">
+							<span class="text-xl">
+								<i class="fas fa-house-user"></i>
+							</span>
+							<span class="hidden sm:block text-lg">&nbsp;관리자 홈</span>
+						</a>
+						<div></div>
+					</li>
+				</c:if>
+
+
+				<!-- 로그인 / 로그아웃 -->
 				<c:choose>
 					<c:when test="${loginedMember.id == null}">
 						<li>
@@ -125,7 +140,7 @@ body {
 						</li>
 					</c:otherwise>
 				</c:choose>
-				
+
 			</ul>
 		</nav>
 	</div>
