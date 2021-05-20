@@ -47,17 +47,6 @@ body {
 					<div></div>
 				</li>
 
-				<!-- 회원관리 -->
-				<li>
-					<a href="/adm/member/list" class="h-full flex items-center px-5">
-						<span class="text-xl">
-							<i class="fas fa-user"></i>
-						</span>
-						<span class="hidden md:block text-lg">&nbsp;회원관리</span>
-					</a>
-					<div></div>
-				</li>
-
 				<!-- 게시판 관리 -->
 				<li>
 					<a href="/adm/board/list" class="h-full flex items-center px-5">
@@ -82,8 +71,7 @@ body {
 						<ul>
 							<!-- 공지사항 게시판 -->
 							<li>
-								<a href="/usr/article/list?boardId=1"
-									class="inline-block text-lg">
+								<a href="/usr/article/list?boardId=1" class="inline-block text-lg">
 									<span>
 										<i class="far fa-newspaper"></i>
 									</span>
@@ -92,8 +80,7 @@ body {
 							</li>
 							<!-- 자유 게시판 -->
 							<li>
-								<a href="/usr/article/list?boardId=2"
-									class="inline-block text-lg">
+								<a href="/usr/article/list?boardId=2" class="inline-block text-lg">
 									<span>
 										<i class="far fa-newspaper"></i>
 									</span>
@@ -103,6 +90,17 @@ body {
 						</ul>
 					</div>
 				</li>
+				
+				<!-- 회원관리 -->
+				<li>
+					<a href="/adm/member/list" class="h-full flex items-center px-5">
+						<span class="text-xl">
+							<i class="fas fa-user"></i>
+						</span>
+						<span class="hidden md:block text-lg">&nbsp;회원관리</span>
+					</a>
+					<div></div>
+				</li>
 
 				<!-- 로그인 / 로그아웃 -->
 				<c:choose>
@@ -110,7 +108,7 @@ body {
 						<li>
 							<a href="/usr/member/login" class="h-full flex items-center px-5">
 								<span class="text-xl">
-									<i class="fas fa-sign-out-alt"></i>
+									<i class="fas fa-sign-in-alt"></i>
 								</span>
 								<span class="hidden md:block text-lg">&nbsp;로그인</span>
 							</a>
@@ -120,8 +118,7 @@ body {
 
 					<c:otherwise>
 						<li>
-							<a href="/usr/member/doLogout"
-								class="h-full flex items-center px-5">
+							<a href="/usr/member/doLogout" class="h-full flex items-center px-5">
 								<span class="text-xl">
 									<i class="fas fa-sign-out-alt"></i>
 								</span>
