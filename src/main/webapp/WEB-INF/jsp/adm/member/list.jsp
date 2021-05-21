@@ -51,7 +51,8 @@
 
 						<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 							<a href="#" class="row-span-3 order-1">
-								<img class="rounded-full" src="https://i.pravatar.cc/100?img=37" alt="">
+								<img class="w-40 h-40 object-cover rounded-full" onerror="${member.profileFallbackImgOnErrorHtmlAttr}" src="${member.profileImgUrl}"
+								alt="">
 							</a>
 
 							<!-- 번호 -->
@@ -99,20 +100,26 @@
 						</div>
 							
 						<div class="grid grid-item-float gap-3 mt-4">
-							<a href="${detailUrl}" class="text-blue-500" title="자세히 보기">
+							
+							<!-- 자세히 보기 -->
+							<a href="${detailUrl}" class="text-gray-500" title="자세히 보기">
 								<span>
 									<i class="fas fa-info"></i>
 									<span>자세히 보기</span>
 								</span>
 							</a>
-							<a href="modify?id=${member.id}" class="text-blue-500 ">
+							
+							<!-- 수정 -->
+							<a href="modify?id=${member.id}" class="text-blue-500">
 								<span>
 									<i class="fas fa-edit"></i>
 									<span>수정</span>
 								</span>
 							</a>
+							
+							<!-- 삭제 -->
 							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-								href="doDelete?id=${member.id}" class="text-blue-500 ">
+								href="doDelete?id=${member.id}" class="text-red-500">
 								<span>
 									<i class="fas fa-trash"></i>
 									<span>삭제</span>

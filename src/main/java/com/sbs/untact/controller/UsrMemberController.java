@@ -12,11 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
-import com.sbs.untact.dto.Rq;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
@@ -129,19 +130,19 @@ public class UsrMemberController extends BaseController {
 	public String doDelete(Integer id, HttpServletRequest req) {
 
 		ResultData deleteMemberRd = memberService.deleteMember(id);
-		
+
 		String redirectUrl = "/usr/member/login";
 
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/member/mypage")
-	public String showMyPage(HttpServletRequest req, Integer id, HttpSession session) {
-		
+	public String showMyPage(HttpServletRequest req, Integer id) {
+
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
-				
+
 		Member member = memberService.getForPrintMember(id);
 
 		if (member == null) {
@@ -149,7 +150,7 @@ public class UsrMemberController extends BaseController {
 		}
 
 		req.setAttribute("member", member);
-		
+
 		return "/usr/member/mypage";
 	}
 
@@ -284,15 +285,19 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(HttpServletRequest req) {
-		
-		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
+	public String Modify(HttpServletRequest req, int id) {
 
-		if (loginedMember == null) {
+		if (id == 0) {
+			return msgAndBack(req, "회원 번호를 입력해주세요.");
+		}
+
+		Member member = memberService.getForPrintMember(id);
+
+		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
-		List<GenFile> files = genFileService.getGenFiles("member", loginedMember.getId(), "common", "attachment");
+		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
 
 		Map<String, GenFile> filesMap = new HashMap<>();
 
@@ -300,31 +305,23 @@ public class UsrMemberController extends BaseController {
 			filesMap.put(file.getFileNo() + "", file);
 		}
 
-		loginedMember.getExtraNotNull().put("file__common__attachment", filesMap);
-		req.setAttribute("member", loginedMember);
+		member.getExtraNotNull().put("file__common__attachment", filesMap);
+		req.setAttribute("member", member);
 
 		return "/usr/member/modify";
 	}
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, HttpSession session) {
-
-		Member loginedMember = ((Rq) req.getAttribute("rq")).getLoginedMember();
-
-		if (loginedMember.getId() == 0) {
-			return msgAndBack(req, "회원 번호를 입력해주세요.");
-		}
-
-		Member member = memberService.getForPrintMember(loginedMember.getId());
-
-		if (member == null) {
-			return msgAndBack(req, "존재하지 않는 회원입니다.");
-		}
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		
+		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 
 		ResultData modifyMemberRd = memberService.modifyMember(param);
+		
+		String redirectUrl = "/usr/member/mypage?id=" + loginMemberId;
 
-		return Util.msgAndReplace(modifyMemberRd.getMsg(), "../member/myPage");
+		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}
 
 }

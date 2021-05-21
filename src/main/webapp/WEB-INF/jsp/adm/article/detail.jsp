@@ -87,18 +87,14 @@
 						</div>
 
 						<div class="plain-link-wrap gap-3 mt-4">
-							<a href="#" class="plain-link" title="자세히 보기">
-								<span>
-									<i class="fas fa-info"></i>
-								</span>
-								<span>자세히 보기</span>
-							</a>
+							
 							<a href="#" class="plain-link">
 								<span>
 									<i class="fas fa-edit"></i>
 								</span>
 								<span>수정</span>
 							</a>
+							
 							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;" href="#"
 								class="plain-link">
 								<span>
@@ -106,6 +102,7 @@
 									<span>삭제</span>
 								</span>
 							</a>
+							
 						</div>
 					</div>
 				</div>

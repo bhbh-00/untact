@@ -30,7 +30,8 @@ public class Member extends EntityDto {
 	private String Extra__thumbImg;
 	
 	public String getProfileImgUrl() {
-        return "/common/genFile/file/member/" + id + "/extra/profileImg/1";
+        return "/common/genFile/file/member/" + id + "/common/attachment/1";
+        
     }
 
     public String getProfileFallbackImgUrl() {
@@ -49,5 +50,4 @@ public class Member extends EntityDto {
 		return MemberService.getAuthLevelNameColor(this);
 	}
 	
-
 }

@@ -25,4 +25,12 @@ public class Article extends EntityDto {
 	public String getWriterThumbImgUrl() {
 		return "/common/genFile/file/member/" + memberId + "/common/attachment/1";
 	}
+	
+	public String getWriterProfileFallbackImgUri() {
+        return "https://via.placeholder.com/300?text=No thumbnail";
+    }
+
+    public String getWriterProfileFallbackImgOnErrorHtmlAttr() {
+        return "this.src = '" + getWriterProfileFallbackImgUri() + "'";
+    }
 }

@@ -25,7 +25,7 @@
 					<!-- 프로필 이미지 -->
 					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						<a href="#" class="row-span-3 order-1">
-							<img class="rounded-full" src="https://i.pravatar.cc/100?img=37"
+							<img class="w-40 h-40 object-cover rounded-full" onerror="${member.profileFallbackImgOnErrorHtmlAttr}" src="${member.profileImgUrl}"
 								alt="">
 						</a>
 						

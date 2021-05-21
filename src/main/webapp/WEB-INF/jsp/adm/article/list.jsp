@@ -151,8 +151,9 @@
 						</div>
 
 						<div class="plain-link-wrap gap-3 mt-4">
+							
 							<!-- 자세히 보기 -->
-							<a href="${detailUrl}" class="plain-link" title="자세히 보기">
+							<a href="${detailUrl}" class="text-gray-500" title="자세히 보기">
 								<span>
 									<i class="fas fa-info"></i>
 								</span>
@@ -160,7 +161,7 @@
 							</a>
 
 							<!-- 수정 -->
-							<a href="modify?id=${article.id}" class="plain-link">
+							<a href="modify?id=${article.id}" class="text-blue-500">
 								<span>
 									<i class="fas fa-edit"></i>
 								</span>
@@ -169,7 +170,7 @@
 
 							<!-- 삭제 -->
 							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-								href="doDelete?id=${article.id}" class="plain-link">
+								href="doDelete?id=${article.id}" class="text-red-500">
 								<span>
 									<i class="fas fa-trash"></i>
 									<span>삭제</span>

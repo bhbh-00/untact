@@ -37,7 +37,7 @@ public class MemberService {
 
 		genFileService.changeInputFileRelIds(param, id);
 
-		return new ResultData("s-1", String.format("%s님! 반갑습니다.", param.get("nickname")));
+		return new ResultData("s-1", String.format("회원가입이 정상적으로 처리되었습니다.", param.get("nickname")));
 	}
 
 	public Member getMemberByLoginId(String loginId) {
@@ -51,7 +51,7 @@ public class MemberService {
 	public ResultData modifyMember(Map<String, Object> param) {
 		memberDao.modifyMember(param);
 
-		return new ResultData("s-1", "회원님의 정보가 수정 완료되었습니다");
+		return new ResultData("s-1", "회원정보가 수정되었습니다.");
 	}
 
 	public boolean isAdmin(Member actor) {

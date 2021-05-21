@@ -117,6 +117,7 @@ public class AdmMemberController extends BaseController {
 	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param) {
 
 		String searchKeywordType = (String) param.get("searchKeywordType");
+		
 		String searchKeyword = (String) param.get("searchKeyword");
 
 		if (searchKeywordType != null) {
