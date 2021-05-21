@@ -24,7 +24,7 @@
 					<!-- 프로필 이미지 -->
 					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						<a href="#" class="row-span-3 order-1">
-							<img class="rounded-full" src="https://i.pravatar.cc/100?img=37"
+							<img class="w-40 h-40 object-cover rounded-full" onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}" src="${loginedMember.profileImgUrl}"
 								alt="">
 						</a>
 						
@@ -74,14 +74,14 @@
 
 					<div class="grid grid-item-float gap-3 mt-4">
 						
-						<a href="modify?id=${member.id}" class="text-blue-500 ">
+						<a href="modify?id=${loginedMember.id}" class="text-blue-500 ">
 							<span>
 								<i class="fas fa-edit"></i>
 								<span>수정</span>
 							</span>
 						</a>
 						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-							href="doDelete?id=${member.id}" class="text-red-500 ">
+							href="doDelete?id=${loginedMember.id}" class="text-red-500 ">
 							<span>
 								<i class="fas fa-trash"></i>
 								<span>회원탈퇴</span>

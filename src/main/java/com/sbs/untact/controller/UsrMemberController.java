@@ -135,7 +135,7 @@ public class UsrMemberController extends BaseController {
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
 
-	@RequestMapping("/usr/member/myPage")
+	@RequestMapping("/usr/member/mypage")
 	public String showMyPage(HttpServletRequest req, Integer id, HttpSession session) {
 		
 		if (id == null) {
@@ -150,7 +150,7 @@ public class UsrMemberController extends BaseController {
 
 		req.setAttribute("member", member);
 		
-		return "/usr/member/myPage";
+		return "/usr/member/mypage";
 	}
 
 	@RequestMapping("/usr/member/getLoginIdDup")

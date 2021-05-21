@@ -67,7 +67,7 @@ body {
 				</li>
 
 				<!-- 내 정보 -->
-				<c:if test="${loginedMember.id != null }">
+				<c:if test="${ loginedMember.id != null }">
 					<li>
 						<a href="#" class="h-full flex items-center px-5">
 							<span class="text-xl">
@@ -78,7 +78,7 @@ body {
 						<div>
 							<ul>
 								<li>
-									<a href="/usr/member/myPage?id=" class="inline-block text-lg">
+									<a href="/usr/member/mypage?id=${ loginedMember.id }" class="inline-block text-lg">
 										<span>
 											<i class="fas fa-user"></i>
 										</span>
@@ -100,7 +100,7 @@ body {
 				</c:if>
 
 				<!-- 관리자 홈 -->
-				<c:if test="${loginedMember.authLevel == 7 }">
+				<c:if test="${ loginedMember.authLevel == 7 }">
 					<li>
 						<a href="/adm/home/main" class="h-full flex items-center px-5">
 							<span class="text-xl">
@@ -115,7 +115,7 @@ body {
 
 				<!-- 로그인 / 로그아웃 -->
 				<c:choose>
-					<c:when test="${loginedMember.id == null}">
+					<c:when test="${ loginedMember.id == null}">
 						<li>
 							<a href="/usr/member/login" class="h-full flex items-center px-5">
 								<span class="text-xl">
