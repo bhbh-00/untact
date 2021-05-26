@@ -57,7 +57,7 @@
 		LEFT JOIN
 		`member` AS M
 		ON R.memberId = M.id
-		WHERE R.id = #{id}
+		WHERE R.relId = #{id}
 	</select>
 
 </mapper>

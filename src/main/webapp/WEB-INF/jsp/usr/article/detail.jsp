@@ -80,7 +80,8 @@
 						<!-- 좋아요 -->
 
 						<div title="좋아요">
-							<a href="doLike?relTypeCode=article&relId=${article.id}&memberId=${loginedMember.id}"
+							<a
+								href="doLike?relTypeCode=article&relId=${article.id}&memberId=${loginedMember.id}"
 								class="flex plain-link">
 
 								<c:choose>
@@ -136,7 +137,7 @@
 					<i class="far fa-comments"></i>
 					<span class="text-lg">댓글</span>
 				</div>
-				
+
 				<div>
 					<!-- 댓글 입력 시작 -->
 					<form class="grid form-type-1" action="../reply/doAdd"
@@ -145,28 +146,83 @@
 						<input type="hidden" name="relTypeCode" value="article" />
 						<input type="hidden" name="relId" value="${article.id}" />
 						<input type="hidden" name="memberId" value="${loginedMember.id}" />
-						<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
+						<input type="hidden" name="redirectUrl"
+							value="/usr/article/detail?id=${article.id}" />
 
 						<input name="body" type="text"
 							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
 							style="border-radius: 25px" placeholder="댓글을 입력해주세요."
 							autocomplete="off">
 					</form>
-					
-					<div class="mt-4 btn-wrap gap-1">
-						<!-- 댓글 입력 끝 -->
-						
-						<!-- 댓글 List -->
-						<c:forEach items="${replys}" var="reply">
-						${reply.body}
-						</c:forEach>
-					</div>
+					<!-- 댓글 입력 끝 -->
+					<div class="mt-4 btn-wrap gap-1"></div>
+
+					<!-- 댓글 List -->
+					<c:forEach items="${replys}" var="reply">
+						<div class="item-bt-1">
+							<div class="flex py-5 px-4">
+								<div class="flex-shrink-0">
+									<img
+										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
+										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
+										src="${loginedMember.profileImgUrl}">
+								</div>
+								<div class="flex-grow px-1">
+
+									<div class="flex text-gray-500 text-light text-sm">
+										<span>${reply.extra__writer}</span>
+										<span class="mx-1">·</span>
+										<span>${reply.updateDate}</span>
+									</div>
+
+									<div class="flex">
+
+										<div class="text-lg font-medium">
+											<span>${reply.body}</span>
+										</div>
+
+										<div class="flex-grow"></div>
+
+										<div class="flex text-sm">
+											<c:if test="${ loginedMember.id == reply.memberId }">
+												<!-- 수정 -->
+												<a href="/usr/reply/doModify?id=${reply.id}"
+													class="flex plain-link ml-5 mr-2">
+													<span>
+														<i class="fas fa-edit"></i>
+													</span>
+													<span class="hidden md:block">수정</span>
+												</a>
+
+												<!-- 삭제 -->
+												<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+													href="/usr/reply/doDelete?id=${reply.id}"
+													class="flex plain-link">
+													<span class="text-red-500">
+														<i class="fas fa-trash"></i>
+														<span class="">삭제</span>
+													</span>
+												</a>
+											</c:if>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+
 				</div>
+
 			</div>
+
+
+
 		</div>
+
 	</div>
-	
-	
+
+
+
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
