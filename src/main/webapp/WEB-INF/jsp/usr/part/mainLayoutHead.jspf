@@ -67,7 +67,7 @@ body {
 				</li>
 
 				<!-- 내 정보 -->
-				<c:if test="${ loginedMember.id != null }">
+				<c:if test="${ loginedMember.id != null}">
 					<li>
 						<a href="#" class="h-full flex items-center px-5">
 							<span class="text-xl">
@@ -78,7 +78,7 @@ body {
 						<div>
 							<ul>
 								<li>
-									<a href="/usr/member/mypage?id=${ loginedMember.id }" class="inline-block text-lg">
+									<a href="../member/checkPassword?afterUrl=..%2Fmember%2Fmodify" class="inline-block text-lg">
 										<span>
 											<i class="fas fa-user"></i>
 										</span>

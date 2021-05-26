@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
@@ -86,16 +84,9 @@ public class UsrMemberController extends BaseController {
 
 	// checkPasswordAuthCode : 체크비밀번호인증코드
 	@RequestMapping("/usr/member/doCheckPassword")
-	public String doCheckPassword(HttpServletRequest req, String loginPw, String checkPasswordAuthCode) {
+	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUrl) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
-				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
-
-		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
-			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
-		}
 
 		if (loginPw == null) {
 			return msgAndBack(req, "비밀번호를 입력해주세요.");
@@ -105,8 +96,11 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
 
-		return msgAndReplace(req, String.format("", loginedMember.getId()),
-				"../member/myPage?id=" + loginedMember.getId());
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+
+		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
+
+		return msgAndReplace(req, "", redirectUrl);
 	}
 
 	@RequestMapping("/usr/member/delete")
@@ -285,7 +279,16 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(HttpServletRequest req, int id) {
+	public String Modify(HttpServletRequest req, int id, String checkPasswordAuthCode) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
 
 		if (id == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
@@ -313,13 +316,21 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
+			String checkPasswordAuthCode) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
 
 		ResultData modifyMemberRd = memberService.modifyMember(param);
-		
-		String redirectUrl = "/usr/member/mypage?id=" + loginMemberId;
+
+		String redirectUrl = "/usr/member/mypage?id=" + loginedMember.getId();
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
 	}

@@ -24,6 +24,10 @@
 				<div class="flex items-center py-2 px-4">
 					
 					<!-- 글쓰기 -->
+					<c:if test="${loginedMember.authLevel == 7 && board.id == 1}">
+						<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
+					</c:if>
+					
 					<c:if test="${board.id == 2}">
 						<a class="btn btn-sm mb-1" href="add?boardId=${ board.id }">글쓰기</a>
 					</c:if>

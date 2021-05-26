@@ -74,7 +74,7 @@
 
 					<div class="grid grid-item-float gap-3 mt-4">
 						
-						<a href="modify?id=${loginedMember.id}" class="text-blue-500 ">
+						<a href="../member/checkPassword?afterUrl=${Util.getUrlEncoded('../member/modify')}" class="text-blue-500 ">
 							<span>
 								<i class="fas fa-edit"></i>
 								<span>수정</span>
