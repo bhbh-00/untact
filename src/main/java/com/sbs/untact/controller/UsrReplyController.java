@@ -83,9 +83,9 @@ public class UsrReplyController extends BaseController {
 	public String doReply(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
 
 		if (param.get("relTypeCode") == "article") {
-			Article article = articleService.getArticle((int) param.get("relId"));
+			Article articleid = articleService.getArticle((int) param.get("relId"));
 
-			if (article == null) {
+			if (articleid == null) {
 				return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 			}
 
@@ -108,35 +108,29 @@ public class UsrReplyController extends BaseController {
 		return Util.msgAndReplace(doAddRd.getMsg(), redirectUrl);
 	}
 
-	@RequestMapping("/usr/reply/list")
-	@ResponseBody
-	public ResultData showList(String relTypeCode, Integer relId) {
-		/*
-		 * 선생님 -> 로그인 없이 댓글을 볼 수 있게 함 댓글 페이징까지! 댓글 전용 컨트롤러 따로 만들기! 댓글이 꼭 게시물에만 달 수 있는게
-		 * 아니라 서비스 전체에 달 수 있게 끔 해준다. -> relTypeCode와 relId추가 sql 쿼리 수정 sql 인덱스 걸기 -> 순서
-		 * 중요! beforeActionInterceptor에 로그인 없이 할 수 있게 수정
-		 */
+	@RequestMapping("/usr/article/replyList")
+	public String showList(HttpServletRequest req, String relTypeCode, Integer relId) {
 
-		// relId는 게시물의 번호
 		if (relTypeCode == null) {
-			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
+			return msgAndBack(req, "relTypeCode를 입력해주세요.");
 		}
 
 		if (relId == null) {
-			return new ResultData("F-1", "댓글 번호를 입력해주세요.");
+			return msgAndBack(req, "댓글 번호를 입력해주세요.");
 		}
 
 		if (relTypeCode.equals("article")) {
 			Article article = articleService.getArticle(relId);
 
 			if (article == null) {
-				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+				msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 			}
 		}
 
 		List<Reply> replies = replyService.getForPrintReplies(relId);
 
-		return new ResultData("S-1", "성공", "replies", replies);
-	}
+		req.setAttribute("replies", replies);
 
+		return "/usr/article/replyList";
+	}
 }

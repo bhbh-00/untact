@@ -127,46 +127,46 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="container mx-auto mt-4">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div id="vue-app__reply-box">
-					<div class="card-title bg-white">
-						<i class="far fa-comments"></i>
-						<span class="text-lg">댓글</span>
-					</div>
-					<div>
-						<!-- 댓글 입력 시작 -->
-						<form class="grid form-type-1" action="../reply/doAdd" method="POST" enctype="multipart/form-data">
-							
-							<input type="hidden" name="relTypeCode" value="article" />
-							<input type="hidden" name="relId" value="${article.id}" />
-							<input type="hidden" name="memberId" value="${loginedMember.id}" />
-							<input type="hidden" name="redirectUrl" value="${loginedMember.id}" />
-							
-							<div class="form-control">
-								<input name="body" type="text" 
-									class="input input-bordered">
-							<input type="submit" class="btn mb-1"
-								value="작성">
-							</div>
-						</form>
+	<div class="container mx-auto mt-4">
+		<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div id="vue-app__reply-box">
+				<div class="card-title bg-white">
+					<i class="far fa-comments"></i>
+					<span class="text-lg">댓글</span>
+				</div>
+				
+				<div>
+					<!-- 댓글 입력 시작 -->
+					<form class="grid form-type-1" action="../reply/doAdd"
+						method="POST" enctype="multipart/form-data">
 
-						<div class="mt-4 btn-wrap gap-1">
-							<!-- 댓글 입력 끝 -->
+						<input type="hidden" name="relTypeCode" value="article" />
+						<input type="hidden" name="relId" value="${article.id}" />
+						<input type="hidden" name="memberId" value="${loginedMember.id}" />
+						<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
+
+						<input name="body" type="text"
+							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
+							style="border-radius: 25px" placeholder="댓글을 입력해주세요."
+							autocomplete="off">
+					</form>
+					
+					<div class="mt-4 btn-wrap gap-1">
+						<!-- 댓글 입력 끝 -->
 						
-						<c:if test="${reply.id != null }">
-							<c:forEach items="${replys}" var="reply">
-								<span>${ reply.body }</span>
-							</c:forEach>
-						</c:if>
-
-						</div>
+						<!-- 댓글 List -->
+						<c:forEach items="${replys}" var="reply">
+						${reply.body}
+						</c:forEach>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

@@ -18,10 +18,12 @@ import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.LikeService;
+import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 @Controller
@@ -32,10 +34,14 @@ public class UsrArticleController extends BaseController {
 	private GenFileService genFileService;
 	@Autowired
 	private LikeService likeService;
+	@Autowired
+	private ReplyService replyService;
+	
 
 	@RequestMapping("/usr/article/deleteLike")
 	@ResponseBody
 	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {
+		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
@@ -259,9 +265,12 @@ public class UsrArticleController extends BaseController {
 
 		Like like = likeService.getLikeByArticle(id);
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
+		
+		List<Reply> replys = replyService.getForPrintReplies(id);
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
+		req.setAttribute("replys", replys);
 		req.setAttribute("like", like);
 		req.setAttribute("totleItemsCountByLike", totleItemsCountByLike);
 		req.setAttribute("loginMemberId", loginMemberId);
