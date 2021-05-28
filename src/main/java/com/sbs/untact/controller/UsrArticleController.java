@@ -37,65 +37,6 @@ public class UsrArticleController extends BaseController {
 	@Autowired
 	private ReplyService replyService;
 	
-
-	@RequestMapping("/usr/article/deleteLike")
-	@ResponseBody
-	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {
-		
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
-		}
-
-		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-		}
-
-		return likeService.deleteLike(id);
-	}
-
-	@RequestMapping("/usr/article/like")
-	public String like(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-
-		if (param.get("relTypeCode") == null) {
-			return msgAndBack(req, "relTypeCode를 입력해주세요.");
-		}
-
-		if (param.get("relId") == null) {
-			return msgAndBack(req, "relId을 입력해주세요.");
-		}
-
-		Article article = articleService.getArticle((int) param.get("relId"));
-
-		if (article == null) {
-			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
-		}
-
-		req.setAttribute("article", article);
-
-		return "/usr/article/like";
-	}
-
-	@RequestMapping("/usr/article/doLike")
-	@ResponseBody
-	public String doLike(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
-
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		if (Util.isEmpty(redirectUrl)) {
-			redirectUrl = "/";
-		}
-
-		req.setAttribute("loginedMember", loginedMember);
-
-		ResultData doLikeRd = likeService.doLike(param);
-
-		return Util.msgAndBack(doLikeRd.getMsg());
-	}
-
 	@RequestMapping("/usr/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
