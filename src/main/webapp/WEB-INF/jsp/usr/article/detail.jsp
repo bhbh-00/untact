@@ -8,6 +8,29 @@
 
 <c:set var="fileInputMaxCount" value="10" />
 
+<script>
+	const addReply_checkAndSubmitDone = false;
+
+	function addReply_checkAndSubmit(form) {
+
+		if (addReply_checkAndSubmitDone) {
+
+			return;
+		}
+
+		form.body.value = form.body.value.trim();
+
+		if (form.body.value.length == 0) {
+			alert('댓글을 입력해주세요.');
+			form.body.focus();
+
+			return;
+		}
+
+		addReply_checkAndSubmitDone = true;
+	}
+</script>
+
 <section class="section-1">
 
 	<div class="section-article-detail">
@@ -77,8 +100,13 @@
 						<div class="flex"></div>
 
 						<div class="flex-grow"></div>
-						<!-- 좋아요 -->
 
+
+						<!-- 좋아요 -->
+						<!-- 좋아요 수정 예정 - 아래 내용 활용하기
+						<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
+							<i class="fas fa-pen"></i>
+						</button> -->
 						<div title="좋아요">
 							<a
 								href="doLike?relTypeCode=article&relId=${article.id}&memberId=${loginedMember.id}"
@@ -141,7 +169,7 @@
 				<div>
 					<!-- 댓글 입력 시작 -->
 					<form class="grid form-type-1" action="../reply/doAdd"
-						method="POST" enctype="multipart/form-data">
+						method="POST" enctype="multipart/form-data" onsubmit="addReply_checkAndSubmit(this); return false;">
 
 						<input type="hidden" name="relTypeCode" value="article" />
 						<input type="hidden" name="relId" value="${article.id}" />
@@ -149,10 +177,17 @@
 						<input type="hidden" name="redirectUrl"
 							value="/usr/article/detail?id=${article.id}" />
 
-						<input name="body" type="text"
-							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
-							style="border-radius: 25px" placeholder="댓글을 입력해주세요."
-							autocomplete="off">
+						<input name="body" type="text" style="border-radius: 25px"
+							placeholder="댓글을 입력해주세요." autocomplete="off"
+							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
+								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue">
+
+						<button type="submit"
+							class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
+							<i class="fas fa-pen"></i>
+						</button>
+
+
 					</form>
 					<!-- 댓글 입력 끝 -->
 					<div class="mt-4 btn-wrap gap-1"></div>
