@@ -100,7 +100,7 @@
 						<div class="flex"></div>
 
 						<div class="flex-grow"></div>
-						
+										
 						<!-- 좋아요 -->
 						<!-- 만약에 좋아요의 멤버아이디와 아이디가 같으면 채우진 하트 아니면 빈하트 -->
 						<form class="grid form-type-1" action="../like/doLike" method="POST" enctype="multipart/form-data">
@@ -110,10 +110,10 @@
 							<input type="hidden" name="memberId" value="${loginedMember.id}" />
 							<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
 							<input type="hidden" name="like" value="like" />
-
+							
 							<button type="submit">
 								<c:choose>
-									<c:when test="${like.memberId == loginMemberId}">
+									<c:when test="${like.memberId == loginedMember.id}">
 										<span class="text-pink-500">
 											<!-- 하트 -->
 											<i class="fas fa-heart"></i>
@@ -133,7 +133,7 @@
 							</button>
 						</form>
 
-						<c:if test="${article.memberId == loginMemberId}">
+						<c:if test="${article.memberId == loginedMember.id}">
 							<!-- 수정 -->
 							<a href="modify?id=${article.id}" class="flex plain-link">
 								<span>

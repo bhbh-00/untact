@@ -184,7 +184,7 @@ public class UsrArticleController extends BaseController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
@@ -214,7 +214,7 @@ public class UsrArticleController extends BaseController {
 		req.setAttribute("replys", replys);
 		req.setAttribute("like", like);
 		req.setAttribute("totleItemsCountByLike", totleItemsCountByLike);
-		req.setAttribute("loginMemberId", loginMemberId);
+		req.setAttribute("loginedMember", loginedMember);
 
 		return "/usr/article/detail";
 	}
