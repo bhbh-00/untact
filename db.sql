@@ -50,6 +50,10 @@ INSERT INTO article
 SELECT NOW(), NOW(), 2, CONCAT('제목_', FLOOR(RAND() * 1000) + 1), CONCAT('내용_', FLOOR(RAND() * 1000) + 1), 2
 FROM article;
 
+# 게시물 테이블에 boardId  랜덤 번호 생성
+UPDATE article
+SET boardId = FLOOR(RAND() * 2) + 1
+WHERE boardId = 0;
 # ============================================== `member`
 
 # 회원 테이블 생성
@@ -110,6 +114,17 @@ ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 # 기존 회원의 비밀번호를 암호화 해서 저장
 UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
+
+# 회원 테이블에 권한레벨 필드 추가
+ALTER TABLE `member`
+ADD COLUMN `authLevel` SMALLINT(2) UNSIGNED
+DEFAULT 3 NOT NULL COMMENT '(3=일반,7=관리자)' AFTER `loginPw`; 
+
+# 1번 회원을 관리자로 지정한다.
+UPDATE `member`
+SET authLevel = 7
+WHERE id = 1;
+
 # ============================================== board
 
 # 게시판 별 리스팅(board) 테이블 생성
@@ -120,8 +135,6 @@ CREATE TABLE board (
     `code` CHAR(20) UNIQUE NOT NULL,
     `name` CHAR(20) UNIQUE NOT NULL
 );
-
-SELECT * FROM board;
 
 # 게시판 별 리스팅 테스트 생성
 INSERT INTO board
@@ -136,10 +149,13 @@ updateDate = NOW(),
 `code` = "free",
 `name` = "자유";
 
-# 게시물 테이블에 boardId  랜덤 번호 생성
-UPDATE article
-SET boardId = FLOOR(RAND() * 2) + 1
-WHERE boardId = 0;
+# 게시판 테이블에 회원번호 칼럼 추가
+ALTER TABLE board ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
+
+# 게시판 memberId 1로 하기
+UPDATE `board`
+SET memberId = 1
+WHERE memberId = 0;
 
 # ============================================== reply
 
@@ -152,8 +168,6 @@ CREATE TABLE reply (
     memberId INT(10) UNSIGNED NOT NULL,
     `body` TEXT NOT NULL
 );
-
-SELECT * FROM reply;
 
 # 댓글 테스트 데이터 생성
 INSERT INTO reply
@@ -169,8 +183,6 @@ updateDate = NOW(),
 articleId = 2,
 memberId= 1,
 `body` = "댓글1 입니다.";
-
-SELECT * FROM reply;
 
 UPDATE reply
 SET `body` = "새로운 댓글입니다."
@@ -211,25 +223,7 @@ CREATE TABLE genFile (
   KEY relId (relId,relTypeCode,typeCode,type2Code,fileNo)
 ); 
 
-# 회원 테이블에 권한레벨 필드 추가
-ALTER TABLE `member`
-ADD COLUMN `authLevel` SMALLINT(2) UNSIGNED
-DEFAULT 3 NOT NULL COMMENT '(3=일반,7=관리자)' AFTER `loginPw`; 
-
-# 1번 회원을 관리자로 지정한다.
-UPDATE `member`
-SET authLevel = 7
-WHERE id = 1;
-
-# 게시판 테이블에 회원번호 칼럼 추가
-ALTER TABLE board ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER updateDate;
-
-# 게시판 memberId 1로 하기
-UPDATE `board`
-SET memberId = 1
-WHERE memberId = 0;
-
-SELECT * FROM article;
+# ============================================== like
 
 # 좋아요 테이블 생성
 CREATE TABLE `like` (
@@ -241,10 +235,11 @@ CREATE TABLE `like` (
     memberId INT(10) UNSIGNED NOT NULL
 );
 
-SELECT * FROM `like`;
-
 # 고속 검색을 위해서 인덱스 걸기
 ALTER TABLE `like` ADD KEY (relTypeCode, relId);
+
+# 좋아요 테이블에 `like` 칼럼 추가
+ALTER TABLE `like` ADD COLUMN `like` CHAR(20) NOT NULL AFTER memberId;
 
 # ============================================== attr
 
