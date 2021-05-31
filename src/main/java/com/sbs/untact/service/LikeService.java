@@ -15,7 +15,7 @@ import com.sbs.untact.util.Util;
 public class LikeService {
 	@Autowired
 	private LikeDao likeDao;
-	
+
 	public ResultData deleteLike(Integer id) {
 		likeDao.deleteLike(id);
 
@@ -28,7 +28,7 @@ public class LikeService {
 
 	public ResultData doLike(@RequestParam Map<String, Object> param) {
 		likeDao.doLike(param);
-		
+
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		return new ResultData("s-1", "좋아요", "id", id);
@@ -45,7 +45,5 @@ public class LikeService {
 	public int getLikeTotleCountByArticle(Integer id) {
 		return likeDao.getLikeTotleCountByArticle(id);
 	}
-	
-	
 
 }

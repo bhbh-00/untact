@@ -15,7 +15,8 @@ public class Like extends EntityDto {
 	private String updateDate;
 	private int articleId;
 	private int memberId;
-
+	private String like;
+	
 	private String extra__writer;
 	private String extra__boardName;
 	private String extra__thumbImg; // 썸네일

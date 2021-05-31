@@ -100,51 +100,22 @@
 						<div class="flex"></div>
 
 						<div class="flex-grow"></div>
-
-
+						
 						<!-- 좋아요 -->
-						<!-- 좋아요 수정 예정 - 아래 내용 활용하기
-						<button type="submit" class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
-							<i class="fas fa-pen"></i>
-						</button> -->
-						<div title="좋아요">
-							<a
-								href="doLike?relTypeCode=article&relId=${article.id}&memberId=${loginedMember.id}"
-								class="flex plain-link">
-
-								<c:choose>
-									<c:when test="${like.memberId == loginMemberId}">
-										<span class="text-pink-500">
-											<i class="fas fa-heart"></i>
-											${Util.numberFormat(totleItemsCountByLike)}
-										</span>
-									</c:when>
-
-									<c:otherwise>
-										<span class="text-pink-500">
-											<i class="far fa-heart"></i>
-											${Util.numberFormat(totleItemsCountByLike)}
-										</span>
-									</c:otherwise>
-
-								</c:choose>
-
-							</a>
-						</div>
 						<!-- 만약에 좋아요의 멤버아이디와 아이디가 같으면 채우진 하트 아니면 빈하트 -->
-
-						<!-- 좋아요 -->
 						<form class="grid form-type-1" action="../like/doLike" method="POST" enctype="multipart/form-data">
 
 							<input type="hidden" name="relTypeCode" value="article" />
 							<input type="hidden" name="relId" value="${article.id}" />
 							<input type="hidden" name="memberId" value="${loginedMember.id}" />
 							<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
+							<input type="hidden" name="like" value="like" />
 
 							<button type="submit">
 								<c:choose>
 									<c:when test="${like.memberId == loginMemberId}">
 										<span class="text-pink-500">
+											<!-- 하트 -->
 											<i class="fas fa-heart"></i>
 											${Util.numberFormat(totleItemsCountByLike)}
 										</span>
@@ -152,33 +123,34 @@
 
 									<c:otherwise>
 										<span class="text-pink-500">
+											<!-- 빈하트 -->
 											<i class="far fa-heart"></i>
 											${Util.numberFormat(totleItemsCountByLike)}
 										</span>
 									</c:otherwise>
 
 								</c:choose>
-							</button>							
-							</form>
-							
-							<c:if test="${article.memberId == loginMemberId}">
-								<!-- 수정 -->
-								<a href="modify?id=${article.id}" class="flex plain-link">
-									<span>
-										<i class="fas fa-edit"></i>
-									</span>
-									<span>수정</span>
-								</a>
+							</button>
+						</form>
 
-								<!-- 삭제 -->
-								<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-									href="doDelete?id=${article.id}" class="flex plain-link">
-									<span class="text-red-500">
-										<i class="fas fa-trash"></i>
-										<span>삭제</span>
-									</span>
-								</a>
-							</c:if>
+						<c:if test="${article.memberId == loginMemberId}">
+							<!-- 수정 -->
+							<a href="modify?id=${article.id}" class="flex plain-link">
+								<span>
+									<i class="fas fa-edit"></i>
+								</span>
+								<span>수정</span>
+							</a>
+
+							<!-- 삭제 -->
+							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+								href="doDelete?id=${article.id}" class="flex plain-link">
+								<span class="text-red-500">
+									<i class="fas fa-trash"></i>
+									<span>삭제</span>
+								</span>
+							</a>
+						</c:if>
 					</div>
 
 				</div>

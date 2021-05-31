@@ -203,7 +203,7 @@ public class UsrArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
-
+		
 		Like like = likeService.getLikeByArticle(id);
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
 		

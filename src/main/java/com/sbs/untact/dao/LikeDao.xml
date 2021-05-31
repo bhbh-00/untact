@@ -34,7 +34,8 @@
 		updateDate = NOW(),
 		relTypeCode = #{relTypeCode},
 		relId = #{relId},
-		memberId = #{memberId}
+		memberId = #{memberId},
+		`like` = #{like}
 	</insert>
 
 	<delete id="deleteLike">

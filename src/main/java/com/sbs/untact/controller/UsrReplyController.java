@@ -29,6 +29,7 @@ public class UsrReplyController extends BaseController {
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
+		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		// 선생님은 replyId로만!
@@ -55,6 +56,7 @@ public class UsrReplyController extends BaseController {
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
 	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
+		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		// 선생님은 replyId로만!
@@ -108,7 +110,7 @@ public class UsrReplyController extends BaseController {
 		return Util.msgAndReplace(doAddRd.getMsg(), redirectUrl);
 	}
 
-	@RequestMapping("/usr/article/replyList")
+	@RequestMapping("/usr/reply/replyList")
 	public String showList(HttpServletRequest req, String relTypeCode, Integer relId) {
 
 		if (relTypeCode == null) {
@@ -131,6 +133,6 @@ public class UsrReplyController extends BaseController {
 
 		req.setAttribute("replies", replies);
 
-		return "/usr/article/replyList";
+		return "/usr/reply/replyList";
 	}
 }

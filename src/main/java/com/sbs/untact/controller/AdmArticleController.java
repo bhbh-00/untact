@@ -36,55 +36,6 @@ public class AdmArticleController extends BaseController {
 	@Autowired
 	private ReplyService replyService;
 	
-	
-	@RequestMapping("/adm/article/deleteLike")
-	@ResponseBody
-	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {
-		
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
-		}
-
-		Article article = articleService.getArticle(id);
-
-		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-		}
-
-		return likeService.deleteLike(id);
-	}
-
-	@RequestMapping("/adm/article/AddLike")
-	@ResponseBody
-	public ResultData doAddLike(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		// /adm/article/doLike?relTypeCode=article&relId=1&memberId=1
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		int id = Util.getAsInt(param.get("id"), 0);
-
-		if (param.get("relTypeCode") == null) {
-			return new ResultData("F-1", "relTypeCode를 입력해주세요.");
-		}
-
-		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId을 입력해주세요.");
-		}
-
-		if (param.get("relTypeCode") == "article") {
-			Article article = articleService.getArticle((int) param.get("relId"));
-
-			if (article == null) {
-				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-			}
-		}
-
-		param.put("memberId", loginedMember);
-
-		return likeService.doLike(param);
-	}
-
 	@RequestMapping("/adm/article/doAddReply")
 	@ResponseBody
 	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
