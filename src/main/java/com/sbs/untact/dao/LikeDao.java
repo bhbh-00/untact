@@ -22,4 +22,6 @@ public interface LikeDao {
 
 	int getLikeTotleCountByArticle(@Param("id") Integer id);
 
+	Like getLikeByMemberId(@Param("id")int id);
+
 }

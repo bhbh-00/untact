@@ -5,6 +5,12 @@
 
 <mapper namespace="com.sbs.untact.dao.LikeDao">
 
+	<select id="getLikeByMemberId" resultType="like">
+		SELECT *
+		FROM `like`
+		WHERE memberId = #{id}
+	</select>
+
 	<select id="getLikeTotleCountByArticle" resultType="int">
 		SELECT COUNT(*)
 		FROM `like`

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
+import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
@@ -59,11 +60,7 @@ public class UsrLikeController extends BaseController {
 			}
 
 		}
-
-		if (param.get("like") == null) {
-			return msgAndBack(req, "좋아요");
-		}
-
+		
 		req.setAttribute("loginedMember", loginedMember);
 
 		ResultData doLikeRd = likeService.doLike(param);

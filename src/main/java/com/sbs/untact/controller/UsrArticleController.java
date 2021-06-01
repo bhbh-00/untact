@@ -36,7 +36,7 @@ public class UsrArticleController extends BaseController {
 	private LikeService likeService;
 	@Autowired
 	private ReplyService replyService;
-	
+
 	@RequestMapping("/usr/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
@@ -203,10 +203,11 @@ public class UsrArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
-		
+
 		Like like = likeService.getLikeByArticle(id);
+	
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
-		
+
 		List<Reply> replys = replyService.getForPrintReplies(id);
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);

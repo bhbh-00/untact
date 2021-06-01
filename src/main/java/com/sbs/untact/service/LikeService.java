@@ -46,4 +46,8 @@ public class LikeService {
 		return likeDao.getLikeTotleCountByArticle(id);
 	}
 
+	public Like getLikeByMemberId(int id) {
+		return likeDao.getLikeByMemberId(id);
+	}
+
 }
