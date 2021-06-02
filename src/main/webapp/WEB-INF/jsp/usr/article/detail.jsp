@@ -6,8 +6,12 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<!-- lodash -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+
 <c:set var="fileInputMaxCount" value="10" />
 
+<!-- 댓글 from -->
 <script>
 	const addReply_checkAndSubmitDone = false;
 

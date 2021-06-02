@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.Reply;
 
 @Mapper
 public interface ArticleDao {
@@ -42,5 +41,9 @@ public interface ArticleDao {
 			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
 	int getArticlesTotleCountByMyList(@Param("id") int id, @Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
+
+	Article getLatestArticleByBoardNameFree();
+
+	Article getLatestArticleByBoardNameNotice();
 
 }

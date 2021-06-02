@@ -147,4 +147,12 @@ public class ArticleService {
 		return articleDao.getArticlesTotleCountByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword);
 	}
 
+	public Article getLatestArticleByBoardNameFree() {
+		return articleDao.getLatestArticleByBoardNameFree();
+	}
+
+	public Article getLatestArticleByBoardNameNotice() {
+		return articleDao.getLatestArticleByBoardNameNotice();
+	}
+
 }

@@ -5,6 +5,11 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
+<!-- lodash -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+
+
 <!-- 첨부파일 갯수 조절 -->
 <c:set var="fileInputMaxCount" value="10" />
 

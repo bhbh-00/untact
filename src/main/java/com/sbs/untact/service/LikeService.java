@@ -50,4 +50,8 @@ public class LikeService {
 		return likeDao.getLikeByMemberId(id);
 	}
 
+	public Like totleCountLikeByArticle() {
+		return likeDao.totleCountLikeByArticle();
+	}
+
 }

@@ -5,6 +5,34 @@
 
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
+	<select id="getLatestArticleByBoardNameNotice" resultType="Article">
+		SELECT A.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
+		B.name AS extra__boardName
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		LEFT JOIN `board` AS B
+		ON A.boardId = B.id
+		WHERE A.boardId = 1
+		ORDER BY A.id DESC
+		LIMIT 1;
+	</select>
+
+	<select id="getLatestArticleByBoardNameFree" resultType="Article">
+		SELECT A.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
+		B.name AS extra__boardName
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		LEFT JOIN `board` AS B
+		ON A.boardId = B.id
+		WHERE A.boardId = 2
+		ORDER BY A.id DESC
+		LIMIT 1;
+	</select>
+
 	<select id="getForPrintArticleByMemberId" resultType="Article">
 		SELECT A.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
