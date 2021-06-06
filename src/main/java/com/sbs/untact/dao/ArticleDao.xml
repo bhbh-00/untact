@@ -16,7 +16,7 @@
 		ON A.boardId = B.id
 		WHERE A.boardId = 1
 		ORDER BY A.id DESC
-		LIMIT 1;
+		LIMIT 2;
 	</select>
 
 	<select id="getLatestArticleByBoardNameFree" resultType="Article">
@@ -30,7 +30,7 @@
 		ON A.boardId = B.id
 		WHERE A.boardId = 2
 		ORDER BY A.id DESC
-		LIMIT 1;
+		LIMIT 2;
 	</select>
 
 	<select id="getForPrintArticleByMemberId" resultType="Article">

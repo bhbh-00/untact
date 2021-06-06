@@ -147,11 +147,11 @@ public class ArticleService {
 		return articleDao.getArticlesTotleCountByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword);
 	}
 
-	public Article getLatestArticleByBoardNameFree() {
+	public List<Article> getLatestArticleByBoardNameFree() {
 		return articleDao.getLatestArticleByBoardNameFree();
 	}
 
-	public Article getLatestArticleByBoardNameNotice() {
+	public List<Article> getLatestArticleByBoardNameNotice() {
 		return articleDao.getLatestArticleByBoardNameNotice();
 	}
 

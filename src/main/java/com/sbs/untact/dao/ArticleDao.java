@@ -42,8 +42,8 @@ public interface ArticleDao {
 
 	int getArticlesTotleCountByMyList(@Param("id") int id, @Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
 
-	Article getLatestArticleByBoardNameFree();
+	List<Article> getLatestArticleByBoardNameFree();
 
-	Article getLatestArticleByBoardNameNotice();
+	List<Article> getLatestArticleByBoardNameNotice();
 
 }
