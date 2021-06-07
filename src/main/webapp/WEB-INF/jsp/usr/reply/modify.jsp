@@ -47,7 +47,7 @@
 					<form onsubmit="ReplyModify_checkAndSubmit(this); return false;"
 						action="doModify" method="POST" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="${reply.id}" />
-						<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+						<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
 						
 						<div class="form-control">
 							<label class="label">

@@ -205,8 +205,7 @@
 						<div class="item-bt-1">
 							<div class="flex py-5 px-4">
 								<div class="flex-shrink-0">
-									<img
-										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
+									<img class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
 										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
 										src="${loginedMember.profileImgUrl}">
 								</div>

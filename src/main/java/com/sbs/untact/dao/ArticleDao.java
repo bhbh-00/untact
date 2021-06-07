@@ -46,4 +46,6 @@ public interface ArticleDao {
 
 	List<Article> getLatestArticleByBoardNameNotice();
 
+	Article getArticleByReply(@Param("id") Integer id);
+
 }

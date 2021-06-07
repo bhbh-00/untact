@@ -125,8 +125,8 @@ public class ArticleService {
 		// 한 페이지에 포함 되는 게시물의 갯수의 값
 		// LIMIT 20, 20 => 2page LIMIT 40, 20 => 3page
 
-		List<Article> articles = articleDao.getForPrintArticlesByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword, limitStart,
-				limitTake);
+		List<Article> articles = articleDao.getForPrintArticlesByMyList(loginMemberId, boardId, searchKeywordType,
+				searchKeyword, limitStart, limitTake);
 		List<Integer> articleIds = articles.stream().map(article -> article.getId()).collect(Collectors.toList());
 		Map<Integer, Map<String, GenFile>> filesMap = genFileService.getFilesMapKeyRelIdAndFileNo("article", articleIds,
 				"common", "attachment");
@@ -153,6 +153,10 @@ public class ArticleService {
 
 	public List<Article> getLatestArticleByBoardNameNotice() {
 		return articleDao.getLatestArticleByBoardNameNotice();
+	}
+
+	public Article getArticleByReply(Integer id) {
+		return articleDao.getArticleByReply(id);
 	}
 
 }

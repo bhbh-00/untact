@@ -5,6 +5,15 @@
 
 <mapper namespace="com.sbs.untact.dao.ArticleDao">
 
+	<select id="getArticleByReply" resultType="Article">
+		SELECT A.id
+		FROM article AS A
+		LEFT JOIN
+		reply AS R
+		ON A.id = R.relId
+		WHERE R.id = #{id};
+	</select>
+
 	<select id="getLatestArticleByBoardNameNotice" resultType="Article">
 		SELECT A.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
