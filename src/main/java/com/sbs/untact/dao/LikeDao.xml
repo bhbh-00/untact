@@ -44,7 +44,7 @@
 		`like` = #{like}
 	</insert>
 
-	<delete id="deleteLike">
+	<delete id="delete">
 		DELETE FROM `like`
 		WHERE id = #{id}
 	</delete>

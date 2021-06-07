@@ -108,37 +108,52 @@
 
 						<!-- 좋아요 -->
 						<!-- 만약에 좋아요의 멤버아이디와 아이디가 같으면 채우진 하트 아니면 빈하트 -->
-						<form class="grid form-type-1" action="../like/doLike"
-							method="POST" enctype="multipart/form-data">
+						<c:choose>
+							<c:when test="${like.memberId == loginedMember.id}">
+								<a href="/usr/like/doDelete?id=${like.id}"
+									class="flex plain-link">
+									<span class="text-pink-500">
+										<!-- 하트 -->
+										<i class="fas fa-heart"></i>
+										${Util.numberFormat(totleItemsCountByLike)}
+									</span>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<form class="grid form-type-1" action="../like/doLike"
+									method="POST" enctype="multipart/form-data">
 
-							<input type="hidden" name="relTypeCode" value="article" />
-							<input type="hidden" name="relId" value="${article.id}" />
-							<input type="hidden" name="memberId" value="${loginedMember.id}" />
-							<input type="hidden" name="redirectUrl"
-								value="/usr/article/detail?id=${article.id}" />
-							<input type="hidden" name="like" value="like" />
+									<input type="hidden" name="relTypeCode" value="article" />
+									<input type="hidden" name="relId" value="${article.id}" />
+									<input type="hidden" name="memberId"
+										value="${loginedMember.id}" />
+									<input type="hidden" name="redirectUrl"
+										value="/usr/article/detail?id=${article.id}" />
+									<input type="hidden" name="like" value="like" />
 
-							<button type="submit">
-								<c:choose>
-									<c:when test="${like.memberId == loginedMember.id}">
-										<span class="text-pink-500">
-											<!-- 하트 -->
-											<i class="fas fa-heart"></i>
-											${Util.numberFormat(totleItemsCountByLike)}
-										</span>
-									</c:when>
+									<button type="submit">
+										<c:choose>
+											<c:when test="${like.memberId == loginedMember.id}">
+												<span class="text-pink-500">
+													<!-- 하트 -->
+													<i class="fas fa-heart"></i>
+													${Util.numberFormat(totleItemsCountByLike)}
+												</span>
+											</c:when>
 
-									<c:otherwise>
-										<span class="text-pink-500">
-											<!-- 빈하트 -->
-											<i class="far fa-heart"></i>
-											${Util.numberFormat(totleItemsCountByLike)}
-										</span>
-									</c:otherwise>
+											<c:otherwise>
+												<span class="text-pink-500">
+													<!-- 빈하트 -->
+													<i class="far fa-heart"></i>
+													${Util.numberFormat(totleItemsCountByLike)}
+												</span>
+											</c:otherwise>
 
-								</c:choose>
-							</button>
-						</form>
+										</c:choose>
+									</button>
+								</form>
+							</c:otherwise>
+						</c:choose>
 
 						<c:if test="${article.memberId == loginedMember.id}">
 							<!-- 수정 -->
@@ -205,7 +220,8 @@
 						<div class="item-bt-1">
 							<div class="flex py-5 px-4">
 								<div class="flex-shrink-0">
-									<img class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
+									<img
+										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
 										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
 										src="${loginedMember.profileImgUrl}">
 								</div>

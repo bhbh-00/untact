@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
-import com.sbs.untact.dto.Board;
-import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
@@ -26,21 +24,29 @@ public class UsrLikeController extends BaseController {
 	@Autowired
 	private LikeService likeService;
 
-	@RequestMapping("/usr/article/deleteLike")
+	@RequestMapping("/usr/like/doDelete")
 	@ResponseBody
-	public ResultData doDeleteLike(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req, String redirectUrl) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
-		return likeService.deleteLike(id);
+		req.setAttribute("loginedMember", loginedMember);
+
+		ResultData dodeleteRd = likeService.delete(id);
+		
+		redirectUrl = "/usr/article/detail?id=" + article.getId();
+		
+		return Util.msgAndReplace(dodeleteRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/like/doLike")
@@ -61,7 +67,7 @@ public class UsrLikeController extends BaseController {
 			}
 
 		}
-		
+
 		req.setAttribute("loginedMember", loginedMember);
 
 		ResultData doLikeRd = likeService.doLike(param);

@@ -10,8 +10,6 @@ import com.sbs.untact.dto.Like;
 @Mapper
 public interface LikeDao {
 
-	void deleteLike(@Param("id") Integer id);
-
 	Like getLikeTotleCount(@Param("id") Integer id);
 
 	void doLike(Map<String, Object> param);
@@ -25,5 +23,7 @@ public interface LikeDao {
 	Like getLikeByMemberId(@Param("id")int id);
 
 	Like totleCountLikeByArticle();
+
+	void delete(@Param("id") Integer id);
 
 }

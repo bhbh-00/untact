@@ -16,12 +16,6 @@ public class LikeService {
 	@Autowired
 	private LikeDao likeDao;
 
-	public ResultData deleteLike(Integer id) {
-		likeDao.deleteLike(id);
-
-		return new ResultData("S-1", "삭제하였습니다.", "id", id);
-	}
-
 	public Like getLikeTotleCount(int id) {
 		return likeDao.getLikeTotleCount(id);
 	}
@@ -52,6 +46,12 @@ public class LikeService {
 
 	public Like totleCountLikeByArticle() {
 		return likeDao.totleCountLikeByArticle();
+	}
+
+	public ResultData delete(Integer id) {
+		likeDao.delete(id);
+
+		return new ResultData("S-1", "좋아요를 취소합니다.", "id", id);
 	}
 
 }
