@@ -36,19 +36,14 @@
 		<div class="container mx-auto">
 			<div
 				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title bg-gray-400 text-white">
-					<a href="javascript:history.back();" class="cursor-pointer">
-						<i class="fas fa-chevron-left"></i>
-					</a>
-					<span>댓글 수정</span>
-				</div>
 
-				<div class="px-4 py-8">
+				<div class="px-4 py-4">
 					<form onsubmit="ReplyModify_checkAndSubmit(this); return false;"
 						action="doModify" method="POST" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="${reply.id}" />
-						<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
-						
+						<input type="hidden" name="redirectUrl"
+							value="/usr/article/detail?id=${article.id}" />
+
 						<div class="form-control">
 							<label class="label">
 								<span class="label-text">댓글</span>
@@ -57,17 +52,24 @@
 								class="h-80 textarea textarea-bordered">${reply.body}</textarea>
 						</div>
 
-						<div class="flex flex-col my-3 md:flex-row">
-							<div class="p-1 md:flex-grow">
-								<div class="btns">
-									<input type="submit"
-										class="btn-primary bg-blue-500 text-white font-bold py-2 px-4 rounded"
-										value="수정">
-									<input onclick="history.back();" type="button"
-										class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"
-										value="취소">
-								</div>
+						<div class="flex">
+
+							<div class="flex-grow"></div>
+
+							<div class="mt-3">
+								<button type="submit" class="btn btn-ghost btn-sm text-blue-600"
+									value="수정">
+									<i class="fas fa-edit"></i>
+									<span class="hidden md:block">수정</span>
+								</button>
+								<button onclick="history.back();" type="button"
+									class="btn btn-ghost btn-sm text-red-600" value="취소">
+									<i class="fas fa-trash"></i>
+									<span class="">삭제</span>
+								</button>
+
 							</div>
+
 						</div>
 
 					</form>

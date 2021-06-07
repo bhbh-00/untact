@@ -200,13 +200,13 @@
 						<input type="hidden" name="redirectUrl"
 							value="/usr/article/detail?id=${article.id}" />
 
-						<input name="body" type="text" style="border-radius: 25px"
-							placeholder="댓글을 입력해주세요." autocomplete="off"
+						<input name="body" type="text" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off"
 							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
 								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue">
 
-						<button type="submit"
-							class="p-1 focus:outline-none focus:shadow-none hover:text-blue-500">
+						<button type="submit" style="border-radius: 25px"
+							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
+								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue">
 							<i class="fas fa-pen"></i>
 						</button>
 
@@ -220,8 +220,7 @@
 						<div class="item-bt-1">
 							<div class="flex py-5 px-4">
 								<div class="flex-shrink-0">
-									<img
-										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
+									<img class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
 										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
 										src="${loginedMember.profileImgUrl}">
 								</div>
@@ -235,17 +234,19 @@
 
 									<div class="flex">
 
-										<div class="text-lg font-medium">
+										<div class="font-medium">
 											<span>${reply.body}</span>
 										</div>
 
 										<div class="flex-grow"></div>
 
 										<div class="flex text-sm">
-											<c:if test="${ loginedMember.id == reply.memberId }">
+
+											<c:if test="${ loginedMember.id == reply.memberId}">
+
 												<!-- 수정 -->
 												<a href="/usr/reply/modify?id=${reply.id}"
-													class="flex plain-link ml-5 mr-2">
+													class="flex plain-link mr-2">
 													<span>
 														<i class="fas fa-edit"></i>
 													</span>
@@ -261,6 +262,7 @@
 														<span class="">삭제</span>
 													</span>
 												</a>
+
 											</c:if>
 										</div>
 									</div>
