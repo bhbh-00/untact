@@ -13,7 +13,7 @@ import com.sbs.untact.dto.Board;
 public interface ArticleDao {
 	// interface에서는 public 필요없음!
 
-	void modifyArticle(Map<String, Object> param);
+	void modify(Map<String, Object> param);
 
 	void deleteArticle(@Param("id") Integer id);
 

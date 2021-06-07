@@ -196,7 +196,7 @@
 		WHERE id = #{id}
 	</delete>
 
-	<update id="modifyArticle">
+	<update id="modify">
 		UPDATE article
 		<set>
 			<if test="title != null or body != null">

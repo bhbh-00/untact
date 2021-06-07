@@ -30,7 +30,7 @@
 		WHERE id = #{id}
 	</select>
 
-	<update id="doModify">
+	<update id="modify">
 		UPDATE reply
 		<set>
 			<if test="body != null">

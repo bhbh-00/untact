@@ -7,7 +7,8 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <!-- lodash -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
 <c:set var="fileInputMaxCount" value="10" />
 
@@ -104,17 +105,19 @@
 						<div class="flex"></div>
 
 						<div class="flex-grow"></div>
-										
+
 						<!-- 좋아요 -->
 						<!-- 만약에 좋아요의 멤버아이디와 아이디가 같으면 채우진 하트 아니면 빈하트 -->
-						<form class="grid form-type-1" action="../like/doLike" method="POST" enctype="multipart/form-data">
+						<form class="grid form-type-1" action="../like/doLike"
+							method="POST" enctype="multipart/form-data">
 
 							<input type="hidden" name="relTypeCode" value="article" />
 							<input type="hidden" name="relId" value="${article.id}" />
 							<input type="hidden" name="memberId" value="${loginedMember.id}" />
-							<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
+							<input type="hidden" name="redirectUrl"
+								value="/usr/article/detail?id=${article.id}" />
 							<input type="hidden" name="like" value="like" />
-							
+
 							<button type="submit">
 								<c:choose>
 									<c:when test="${like.memberId == loginedMember.id}">
@@ -179,7 +182,8 @@
 						<input type="hidden" name="relTypeCode" value="article" />
 						<input type="hidden" name="relId" value="${article.id}" />
 						<input type="hidden" name="memberId" value="${loginedMember.id}" />
-						<input type="hidden" name="redirectUrl" value="/usr/article/detail?id=${article.id}" />
+						<input type="hidden" name="redirectUrl"
+							value="/usr/article/detail?id=${article.id}" />
 
 						<input name="body" type="text" style="border-radius: 25px"
 							placeholder="댓글을 입력해주세요." autocomplete="off"
@@ -225,7 +229,7 @@
 										<div class="flex text-sm">
 											<c:if test="${ loginedMember.id == reply.memberId }">
 												<!-- 수정 -->
-												<a href="/usr/reply/doModify?id=${reply.id}"
+												<a href="/usr/reply/modify?id=${reply.id}"
 													class="flex plain-link ml-5 mr-2">
 													<span>
 														<i class="fas fa-edit"></i>
@@ -251,16 +255,9 @@
 					</c:forEach>
 
 				</div>
-
 			</div>
-
-
-
 		</div>
-
 	</div>
-
-
 
 </section>
 

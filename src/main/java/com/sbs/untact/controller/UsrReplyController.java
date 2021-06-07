@@ -29,7 +29,7 @@ public class UsrReplyController extends BaseController {
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		// 선생님은 replyId로만!
@@ -52,32 +52,50 @@ public class UsrReplyController extends BaseController {
 
 		return replyService.delete(id);
 	}
+	
+	@RequestMapping("/usr/reply/modify")
+	public String ShowModify(Integer id, HttpServletRequest req) {
+
+		if (id == null) {
+			return msgAndBack(req, "댓글 번호를 입력해주세요.");
+		}
+		
+		Reply reply = replyService.getReply(id);
+		
+		if (reply == null) {
+			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
+		}
+		
+		req.setAttribute("reply", reply);
+		
+		return "/usr/reply/modify";
+	}
 
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
-		
+	public String doModify(Integer id, String body, HttpServletRequest req, String redirectUrl) {
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		// 선생님은 replyId로만!
+		
 		if (id == null) {
-			return new ResultData("F-1", "댓글 번호를 입력해주세요.");
+			return msgAndBack(req, "댓글 번호를 입력해주세요.");
 		}
-
+		
 		Reply reply = replyService.getReply(id);
-
+		
 		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
-
+		
 		ResultData actorCanDeleteRd = replyService.getActorCanModifyRd(reply, loginedMember);
-		// articleService 말고 이제는 reply서비스에게!
-
+		
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return msgAndBack(req, actorCanDeleteRd.getMsg());
 		}
-
-		return replyService.doModify(id, body);
+		
+		ResultData modifyReplyRd = replyService.modify(id, body);
+	
+		return Util.msgAndReplace(modifyReplyRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/reply/doAdd")
@@ -85,9 +103,9 @@ public class UsrReplyController extends BaseController {
 	public String doReply(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
 
 		if (param.get("relTypeCode") == "article") {
-			Article articleid = articleService.getArticle((int) param.get("relId"));
+			Article article = articleService.getArticle((int) param.get("relId"));
 
-			if (articleid == null) {
+			if (article == null) {
 				return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 			}
 

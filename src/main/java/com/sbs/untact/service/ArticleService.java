@@ -24,8 +24,8 @@ public class ArticleService {
 	@Autowired
 	private GenFileService genFileService;
 
-	public ResultData modifyArticle(Map<String, Object> param) {
-		articleDao.modifyArticle(param);
+	public ResultData modify(Map<String, Object> param) {
+		articleDao.modify(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
 

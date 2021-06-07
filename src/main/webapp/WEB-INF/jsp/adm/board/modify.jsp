@@ -101,17 +101,16 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>게시판 작성</span>
+					<span>게시판 수정</span>
 				</div>
 
 				<div class="px-4 py-8">
 
 					<form class="formName grid form-type-1"
 						onsubmit="BoardModify_checkAndSubmit(this); return false;"
-						action="doModify" method="POST">
+						action="doModify" method="POST" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="${board.id}" />
-						<input type="hidden" name="redirectUrl"
-							value="${param.redirectUrl}" />
+						<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
 
 						<!-- 번호 -->
 						<div class="form-control">
@@ -159,8 +158,7 @@
 						</div>
 	
 						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1"
-								value="작성">
+							<input type="submit" class="btn btn-primary btn-sm mb-1" value="작성">
 
 							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
 								<span>
@@ -175,7 +173,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 </section>

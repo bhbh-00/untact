@@ -1,14 +1,12 @@
 package com.sbs.untact.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.untact.dto.Article;
@@ -49,32 +47,6 @@ public class AdmReplyController {
 		}
 
 		return replyService.delete(id);
-	}
-
-	@RequestMapping("/adm/reply/doModify")
-	@ResponseBody
-	public ResultData doModify(Integer id, String body, HttpServletRequest req) {
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		// 선생님은 replyId로만!
-		if (id == null) {
-			return new ResultData("F-1", "댓글 번호를 입력해주세요.");
-		}
-
-		Reply reply = replyService.getReply(id);
-
-		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
-		}
-
-		ResultData actorCanDeleteRd = replyService.getActorCanModifyRd(reply, loginedMember);
-		// articleService 말고 이제는 reply서비스에게!
-
-		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
-		}
-
-		return replyService.doModify(id, body);
 	}
 
 	@RequestMapping("/adm/reply/list")

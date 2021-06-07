@@ -121,7 +121,7 @@ public class AdmArticleController extends BaseController {
 			return actorCanModifyRd;
 		}
 
-		return articleService.modifyArticle(param);
+		return articleService.modify(param);
 	}
 
 	@RequestMapping("/adm/article/doDelete")
