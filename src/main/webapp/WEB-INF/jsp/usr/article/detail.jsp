@@ -188,7 +188,7 @@
 					<span class="text-lg">댓글</span>
 				</div>
 
-				<div>
+				<div class="relative">
 					<!-- 댓글 입력 시작 -->
 					<form class="grid form-type-1" action="../reply/doAdd"
 						method="POST" enctype="multipart/form-data"
@@ -204,9 +204,7 @@
 							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
 								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue">
 
-						<button type="submit" style="border-radius: 25px"
-							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
-								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue">
+						<button type="submit" class="absolute top-2 right-5">
 							<i class="fas fa-pen"></i>
 						</button>
 
