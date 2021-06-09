@@ -5,7 +5,7 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
-<section class="section-1">
+<section class="section-member-list">
 
 	<div class="component-title-bar container mx-auto pt-1 pb-1">
 		<span class="text-lg font-bold text-center">회원 관리</span>
@@ -48,6 +48,7 @@
 
 						<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
 						<c:set var="detailUrl" value="detail?id=${member.id}" />
+						<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
 
 						<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 							<a href="#" class="row-span-3 order-1">

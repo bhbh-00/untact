@@ -41,8 +41,7 @@
 	<div class="section-article-detail">
 
 		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<div class="card-title bg-white">
 					<a href="javascript:history.back();" class="cursor-pointer">
@@ -60,8 +59,7 @@
 					</div>
 
 					<!-- 번호 -->
-					<div
-						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+					<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 						<div>
 							<span class="badge badge-primary">번호</span>
 							<span>${article.id}</span>

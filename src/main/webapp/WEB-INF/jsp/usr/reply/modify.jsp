@@ -35,8 +35,7 @@
 	<div class="section-reply-modify">
 
 		<div class="container mx-auto mt-4">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 				<div>
 					<div class="card-title bg-white">
 						<a href="javascript:history.back();" class="cursor-pointer">
