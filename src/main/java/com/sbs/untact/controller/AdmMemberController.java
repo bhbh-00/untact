@@ -148,11 +148,34 @@ public class AdmMemberController extends BaseController {
 		int totleItemsCount = memberService.getMemberTotleCount(searchKeywordType, searchKeyword);
 
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
-//		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
+		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
+
+		int pageMenuArmSize = 5;
+
+		// 시작 페이지 번호
+		int pageMenuStrat = page - pageMenuArmSize;
+
+		// 시작 페이지가 1보다 작다면 시작 페이지는 1
+		if (pageMenuStrat < 1) {
+			pageMenuStrat = 1;
+		}
+
+		// 끝 페이지 페이지 번호
+		int pageMenuEnd = page + pageMenuArmSize;
+
+		if (pageMenuEnd > totlePage) {
+			pageMenuEnd = totlePage;
+		}
 
 		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, itemsInAPage,
 				itemsInAPage, param);
 
+		req.setAttribute("totleItemsCount", totleItemsCount);
+		req.setAttribute("totlePage", totlePage);
+		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
+		req.setAttribute("pageMenuStrat", pageMenuStrat);
+		req.setAttribute("pageMenuEnd", pageMenuEnd);
+		req.setAttribute("page", page);
 		req.setAttribute("members", members);
 
 		return "adm/member/list";
