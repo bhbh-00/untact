@@ -12,10 +12,8 @@
 		<!-- 검색 -->
 		<form class="flex">
 			<select name="searchKeywordType">
-				<option
-					value="loginIdAndAuthLevelAndNameAndNicknameAndCellphoneNoAndEmail">전체</option>
+				<option value="loginIdAndNameAndNicknameAndCellphoneNoAndEmail">전체</option>
 				<option value="loginId">아이디</option>
-				<option value="authLevel">권한레벨</option>
 				<option value="name">이름</option>
 				<option value="nickname">닉네임</option>
 				<option value="cellphoneNo">핸드폰번호</option>
@@ -58,6 +56,7 @@
 
 			<!-- 권한별로 보기 -->
 			<div class="flex items-center">
+				<!-- 권한별로 보기 -->
 				<select class="select-auth-level mr-4 py-1">
 					<option value="">권한전체</option>
 					<option value="3">일반회원</option>
@@ -68,10 +67,8 @@
 					if (!param.authLevel) {
 						param.authLevel = '';
 					}
-
-					$('.section-1 .select-auth-level').val(param.authLevel);
-
-					$('.section-1 .select-auth-level').change(function() {
+					$('.section-member-list .select-auth-level').val(param.authLevel);
+					$('.section-member-list .select-auth-level').change(function() {
 						location.href = "?authLevel=" + this.value;
 					});
 					/* change 바뀔 때 마다 뭔가 실행된다.*/
@@ -102,46 +99,47 @@
 						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 						<!-- 프로필 -->
 						<a href="${detailUrl}" class="row-span-7">
-							<img class="w-40 h-40 object-cover rounded-full" src="${thumbUrl}"
-								alt="" onerror="${member.profileFallbackImgOnErrorHtmlAttr}">
+							<img class="w-40 h-40 object-cover rounded-full"
+								src="${thumbUrl}" alt=""
+								onerror="${member.profileFallbackImgOnErrorHtmlAttr}">
 						</a>
-											
+
 						<!-- 아이디 -->
 						<a href="${detailUrl}" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">아이디</span>
 							<span>${member.loginId}</span>
 						</a>
-						
+
 						<!-- 이름 -->
 						<a href="${detailUrl}" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">이름</span>
 							<span>${member.name}</span>
 						</a>
-						
+
 						<!-- 닉네임 -->
 						<a href="${detailUrl}" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">닉네임</span>
 							<span>${member.nickname}</span>
 						</a>
-						
+
 						<!-- 핸드폰번호 -->
 						<a href="${detailUrl}" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">핸드폰번호</span>
 							<span>${member.cellphoneNo}</span>
 						</a>
-						
+
 						<!-- 이메일 -->
 						<a href="${detailUrl}" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">닉네임</span>
 							<span>${member.email}</span>
 						</a>
-						
+
 						<!--  -->
 						<a href="${detailUrl}">
 							<span></span>
 							<span></span>
 						</a>
-						
+
 						<!-- 등록날짜 -->
 						<a href="${detailUrl}" class="hover:underline">
 							<span class="badge">등록날짜</span>

@@ -12,9 +12,6 @@
 		<if test="searchKeywordType == 'loginId'">
 			AND loginId LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
-		<if test="searchKeywordType == 'authLevel'">
-			AND authLevel LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
 		<if test="searchKeywordType == 'name'">
 			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
@@ -27,7 +24,7 @@
 		<if test="searchKeywordType == 'email'">
 			AND email LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
-		<if test="searchKeywordType == 'loginIdAndAuthLevelAndNameAndNicknameAndCellphoneNoAndEmail'">
+		<if test="searchKeywordType == 'loginIdAndNameAndNicknameAndCellphoneNoAndEmail'">
 			AND (loginId LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			authLevel LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			name LIKE CONCAT('%', #{searchKeyword}, '%') OR
