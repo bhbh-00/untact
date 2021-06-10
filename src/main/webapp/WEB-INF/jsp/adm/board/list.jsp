@@ -65,8 +65,6 @@
 		<div>
 			<c:forEach items="${boards}" var="board">
 
-				<c:set var="listUrl" value="list?" />
-				
 				<div class="p-4">
 
 					<!-- 게시판 이름 -->
@@ -83,14 +81,14 @@
 					</c:if>
 
 					<!-- 게시물 번호 -->
-					<a href="${listUrl}" class="hover:underline">
+					<a class="hover:underline">
 						<span class="text-base">No.${board.id}</span>
 					</a>
 
 					<div
 						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 						<!-- 썸네일 -->
-						<a href="${listUrl}" class="row-span-7">
+						<a class="row-span-7">
 							<img class="w-full h-40 object-cover rounded" src="${thumbUrl}"
 								alt=""
 								onerror="${board.codeProfileFallbackImgOnErrorHtmlAttr}">
@@ -111,20 +109,20 @@
 						</a>
 
 						<!-- 작성자 -->
-						<a href="${listUrl}" class="cursor-pointer hover:underline">
+						<a class="cursor-pointer hover:underline">
 							<span class="badge badge-accent">작성자</span>
 							<span>${board.extra__writer}</span>
 						</a>
 
 						<!-- 등록날짜 -->
-						<a href="${listUrl}" class="hover:underline">
+						<a class="hover:underline">
 							<span class="badge">등록날짜</span>
 							<span class="text-gray-600 text-light">${board.regDate}</span>
 						</a>
 
 						<!-- 수정날짜 -->
 						<c:if test="${board.updateDate != board.regDate}">
-							<a href="${listUrl}" class="hover:underline">
+							<a class="hover:underline">
 								<span class="badge">수정날짜</span>
 								<span class="text-gray-600 text-light">${board.updateDate}</span>
 							</a>

@@ -114,13 +114,13 @@
 
 
 						<!-- 제목 -->
-						<a class="hover:underline cursor-pointer">
+						<a href="${detailUrl}" class="hover:underline cursor-pointer">
 							<span class="badge badge-outline mb-1">제목</span>
 							<span class="line-clamp-3 ml-1"> ${article.title} </span>
 						</a>
 
 						<!-- 본문 -->
-						<a
+						<a href="${detailUrl}"
 							class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
 							<span class="badge badge-outline mb-1">본문</span>
 							<span class="line-clamp-3 ml-1"> ${article.body} </span>
