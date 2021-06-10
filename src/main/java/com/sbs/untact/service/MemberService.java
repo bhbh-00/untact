@@ -99,9 +99,9 @@ public class MemberService {
 	public static String getAuthLevelNameColor(Member member) {
 		switch (member.getAuthLevel()) {
 		case 7:
-			return "blue";
+			return "badge-warning";
 		case 3:
-			return "yellow";
+			return "badge-info";
 		default:
 			return "";
 		}
@@ -195,6 +195,10 @@ public class MemberService {
 
 	public boolean needToChangePassword(int actorId) {
 		return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
+	}
+
+	public int getMemberTotleCount(String searchKeywordType, String searchKeyword) {
+		return memberDao.getMemberTotleCount(searchKeywordType, searchKeyword);
 	}
 
 }

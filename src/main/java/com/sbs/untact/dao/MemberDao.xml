@@ -5,6 +5,39 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
+	<select id="getMemberTotleCount" resultType="int">
+		SELECT count(*)
+		FROM `member`
+		WHERE 1
+		<if test="searchKeywordType == 'loginId'">
+			AND loginId LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'authLevel'">
+			AND authLevel LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'name'">
+			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nickname'">
+			AND nickname LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'cellphoneNo'">
+			AND cellphoneNo LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'email'">
+			AND email LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'loginIdAndAuthLevelAndNameAndNicknameAndCellphoneNoAndEmail'">
+			AND (loginId LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			authLevel LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			nickname LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			cellphoneNo LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			email LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+	</select>
+
 	<select id="getMemberByLoginIdAndEmail" resultType="Member">
 		SELECT *
 		FROM `member`

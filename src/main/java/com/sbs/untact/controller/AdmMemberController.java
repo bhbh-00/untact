@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
@@ -26,8 +27,7 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
-	
+
 	@RequestMapping("/adm/member/findLoginPw")
 	public String ShowfindLoginPw() {
 		return ("/adm/member/findLoginPw");
@@ -36,26 +36,26 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/doFindLoginPw")
 	@ResponseBody
 	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
-		
+
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/adm/member/login";
-        }
+		}
 
-        Member member = memberService.getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 
-        if (member == null) {
-            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
-        }
-        
-        if (member.getEmail().equals(email) == false) {
-            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
-        }
+		if (member == null) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
 
-        ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+		if (member.getEmail().equals(email) == false) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
 
-        return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
+		ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
+
+		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
 	}
-	
+
 	@RequestMapping("/adm/member/findLoginId")
 	public String ShowfindLoginId() {
 		return ("/adm/member/findLoginId");
@@ -64,24 +64,24 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/doFindLoginId")
 	@ResponseBody
 	public String dofindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
-		
+
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/";
-        }
+		}
 
-        Member member = memberService.getMemberByNameAndEmail(name, email);
+		Member member = memberService.getMemberByNameAndEmail(name, email);
 
-        if (member == null) {
-            return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
-        }
+		if (member == null) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
 
-        return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
+		return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
 	}
-	
+
 	@RequestMapping("/adm/member/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
-		
+
 		if (id == null) {
 			return new ResultData("F-1", "id를 입력해주세요.");
 		}
@@ -97,7 +97,7 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
-		
+
 		if (id == null) {
 			return msgAndBack(req, "제목을 입력해주세요.");
 		}
@@ -114,10 +114,11 @@ public class AdmMemberController extends BaseController {
 	}
 
 	@RequestMapping("/adm/member/list")
-	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param) {
+	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param,
+			@RequestParam(defaultValue = "1") int page) {
 
 		String searchKeywordType = (String) param.get("searchKeywordType");
-		
+
 		String searchKeyword = (String) param.get("searchKeyword");
 
 		if (searchKeywordType != null) {
@@ -140,7 +141,14 @@ public class AdmMemberController extends BaseController {
 			searchKeywordType = null;
 		}
 
+		// 한 페이지에 포함 되는 게시물의 갯수
 		int itemsInAPage = 20;
+
+		// 총 게시물의 갯수를 구하는
+		int totleItemsCount = memberService.getMemberTotleCount(searchKeywordType, searchKeyword);
+
+		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
+//		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
 
 		List<Member> members = memberService.getForPrintMembers(searchKeywordType, searchKeyword, itemsInAPage,
 				itemsInAPage, param);
@@ -314,10 +322,11 @@ public class AdmMemberController extends BaseController {
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpSession session) {
-		/* 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐)
-		 * 이러한 오류를 해결? 발생이 안되게 하기 위해서는
+		/*
+		 * 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐) 이러한 오류를 해결? 발생이 안되게 하기 위해서는
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		 * param.put("id", loginedMemberId); -> 이게 없으면 됌! */
+		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
+		 */
 		ResultData modifyMemberRd = memberService.modifyMember(param);
 		String redirectUrl = "/adm/member/list";
 
