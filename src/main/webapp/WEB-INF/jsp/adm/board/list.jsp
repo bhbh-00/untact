@@ -7,183 +7,183 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
-<section class="section-1">
+<section class="section-board-list">
 
-	<div class="component-title-bar container mx-auto pt-1 pb-1 ">
-		<span class="text-lg font-bold text-center">게시판 관리</span>
+	<div
+		class="container mx-auto bg-white card bordered shadow-lg p-5 mb-5 relative">
+		<!-- 검색 -->
+		<form class="flex">
+			<select name="searchKeywordType">
+				<option value="codeAndName">전체</option>
+				<option value="code">코드</option>
+				<option value="name">이름</option>
+			</select>
+
+			<script>
+				if (param.searchKeywordType) {
+					$('.section-1 select[name="searchKeywordType"]').val(param.searchKeywordType);
+				}
+			</script>
+
+			<input autofocus="autofocus" type="text" style="border-radius: 25px"
+				placeholder="검색어를 입력해주세요" name="searchKeyword" maxlength="20"
+				autocomplete="off" value="${param.searchKeyword}"
+				class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
+								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue" />
+
+			<button type="submit" class="absolute top-7 right-9">
+				<i class="fas fa-pen"></i>
+			</button>
+
+		</form>
 	</div>
 
-	<div class="section-board-list">
+	<div
+		class="container mx-auto bg-white card bordered shadow-lg px-5 pt-5 pb-3">
 
-		<div class="container mx-auto mt-4 mb-4">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white mb-4">
-			
-				<div class="flex items-center px-4 py-2">
+		<div class="flex">
 
-					<span>Total : ${Util.numberFormat(totleItemsCount)}</span>
+			<div class="items-center ml-2">
 
-					<div class="flex-grow"></div>
+				<span class="text-xl font-bold">
+					<i class="far fa-clipboard"></i>
+					<span>게시판 관리</span>
+				</span>
+			</div>
 
-					<form class="flex">
-						<select name="searchKeywordType">
-							<option value="codeAndName">전체</option>
-							<option value="code">코드</option>
-							<option value="name">이름</option>
-						</select>
+			<div class="flex-grow"></div>
 
-						<script>
-							if (param.searchKeywordType) {
-								$('.section-1 select[name="searchKeywordType"]').val(param.searchKeywordType);
-							}
-						</script>
+			<div class="flex items-center">
 
-						<input
-							class="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-							autofocus="autofocus" type="text" placeholder="검색어를 입력해주세요"
-							name="searchKeyword" maxlength="20"
-							value="${param.searchKeyword}" />
-						<input
-							class="btn-primary bg-gray-400 text-white font-bold py-2 px-4 rounded"
-							type="submit" value="검색" />
+				<!-- 게시판 생성 -->
+				<a class="btn btn-error btn-wide btn-sm mb-1"
+					href="add?id=${ board.id }">게시판 생성</a>
 
-					</form>
-
-				</div>
-				
-				<a class="btn btn-sm bg-gray-600 border-transparent my-2 mx-4 h-full" href="add?id=${ board.id }">게시판 생성</a>
 			</div>
 		</div>
 
-		<div class="container mx-auto">
-			<div
-				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+		<div>
+			<c:forEach items="${boards}" var="board">
 
-				<c:forEach items="${boards}" var="board">
+				<c:set var="listUrl" value="list?" />
+				
+				<div class="p-4">
 
-					<div class="px-4 py-8">
+					<!-- 게시판 이름 -->
+					<c:if test="${board.id == 1}">
+						<a href="${listUrl}" class="cursor-pointer hover:underline">
+							<span class="badge badge-info">${board.name}</span>
+						</a>
+					</c:if>
 
-						<c:set var="listUrl" value="list?" />
+					<c:if test="${board.id == 2}">
+						<a href="${listUrl}" class="cursor-pointer hover:underline">
+							<span class="badge badge-warning">${board.name}</span>
+						</a>
+					</c:if>
 
-						<div
-							class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-							<a href="#" class="row-span-3 order-1">
-								<img class="rounded-full" src="https://i.pravatar.cc/100?img=37"
-									alt="">
-							</a>
+					<!-- 게시물 번호 -->
+					<a href="${listUrl}" class="hover:underline">
+						<span class="text-base">No.${board.id}</span>
+					</a>
 
-							<!-- 번호 -->
-							<a href="${listUrl}" class="order-2">
-								<span class="badge badge-warning">번호</span>
-								<span>${board.id}</span>
-							</a>
+					<div
+						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						<!-- 썸네일 -->
+						<a href="${listUrl}" class="row-span-7">
+							<img class="w-full h-40 object-cover rounded" src="${thumbUrl}"
+								alt=""
+								onerror="${board.codeProfileFallbackImgOnErrorHtmlAttr}">
+						</a>
 
-							<!-- boardName 공지사항/자유 -->
-							<a href="list?boardName=${board.name}"
-								class="cursor-pointer order-3">
-								<span class="badge badge-info">타입</span>
-								<span>${board.name}</span>
-							</a>
 
-							<!-- 등록날짜 -->
-							<a href="${listUrl}" class="order-4">
-								<span class="badge">등록날짜</span>
-								<span class="text-gray-600 text-light">${board.regDate}</span>
-							</a>
+						<!-- 제목 -->
+						<a class="hover:underline cursor-pointer">
+							<span class="badge badge-outline mb-1">코드</span>
+							<span class="line-clamp-3 ml-1"> ${board.code} </span>
+						</a>
 
-							<!-- 수정날짜 -->
-							<a href="${listUrl}" class="order-5">
+						<!-- 본문 -->
+						<a
+							class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
+							<span class="badge badge-outline mb-1">이름</span>
+							<span class="line-clamp-3 ml-1"> ${board.name} </span>
+						</a>
+
+						<!-- 작성자 -->
+						<a href="${listUrl}" class="cursor-pointer hover:underline">
+							<span class="badge badge-accent">작성자</span>
+							<span>${board.extra__writer}</span>
+						</a>
+
+						<!-- 등록날짜 -->
+						<a href="${listUrl}" class="hover:underline">
+							<span class="badge">등록날짜</span>
+							<span class="text-gray-600 text-light">${board.regDate}</span>
+						</a>
+
+						<!-- 수정날짜 -->
+						<c:if test="${board.updateDate != board.regDate}">
+							<a href="${listUrl}" class="hover:underline">
 								<span class="badge">수정날짜</span>
 								<span class="text-gray-600 text-light">${board.updateDate}</span>
 							</a>
+						</c:if>
 
-							<!-- 코드 -->
-							<a href="${listUrl}" class="order-6">
-								<span class="badge">코드</span>
-								<span class="text-gray-600">${board.code}</span>
-							</a>
-
-							<!-- 이름 -->
-							<a href="${listUrl}" class="order-7">
-								<span class="badge">이름</span>
-								<span class="text-gray-600">${board.name}</span>
-							</a>
-
-							<!-- 작성자 -->
-							<a href="${listUrl}" class="order-8 sm:order-4 md:order-8">
-								<span class="badge">작성자</span>
-								<span class="text-gray-600">${board.extra__writer}</span>
-							</a>
-						</div>
-
-						<div class="grid grid-item-float gap-3 mt-4">
-							<a href="modify?id=${board.id}" class="text-blue-500 ">
-								<span>
-									<i class="fas fa-edit"></i>
-									<span>수정</span>
-								</span>
-							</a>
-							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-								href="doDelete?id=${board.id}" class="text-blue-500 ">
-								<span>
-									<i class="fas fa-trash"></i>
-									<span>삭제</span>
-								</span>
-							</a>
-						</div>
 					</div>
-				</c:forEach>
-
-				<!-- 페이징 -->
-				<c:set var="pageBtnAddiQueryStr"
-					value="&searchKeywordType=${param.searchKeywordType}&searchKeyword=${param.searchKeyword}" />
-				<nav class="flex justify-center py-5 rounded-md shadow-sm"
-					aria-label="Pagination">
-
-					<!-- 시작 페이지 -->
-					<c:if test="${pageMenuStart != 1}">
-						<a href="?page=1"
-							class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-							<span class="sr-only">Previous</span>
-							<i class="fas fa-chevron-left"></i>
-						</a>
-					</c:if>
-
-					<!-- 페이지 번호 -->
-					<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
-						<c:set var="aClassStr"
-							value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
-
-						<c:set var="aClassStr" value="${aClassStr} active" />
-
-						<!-- 현재 페이지 -->
-						<c:if test="${i == page}">
-							<c:set var="aClassStr"
-								value="${aClassStr} text-red-700 hover:bg-red-50" />
-						</c:if>
-
-						<!-- 현재 페이지가 아닌 -->
-						<c:if test="${i != page}">
-							<c:set var="aClassStr"
-								value="${aClassStr} text-gray-700 hover:bg-gray-50" />
-						</c:if>
-
-						<a href="?page=${i}${pageBtnAddiQueryStr}" class="${aClassStr}">${i}</a>
-					</c:forEach>
-
-					<!-- 마지막 페이지 -->
-					<c:if test="${pageMenuEnd != totalPage}">
-						<a href="?page=${totlePage}"
-							class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-							<span class="sr-only">Next</span>
-							<i class="fas fa-chevron-right"></i>
-						</a>
-					</c:if>
-				</nav>
-
-			</div>
+				</div>
+				<hr>
+			</c:forEach>
 		</div>
+
+		<!-- 페이징 -->
+		<nav class="flex justify-center pt-3" aria-label="Pagination">
+
+			<!-- 시작 페이지 -->
+			<!-- 내가 보고 있는 페이지 챕터가 첫번째이면 < 표시 안보이게 -->
+			<c:if test="${pageMenuStart != 1}">
+				<a href="${Util.getNewUrl(requestUrl, 'page', 1)}"
+					class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+					<span class="sr-only">Previous</span>
+					<i class="fas fa-chevron-left"></i>
+				</a>
+			</c:if>
+
+			<!-- 페이지 번호 -->
+			<c:forEach var="i" begin="${pageMenuStrat}" end="${pageMenuEnd}">
+				<c:set var="aClassStr"
+					value="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium" />
+
+				<c:set var="aClassStr" value="${aClassStr} active" />
+
+				<!-- 현재 페이지 -->
+				<c:if test="${i == page}">
+					<c:set var="aClassStr"
+						value="${aClassStr} text-red-700 hover:bg-red-50" />
+				</c:if>
+
+				<!-- 현재 페이지가 아닌 -->
+				<c:if test="${i != page}">
+					<c:set var="aClassStr"
+						value="${aClassStr} text-gray-700 hover:bg-gray-50" />
+				</c:if>
+
+				<a href="${Util.getNewUrl(requestUrl, 'page', i)}"
+					class="${aClassStr}">${i}</a>
+			</c:forEach>
+
+			<!-- 마지막 페이지 -->
+			<!-- 내가 보고 있는 페이지 챕터가 마지막이면 > 표시 안보이게 -->
+			<c:if test="${pageMenuEnd != totalPage}">
+				<a href="${Util.getNewUrl(requestUrl, 'page', totalPage)}"
+					class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+					<span class="sr-only">Next</span>
+					<i class="fas fa-chevron-right"></i>
+				</a>
+			</c:if>
+		</nav>
 	</div>
-	</div>
+
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
