@@ -98,7 +98,11 @@ public class UsrMemberController extends BaseController {
 
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
+		redirectUrl = "/usr/member/modify?id=" + loginedMember.getId();
+
 		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
+
+		req.setAttribute("loginedMember", loginedMember);
 
 		return msgAndReplace(req, "", redirectUrl);
 	}
@@ -142,7 +146,7 @@ public class UsrMemberController extends BaseController {
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
-
+		
 		req.setAttribute("member", member);
 
 		return "/usr/member/mypage";

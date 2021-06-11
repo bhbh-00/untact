@@ -86,17 +86,9 @@
 				<div class="p-4">
 
 					<!-- 게시판 번호 -->
-					<c:if test="${board.id == 1}">
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
-							<span class="badge badge-info">${article.extra__boardName}</span>
-						</a>
-					</c:if>
-
-					<c:if test="${board.id == 2}">
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
-							<span class="badge badge-warning">${article.extra__boardName}</span>
-						</a>
-					</c:if>
+					<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<span class="badge badge-info">${article.extra__boardName}</span>
+					</a>
 
 					<!-- 게시물 번호 -->
 					<a href="${detailUrl}" class="hover:underline">

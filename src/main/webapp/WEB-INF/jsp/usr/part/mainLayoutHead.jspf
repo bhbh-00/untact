@@ -79,7 +79,7 @@ body {
 						<div>
 							<ul>
 								<li>
-									<a href="../member/checkPassword?afterUrl=..%2Fmember%2Fmodify" class="inline-block text-lg">
+									<a href="/usr/member/mypage?id=${ loginedMember.id }" class="inline-block text-lg">
 										<span>
 											<i class="fas fa-user"></i>
 										</span>
