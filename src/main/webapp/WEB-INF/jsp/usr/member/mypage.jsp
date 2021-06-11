@@ -7,9 +7,8 @@
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
-<section class="section-1">
+<section class="section-member-mypage">
 
-	<div class="section-member-mypage">
 		<div class="container mx-auto">
 			<div
 				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
@@ -95,7 +94,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
@@ -27,7 +26,39 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
+	
+	// 회원정보 수정 시 비밀번호 체크
+	@RequestMapping("/adm/member/checkPassword")
+	public String ShowCheckPassword(HttpServletRequest req) {
+		return "/usr/member/checkPassword";
+	}
 
+	// checkPasswordAuthCode : 체크비밀번호인증코드
+	@RequestMapping("/adm/member/doCheckPassword")
+	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUrl) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		if (loginPw == null) {
+			return msgAndBack(req, "비밀번호를 입력해주세요.");
+		}
+
+		if (loginedMember.getLoginPw().equals(loginPw) == false) {
+			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
+		}
+
+		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
+
+		redirectUrl = "../member/modify?id=" + loginedMember.getId();
+
+		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
+
+		req.setAttribute("loginedMember", loginedMember);
+
+		return msgAndReplace(req, "", redirectUrl);
+	}
+	
+	// 비밀번호 찾기
 	@RequestMapping("/adm/member/findLoginPw")
 	public String ShowfindLoginPw() {
 		return ("/adm/member/findLoginPw");
@@ -55,7 +86,8 @@ public class AdmMemberController extends BaseController {
 
 		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
 	}
-
+	
+	// 아이디 찾기
 	@RequestMapping("/adm/member/findLoginId")
 	public String ShowfindLoginId() {
 		return ("/adm/member/findLoginId");
