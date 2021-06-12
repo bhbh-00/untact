@@ -20,8 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class Util {
+import lombok.Getter;
 
+public class Util {
 	public static String getCurrenDate() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
@@ -414,4 +415,5 @@ public class Util {
 
 		return dateStr;
 	}
+
 }

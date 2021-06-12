@@ -22,7 +22,6 @@ import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.LikeService;
-import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 @Controller
@@ -33,33 +32,6 @@ public class AdmArticleController extends BaseController {
 	private GenFileService genFileService;
 	@Autowired
 	private LikeService likeService;
-	@Autowired
-	private ReplyService replyService;
-	
-	@RequestMapping("/adm/article/doAddReply")
-	@ResponseBody
-	public ResultData doAddReply(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-		
-		if (param.get("relId") == null) {
-			return new ResultData("F-1", "relId을 입력해주세요.");
-		}
-		
-		Article article = articleService.getArticle((int) param.get("relId"));
-
-		if (article == null) {
-				return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
-			}
-
-		if (param.get("body") == null) {
-			return new ResultData("F-1", "댓글을 입력해주세요.");
-		}
-		
-		req.setAttribute("article", article);
-		param.put("memberId", loginMemberId);
-
-		return replyService.doAdd(param);
-	}
 
 	@RequestMapping("/adm/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
@@ -90,62 +62,67 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
-		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		if (id == 0) {
-			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+			return  msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
 
 		if (Util.isEmpty(param.get("title"))) {
-			return new ResultData("F-1", "제목을 입력해주세요.");
+			return  msgAndBack(req, "제목을 입력해주세요.");
 		}
 
 		if (Util.isEmpty(param.get("body"))) {
-			return new ResultData("F-1", "내용을 입력해주세요.");
+			return  msgAndBack(req, "내용을 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return  msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
 
 		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return Util.msgAndReplace(actorCanModifyRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
-		return articleService.modify(param);
+		ResultData modifyArticleRd = articleService.modify(param);
+		String redirectUrl = "../article/detail?id=" + article.getId();
+
+		return Util.msgAndReplace(modifyArticleRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req,"해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
-		return articleService.deleteArticle(id);
+		ResultData deleteMemberRd = articleService.deleteArticle(id);
+		String redirectUrl = "../article/list";
+
+		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/adm/article/add")
@@ -160,7 +137,7 @@ public class AdmArticleController extends BaseController {
 		// String title, String body이 null이면 내용이 없는 거!!
 
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-		
+
 		/*
 		 * HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 Util.getAsInt 필요 없음 (int로 형변환 필요함)
 		 * !!로그인과 회원가입은 세션이 필요함
@@ -186,9 +163,9 @@ public class AdmArticleController extends BaseController {
 
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
-		
+
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-		
+
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
@@ -206,7 +183,7 @@ public class AdmArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
-		
+
 		Like like = likeService.getLikeByArticle(id);
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
 

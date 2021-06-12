@@ -94,11 +94,11 @@ public class UsrArticleController extends BaseController {
 		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
 
 		if (actorCanModifyRd.isFail()) {
-			return Util.msgAndReplace(actorCanModifyRd.getMsg(), "/usr/article/detail?id=" + article.getId());
+			return Util.msgAndReplace(actorCanModifyRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
 		ResultData modifyArticleRd = articleService.modify(param);
-		String redirectUrl = "/usr/article/detail?id=" + article.getId();
+		String redirectUrl = "../article/detail?id=" + article.getId();
 
 		return Util.msgAndReplace(modifyArticleRd.getMsg(), redirectUrl);
 	}
@@ -122,11 +122,11 @@ public class UsrArticleController extends BaseController {
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
-			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "/usr/article/detail?id=" + article.getId());
+			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
 		ResultData deleteMemberRd = articleService.deleteArticle(id);
-		String redirectUrl = "/usr/article/list";
+		String redirectUrl = "../article/list";
 
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}

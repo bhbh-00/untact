@@ -10,7 +10,7 @@
 	param.boardId = parseInt("${board.id}");
 </script>
 
-<section class="section-article-list">
+<section class="section-usr-article-list">
 
 	<div
 		class="container mx-auto bg-white card bordered shadow-lg p-5 mb-5 relative">
