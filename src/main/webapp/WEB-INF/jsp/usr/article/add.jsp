@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
@@ -19,7 +19,7 @@
 
 <script>
 	ArticleAdd__submited = false;
-	
+
 	function ArticleAdd__checkAndSubmit(form) {
 		// 이게 끝나면 폼 전송완료
 
@@ -119,12 +119,13 @@
 	}
 </script>
 
-<section class="section-1">
+<section class="section-article-add">
 
 	<div class="section-article-write">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title bg-gray-400 text-white">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+				<div class="card-title">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -178,8 +179,9 @@
 						</c:forEach>
 
 						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1" value="작성">
-							
+							<input type="submit" class="btn btn-primary btn-sm mb-1"
+								value="작성">
+
 							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
 								<span>
 									<i class="fas fa-list"></i>
@@ -194,8 +196,6 @@
 			</div>
 		</div>
 	</div>
-
-
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>
