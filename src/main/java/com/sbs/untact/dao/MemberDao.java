@@ -15,7 +15,7 @@ public interface MemberDao {
 
 	Member getMember(@Param("id") int id);
 
-	void modifyMember(Map<String, Object> param);
+	void modify(Map<String, Object> param);
 
 	Member getMemberByAuthKey(@Param("authKey") String authKey);
 
@@ -25,7 +25,7 @@ public interface MemberDao {
 
 	Member getForPrintMember(@Param("id") int id);
 
-	void deleteMember(@Param("id") Integer id);
+	void delete(@Param("id") Integer id);
 
 	Member getMemberByLoginId(@Param("loginId") String loginId);
 

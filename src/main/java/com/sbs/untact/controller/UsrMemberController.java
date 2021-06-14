@@ -127,7 +127,7 @@ public class UsrMemberController extends BaseController {
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
 
-		ResultData deleteMemberRd = memberService.deleteMember(id);
+		ResultData deleteMemberRd = memberService.delete(id);
 
 		String redirectUrl = "/usr/member/login";
 
@@ -136,7 +136,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/mypage")
 	public String showMyPage(HttpServletRequest req, Integer id) {
-
+		
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -259,9 +259,9 @@ public class UsrMemberController extends BaseController {
 			return Util.msgAndBack("아이디를 입력해주세요.");
 		}
 
-		Member existingMember = memberService.getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 
-		if (existingMember == null) {
+		if (member == null) {
 			return Util.msgAndBack("존재하지 않는 아이디입니다.");
 		}
 
@@ -269,21 +269,28 @@ public class UsrMemberController extends BaseController {
 			return Util.msgAndBack("비밀번호를 입력해주세요.");
 		}
 
-		if (existingMember.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(loginPw) == false) {
 			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
 		}
 
-		session.setAttribute("loginedMemberId", existingMember.getId());
+		session.setAttribute("loginedMemberId", member.getId());
 
-		String msg = String.format("%s님! 환영합니다.", existingMember.getNickname());
+		String msg = String.format("%s님! 환영합니다.", member.getNickname());
 
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
+		
+		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
+
+        if ( isUsingTempPassword ) {
+            msg = "임시 비밀번호를 변경해주세요.";
+            redirectUrl = "../member/mypage?id=" + member.getId();
+        }
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(HttpServletRequest req, int id, String checkPasswordAuthCode) {
+	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -294,7 +301,7 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
-		if (id == 0) {
+		if (id == null) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
 		}
 
@@ -332,7 +339,7 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
-		ResultData modifyMemberRd = memberService.modifyMember(param);
+		ResultData modifyMemberRd = memberService.modify(param);
 
 		String redirectUrl = "/usr/member/mypage?id=" + loginedMember.getId();
 

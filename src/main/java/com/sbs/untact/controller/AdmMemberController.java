@@ -124,7 +124,7 @@ public class AdmMemberController extends BaseController {
 			return new ResultData("F-1", "해당 회원은 존재하지 않습니다.");
 		}
 
-		return memberService.deleteMember(id);
+		return memberService.delete(id);
 	}
 
 	@RequestMapping("/adm/member/detail")
@@ -382,7 +382,7 @@ public class AdmMemberController extends BaseController {
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
 		 */
-		ResultData modifyMemberRd = memberService.modifyMember(param);
+		ResultData modifyMemberRd = memberService.modify(param);
 		String redirectUrl = "/adm/member/list";
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);

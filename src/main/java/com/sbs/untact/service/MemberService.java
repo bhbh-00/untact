@@ -48,8 +48,12 @@ public class MemberService {
 		return memberDao.getMember(id);
 	}
 
-	public ResultData modifyMember(Map<String, Object> param) {
-		memberDao.modifyMember(param);
+	public ResultData modify(Map<String, Object> param) {
+		memberDao.modify(param);
+		
+		if (param.get("loginPw") != null) {
+            attrService.remove("member", (Integer)param.get("id"), "extra", "useTempPassword");
+        }
 
 		return new ResultData("s-1", "회원정보가 수정되었습니다.");
 	}
@@ -108,8 +112,8 @@ public class MemberService {
 	}
 	// static 끝
 
-	public ResultData deleteMember(Integer id) {
-		memberDao.deleteMember(id);
+	public ResultData delete(Integer id) {
+		memberDao.delete(id);
 		return new ResultData("S-1", "탈퇴 완료되었습니다.", "id", id);
 	}
 
@@ -171,6 +175,7 @@ public class MemberService {
 	}
 
 	private void setTempPassword(Member actor, String tempPassword) {
+		attrService.setValue("member", actor.getId(), "extra", "useTempPassword", "1", null);
 		memberDao.modifyUserMember(actor.getId(), tempPassword, null, null, null, null, null);
 	}
 
@@ -199,6 +204,10 @@ public class MemberService {
 
 	public int getMemberTotleCount(String searchKeywordType, String searchKeyword) {
 		return memberDao.getMemberTotleCount(searchKeywordType, searchKeyword);
+	}
+
+	public boolean isUsingTempPassword(int actorId) {
+		 return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
 	}
 
 }

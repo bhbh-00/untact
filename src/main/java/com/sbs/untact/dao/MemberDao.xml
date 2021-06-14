@@ -58,7 +58,7 @@
 		loginPw = #{loginPw}
 	</select>
 
-	<delete id="deleteMember">
+	<delete id="delet">
 		DELETE FROM `member`
 		WHERE id = #{id}
 	</delete>
@@ -160,7 +160,7 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="modifyMember">
+	<update id="modify">
 		UPDATE `member`
 		<set>
 			<if
