@@ -35,7 +35,7 @@
 		}
 
 		if (form.loginPwInput.value != form.loginPwConfirm.value) {
-			alert('로그인비번이 일치하지 않습니다.');
+			alert('비밀번호가 일치하지 않습니다.');
 			form.loginPwConfirm.focus();
 
 			return;
@@ -188,7 +188,7 @@
 							<label class="label">
 								<span class="label-text">회원타입</span>
 							</label>
-							<select class="select select-bordered">
+							<select name="authLevel" class="select select-bordered">
 								<option disabled="disabled" selected="selected">회원타입을
 									선택해주세요.</option>
 								<option value="0">미승인</option>

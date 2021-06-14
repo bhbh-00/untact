@@ -207,9 +207,11 @@ $(function() {
 
 	<div
 		class="container mx-auto min-h-screen flex items-center justify-center">
+		
 		<div class="w-full">
+			
 			<div class="logo-bar flex justify-center mb-5">
-				<a href="/usr/member/login" class="logo">
+				<a href="../member/login" class="logo">
 					<span>
 						<i class="fas fa-people-arrows"></i>
 					</span>
@@ -219,6 +221,13 @@ $(function() {
 
 			<div
 				class="container mx-auto bg-white card bordered shadow-lg px-5 pt-5 pb-3">
+
+				<div class="container mx-auto flex text-xl mt-4 ml-5">
+					<span class="flex items-center mr-1">
+						<i class="fas fa-user-edit"></i>
+					</span>
+					<span class="font-bold"> 회원가입 </span>
+				</div>
 
 				<div class="px-4 py-8">
 
@@ -230,13 +239,7 @@ $(function() {
 						<input type="hidden" name="redirectUrl"
 							value="${param.redirectUrl}" />
 						<input type="hidden" name="loginPw" />
-
-						<div class="container mx-auto flex text-xl ml-1">
-							<span class="flex items-center mr-1">
-								<i class="fas fa-user-edit"></i>
-							</span>
-							<span class="font-bold"> 회원가입 </span>
-						</div>
+						<input type="hidden" name="authLevel" value="3"/>
 
 						<!-- loginId -->
 						<div class="form-control">

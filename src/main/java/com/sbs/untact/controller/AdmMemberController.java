@@ -276,6 +276,10 @@ public class AdmMemberController extends BaseController {
 		if (param.get("name") == null) {
 			return Util.msgAndBack("이름을 입력해주세요.");
 		}
+		
+		if (param.get("authLevel") == null) {
+			return Util.msgAndBack("권한번호를 선택해주세요.");
+		}
 
 		if (param.get("nickname") == null) {
 			return Util.msgAndBack("닉네임을 입력해주세요.");

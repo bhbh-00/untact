@@ -70,6 +70,7 @@
 		updateDate = NOW(),
 		loginId = #{loginId},
 		loginPw = #{loginPw},
+		authLevel = #{authLevel},
 		authKey = CONCAT("authKey1__", UUID(), "__", RAND()),
 		`name` = #{name},
 		nickname = #{nickname},
