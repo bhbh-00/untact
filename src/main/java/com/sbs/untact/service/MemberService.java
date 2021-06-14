@@ -199,7 +199,7 @@ public class MemberService {
 
 	private void setTempPassword(Member actor, String tempPassword) {
 		attrService.setValue("member", actor.getId(), "extra", "useTempPassword", "1", null);
-		memberDao.modifyUserMember(actor.getId(), tempPassword, null, null, null, null, null);
+		memberDao.modifyUserMember(actor.getId(), tempPassword, 0, null, null, null, null);
 	}
 
 	public ResultData checkValidCheckPasswordAuthCode(int actorId, String checkPasswordAuthCode) {

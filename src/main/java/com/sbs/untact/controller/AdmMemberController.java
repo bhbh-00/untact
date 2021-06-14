@@ -366,7 +366,7 @@ public class AdmMemberController extends BaseController {
 	}
 
 	@RequestMapping("/adm/member/modify")
-	public String Modify(int id, HttpServletRequest req) {
+	public String Modify(Integer id, HttpServletRequest req) {
 
 		if (id == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
