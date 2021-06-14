@@ -136,7 +136,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/mypage")
 	public String showMyPage(HttpServletRequest req, Integer id) {
-		
+
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -146,7 +146,7 @@ public class UsrMemberController extends BaseController {
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
-		
+
 		req.setAttribute("member", member);
 
 		return "/usr/member/mypage";
@@ -230,7 +230,7 @@ public class UsrMemberController extends BaseController {
 
 		memberService.join(param);
 
-		String msg = String.format("%s님! 환영합니다.", param.get("nickname"));
+		String msg = String.format("%s님! 가입을 환영합니다!", param.get("nickname"));
 
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "../member/login");
 
@@ -278,13 +278,20 @@ public class UsrMemberController extends BaseController {
 		String msg = String.format("%s님! 환영합니다.", member.getNickname());
 
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
-		
-		boolean isUsingTempPassword = memberService.isUsingTempPassword(member.getId());
 
-        if ( isUsingTempPassword ) {
-            msg = "임시 비밀번호를 변경해주세요.";
-            redirectUrl = "../member/mypage?id=" + member.getId();
-        }
+		boolean needToChangePassword = memberService.needToChangePassword(member.getId());
+
+		if (needToChangePassword) {
+			msg = "현재 비밀번호를 사용한지" + memberService.getNeedToChangePasswordFreeDays() + "일이 지났습니다. 비밀번호를 변경해주세요.";
+			redirectUrl = "../member/mypage?id=" + member.getId();
+		}
+
+		boolean usingTempPassword = memberService.usingTempPassword(member.getId());
+
+		if (usingTempPassword) {
+			msg = "임시 비밀번호를 변경해주세요.";
+			redirectUrl = "../member/mypage?id=" + member.getId();
+		}
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
@@ -339,11 +346,11 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
-		ResultData modifyMemberRd = memberService.modify(param);
+		ResultData modifyRd = memberService.modify(param);
 
 		String redirectUrl = "/usr/member/mypage?id=" + loginedMember.getId();
 
-		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
+		return Util.msgAndReplace(modifyRd.getMsg(), redirectUrl);
 	}
 
 }

@@ -26,7 +26,7 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
+
 	// 회원정보 수정 시 비밀번호 체크
 	@RequestMapping("/adm/member/checkPassword")
 	public String ShowCheckPassword(HttpServletRequest req) {
@@ -57,7 +57,7 @@ public class AdmMemberController extends BaseController {
 
 		return msgAndReplace(req, "", redirectUrl);
 	}
-	
+
 	// 비밀번호 찾기
 	@RequestMapping("/adm/member/findLoginPw")
 	public String ShowfindLoginPw() {
@@ -86,7 +86,7 @@ public class AdmMemberController extends BaseController {
 
 		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
 	}
-	
+
 	// 아이디 찾기
 	@RequestMapping("/adm/member/findLoginId")
 	public String ShowfindLoginId() {
@@ -218,36 +218,36 @@ public class AdmMemberController extends BaseController {
 	public ResultData getLoginIdDup(String loginId) {
 
 		if (loginId == null) {
-			return new ResultData("F-5", "loginId를 입력해주세요.");
+			return new ResultData("F-5", "아이디를 입력해주세요.");
 		}
 
 		if (Util.allNumberString(loginId)) {
-			return new ResultData("F-3", "로그인아이디는 숫자만으로 구성될 수 없습니다.");
+			return new ResultData("F-3", "아이디는 숫자만으로 구성될 수 없습니다.");
 		}
 
 		if (Util.startsWithNumberString(loginId)) {
-			return new ResultData("F-4", "로그인아이디는 숫자로 시작할 수 없습니다.");
+			return new ResultData("F-4", "아이디는 숫자로 시작할 수 없습니다.");
 		}
 
 		if (loginId.length() < 5) {
-			return new ResultData("F-5", "로그인아이디는 5자 이상으로 입력해주세요.");
+			return new ResultData("F-5", "아이디는 5자 이상으로 입력해주세요.");
 		}
 
 		if (loginId.length() > 20) {
-			return new ResultData("F-6", "로그인아이디는 20자 이하로 입력해주세요.");
+			return new ResultData("F-6", "아이디는 20자 이하로 입력해주세요.");
 		}
 
 		if (Util.isStandardLoginIdString(loginId) == false) {
-			return new ResultData("F-1", "로그인아이디는 영문소문자와 숫자의 조합으로 구성되어야 합니다.");
+			return new ResultData("F-1", "아이디는 영문소문자와 숫자의 조합으로 구성되어야 합니다.");
 		}
 
 		Member existingMember = memberService.getMemberByLoginId(loginId);
 
 		if (existingMember != null) {
-			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 로그인아이디 입니다.", loginId));
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 아이디 입니다.", loginId));
 		}
 
-		return new ResultData("S-1", String.format("%s(은)는 사용가능한 로그인아이디 입니다.", loginId), "loginId", loginId);
+		return new ResultData("S-1", String.format("%s(은)는 사용가능한 아이디 입니다.", loginId), "loginId", loginId);
 
 	}
 
@@ -291,7 +291,7 @@ public class AdmMemberController extends BaseController {
 
 		memberService.join(param);
 
-		String msg = String.format("%s님! 환영합니다.", param.get("nickname"));
+		String msg = String.format("%s님! 가입을 환영합니다.", param.get("nickname"));
 
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "../member/login");
 
@@ -320,9 +320,9 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("아이디를 입력해주세요.");
 		}
 
-		Member existingMember = memberService.getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 
-		if (existingMember == null) {
+		if (member == null) {
 			return Util.msgAndBack("존재하지 않는 아이디입니다.");
 		}
 
@@ -330,19 +330,33 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("비밀번호를 입력해주세요.");
 		}
 
-		if (existingMember.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(loginPw) == false) {
 			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
 		}
 
-		if (memberService.isAdmin(existingMember) == false) {
+		if (memberService.isAdmin(member) == false) {
 			return Util.msgAndBack("관리자만 접근 가능합니다.");
 		}
 
-		session.setAttribute("loginedMemberId", existingMember.getId());
+		session.setAttribute("loginedMemberId", member.getId());
 
-		String msg = String.format("%s님! 환영합니다.", existingMember.getNickname());
+		String msg = String.format("%s님! 환영합니다.", member.getNickname());
 
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
+
+		boolean needToChangePassword = memberService.needToChangePassword(member.getId());
+
+		if (needToChangePassword) {
+			msg = "현재 비밀번호를 사용한지" + memberService.getNeedToChangePasswordFreeDays() + "일이 지났습니다. 비밀번호를 변경해주세요.";
+			redirectUrl = "../member/mypage?id=" + member.getId();
+		}
+
+		boolean usingTempPassword = memberService.usingTempPassword(member.getId());
+
+		if (usingTempPassword) {
+			msg = "임시 비밀번호를 변경해주세요.";
+			redirectUrl = "/usr/member/mypage?id=" + member.getId();
+		}
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}

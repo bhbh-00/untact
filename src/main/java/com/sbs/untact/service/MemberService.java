@@ -19,16 +19,34 @@ import com.sbs.untact.util.Util;
 public class MemberService {
 	@Autowired
 	private MailService mailService;
+
 	@Value("${custom.siteMainUri}")
 	private String siteMainUri;
+
 	@Value("${custom.siteName}")
 	private String siteName;
+
+	@Value("${custom.needToChangePasswordFreeDays}")
+	private int needToChangePasswordFreeDays;
+
 	@Autowired
 	private MemberDao memberDao;
+
 	@Autowired
 	private GenFileService genFileService;
+
 	@Autowired
 	private AttrService attrService;
+
+	public int getNeedToChangePasswordFreeDays() {
+		return needToChangePasswordFreeDays;
+	}
+
+	private void setNeedToChangePasswordLater(int actorId) {
+		int days = getNeedToChangePasswordFreeDays();
+		attrService.setValue("member", actorId, "extra", "needToChangePassword", "0",
+				Util.getDateStrLater(60 * 60 * 24 * days));
+	}
 
 	public ResultData join(Map<String, Object> param) {
 		memberDao.join(param);
@@ -36,6 +54,8 @@ public class MemberService {
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		genFileService.changeInputFileRelIds(param, id);
+
+		setNeedToChangePasswordLater(id);
 
 		return new ResultData("s-1", String.format("회원가입이 정상적으로 처리되었습니다.", param.get("nickname")));
 	}
@@ -48,12 +68,15 @@ public class MemberService {
 		return memberDao.getMember(id);
 	}
 
+	// 회원정보 수정
 	public ResultData modify(Map<String, Object> param) {
 		memberDao.modify(param);
-		
+
 		if (param.get("loginPw") != null) {
-            attrService.remove("member", (Integer)param.get("id"), "extra", "useTempPassword");
-        }
+			setNeedToChangePasswordLater((Integer) param.get("id"));
+
+			attrService.remove("member", (Integer) param.get("id"), "extra", "useTempPassword");
+		}
 
 		return new ResultData("s-1", "회원정보가 수정되었습니다.");
 	}
@@ -198,16 +221,16 @@ public class MemberService {
 		return authCode;
 	}
 
-	public boolean needToChangePassword(int actorId) {
-		return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
-	}
-
 	public int getMemberTotleCount(String searchKeywordType, String searchKeyword) {
 		return memberDao.getMemberTotleCount(searchKeywordType, searchKeyword);
 	}
 
-	public boolean isUsingTempPassword(int actorId) {
-		 return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
+	public boolean usingTempPassword(int actorId) {
+		return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
+	}
+
+	public boolean needToChangePassword(int actorId) {
+		return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
 	}
 
 }

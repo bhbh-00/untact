@@ -30,6 +30,7 @@ spring:
 mybatis:
   type-aliases-package: com.sbs.untact.dto
 custom:
+  needToChangePasswordFreeDays: 90
   siteMainUri: http://localhost:8024/
   siteName: Untact
   emailFrom: Untact@localhost

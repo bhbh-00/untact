@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.Getter;
-
 public class Util {
 	public static String getCurrenDate() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -407,11 +405,11 @@ public class Util {
 		return sb.toString();
 	}
 
-	// 유효시간 설정 (1시간)
-	public static String getDateStrLater(int seconds) {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	// 유효시간 설정
+	public static String getDateStrLater(long seconds) {
+		SimpleDateFormat format  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-		String dateStr = format1.format(System.currentTimeMillis() + seconds * 1000);
+		String dateStr = format.format(System.currentTimeMillis() + seconds * 1000);
 
 		return dateStr;
 	}
