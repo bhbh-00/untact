@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -212,11 +213,11 @@ public class UsrMemberController extends BaseController {
 		if (param.get("loginPw") == null) {
 			return Util.msgAndBack("비밀번호를 입력해주세요.");
 		}
-		
+
 		if (param.get("name") == null) {
 			return Util.msgAndBack("이름을 입력해주세요.");
 		}
-		
+
 		if (param.get("authLevel") == null) {
 			return Util.msgAndBack("권한번호를 선택해주세요.");
 		}
@@ -302,7 +303,7 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
+	public String Modify(HttpServletRequest req, int id, String checkPasswordAuthCode) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -313,7 +314,7 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
-		if (id == null) {
+		if (id == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
 		}
 
@@ -339,8 +340,8 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req,
-			String checkPasswordAuthCode) {
+	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,
+			String cellphoneNo, String email, String checkPasswordAuthCode) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -351,7 +352,8 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
-		ResultData modifyRd = memberService.modify(param);
+		ResultData modifyRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
+				cellphoneNo, email);
 
 		String redirectUrl = "/usr/member/mypage?id=" + loginedMember.getId();
 

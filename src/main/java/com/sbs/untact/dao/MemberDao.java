@@ -14,9 +14,7 @@ public interface MemberDao {
 	void join(Map<String, Object> param);
 
 	Member getMember(@Param("id") int id);
-
-	void modify(Map<String, Object> param);
-
+	
 	Member getMemberByAuthKey(@Param("authKey") String authKey);
 
 	Member getMembers(@Param("authLevel") int authLevel);
@@ -35,7 +33,7 @@ public interface MemberDao {
 
 	Member getMemberByLoginIdAndEmail(@Param("loginId") String loginId, @Param("email") String email);
 
-	void modifyUserMember(@Param("id") int id, @Param("loginPw") String loginPw, @Param("authLevel") int authLevel,
+	void modify(@Param("id") int id, @Param("loginPw") String loginPw, @Param("authLevel") int authLevel,
 			@Param("name") String name, @Param("nickname") String nickname, @Param("cellphoneNo") String cellphoneNo,
 			@Param("email") String email);
 

@@ -276,7 +276,7 @@ public class AdmMemberController extends BaseController {
 		if (param.get("name") == null) {
 			return Util.msgAndBack("이름을 입력해주세요.");
 		}
-		
+
 		if (param.get("authLevel") == null) {
 			return Util.msgAndBack("권한번호를 선택해주세요.");
 		}
@@ -394,13 +394,17 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
-	public String doModify(@RequestParam Map<String, Object> param, HttpSession session) {
+	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,
+			String cellphoneNo, String email, HttpSession session) {
 		/*
 		 * 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐) 이러한 오류를 해결? 발생이 안되게 하기 위해서는
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
 		 */
-		ResultData modifyMemberRd = memberService.modify(param);
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		ResultData modifyMemberRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
+				cellphoneNo, email);
 		String redirectUrl = "/adm/member/list";
 
 		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);

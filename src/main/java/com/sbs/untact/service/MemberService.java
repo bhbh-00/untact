@@ -48,6 +48,7 @@ public class MemberService {
 				Util.getDateStrLater(60 * 60 * 24 * days));
 	}
 
+	// 회원가입
 	public ResultData join(Map<String, Object> param) {
 		memberDao.join(param);
 
@@ -69,13 +70,13 @@ public class MemberService {
 	}
 
 	// 회원정보 수정
-	public ResultData modify(Map<String, Object> param) {
-		memberDao.modify(param);
+	public ResultData modify(int id, String loginPw, int authLevel, String name, String nickname, String cellphoneNo,
+			String email) {
+		memberDao.modify(id, loginPw, authLevel, name, nickname, cellphoneNo, email);
 
-		if (param.get("loginPw") != null) {
-			setNeedToChangePasswordLater((Integer) param.get("id"));
-
-			attrService.remove("member", (Integer) param.get("id"), "extra", "useTempPassword");
+		if (loginPw != null) {
+			setNeedToChangePasswordLater(id);
+			attrService.remove("member", id, "extra", "useTempPassword");
 		}
 
 		return new ResultData("s-1", "회원정보가 수정되었습니다.");
@@ -199,7 +200,7 @@ public class MemberService {
 
 	private void setTempPassword(Member actor, String tempPassword) {
 		attrService.setValue("member", actor.getId(), "extra", "useTempPassword", "1", null);
-		memberDao.modifyUserMember(actor.getId(), tempPassword, 0, null, null, null, null);
+		memberDao.modify(actor.getId(), tempPassword, 0, null, null, null, null);
 	}
 
 	public ResultData checkValidCheckPasswordAuthCode(int actorId, String checkPasswordAuthCode) {
