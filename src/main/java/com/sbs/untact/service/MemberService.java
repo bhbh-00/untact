@@ -174,10 +174,6 @@ public class MemberService {
 		return memberDao.getMemberByNameAndEmail(name, email);
 	}
 
-	public Member getMemberByLoginIdAndEmail(String loginId, String email) {
-		return memberDao.getMemberByLoginIdAndEmail(loginId, email);
-	}
-
 	// 비밀번호 찾기 메일 보내기
 	public ResultData notifyTempLoginPwByEmail(Member actor) {
 		String title = "[" + siteName + "] 임시 패스워드 발송";
@@ -233,5 +229,5 @@ public class MemberService {
 	public boolean needToChangePassword(int actorId) {
 		return attrService.getValue("member", actorId, "extra", "needToChangePassword").equals("0") == false;
 	}
-
+	
 }

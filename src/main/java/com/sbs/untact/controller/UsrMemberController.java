@@ -200,38 +200,16 @@ public class UsrMemberController extends BaseController {
 	@ResponseBody
 	public String doJoin(@RequestParam Map<String, Object> param) {
 
-		if (param.get("loginId") == null) {
-			return Util.msgAndBack("아이디를 입력해주세요.");
-		}
-
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 
 		if (existingMember != null) {
 			return Util.msgAndBack("이미 사용 중인 아이디입니다.");
 		}
-
-		if (param.get("loginPw") == null) {
-			return Util.msgAndBack("비밀번호를 입력해주세요.");
-		}
-
-		if (param.get("name") == null) {
-			return Util.msgAndBack("이름을 입력해주세요.");
-		}
-
-		if (param.get("authLevel") == null) {
-			return Util.msgAndBack("권한번호를 선택해주세요.");
-		}
-
-		if (param.get("nickname") == null) {
-			return Util.msgAndBack("닉네임을 입력해주세요.");
-		}
-
-		if (param.get("cellphoneNo") == null) {
-			return Util.msgAndBack("핸드폰을 입력해주세요.");
-		}
-
-		if (param.get("email") == null) {
-			return Util.msgAndBack("이메일을 입력해주세요.");
+		
+		existingMember = memberService.getMemberByNameAndEmail((String) param.get("name"),(String) param.get("email"));
+		
+		if (existingMember != null) {
+			return Util.msgAndBack(String.format("%s님 이미 가입되어 있는「%s」메일 주소입니다. (%s)", param.get("name"), param.get("email"), existingMember.getRegDate()));
 		}
 
 		memberService.join(param);

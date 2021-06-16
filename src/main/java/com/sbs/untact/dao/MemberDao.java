@@ -30,13 +30,11 @@ public interface MemberDao {
 	Member getMemberByLoginPw(@Param("loginPw") String loginPw);
 
 	Member getMemberByNameAndEmail(@Param("name") String name, @Param("email") String email);
-
-	Member getMemberByLoginIdAndEmail(@Param("loginId") String loginId, @Param("email") String email);
-
+	
 	void modify(@Param("id") int id, @Param("loginPw") String loginPw, @Param("authLevel") int authLevel,
 			@Param("name") String name, @Param("nickname") String nickname, @Param("cellphoneNo") String cellphoneNo,
 			@Param("email") String email);
 
 	int getMemberTotleCount(@Param("searchKeywordType")String searchKeywordType, @Param("searchKeyword") String searchKeyword);
-
+	
 }
