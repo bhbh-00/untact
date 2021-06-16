@@ -198,7 +198,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
+	public String doJoin(@RequestParam Map<String, Object> param) {
 
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 

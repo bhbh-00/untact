@@ -126,7 +126,7 @@
 		<div class="container mx-auto">
 			<div class="card bordered shadow-lg bg-white">
 
-				<div class="card-title bg-gray-400 text-white">
+				<div class="card-title border-gray-400 border-b">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -156,10 +156,12 @@
 						</div>
 
 						<!-- 수정날짜 -->
-						<div class="form-control">
-							<label class="cursor-pointer label"> 수정날짜 </label>
-							<div class="plain-text">${member.updateDate}</div>
-						</div>
+						<c:if test="${member.regDate != member.updateDate}">
+							<div class="form-control">
+								<label class="cursor-pointer label"> 수정날짜 </label>
+								<div class="plain-text">${member.updateDate}</div>
+							</div>
+						</c:if>
 
 						<!-- 아이디 -->
 						<div class="form-control">
@@ -258,17 +260,12 @@
 								class="input input-bordered" value="${member.cellphoneNo}">
 						</div>
 
-						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1"
-								value="작성">
-
-							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
-								<span>
-									<i class="fas fa-list"></i>
-								</span>
-								&nbsp;
-								<span>리스트</span>
-							</a>
+						<div class="form-control mt-4">
+							<div class="p-1 md:flex-grow">
+								<input
+									class="w-full btn-primary bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
+									type="submit" value="수정" />
+							</div>
 						</div>
 
 					</form>

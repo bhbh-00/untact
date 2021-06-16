@@ -158,10 +158,12 @@
 						</div>
 
 						<!-- 수정날짜 -->
-						<div class="form-control">
-							<label class="cursor-pointer label"> 수정날짜 </label>
-							<div class="plain-text">${member.updateDate}</div>
-						</div>
+						<c:if test="${member.regDate != member.updateDate}">
+							<div class="form-control">
+								<label class="cursor-pointer label"> 수정날짜 </label>
+								<div class="plain-text">${member.updateDate}</div>
+							</div>
+						</c:if>
 
 						<!-- 아이디 -->
 						<div class="form-control">
@@ -180,7 +182,7 @@
 									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
 									name="file__member__${member.id}__common__attachment__1"
 									maxlength="20" />
-									<div class="mt-3">
+								<div class="mt-3">
 									<c:set var="fileNo" value="${String.valueOf(1)}" />
 									${member.extra.file__common__attachment[fileNo].mediaHtml}
 								</div>

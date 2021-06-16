@@ -14,7 +14,7 @@
 
 <script>
 const JoinForm__checkAndSubmitDone = false;
-<!--  const = var / 중복 방지를 위한.  -->
+
 let JoinForm__validLoginId = '';
 
 //로그인 아이디 중복체크 함수 ajax
@@ -64,6 +64,7 @@ function JoinForm__checkLoginIdDup(obj) {
 		*/
 	);
 }
+
 function JoinForm__checkAndSubmit(form) {
 	
 	if ( JoinForm__checkAndSubmitDone ) {
@@ -145,29 +146,25 @@ function JoinForm__checkAndSubmit(form) {
 		return;
 	}
 	
-	/// 파일 업로드
+	// 파일 업로드
 	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
 	const submitForm = function(data) {
-		
-		if (data) {
+			if (data) {
+				form.genFileIdsStr.value = data.body.genFileIdsStr;
+			}
 			
-			form.genFileIdsStr.value = data.body.genFileIdsStr;
-			
-		}
-
-		form.submit();
-		
+			form.submit();
+			JoinForm__checkAndSubmitDone = true;
 	}
 	
 	function startUpload(onSuccess) {
-		
 		if (!form.file__member__0__common__attachment__1.value) {
 			onSuccess();
 			return;
 		}
-
+		
 		const formData = new FormData(form);
-
+		
 		$.ajax({
 			url : '/common/genFile/doUpload',
 			data : formData,
@@ -177,21 +174,19 @@ function JoinForm__checkAndSubmit(form) {
 			type : 'POST',
 			success : onSuccess
 		});
-
+		
 		// 파일을 업로드 한 후
 		// 기다린다.
 		// 응답을 받는다.
 		// onSuccess를 실행한다.
 	}
 	
-	
 	form.loginPw.value = sha256(form.loginPwInput.value);
 	form.loginPwInput.value = '';
 	form.loginPwConfirm.value = '';
 	
-	JoinForm__checkAndSubmitDone = true;
-	
 	startUpload(submitForm);
+	
 }
 
 $(function() {
@@ -207,9 +202,9 @@ $(function() {
 
 	<div
 		class="container mx-auto min-h-screen flex items-center justify-center">
-		
+
 		<div class="w-full">
-			
+
 			<div class="logo-bar flex justify-center mb-5">
 				<a href="../member/login" class="logo">
 					<span>
@@ -239,7 +234,7 @@ $(function() {
 						<input type="hidden" name="redirectUrl"
 							value="${param.redirectUrl}" />
 						<input type="hidden" name="loginPw" />
-						<input type="hidden" name="authLevel" value="3"/>
+						<input type="hidden" name="authLevel" value="3" />
 
 						<!-- loginId -->
 						<div class="form-control">
@@ -283,10 +278,11 @@ $(function() {
 								<span class="label-text">프로필 이미지</span>
 							</label>
 							<div>
-								<input class="thumb-available"
-									data-thumb-selector="next().next()" type="file"
+								<input accept="image/gif, image/jpeg, image/png"
+									class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
 									name="file__member__0__common__attachment__1"
-									placeholder="프로필이미지" accept="image/png, image/jpeg, image/png">
+									maxlength="20" />
 								<div class="mt-2"></div>
 							</div>
 						</div>
@@ -343,8 +339,6 @@ $(function() {
 		</div>
 	</div>
 
-	</div>
-	</div>
 </section>
 
 <%@ include file="../part/foot.jspf"%>
