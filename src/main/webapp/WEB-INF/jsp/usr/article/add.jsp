@@ -179,10 +179,11 @@
 						</c:forEach>
 
 						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1"
-								value="작성">
-
-							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
+							<button class="btn btn-ghost btn-sm mb-1" type="submit">
+								<i class="fas fa-pen mr-1"></i>
+								<span>작성</span>
+							</button>
+							<a href="list?" class="btn btn-ghost btn-sm mb-1" title="리스트 보기">
 								<span>
 									<i class="fas fa-list"></i>
 								</span>

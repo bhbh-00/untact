@@ -208,7 +208,7 @@ $(function() {
 		<div class="w-full">
 			
 			<div class="logo-bar flex justify-center mb-5">
-				<a href="../member/login" class="logo">
+				<a href="../home/main" class="logo">
 					<span>
 						<i class="fas fa-people-arrows"></i>
 					</span>

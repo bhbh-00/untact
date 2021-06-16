@@ -48,7 +48,6 @@
 		<div class="flex">
 
 			<div class="items-center ml-2">
-
 				<span class="text-xl font-bold">
 					<i class="far fa-newspaper"></i>
 					<span>${board.name} 게시물</span>
@@ -61,13 +60,17 @@
 
 				<!-- 글쓰기 -->
 				<c:if test="${loginedMember.authLevel == 7 && board.id == 1}">
-					<a class="btn btn-error btn-wide btn-sm mb-1"
-						href="add?boardId=${ board.id }">글쓰기</a>
+					<a class="btn btn-ghost btn-sm mb-1"
+						href="add?boardId=${ board.id }">
+						<i class="fas fa-pen text-xl"></i>
+					</a>
 				</c:if>
 
-				<c:if test="${board.id == 2}">
-					<a class="btn btn-error btn-wide btn-sm mb-1"
-						href="add?boardId=${ board.id }">글쓰기</a>
+				<c:if test="${ board.id != 1 }">
+					<a class="btn btn-ghost btn-sm mb-1"
+						href="add?boardId=${ board.id }">
+						<i class="fas fa-pen text-xl"></i>
+					</a>
 				</c:if>
 
 			</div>

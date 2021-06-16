@@ -59,7 +59,6 @@
 							<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8" action="doFindLoginPw" method="POST" onsubmit="findLoginPw__checkAndSubmit(this); return false;">
 
 								<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
-
 								
 								<div class="container mx-auto flex mb-4 text-xl">
 								<span class="flex items-center mr-1"><i class="fas fa-search"></i></span>

@@ -53,16 +53,29 @@
 					<i class="far fa-newspaper"></i>
 					<span>내 게시물</span>
 				</span>
+				
+				<!-- 게시판별로 -->
+				<select class="py-2 select-board-id">
+					<option value="1">공지사항</option>
+					<option value="2">자유게시판</option>
+				</select>
+				<script>
+					$('.section-article-Mylist .select-board-id').val(param.boardId);
+					$('.section-article-Mylist .select-board-id').change(function() {
+						location.href = '?boardId=' + this.value;
+					});
+				</script>
 			</div>
 
 			<div class="flex-grow"></div>
 
 			<div class="flex items-center">
-
+			
 				<!-- 글쓰기 -->
-				<a class="btn btn-error btn-wide btn-sm mb-1"
-					href="add?boardId=${ board.id }">글쓰기</a>
-					
+				<a class="btn btn-ghost btn-sm mb-1"
+					href="add?boardId=${ board.id }">
+					<i class="fas fa-pen text-xl"></i>
+				</a>
 			</div>
 		</div>
 

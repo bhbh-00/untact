@@ -13,189 +13,186 @@
 
 
 <script>
-const JoinForm__checkAndSubmitDone = false;
+	const JoinForm__checkAndSubmitDone = false;
 
-let JoinForm__validLoginId = '';
+	let JoinForm__validLoginId = '';
 
-//로그인 아이디 중복체크 함수 ajax
-function JoinForm__checkLoginIdDup(obj) {
-	
-	const form = $('.formLogin').get(0);
-	
-	form.loginId.value = form.loginId.value.trim();
-	
-	if (form.loginId.value.length == 0) {
-		return;
-	}
-	
-	// 편지라고 생각하면 됌!
-	$.get(
-		'getLoginIdDup',
+	//로그인 아이디 중복체크 함수 ajax
+	function JoinForm__checkLoginIdDup(obj) {
+
+		const form = $('.formLogin').get(0);
+
+		form.loginId.value = form.loginId.value.trim();
+
+		if (form.loginId.value.length == 0) {
+			return;
+		}
+
+		// 편지라고 생각하면 됌!
+		$.get('getLoginIdDup',
 		// url
 		{
-			loginId:form.loginId.value
-		},
-		function(data) {
-			
+			loginId : form.loginId.value
+		}, function(data) {
+
 			let colorClass = 'text-green-500';
-			
-			if ( data.fail ) {	
+
+			if (data.fail) {
 				colorClass = 'text-red-500';
 			}
-			
+
 			$('.loginIdInputMsg').html("<span class='" + colorClass + "'>" + data.msg + "</span>");
-			
-			if ( data.fail ) {
+
+			if (data.fail) {
 				form.loginId.focus();
 			}
-			
+
 			else {
 				JoinForm__validLoginId = data.body.loginId;
 			}
-			
-		
+
 		},
-		
+
 		'json'
-		
+
 		/* 형식
 		(html -> html)
 		(json -> json)
-		*/
-	);
-}
+		 */
+		);
+	}
 
-function JoinForm__checkAndSubmit(form) {
-	
-	if ( JoinForm__checkAndSubmitDone ) {
-		return;
-	}
-	
-	form.loginId.value = form.loginId.value.trim();
-	
-	if ( form.loginId.value.length == 0 ) {
-		alert('아이디를 입력해주세요.');
-		form.loginId.focus();
-		
-		return;
-	}
-	
-	if ( form.loginId.value != JoinForm__validLoginId ) {
-		alert('아이디 중복체크를 해주세요.');
-		form.loginId.focus();
-		
-		return;
-	}
-		
-	form.loginPwInput.value = form.loginPwInput.value.trim();
-	
-	if ( form.loginPwInput.value.length == 0 ) {
-		alert('비밀번호를 입력해주세요.');
-		form.loginPwInput.focus();
-		
-		return;
-	}
-		
-	if ( form.loginPwConfirm.value.length == 0 ) {
-		alert('비밀번호를 확인해주세요.');
-		form.loginPwConfirm.focus();
-		
-		return;
-	}
-	
-	if (form.loginPwInput.value != form.loginPwConfirm.value) {
-		alert('비밀번호가 일치하지 않습니다.');
-		form.loginPwConfirm.focus();
-		
-		return;
-	}
-	
-	form.name.value = form.name.value.trim();
-	
-	if ( form.name.value.length == 0 ) {
-		alert('이름을 입력해주세요.');
-		form.name.focus();
-		
-		return;
-	}
-	
-	form.nickname.value = form.nickname.value.trim();
-	
-	if ( form.nickname.value.length == 0 ) {
-		alert('닉네임를 입력해주세요.');
-		form.nickname.focus();
-		
-		return;
-	}
-	
-	form.email.value = form.email.value.trim();
-	
-	if ( form.email.value.length == 0 ) {
-		alert('이메일를 입력해주세요.');
-		form.email.focus();
-		
-		return;
-	}
-	
-	form.cellphoneNo.value = form.cellphoneNo.value.trim();
-	
-	if ( form.cellphoneNo.value.length == 0 ) {
-		alert('전화번호를 입력해주세요.');
-		form.cellphoneNo.focus();
-		
-		return;
-	}
-	
-	// 파일 업로드
-	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
-	const submitForm = function(data) {
+	function JoinForm__checkAndSubmit(form) {
+
+		if (JoinForm__checkAndSubmitDone) {
+			return;
+		}
+
+		form.loginId.value = form.loginId.value.trim();
+
+		if (form.loginId.value.length == 0) {
+			alert('아이디를 입력해주세요.');
+			form.loginId.focus();
+
+			return;
+		}
+
+		if (form.loginId.value != JoinForm__validLoginId) {
+			alert('아이디 중복체크를 해주세요.');
+			form.loginId.focus();
+
+			return;
+		}
+
+		form.loginPwInput.value = form.loginPwInput.value.trim();
+
+		if (form.loginPwInput.value.length == 0) {
+			alert('비밀번호를 입력해주세요.');
+			form.loginPwInput.focus();
+
+			return;
+		}
+
+		if (form.loginPwConfirm.value.length == 0) {
+			alert('비밀번호를 확인해주세요.');
+			form.loginPwConfirm.focus();
+
+			return;
+		}
+
+		if (form.loginPwInput.value != form.loginPwConfirm.value) {
+			alert('비밀번호가 일치하지 않습니다.');
+			form.loginPwConfirm.focus();
+
+			return;
+		}
+
+		form.name.value = form.name.value.trim();
+
+		if (form.name.value.length == 0) {
+			alert('이름을 입력해주세요.');
+			form.name.focus();
+
+			return;
+		}
+
+		form.nickname.value = form.nickname.value.trim();
+
+		if (form.nickname.value.length == 0) {
+			alert('닉네임를 입력해주세요.');
+			form.nickname.focus();
+
+			return;
+		}
+
+		form.email.value = form.email.value.trim();
+
+		if (form.email.value.length == 0) {
+			alert('이메일를 입력해주세요.');
+			form.email.focus();
+
+			return;
+		}
+
+		form.cellphoneNo.value = form.cellphoneNo.value.trim();
+
+		if (form.cellphoneNo.value.length == 0) {
+			alert('전화번호를 입력해주세요.');
+			form.cellphoneNo.focus();
+
+			return;
+		}
+
+		// 파일 업로드
+		// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
+		const submitForm = function(data) {
 			if (data) {
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
 			}
-			
+
 			form.submit();
 			JoinForm__checkAndSubmitDone = true;
-	}
-	
-	function startUpload(onSuccess) {
-		if (!form.file__member__0__common__attachment__1.value) {
-			onSuccess();
-			return;
 		}
-		
-		const formData = new FormData(form);
-		
-		$.ajax({
-			url : '/common/genFile/doUpload',
-			data : formData,
-			processData : false,
-			contentType : false,
-			dataType : "json",
-			type : 'POST',
-			success : onSuccess
-		});
-		
-		// 파일을 업로드 한 후
-		// 기다린다.
-		// 응답을 받는다.
-		// onSuccess를 실행한다.
-	}
-	
-	form.loginPw.value = sha256(form.loginPwInput.value);
-	form.loginPwInput.value = '';
-	form.loginPwConfirm.value = '';
-	
-	startUpload(submitForm);
-	
-}
 
-$(function() {
-	$('.inputLoginId').change(function() {
-		JoinForm__checkLoginIdDup();
+		function startUpload(onSuccess) {
+			if (!form.file__member__0__common__attachment__1.value) {
+				onSuccess();
+				return;
+			}
+
+			const formData = new FormData(form);
+
+			$.ajax({
+				url : '/common/genFile/doUpload',
+				data : formData,
+				processData : false,
+				contentType : false,
+				dataType : "json",
+				type : 'POST',
+				success : onSuccess
+			});
+
+			// 파일을 업로드 한 후
+			// 기다린다.
+			// 응답을 받는다.
+			// onSuccess를 실행한다.
+		}
+
+		form.loginPw.value = sha256(form.loginPwInput.value);
+		form.loginPwInput.value = '';
+		form.loginPwConfirm.value = '';
+
+		startUpload(submitForm);
+
+	}
+
+	$(function() {
+		$('.inputLoginId').change(function() {
+			JoinForm__checkLoginIdDup();
+		});
+
+		$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
 	});
-	
-	$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
-});
 </script>
 
 <section class="section-member-join">
@@ -206,7 +203,7 @@ $(function() {
 		<div class="w-full">
 
 			<div class="logo-bar flex justify-center mb-5">
-				<a href="../member/login" class="logo">
+				<a href="../home/main" class="logo">
 					<span>
 						<i class="fas fa-people-arrows"></i>
 					</span>
@@ -281,8 +278,7 @@ $(function() {
 								<input accept="image/gif, image/jpeg, image/png"
 									class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
-									name="file__member__0__common__attachment__1"
-									maxlength="20" />
+									name="file__member__0__common__attachment__1" maxlength="20" />
 								<div class="mt-2"></div>
 							</div>
 						</div>

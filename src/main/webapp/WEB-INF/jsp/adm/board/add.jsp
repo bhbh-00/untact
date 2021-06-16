@@ -105,12 +105,14 @@
 	});
 </script>
 
-<section class="section-1">
-	<div class="section-board-add">
-		<div class="container mx-auto">
-			<div class="card bordered shadow-lg">
+<section class="section-board-add">
 
-				<div class="card-title bg-gray-400 text-white">
+	<div class="section-board-add">
+		<div class="container mx-auto mt-4 mb-5">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+
+				<div class="card-title">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -119,7 +121,8 @@
 
 				<div class="px-4 py-8">
 
-					<form class="formCode" onsubmit="BoardAdd__checkAndSubmit(this); return false;"
+					<form class="formCode"
+						onsubmit="BoardAdd__checkAndSubmit(this); return false;"
 						action="doAdd" method="POST" enctype="multipart/form-data">
 
 						<!-- 코드 -->
@@ -149,10 +152,11 @@
 						</div>
 
 						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1"
-								value="작성">
-
-							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
+							<button class="btn btn-ghost btn-sm mb-1" type="submit">
+								<i class="fas fa-pen mr-1"></i>
+								<span>작성</span>
+							</button>
+							<a href="list?" class="btn btn-ghost btn-sm mb-1" title="리스트 보기">
 								<span>
 									<i class="fas fa-list"></i>
 								</span>
@@ -166,7 +170,7 @@
 			</div>
 		</div>
 	</div>
-	</div>
+
 </section>
 
 <%@ include file="../part/mainLayoutFoot.jspf"%>

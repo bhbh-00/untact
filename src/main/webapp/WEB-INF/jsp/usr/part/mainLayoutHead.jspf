@@ -14,7 +14,7 @@ body {
 
 <header class="top-bar h-10 top-bar--fly">
 	<div class="container mx-auto flex h-full">
-		<a href="/usr/home/main" class="px-3 flex items-center">
+		<a href="../home/main" class="px-3 flex items-center">
 			<span class="text-4xl">
 				<i class="fas fa-people-arrows"></i>
 			</span>
@@ -28,7 +28,7 @@ body {
 
 				<!-- 사용자 사이트 홈 -->
 				<li>
-					<a href="/usr/home/main" class="h-full flex items-center px-5">
+					<a href="../home/main" class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="fas fa-home"></i>
 						</span>
@@ -48,7 +48,7 @@ body {
 					<div>
 						<ul>
 							<li>
-								<a href="/usr/article/list?boardId=1" class="inline-block text-lg">
+								<a href="../article/list?boardId=1" class="inline-block text-lg">
 									<span>
 										<i class="far fa-newspaper"></i>
 									</span>
@@ -56,7 +56,7 @@ body {
 								</a>
 							</li>
 							<li>
-								<a href="/usr/article/list?boardId=2" class="inline-block text-lg">
+								<a href="../article/list?boardId=2" class="inline-block text-lg">
 									<span>
 										<i class="far fa-newspaper"></i>
 									</span>
@@ -79,7 +79,7 @@ body {
 						<div>
 							<ul>
 								<li>
-									<a href="/usr/member/mypage?id=${ loginedMember.id }" class="inline-block text-lg">
+									<a href="../member/mypage?id=${ loginedMember.id }" class="inline-block text-lg">
 										<span>
 											<i class="fas fa-user"></i>
 										</span>
@@ -87,7 +87,7 @@ body {
 									</a>
 								</li>
 								<li>
-									<a href="/usr/article/myList?boardId=2"
+									<a href="../article/myList?boardId=1"
 										class="inline-block text-lg">
 										<span>
 											<i class="fas fa-user"></i>
@@ -118,7 +118,7 @@ body {
 				<c:choose>
 					<c:when test="${ loginedMember.id == null}">
 						<li>
-							<a href="/usr/member/login" class="h-full flex items-center px-5">
+							<a href="../member/login" class="h-full flex items-center px-5">
 								<span class="text-xl">
 									<i class="fas fa-sign-in-alt"></i>
 								</span>
@@ -130,7 +130,7 @@ body {
 
 					<c:otherwise>
 						<li>
-							<a href="/usr/member/doLogout"
+							<a href="../member/doLogout"
 								class="h-full flex items-center px-5">
 								<span class="text-xl">
 									<i class="fas fa-sign-out-alt"></i>

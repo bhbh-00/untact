@@ -56,8 +56,9 @@
 			<div class="flex items-center">
 
 				<!-- 게시판 생성 -->
-				<a class="btn btn-error btn-wide btn-sm mb-1"
-					href="add?id=${ board.id }">게시판 생성</a>
+				<a class="btn btn-ghost btn-sm mb-1" href="add?id=${ board.id }">
+					<i class="fas fa-pen text-xl"></i>
+				</a>
 
 			</div>
 		</div>
@@ -86,12 +87,11 @@
 					</a>
 
 					<div
-						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
 						<!-- 썸네일 -->
 						<a class="row-span-7">
 							<img class="w-full h-40 object-cover rounded" src="${thumbUrl}"
-								alt=""
-								onerror="${board.codeProfileFallbackImgOnErrorHtmlAttr}">
+								alt="" onerror="${board.codeProfileFallbackImgOnErrorHtmlAttr}">
 						</a>
 
 
@@ -128,6 +128,26 @@
 							</a>
 						</c:if>
 
+					</div>
+
+					<div class="ml-1">
+						<!-- 수정 -->
+						<a href="../board/modify?id=${board.id}"
+							class="text-blue-500 mr-2">
+							<span>
+								<i class="fas fa-edit"></i>
+								<span>수정</span>
+							</span>
+						</a>
+
+						<!-- 삭제 -->
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+							href="doDelete?id=${board.id}" class="text-red-500">
+							<span>
+								<i class="fas fa-trash"></i>
+								<span>삭제</span>
+							</span>
+						</a>
 					</div>
 				</div>
 				<hr>

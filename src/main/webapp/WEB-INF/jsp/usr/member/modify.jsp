@@ -141,7 +141,7 @@
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
 						<input type="hidden" name="loginPw" />
-						<input type="hidden" name="authLevel" value="3" />
+						<input type="hidden" name="authLevel" value="${member.authLevel}" />
 						<input type="hidden" name="checkPasswordAuthCode"
 							value="${param.checkPasswordAuthCode}">
 

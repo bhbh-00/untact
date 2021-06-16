@@ -111,7 +111,8 @@
 
 	<div class="section-article-write">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 				<div class="card-title bg-gray-400 text-white">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
@@ -124,15 +125,15 @@
 						action="doModify" method="POST" enctype="multipart/form-data">
 						<input type="hidden" name="genFileIdsStr" value="" />
 						<input type="hidden" name="id" value="${article.id}" />
-						
+
 						<div class="form-control">
 							<label class="label">
 								<span class="label-text">제목</span>
 							</label>
-							<input value="${article.title}" name="title" type="text" placeholder="제목 입력해주세요."
-								class="input input-bordered">
+							<input value="${article.title}" name="title" type="text"
+								placeholder="제목 입력해주세요." class="input input-bordered">
 						</div>
-						
+
 						<div class="form-control">
 							<label class="label">
 								<span class="label-text">본문</span>
@@ -140,21 +141,23 @@
 							<textarea name="body" placeholder="내용을 입력해주세요."
 								class="h-80 textarea textarea-bordered">${article.body}</textarea>
 						</div>
-						
+
 						<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
-						
+
 							<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
-							<c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
-							
+							<c:set var="file"
+								value="${article.extra.file__common__attachment[fileNo]}" />
+
 							<div class="form-control">
 								<label class="label">
 									<span class="label-text">본문 이미지 ${inputNo}</span>
 								</label>
-							
+
 								<div>
 									<input class="thumb-available" type="file"
 										name="file__article__${article.id}__common__attachment__${inputNo}"
-										class="form-row-input w-full rounded-sm" placeholder="본문 이미지 ${inputNo}"/>
+										class="form-row-input w-full rounded-sm"
+										placeholder="본문 이미지 ${inputNo}" />
 									<c:if test="${file != null}">
 										<div>
 											<a href="${file.downloadUrl}" target="_blank"
@@ -187,9 +190,9 @@
 						<div class="flex flex-col my-3 md:flex-row">
 							<div class="p-1 md:flex-grow">
 								<div class="btns">
-									<input type="submit" class="btn-primary bg-blue-500 text-white font-bold py-2 px-4 rounded"
-										value="수정">
-									<input onclick="history.back();" type="button" class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"
+									<input type="submit" class="flex plain-link mr-2" value="수정">
+									<input onclick="history.back();" type="button"
+										class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"
 										value="취소">
 								</div>
 							</div>

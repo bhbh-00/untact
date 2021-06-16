@@ -27,7 +27,7 @@ body {
 
 				<!-- 관리자 사이트 홈 -->
 				<li>
-					<a href="/adm/home/main" class="h-full flex items-center px-5">
+					<a href="../home/main" class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="fas fa-house-user"></i>
 						</span>
@@ -49,7 +49,7 @@ body {
 
 				<!-- 게시판 관리 -->
 				<li>
-					<a href="/adm/board/list" class="h-full flex items-center px-5">
+					<a href="../board/list" class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="far fa-clipboard"></i>
 						</span>
@@ -60,7 +60,7 @@ body {
 
 				<!-- 게시물 관리 -->
 				<li>
-					<a href="/adm/article/list?boardId=1"
+					<a href="../article/list?boardId=1"
 						class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="far fa-newspaper"></i>
@@ -71,7 +71,7 @@ body {
 						<ul>
 							<!-- 공지사항 게시판 -->
 							<li>
-								<a href="/adm/article/list?boardId=1" class="inline-block text-lg">
+								<a href="../article/list?boardId=1" class="inline-block text-lg">
 									<span>
 										<i class="far fa-newspaper"></i>
 									</span>
@@ -80,7 +80,7 @@ body {
 							</li>
 							<!-- 자유 게시판 -->
 							<li>
-								<a href="/adm/article/list?boardId=2" class="inline-block text-lg">
+								<a href="../article/list?boardId=2" class="inline-block text-lg">
 									<span>
 										<i class="far fa-newspaper"></i>
 									</span>
@@ -93,7 +93,7 @@ body {
 				
 				<!-- 회원관리 -->
 				<li>
-					<a href="/adm/member/list" class="h-full flex items-center px-5">
+					<a href="../member/list" class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="fas fa-user"></i>
 						</span>
@@ -106,7 +106,7 @@ body {
 				<c:choose>
 					<c:when test="${loginedMember.id == null}">
 						<li>
-							<a href="/adm/member/login" class="h-full flex items-center px-5">
+							<a href="../member/login" class="h-full flex items-center px-5">
 								<span class="text-xl">
 									<i class="fas fa-sign-in-alt"></i>
 								</span>
@@ -118,7 +118,7 @@ body {
 
 					<c:otherwise>
 						<li>
-							<a href="/adm/member/doLogout" class="h-full flex items-center px-5">
+							<a href="../member/doLogout" class="h-full flex items-center px-5">
 								<span class="text-xl">
 									<i class="fas fa-sign-out-alt"></i>
 								</span>

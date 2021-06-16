@@ -79,9 +79,6 @@
 		<div>
 			<c:forEach items="${members}" var="member">
 
-				<c:set var="detailUrl" value="detail?id=${member.id}" />
-				<c:set var="thumbUrl" value="${thumbFile.getForPrintUrl()}" />
-
 				<div class="p-4">
 
 					<!-- 회원타입 -->
@@ -91,64 +88,64 @@
 					</a>
 
 					<!-- 번호 -->
-					<a href="${detailUrl}" class="hover:underline">
+					<a href="#" class="hover:underline">
 						<span class="text-base">No.${member.id}</span>
 					</a>
 
 					<div
-						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
 						<!-- 프로필 -->
-						<a href="${detailUrl}" class="row-span-7">
+						<a href="#" class="row-span-7">
 							<img class="w-40 h-40 object-cover rounded-full"
 								onerror="${member.profileFallbackImgOnErrorHtmlAttr}"
 								src="${member.profileImgUrl}">
 						</a>
 
 						<!-- 아이디 -->
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<a href="#" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">아이디</span>
 							<span>${member.loginId}</span>
 						</a>
 
 						<!-- 이름 -->
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<a href="#" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">이름</span>
 							<span>${member.name}</span>
 						</a>
 
 						<!-- 닉네임 -->
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<a href="#" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">닉네임</span>
 							<span>${member.nickname}</span>
 						</a>
 
 						<!-- 핸드폰번호 -->
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<a href="#" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">핸드폰번호</span>
 							<span>${member.cellphoneNo}</span>
 						</a>
 
 						<!-- 이메일 -->
-						<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<a href="#" class="cursor-pointer hover:underline">
 							<span class="badge badge-outline mb-1">닉네임</span>
 							<span>${member.email}</span>
 						</a>
 
 						<!--  -->
-						<a href="${detailUrl}">
+						<a href="#">
 							<span></span>
 							<span></span>
 						</a>
 
 						<!-- 등록날짜 -->
-						<a href="${detailUrl}" class="hover:underline">
+						<a href="#" class="hover:underline">
 							<span class="badge">등록날짜</span>
 							<span class="text-gray-600 text-light">${member.regDate}</span>
 						</a>
 
 						<!-- 수정날짜 -->
 						<c:if test="${member.updateDate != member.regDate}">
-							<a href="${detailUrl}" class="hover:underline">
+							<a href="#" class="hover:underline">
 								<span class="badge">수정날짜</span>
 								<span class="text-gray-600 text-light">${member.updateDate}</span>
 							</a>

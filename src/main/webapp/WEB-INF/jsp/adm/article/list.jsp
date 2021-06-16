@@ -10,7 +10,7 @@
 	param.boardId = parseInt("${board.id}");
 </script>
 
-<section class="section-article-list">
+<section class="section-adm-article-list">
 
 	<div
 		class="container mx-auto bg-white card bordered shadow-lg p-5 mb-5 relative">
@@ -61,13 +61,17 @@
 
 				<!-- 글쓰기 -->
 				<c:if test="${loginedMember.authLevel == 7 && board.id == 1}">
-					<a class="btn btn-error btn-sm mb-1 btn-wide"
-						href="add?boardId=${ board.id }"> 글쓰기 </a>
+					<a class="btn btn-ghost btn-sm mb-1"
+						href="add?boardId=${ board.id }">
+						<i class="fas fa-pen text-xl"></i>
+					</a>
 				</c:if>
 
-				<c:if test="${board.id == 2}">
-					<a class="btn btn-error btn-sm mb-1 btn-wide"
-						href="add?boardId=${ board.id }">글쓰기</a>
+				<c:if test="${ board.id != 1 }">
+					<a class="btn btn-ghost btn-sm mb-1"
+						href="add?boardId=${ board.id }">
+						<i class="fas fa-pen text-xl"></i>
+					</a>
 				</c:if>
 
 			</div>

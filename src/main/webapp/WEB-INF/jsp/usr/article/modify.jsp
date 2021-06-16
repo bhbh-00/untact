@@ -107,12 +107,12 @@
 	}
 </script>
 
-<section class="section-1">
+<section class="section-usr">
 
-	<div class="section-article-write">
+	<div class="section-article-modify">
 		<div class="container mx-auto">
 			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title bg-gray-400 text-white">
+				<div class="card-title">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
