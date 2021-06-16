@@ -24,7 +24,6 @@ import com.sbs.untact.util.Util;
 public class GenFileService {
 	@Value("${custom.genFileDirPath}")
 	private String genFileDirPath;
-	// 파일경로를 정해줌
 
 	@Autowired
 	private GenFileDao genFileDao;
@@ -32,21 +31,19 @@ public class GenFileService {
 	public ResultData saveMeta(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo,
 			String originFileName, String fileExtTypeCode, String fileExtType2Code, String fileExt, int fileSize,
 			String fileDir) {
+
 		Map<String, Object> param = Util.mapOf("relTypeCode", relTypeCode, "relId", relId, "typeCode", typeCode,
 				"type2Code", type2Code, "fileNo", fileNo, "originFileName", originFileName, "fileExtTypeCode",
 				fileExtTypeCode, "fileExtType2Code", fileExtType2Code, "fileExt", fileExt, "fileSize", fileSize,
 				"fileDir", fileDir);
-
 		genFileDao.saveMeta(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
-
-		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);
+		return new ResultData("S-1", "성공하였습니다.", "id", id);
 	}
 
 	public ResultData save(MultipartFile multipartFile) {
 		String fileInputName = multipartFile.getName();
-		// 파일명 얻어오기
 		String[] fileInputNameBits = fileInputName.split("__");
 
 		if (fileInputNameBits[0].equals("file") == false) {
@@ -56,7 +53,7 @@ public class GenFileService {
 		int fileSize = (int) multipartFile.getSize();
 
 		if (fileSize <= 0) {
-			return new ResultData("F-2", "파일이 없로드 되지 않았습니다.");
+			return new ResultData("F-2", "파일이 업로드 되지 않았습니다.");
 		}
 
 		String relTypeCode = fileInputNameBits[1];
@@ -69,7 +66,6 @@ public class GenFileService {
 		String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
 		String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
 
-		// 확장자명을 통일해주는
 		if (fileExt.equals("jpeg")) {
 			fileExt = "jpg";
 		} else if (fileExt.equals("htm")) {
@@ -78,7 +74,6 @@ public class GenFileService {
 
 		String fileDir = Util.getNowYearMonthDateStr();
 
-		// 원래 있던 파일(oldGenFile)을 삭제
 		if (relId > 0) {
 			GenFile oldGenFile = getGenFile(relTypeCode, relId, typeCode, type2Code, fileNo);
 
@@ -91,7 +86,7 @@ public class GenFileService {
 				fileExtTypeCode, fileExtType2Code, fileExt, fileSize, fileDir);
 		int newGenFileId = (int) saveMetaRd.getBody().get("id");
 
-		// 새 파일이 저장될 폴더(io파일) -> 객체 생성 C:/work/untact-teacher-file/article/년월/1.확장자명
+		// 새 파일이 저장될 폴더(io파일) 객체 생성
 		String targetDirPath = genFileDirPath + "/" + relTypeCode + "/" + fileDir;
 		java.io.File targetDir = new java.io.File(targetDirPath);
 
@@ -112,6 +107,10 @@ public class GenFileService {
 
 		return new ResultData("S-1", "파일이 생성되었습니다.", "id", newGenFileId, "fileRealPath", targetFilePath, "fileName",
 				targetFileName, "fileInputName", fileInputName);
+	}
+
+	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
+		return genFileDao.getGenFiles(relTypeCode, relId, typeCode, type2Code);
 	}
 
 	public GenFile getGenFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo) {
@@ -184,10 +183,6 @@ public class GenFileService {
 		genFileDao.deleteFile(genFile.getId());
 	}
 
-	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
-		return genFileDao.getGenFiles(relTypeCode, relId, typeCode, type2Code);
-	}
-
 	public GenFile getGenFile(int id) {
 		return genFileDao.getGenFileById(id);
 	}
@@ -211,9 +206,9 @@ public class GenFileService {
 	}
 
 	public void changeInputFileRelIds(Map<String, Object> param, int id) {
-		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
-
-		if (genFileIdsStr != null) {
+		String genFileIdsStr = Util.ifEmpty((String)param.get("genFileIdsStr"), null);
+		
+		if ( genFileIdsStr != null ) {
 			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ",");
 
 			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.
@@ -222,7 +217,6 @@ public class GenFileService {
 				changeRelId(genFileId, id);
 			}
 		}
-
 	}
 
 }

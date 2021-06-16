@@ -7,12 +7,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
@@ -198,7 +198,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(@RequestParam Map<String, Object> param) {
+	public String doJoin(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
 
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 
@@ -217,7 +217,7 @@ public class UsrMemberController extends BaseController {
 		String msg = String.format("%s님! 가입을 환영합니다!", param.get("nickname"));
 
 		String redirectUrl = Util.ifEmpty((String) param.get("redirectUrl"), "../member/login");
-
+		
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
@@ -303,7 +303,6 @@ public class UsrMemberController extends BaseController {
 		}
 
 		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
-
 		Map<String, GenFile> filesMap = new HashMap<>();
 
 		for (GenFile file : files) {
@@ -311,6 +310,7 @@ public class UsrMemberController extends BaseController {
 		}
 
 		member.getExtraNotNull().put("file__common__attachment", filesMap);
+		
 		req.setAttribute("member", member);
 
 		return "/usr/member/modify";
@@ -332,7 +332,9 @@ public class UsrMemberController extends BaseController {
 
 		ResultData modifyRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
 				cellphoneNo, email);
-
+		
+		req.setAttribute("member", loginedMember);
+		
 		String redirectUrl = "/usr/member/mypage?id=" + loginedMember.getId();
 
 		return Util.msgAndReplace(modifyRd.getMsg(), redirectUrl);

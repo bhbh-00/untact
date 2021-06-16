@@ -13,26 +13,21 @@
 		= #{relTypeCode},
 		relId = #{relId},
 		typeCode = #{typeCode},
-		type2Code = #{type2Code},
+		type2Code =
+		#{type2Code},
 		fileNo = #{fileNo},
 		originFileName = #{originFileName},
 		fileExtTypeCode = #{fileExtTypeCode},
-		fileExtType2Code = #{fileExtType2Code},
-		fileExt = #{fileExt},
+		fileExtType2Code =
+		#{fileExtType2Code},
 		fileSize = #{fileSize},
-		fileDir = #{fileDir}
+		fileDir = #{fileDir},
+		fileExt = #{fileExt}
 	</insert>
-	
-	<select id="getGenFileById" resultType="GenFile">
-		SELECT *
-		FROM genFile
-		WHERE 1
-		AND id = #{id}
-	</select>
 
 	<select id="getGenFile" resultType="GenFile">
 		SELECT *
-		FROM GenFile
+		FROM genFile
 		WHERE 1
 		<if test="relTypeCode != null">
 			AND relTypeCode = #{relTypeCode}
@@ -50,7 +45,40 @@
 			AND fileNo = #{fileNo}
 		</if>
 	</select>
-	
+
+	<select id="getGenFileById" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND id = #{id}
+	</select>
+
+	<select id="getGenFiles" resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId =
+		#{relId}
+		<if test="typeCode != null">
+			AND typeCode = #{typeCode}
+		</if>
+		<if test="type2Code != null">
+			AND type2Code = #{type2Code}
+		</if>
+		ORDER BY typeCode, type2Code, fileNo
+	</select>
+
+	<select id="getGenFilesByRelTypeCodeAndRelId"
+		resultType="GenFile">
+		SELECT *
+		FROM genFile
+		WHERE 1
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		ORDER BY typeCode, type2Code, fileNo
+	</select>
+
 	<select
 		id="getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code"
 		resultType="GenFile">
@@ -66,35 +94,10 @@
 		</if>
 		AND relTypeCode = #{relTypeCode}
 		AND typeCode = #{typeCode}
-		AND type2Code = #{type2Code}
+		AND
+		type2Code = #{type2Code}
 		ORDER BY relId, fileNo
 	</select>
-	
-	
-	<select id="getGenFiles" resultType="GenFile">
-		SELECT *
-		FROM GenFile
-		WHERE 1
-		AND relTypeCode = #{relTypeCode}
-		AND relId = #{relId}
-		<if test="typeCode != null">
-			AND typeCode = #{typeCode}
-		</if>
-		<if test="type2Code != null">
-			AND type2Code = #{type2Code}
-		</if>
-		ORDER BY typeCode, type2Code, fileNo
-	</select>
-	
-		<select id="getGenFilesByRelTypeCodeAndRelId" resultType="GenFile">
-		SELECT *
-		FROM GenFile
-		WHERE 1
-		AND relTypeCode = #{relTypeCode}
-		AND relId = #{relId}
-		ORDER BY typeCode, type2Code, fileNo
-	</select>
-	
 
 	<update id="changeRelId">
 		UPDATE genFile
@@ -105,15 +108,15 @@
 		WHERE id = #{id}
 	</update>
 
-	<delete id="deleteFile">
-		DELETE FROM genFile
-		WHERE id = #{id}
-	</delete>
-
-	<delete id="deleteFiles" >
+	<delete id="deleteFiles">
 		DELETE FROM genFile
 		WHERE relTypeCode = #{relTypeCode}
 		AND relId = #{relId}
+	</delete>
+
+	<delete id="deleteFile">
+		DELETE FROM genFile
+		WHERE id = #{id}
 	</delete>
 	
 </mapper>

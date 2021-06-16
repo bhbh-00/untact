@@ -79,7 +79,6 @@
 		}
 
 		function startUpload(onSuccess) {
-
 			if (!form["file__member__" + param.id + "__common__attachment__1"].value) {
 				onSuccess();
 				return;
@@ -102,13 +101,9 @@
 			// 응답을 받는다.
 			// onSuccess를 실행한다.
 		}
-
 		const submitForm = function(data) {
-
 			if (data) {
-
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
-
 			}
 
 			form.submit();
@@ -124,7 +119,7 @@
 	}
 </script>
 
-<section class="section-usr-modify">
+<section class="section-usr-member-modify">
 
 	<div class="section-member-modify mb-10">
 		<div class="container mx-auto">
@@ -146,7 +141,7 @@
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
 						<input type="hidden" name="loginPw" />
-						<input type="hidden" name="authLevel" value="3"/>
+						<input type="hidden" name="authLevel" value="3" />
 						<input type="hidden" name="checkPasswordAuthCode"
 							value="${param.checkPasswordAuthCode}">
 
@@ -174,18 +169,18 @@
 							<div class="plain-text">${member.loginId}</div>
 						</div>
 
-						<!-- 프로필사진 -->
+						<!-- 프로필 -->
 						<div class="form-control">
 							<label class="label">
-								<span class="label-text">프로필사진</span>
+								<span class="label-text">프로필</span>
 							</label>
 							<div>
 								<input accept="image/gif, image/jpeg, image/png"
 									class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
 									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
 									name="file__member__${member.id}__common__attachment__1"
-									maxlength="20">
-								<div class="mt-2">
+									maxlength="20" />
+									<div class="mt-3">
 									<c:set var="fileNo" value="${String.valueOf(1)}" />
 									${member.extra.file__common__attachment[fileNo].mediaHtml}
 								</div>

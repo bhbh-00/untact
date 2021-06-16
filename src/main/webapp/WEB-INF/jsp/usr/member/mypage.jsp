@@ -21,7 +21,7 @@
 
 				<div class="px-4 py-3 pt-7 pb-7">
 
-					<!-- 프로필 이미지 -->
+					<!-- 프로필 -->
 					<div
 						class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						<a href="#" class="row-span-3 order-1">

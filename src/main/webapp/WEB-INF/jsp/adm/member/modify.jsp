@@ -6,7 +6,8 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <!-- sha256 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
 	const ModifyMember_checkAndSubmitDone = false;
@@ -40,7 +41,15 @@
 
 			return;
 		}
+		
+		form.authLevel.value = form.authLevel.value.trim();
 
+		if (form.authLevel.value.length == null) {
+			alert('회원타입을 입력해주세요.');
+			form.name.focus();
+			return;
+		}
+		
 		form.name.value = form.name.value.trim();
 
 		if (form.name.value.length == 0) {
@@ -105,21 +114,21 @@
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
 
 			}
-			
+
 			form.submit();
 			ModifyMember_checkAndSubmitDone = true;
 
 		}
-		
+
 		form.loginPw.value = sha256(form.loginPwInput.value);
 		form.loginPwInput.value = '';
 		form.loginPwConfirm.value = '';
-		
+
 		startUpload(submitForm);
 	}
 </script>
 
-<section class="section-1">
+<section class="section-adm-member-modify">
 
 	<div class="section-member-modify">
 		<div class="container mx-auto">
@@ -134,37 +143,56 @@
 
 				<div class="px-4 py-8">
 
-					<form class="grid form-type-1" onsubmit="ModifyMember_checkAndSubmit(this); return false;"
+					<form class="grid form-type-1"
+						onsubmit="ModifyMember_checkAndSubmit(this); return false;"
 						action="doModify" method="POST">
 
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
 						<input type="hidden" name="loginPw" />
-						
+
 						<!-- 번호 -->
 						<div class="form-control">
 							<label class="cursor-pointer label"> 번호 </label>
 							<div class="plain-text">${member.id}</div>
 						</div>
-						
+
 						<!-- 등록날짜 -->
 						<div class="form-control">
 							<label class="cursor-pointer label"> 등록날짜 </label>
 							<div class="plain-text">${member.regDate}</div>
 						</div>
-						
+
 						<!-- 수정날짜 -->
 						<div class="form-control">
 							<label class="cursor-pointer label"> 수정날짜 </label>
 							<div class="plain-text">${member.updateDate}</div>
 						</div>
-						
+
 						<!-- 아이디 -->
 						<div class="form-control">
 							<label class="cursor-pointer label"> 아이디 </label>
 							<div class="plain-text">${member.loginId}</div>
 						</div>
-						
+
+						<!-- 비밀번호 -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">비밀번호</span>
+							</label>
+							<input type="password" name="loginPwInput" placeholder="비밀번호"
+								class="input input-bordered" maxlength="30">
+						</div>
+
+						<!-- 비밀번호 확인 -->
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">비밀번호 확인</span>
+							</label>
+							<input type="password" name="loginPwConfirm"
+								placeholder="비밀번호 확인" class="input input-bordered" value="">
+						</div>
+
 						<!-- 프로필사진 -->
 						<div class="form-control">
 							<label class="label">
@@ -182,39 +210,26 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<!-- 회원타입 -->
 						<div class="form-control">
 							<label class="label">
 								<span class="label-text">회원타입</span>
 							</label>
-							<select name="authLevel" class="select select-bordered">
+							<select name="authLevel" class="select select-auth-level">
 								<option disabled="disabled" selected="selected">회원타입을
 									선택해주세요.</option>
-								<option value="0">미승인</option>
 								<option value="3">일반</option>
 								<option value="7">관리자</option>
 							</select>
+							<script>
+								const memberAuthLevel = parseInt("${member.authLevel}");
+							</script>
+							<script>
+								$('.section-adm-member-modify .select-auth-level').val(memberAuthLevel);
+							</script>
 						</div>
-						
-						<!-- 비밀번호 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">비밀번호</span>
-							</label>
-							<input type="password" name="loginPwInput" placeholder="비밀번호"
-								class="input input-bordered" maxlength="30">
-						</div>
-						
-						<!-- 비밀번호 확인 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">비밀번호 확인</span>
-							</label>
-							<input type="password" name="loginPwConfirm"
-								placeholder="비밀번호 확인" class="input input-bordered" value="">
-						</div>
-						
+
 						<!-- 이름 -->
 						<div class="form-control">
 							<label class="label">
@@ -223,7 +238,7 @@
 							<input type="text" placeholder="이름 입력해주세요." name="name"
 								class="input input-bordered" value="${member.name}">
 						</div>
-						
+
 						<!-- 닉네임 -->
 						<div class="form-control">
 							<label class="label">
@@ -232,7 +247,7 @@
 							<input type="text" name="nickname" class="input input-bordered"
 								value="${member.nickname}">
 						</div>
-						
+
 						<!-- 이메일 -->
 						<div class="form-control">
 							<label class="label">
@@ -241,7 +256,7 @@
 							<input type="email" name="email" class="input input-bordered"
 								value="${member.email}">
 						</div>
-						
+
 						<!-- 전화번호 -->
 						<div class="form-control">
 							<label class="label">
