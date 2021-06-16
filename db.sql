@@ -266,3 +266,17 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
+
+# 임시로 만들어진 회원은, 비번변경할 필요가 없도록 설정
+INSERT INTO attr (
+    regDate,
+	updateDate,
+	relTypeCode,
+	relId,
+	typeCode,
+	type2Code,
+	`value`,
+	expireDate
+)
+SELECT NOW(), NOW(), 'member', id, 'extra', 'needToChangePassword', 0, NULL
+FROM `member`

@@ -40,7 +40,7 @@
 		}
 
 		if (form.loginPwInput.value != form.loginPwConfirm.value) {
-			alert('로그인비번이 일치하지 않습니다.');
+			alert('비밀번호가 일치하지 않습니다.');
 			form.loginPwConfirm.focus();
 
 			return;
