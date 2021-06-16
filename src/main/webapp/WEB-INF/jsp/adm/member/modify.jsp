@@ -41,15 +41,7 @@
 
 			return;
 		}
-		
-		form.authLevel.value = form.authLevel.value.trim();
 
-		if (form.authLevel.value.length == null) {
-			alert('회원타입을 입력해주세요.');
-			form.name.focus();
-			return;
-		}
-		
 		form.name.value = form.name.value.trim();
 
 		if (form.name.value.length == 0) {

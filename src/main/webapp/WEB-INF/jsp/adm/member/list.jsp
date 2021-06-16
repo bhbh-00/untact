@@ -100,8 +100,8 @@
 						<!-- 프로필 -->
 						<a href="${detailUrl}" class="row-span-7">
 							<img class="w-40 h-40 object-cover rounded-full"
-								src="${thumbUrl}" alt=""
-								onerror="${member.profileFallbackImgOnErrorHtmlAttr}">
+								onerror="${member.profileFallbackImgOnErrorHtmlAttr}"
+								src="${member.profileImgUrl}">
 						</a>
 
 						<!-- 아이디 -->
