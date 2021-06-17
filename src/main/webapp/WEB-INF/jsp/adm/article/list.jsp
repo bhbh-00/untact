@@ -57,20 +57,18 @@
 
 			<div class="flex-grow"></div>
 
-			<div class="flex items-center">
+			<div class="flex items-center text-2xl text-gray-500">
 
 				<!-- 글쓰기 -->
 				<c:if test="${loginedMember.authLevel == 7 && board.id == 1}">
-					<a class="btn btn-ghost btn-sm mb-1"
-						href="add?boardId=${ board.id }">
-						<i class="fas fa-pen text-xl"></i>
+					<a href="add?boardId=${ board.id }" class="mr-2">
+						<i class="fas fa-plus-circle"></i>
 					</a>
 				</c:if>
 
 				<c:if test="${ board.id != 1 }">
-					<a class="btn btn-ghost btn-sm mb-1"
-						href="add?boardId=${ board.id }">
-						<i class="fas fa-pen text-xl"></i>
+					<a href="add?boardId=${ board.id }" class="mr-2">
+						<i class="fas fa-plus-circle"></i>
 					</a>
 				</c:if>
 

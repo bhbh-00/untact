@@ -244,12 +244,17 @@
 								class="input input-bordered" value="${member.cellphoneNo}">
 						</div>
 
-						<div class="form-control mt-4">
-							<div class="p-1 md:flex-grow">
-								<input
-									class="w-full btn-primary bg-gray-400 hover:bg-gray-200 text-white font-bold py-2 px-4 rounded"
-									type="submit" value="수정" />
-							</div>
+						<div class="mt-2">
+							<button class="btn btn-ghost btn-sm mb-1 text-blue-500"
+								type="submit">
+								<i class="fas fa-edit mr-1"></i>
+								<span>수정</span>
+							</button>
+							<a onclick="history.back();"
+								class="btn btn-ghost btn-sm mb-1 text-red-500">
+								<i class="fas fa-trash mr-1"></i>
+								<span>취소</span>
+							</a>
 						</div>
 
 					</form>

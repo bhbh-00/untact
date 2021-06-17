@@ -119,9 +119,9 @@
 	}
 </script>
 
-<section class="section-article-add">
+<section class="section-usr">
 
-	<div class="section-article-write">
+	<div class="section-article-add">
 		<div class="container mx-auto">
 			<div
 				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">

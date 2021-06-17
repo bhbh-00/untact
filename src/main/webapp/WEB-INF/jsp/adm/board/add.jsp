@@ -151,11 +151,13 @@
 								placeholder="이름을 입력해주세요.">
 						</div>
 
-						<div class="mt-4 btn-wrap gap-1">
-							<button class="btn btn-ghost btn-sm mb-1" type="submit">
-								<i class="fas fa-pen mr-1"></i>
+						<div class="mt-2">
+							<button class="btn btn-ghost btn-sm mb-1 text-blue-500"
+								type="submit">
+								<i class="fas fa-edit mr-1"></i>
 								<span>작성</span>
 							</button>
+
 							<a href="list?" class="btn btn-ghost btn-sm mb-1" title="리스트 보기">
 								<span>
 									<i class="fas fa-list"></i>
@@ -164,6 +166,7 @@
 								<span>리스트</span>
 							</a>
 						</div>
+						
 					</form>
 
 				</div>

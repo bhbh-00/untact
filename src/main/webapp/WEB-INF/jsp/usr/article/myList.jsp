@@ -53,7 +53,7 @@
 					<i class="far fa-newspaper"></i>
 					<span>내 게시물</span>
 				</span>
-				
+
 				<!-- 게시판별로 -->
 				<select class="py-2 select-board-id">
 					<option value="1">공지사항</option>
@@ -69,13 +69,13 @@
 
 			<div class="flex-grow"></div>
 
-			<div class="flex items-center">
-			
+			<div class="flex items-center text-2xl text-gray-500">
+
 				<!-- 글쓰기 -->
-				<a class="btn btn-ghost btn-sm mb-1"
-					href="add?boardId=${ board.id }">
-					<i class="fas fa-pen text-xl"></i>
+				<a href="add?boardId=${ board.id }" class="mr-2">
+					<i class="fas fa-plus-circle"></i>
 				</a>
+				
 			</div>
 		</div>
 

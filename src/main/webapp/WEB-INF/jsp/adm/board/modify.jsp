@@ -54,7 +54,7 @@
 		);
 
 	}
-	
+
 	function BoardModify_checkAndSubmit(form) {
 
 		if (BoardModify_checkAndSubmitDone) {
@@ -95,9 +95,10 @@
 
 	<div class="section-board-modify">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg bg-white">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
-				<div class="card-title bg-gray-400 text-white">
+				<div class="card-title">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -110,7 +111,8 @@
 						onsubmit="BoardModify_checkAndSubmit(this); return false;"
 						action="doModify" method="POST" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="${board.id}" />
-						<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
+						<input type="hidden" name="redirectUrl"
+							value="${param.redirectUrl}" />
 
 						<!-- 번호 -->
 						<div class="form-control">
@@ -151,23 +153,26 @@
 								class="inputName input input-bordered" maxlength="20"
 								value="${board.name}">
 						</div>
-						
+
 						<!-- 중복확인 -->
 						<div class="form-control">
 							<div class="NameInputMsg"></div>
 						</div>
-	
-						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1" value="작성">
 
-							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
-								<span>
-									<i class="fas fa-list"></i>
-								</span>
-								&nbsp;
-								<span>리스트</span>
-							</a>
+						<div>
+							<button class="btn btn-ghost btn-sm mb-1 text-blue-500"
+								type="submit">
+								<i class="fas fa-edit mr-1"></i>
+								<span>수정</span>
+							</button>
+
+							<button onclick="history.back();"
+								class="btn btn-ghost btn-sm mb-1 text-red-500">
+								<i class="fas fa-trash mr-1"></i>
+								<span>취소</span>
+							</button>
 						</div>
+						
 					</form>
 
 				</div>

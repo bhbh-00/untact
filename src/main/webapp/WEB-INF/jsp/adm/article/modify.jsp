@@ -107,13 +107,13 @@
 	}
 </script>
 
-<section class="section-1">
+<section class="section-adm">
 
-	<div class="section-article-write">
+	<div class="section-article-modify">
 		<div class="container mx-auto">
 			<div
 				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title bg-gray-400 text-white">
+				<div class="card-title">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -153,7 +153,7 @@
 									<span class="label-text">본문 이미지 ${inputNo}</span>
 								</label>
 
-								<div>
+								<div class="mb-2">
 									<input class="thumb-available" type="file"
 										name="file__article__${article.id}__common__attachment__${inputNo}"
 										class="form-row-input w-full rounded-sm"
@@ -190,10 +190,14 @@
 						<div class="flex flex-col my-3 md:flex-row">
 							<div class="p-1 md:flex-grow">
 								<div class="btns">
-									<input type="submit" class="flex plain-link mr-2" value="수정">
-									<input onclick="history.back();" type="button"
-										class="btn-info bg-red-600 text-white font-bold py-2 px-4 rounded"
-										value="취소">
+									<button class="btn btn-ghost btn-sm mb-1 text-blue-500" type="submit">
+										<i class="fas fa-edit mr-1"></i>
+										<span>수정</span>
+									</button>
+									<a onclick="history.back();" class="btn btn-ghost btn-sm mb-1 text-red-500">
+										<i class="fas fa-trash mr-1"></i>
+										<span>취소</span>
+									</a>
 								</div>
 							</div>
 						</div>

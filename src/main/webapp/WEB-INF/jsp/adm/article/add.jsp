@@ -13,7 +13,7 @@
 
 <script>
 	ArticleAdd__submited = false;
-	
+
 	function ArticleAdd__checkAndSubmit(form) {
 		// 이게 끝나면 폼 전송완료
 
@@ -113,12 +113,13 @@
 	}
 </script>
 
-<section class="section-1">
+<section class="section-adm">
 
-	<div class="section-article-write">
+	<div class="section-article-add">
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-				<div class="card-title bg-gray-400 text-white">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+				<div class="card-title">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
@@ -171,10 +172,14 @@
 							</div>
 						</c:forEach>
 
-						<div class="mt-4 btn-wrap gap-1">
-							<input type="submit" class="btn btn-primary btn-sm mb-1" value="작성">
-							
-							<a href="list?" class="btn btn-sm mb-1" title="리스트 보기">
+						<div>
+							<button class="btn btn-ghost btn-sm mb-1 text-blue-500"
+								type="submit">
+								<i class="fas fa-edit mr-1"></i>
+								<span>작성</span>
+							</button>
+
+							<a href="list?" class="btn btn-ghost btn-sm mb-1" title="리스트 보기">
 								<span>
 									<i class="fas fa-list"></i>
 								</span>
