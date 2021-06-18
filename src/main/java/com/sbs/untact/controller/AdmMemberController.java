@@ -339,7 +339,7 @@ public class AdmMemberController extends BaseController {
 		}
 
 		if (memberService.isAdmin(member) == false) {
-			return Util.msgAndBack("관리자만 접근 가능합니다.");
+			return Util.msgAndBack("관리자만 이용 가능합니다.");
 		}
 
 		session.setAttribute("loginedMemberId", member.getId());
