@@ -143,23 +143,18 @@ function JoinForm__checkAndSubmit(form) {
 		return;
 	}
 	
-	/// 파일 업로드
+	// 파일 업로드
 	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
 	const submitForm = function(data) {
 		
 		if (data) {
-			
 			form.genFileIdsStr.value = data.body.genFileIdsStr;
-			
 		}
 
-		form.submit();
-		JoinForm__checkAndSubmitDone = true;
-		
+		form.submit();			
 	}
-	
+
 	function startUpload(onSuccess) {
-		
 		if (!form.file__member__0__common__attachment__1.value) {
 			onSuccess();
 			return;
@@ -182,13 +177,14 @@ function JoinForm__checkAndSubmit(form) {
 		// 응답을 받는다.
 		// onSuccess를 실행한다.
 	}
-	
-	
+
 	form.loginPw.value = sha256(form.loginPwInput.value);
 	form.loginPwInput.value = '';
 	form.loginPwConfirm.value = '';
-	
+
 	startUpload(submitForm);
+	JoinForm__checkAndSubmitDone = true;
+
 }
 
 $(function() {
@@ -204,9 +200,9 @@ $(function() {
 
 	<div
 		class="container mx-auto min-h-screen flex items-center justify-center">
-		
+
 		<div class="w-full">
-			
+
 			<div class="logo-bar flex justify-center mb-5">
 				<a href="../home/main" class="logo">
 					<span>
@@ -295,7 +291,6 @@ $(function() {
 							<select name="authLevel" class="select select-bordered">
 								<option disabled="disabled" selected="selected">회원권한을
 									선택해주세요.</option>
-								<option value="0">미승인</option>
 								<option value="3">일반</option>
 								<option value="7">관리자</option>
 							</select>

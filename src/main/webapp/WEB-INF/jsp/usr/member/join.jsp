@@ -146,12 +146,12 @@
 		// 파일 업로드
 		// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
 		const submitForm = function(data) {
+
 			if (data) {
 				form.genFileIdsStr.value = data.body.genFileIdsStr;
 			}
 
 			form.submit();
-			JoinForm__checkAndSubmitDone = true;
 		}
 
 		function startUpload(onSuccess) {
@@ -183,6 +183,7 @@
 		form.loginPwConfirm.value = '';
 
 		startUpload(submitForm);
+		JoinForm__checkAndSubmitDone = true;
 
 	}
 
@@ -212,20 +213,29 @@
 			</div>
 
 			<div
-				class="container mx-auto bg-white card bordered shadow-lg px-5 pt-5 pb-3">
+				class="container mx-auto bg-white card bordered shadow-lg px-5 pt-8 pb-3">
 
-				<div class="container mx-auto flex text-xl mt-4 ml-5">
-					<span class="flex items-center mr-1">
-						<i class="fas fa-user-edit"></i>
-					</span>
-					<span class="font-bold"> 회원가입 </span>
+				<div class="flex container mx-auto px-5 pb-2">
+					<div class="text-xl">
+						<i class="fas fa-user-edit mr-1"></i>
+						<span class="font-bold">회원가입</span>
+					</div>
+
+					<div class="flex-grow"></div>
+
+					<div class="flex items-center text-gray-500">
+						<a href="../home/main" class="btn btn-ghost btn-sm mb-1">
+							<i class="fas fa-home text-lg"></i>
+							<span>home</span>
+						</a>
+					</div>
 				</div>
 
-				<div class="px-4 py-8">
+				<div class="px-4 py-4">
 
 					<form class="formLogin grid form-type-1" action="doJoin"
-						method="POST"
-						onsubmit="JoinForm__checkAndSubmit(this); return false;">
+						onsubmit="JoinForm__checkAndSubmit(this); return false;"
+						method="POST">
 
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="redirectUrl"
@@ -325,7 +335,7 @@
 						<div class="form-control mt-4">
 							<input type="submit"
 								class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full text-base"
-								value="회원가입">
+								value="가입하기">
 						</div>
 
 					</form>

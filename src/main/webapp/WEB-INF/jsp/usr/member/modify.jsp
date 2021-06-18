@@ -134,9 +134,8 @@
 
 				<div class="px-4 py-8">
 
-					<form class="grid form-type-1"
-						onsubmit="ModifyMember_checkAndSubmit(this); return false;"
-						action="doModify" method="POST">
+					<form class="grid form-type-1" action="doModify" method="POST"
+						onsubmit="ModifyMember_checkAndSubmit(this); return false;">
 
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
