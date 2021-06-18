@@ -26,38 +26,7 @@ public class AdmMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-
-	// 회원정보 수정 시 비밀번호 체크
-	@RequestMapping("/adm/member/checkPassword")
-	public String ShowCheckPassword(HttpServletRequest req) {
-		return "/usr/member/checkPassword";
-	}
-
-	// checkPasswordAuthCode : 체크비밀번호인증코드
-	@RequestMapping("/adm/member/doCheckPassword")
-	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUrl) {
-
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		if (loginPw == null) {
-			return msgAndBack(req, "비밀번호를 입력해주세요.");
-		}
-
-		if (loginedMember.getLoginPw().equals(loginPw) == false) {
-			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
-		}
-
-		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
-
-		redirectUrl = "../member/modify?id=" + loginedMember.getId();
-
-		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
-
-		req.setAttribute("loginedMember", loginedMember);
-
-		return msgAndReplace(req, "", redirectUrl);
-	}
-
+	
 	// 비밀번호 찾기
 	@RequestMapping("/adm/member/findLoginPw")
 	public String ShowfindLoginPw() {
@@ -394,16 +363,14 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,
+	public String doModify(Integer id, String loginPw, int authLevel, String name, String nickname,
 			String cellphoneNo, String email, HttpSession session) {
 		/*
 		 * 기존의 session을 받으면 회원수정(로그인을 한 계정(관리자 1번)으로 덮어짐) 이러한 오류를 해결? 발생이 안되게 하기 위해서는
 		 * int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 		 * param.put("id", loginedMemberId); -> 이게 없으면 됌!
 		 */
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		ResultData modifyMemberRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
+		ResultData modifyMemberRd = memberService.modify(id, loginPw, authLevel, name, nickname,
 				cellphoneNo, email);
 		String redirectUrl = "/adm/member/list";
 
