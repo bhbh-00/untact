@@ -4,7 +4,8 @@
 <%@ include file="../part/head.jspf"%>
 
 <!-- sha256 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
 	<!--  자바스크립트  -->
@@ -43,7 +44,8 @@
 	</script>
 <section class="section-usr-login">
 
-	<div class="container mx-auto min-h-screen flex items-center justify-center">
+	<div
+		class="container mx-auto min-h-screen flex items-center justify-center">
 		<div class="w-full">
 			<div class="logo-bar flex justify-center mt-3">
 				<a href="#" class="logo">
@@ -56,48 +58,55 @@
 
 			<div class="section-member-login">
 				<div class="container mx-auto mt-4">
-					<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+					<div
+						class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
-							<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
-								action="doLogin" method="POST" onsubmit="LoginForm__checkAndSubmit(this); return false;">
-								<input type="hidden" name="redirectUrl" value="${param.redirectUrl}" />
-								<input type="hidden" name="loginPw" />		
+						<form class="bg-white w-full shadow-md rounded px-8 pt-6 pb-8"
+							action="doLogin" method="POST"
+							onsubmit="LoginForm__checkAndSubmit(this); return false;">
+							<input type="hidden" name="redirectUrl"
+								value="${param.redirectUrl}" />
+							<input type="hidden" name="loginPw" />
 
-								<div class="form-control">
-									<input name="loginId" autofocus="autofocus" type="text"
-										placeholder="아이디를 입력해주세요." class="input input-bordered"
-										maxlength="20">
-								</div>
+							<div class="form-control">
+								<input name="loginId" autofocus="autofocus" type="text"
+									placeholder="아이디를 입력해주세요." class="input input-bordered"
+									maxlength="20">
+							</div>
 
-								<div class="form-control mt-3 mb-4">
-									<input name="loginPwInput" autofocus="autofocus" type="password"
-										placeholder="비밀번호를 입력해주세요." class="input input-bordered"
-										maxlength="30">
-								</div>
-								
-								<div class="form-control mb-2">
-									<input type="submit" class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full" value="로그인">
-								</div>
-								
-								<div class="flex flex-col md:flex-row text-gray-600">
-									<div class="p-1 text-center md:flex-grow">
-										<i class="fas fa-user"></i>
-										<a href="join" class="inline-block hover:underline">회원가입</a>
-										<a href="#" class="inline-block hover:underline"> | </a>
-										<i class="fas fa-search"></i>
-										<a href="findLoginId" class="inline-block hover:underline">아이디찾기</a>
-										<a href="#" class="inline-block hover:underline"> | </a>
-										<i class="fas fa-search"></i>
-										<a href="findLoginPw" class="inline-block hover:underline">비밀번호찾기</a>
-									</div>
-								</div>
-							</form>
+							<div class="form-control mt-3 mb-4">
+								<input name="loginPwInput" autofocus="autofocus" type="password"
+									placeholder="비밀번호를 입력해주세요." class="input input-bordered"
+									maxlength="30">
+							</div>
 
-						</div>
+							<div class="form-control mb-2">
+								<input type="submit"
+									class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full"
+									value="로그인">
+							</div>
+
+							<div class="flex flex-col md:flex-row text-gray-600">
+								<div class="p-1 text-center md:flex-grow">
+									<i class="fas fa-home"></i>
+									<a href="../home/main" class="inline-block hover:underline">홈</a>
+									<a href="#" class="inline-block hover:underline"> | </a>
+									<i class="fas fa-user"></i>
+									<a href="join" class="inline-block hover:underline">회원가입</a>
+									<a href="#" class="inline-block hover:underline"> | </a>
+									<i class="fas fa-search"></i>
+									<a href="findLoginId" class="inline-block hover:underline">아이디</a>
+									<a href="#" class="inline-block hover:underline"> · </a>
+									<a href="findLoginPw" class="inline-block hover:underline">비밀번호찾기</a>
+								</div>
+							</div>
+						</form>
+
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
 
 </section>
