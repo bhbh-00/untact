@@ -59,7 +59,7 @@
 
 					<div class="mt-2">
 						<!-- 번호 -->
-						<span class="badge badge-primary">No. ${article.id}</span>
+						<span class="badge badge-outline">No. ${article.id}</span>
 					</div>
 
 					<!-- 본문 -->
