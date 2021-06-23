@@ -68,26 +68,14 @@
 
 				<div class="p-4">
 
-					<!-- 게시판 이름 -->
-					<c:if test="${board.id == 1}">
-						<a href="${listUrl}" class="cursor-pointer hover:underline">
-							<span class="badge badge-info">${board.name}</span>
-						</a>
-					</c:if>
-
-					<c:if test="${board.id == 2}">
-						<a href="${listUrl}" class="cursor-pointer hover:underline">
-							<span class="badge badge-warning">${board.name}</span>
-						</a>
-					</c:if>
-
 					<!-- 게시물 번호 -->
 					<a class="hover:underline">
-						<span class="text-base">No.${board.id}</span>
+						<span class="badge badge-outline">No.${board.id}</span>
 					</a>
 
 					<div
 						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+						
 						<!-- 썸네일 -->
 						<a class="row-span-7">
 							<img class="w-full h-40 object-cover rounded" src="${thumbUrl}"
@@ -95,13 +83,13 @@
 						</a>
 
 
-						<!-- 제목 -->
+						<!-- 코드 -->
 						<a class="hover:underline cursor-pointer">
 							<span class="badge badge-outline mb-1">코드</span>
 							<span class="line-clamp-3 ml-1"> ${board.code} </span>
 						</a>
 
-						<!-- 본문 -->
+						<!-- 이름 -->
 						<a
 							class="mt-3 hover:underline cursor-pointer col-span-1 sm:col-span-2 xl:col-span-3">
 							<span class="badge badge-outline mb-1">이름</span>

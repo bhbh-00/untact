@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartRequest;
 
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.Member;
@@ -25,27 +24,31 @@ public class AdmBoardController extends BaseController {
 
 	@RequestMapping("/adm/board/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id, HttpServletRequest req) {
+	public String doDelete(int id, HttpServletRequest req) {
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == 0) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Board board = boardService.getBoard(id);
 
 		if (board == null) {
-			return new ResultData("F-1", "해당 게시판은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");
 		}
-		
+
 		ResultData actorCanDeleteRd = boardService.getActorCanDeleteRd(board, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return Util.msgAndBack(actorCanDeleteRd.getMsg());
 		}
 
+		ResultData deleteBoardRd = boardService.delete(id);
 
-		return boardService.deleteBoard(id);
+		String redirectUrl = "../board/list";
+
+		return Util.msgAndReplace(deleteBoardRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/adm/board/getCodeDup")
@@ -64,7 +67,7 @@ public class AdmBoardController extends BaseController {
 
 		return new ResultData("S-1", String.format("%s(은)는 사용가능한 code 입니다.", code), "code", code);
 	}
-	
+
 	@RequestMapping("/adm/board/getNameDup")
 	@ResponseBody
 	public ResultData getNameDup(String name) {
@@ -76,7 +79,7 @@ public class AdmBoardController extends BaseController {
 		Board existingBoard = boardService.getBoardByName(name);
 
 		if (existingBoard != null) {
-			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 name 입니다.", name));
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 code 입니다.", name));
 		}
 
 		return new ResultData("S-1", String.format("%s(은)는 사용가능한 name 입니다.", name), "name", name);
@@ -102,61 +105,69 @@ public class AdmBoardController extends BaseController {
 
 	@RequestMapping("/adm/board/doModify")
 	@ResponseBody
-	public ResultData doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		if (id == 0) {
-			return new ResultData("F-1", "게시물 번호를 입력해주세요.");
+			return msgAndBack(req, "번호를 입력해주세요.");
 		}
 
 		if (Util.isEmpty(param.get("name"))) {
-			return new ResultData("F-1", "이름을 입력해주세요.");
+			return msgAndBack(req, "name을 입력해주세요.");
 		}
 
 		Board board = boardService.getBoard(id);
 
 		if (board == null) {
-			return new ResultData("F-1", "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanModifyRd = boardService.getActorCanModifyRd(board, loginedMember);
 
 		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return Util.msgAndBack(actorCanModifyRd.getMsg());
 		}
 
-		return boardService.modifyBoard(param);
+		ResultData modifyBoardRd = boardService.modify(param);
+		String redirectUrl = "../board/list";
+
+		return Util.msgAndReplace(modifyBoardRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/adm/board/add")
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-
 		return "/adm/board/add";
-
 	}
 
 	@RequestMapping("/adm/board/doAdd")
-	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
-			MultipartRequest multipartRequest) {
-		int loginMemberId = (int) req.getAttribute("loginedMemberId");
+	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (param.get("code") == null) {
-			return msgAndBack(req, "제목을 입력해주세요.");
+			return msgAndBack(req, "code를 입력해주세요");
 		}
 
 		if (param.get("name") == null) {
-			return msgAndBack(req, "제목을 입력해주세요.");
+			return msgAndBack(req, "name를 입력해주세요");
 		}
 
-		param.put("memberId", loginMemberId);
+		Board existingBoard = boardService.getBoardByName((String) param.get("name"));
+
+		if (existingBoard != null) {
+			return msgAndBack(req, "이미 등록 된 name입니다.");
+		}
+
+		param.put("loginedMember", loginedMember);
 
 		ResultData addBoardRd = boardService.doAdd(param);
 
 		int newBoardId = (int) addBoardRd.getBody().get("id");
 
-		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newBoardId), "../board/list?id=" + newBoardId);
+		return msgAndReplace(req, String.format("%d번 게시판이 작성되었습니다.", newBoardId), "../board/list");
 	}
 
 	@RequestMapping("/adm/board/list")

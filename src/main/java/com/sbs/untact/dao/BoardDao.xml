@@ -5,7 +5,7 @@
 
 <mapper namespace="com.sbs.untact.dao.BoardDao">
 
-	<delete id="deleteBoard">
+	<delete id="delete">
 		DELETE FROM `board`
 		WHERE id = #{id}
 	</delete>
@@ -13,18 +13,16 @@
 	<select id="getBoardByCode" resultType="Board">
 		SELECT *
 		FROM `board`
-		WHERE
-		`code` = #{code}
+		WHERE `code` = #{code}
 	</select>
 	
 	<select id="getBoardByName" resultType="Board">
 		SELECT *
 		FROM `board`
-		WHERE
-		`name` = #{name}
+		WHERE `name` = #{name}
 	</select>
 	
-	<update id="modifyBoard">
+	<update id="modify">
 		UPDATE `board`
 		<set>
 			<if test="name != null">
@@ -34,7 +32,7 @@
 		WHERE id = #{id}
 	</update>
 
-	<insert id="addBoard" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `board`
 		SET regDate = NOW(),
 		updateDate = NOW(),

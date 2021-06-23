@@ -121,18 +121,18 @@
 
 				<div class="px-4 py-8">
 
-					<form class="formCode"
-						onsubmit="BoardAdd__checkAndSubmit(this); return false;"
-						action="doAdd" method="POST" enctype="multipart/form-data">
+					<form class="formCode" action="doAdd" method="POST"
+						onsubmit="BoardAdd__checkAndSubmit(this); return false;">
+						
+						<input type="hidden" name="memberId" value="${loginedMember.id}" />
 
 						<!-- 코드 -->
 						<div class="form-control">
 							<label class="label">
 								<span class="label-text">코드</span>
 							</label>
-							<input type="text" name="code" autofocus="autofocus"
-								class="inputCode form-row-input w-full rounded-sm"
-								placeholder="코드을 입력해주세요.">
+							<input type="text" name="code" placeholder="코드을 입력해주세요."
+								autofocus="autofocus" class="inputCode input input-bordered">
 						</div>
 
 						<!-- 중복확인 -->
@@ -146,9 +146,8 @@
 							<label class="label">
 								<span class="label-text">이름</span>
 							</label>
-							<input type="text" name="name" autofocus="autofocus"
-								class="inputCode form-row-input w-full rounded-sm"
-								placeholder="이름을 입력해주세요.">
+							<input type="text" name="name" placeholder="이름을 입력해주세요."
+								autofocus="autofocus" class="input input-bordered">
 						</div>
 
 						<div class="mt-2">
@@ -166,7 +165,7 @@
 								<span>리스트</span>
 							</a>
 						</div>
-						
+
 					</form>
 
 				</div>

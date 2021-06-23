@@ -46,7 +46,7 @@ public class BoardService {
 	}
 
 	public ResultData doAdd(Map<String, Object> param) {
-		boardDao.addBoard(param);
+		boardDao.add(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
@@ -69,8 +69,8 @@ public class BoardService {
 		return getActorCanModifyRd(board, actor);
 	}
 
-	public ResultData modifyBoard(Map<String, Object> param) {
-		boardDao.modifyBoard(param);
+	public ResultData modify(Map<String, Object> param) {
+		boardDao.modify(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
@@ -81,8 +81,8 @@ public class BoardService {
 		return boardDao.getBoardByName(name);
 	}
 
-	public ResultData deleteBoard(int id) {
-		boardDao.deleteBoard(id);
+	public ResultData delete(int id) {
+		boardDao.delete(id);
 
 		return new ResultData("s-1", "삭제되었습니다.", "id", id);
 	}

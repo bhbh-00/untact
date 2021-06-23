@@ -101,6 +101,7 @@ public class UsrArticleController extends BaseController {
 		}
 
 		ResultData modifyArticleRd = articleService.modify(param);
+		
 		String redirectUrl = "../article/detail?id=" + article.getId();
 
 		return Util.msgAndReplace(modifyArticleRd.getMsg(), redirectUrl);

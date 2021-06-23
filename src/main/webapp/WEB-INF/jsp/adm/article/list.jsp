@@ -107,6 +107,7 @@
 
 					<div
 						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+						
 						<!-- 썸네일 -->
 						<a href="${detailUrl}" class="row-span-7">
 							<img class="w-full h-40 object-cover rounded" src="${thumbUrl}"
