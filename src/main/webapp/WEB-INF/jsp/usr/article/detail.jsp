@@ -41,29 +41,43 @@
 	<div class="section-article-detail">
 
 		<div class="container mx-auto">
-			<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
+			<div
+				class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 
 				<div class="card-title bg-white">
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>${article.id}번 게시물</span>
+
+					<!-- 제목 -->
+					<div>
+						<span>${article.title}</span>
+					</div>
 				</div>
 
 				<div class="p-5">
 
-					<!-- 제목 -->
-					<div class="mt-7">
-						<span class="badge badge-outline">제목</span>
-						<div class="break-all mt-1 ml-1">${article.title}</div>
+					<div class="mt-2">
+						<!-- 번호 -->
+						<span class="badge badge-primary">No. ${article.id}</span>
 					</div>
 
-					<!-- 번호 -->
-					<div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-						<div>
-							<span class="badge badge-primary">번호</span>
-							<span>${article.id}</span>
+					<!-- 본문 -->
+					<div class="my-10">
+						<span class="badge badge-outline">본문</span>
+						<div class="mt-3">
+							<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
+								<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
+								<c:set var="file"
+									value="${article.extra.file__common__attachment[fileNo]}" />
+									${file.mediaHtml}
+							</c:forEach>
 						</div>
+						<div class="mt-3 break-all ml-1">${article.body}</div>
+					</div>
+
+					<div
+						class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
 
 						<!-- 작성자 -->
 						<div>
@@ -77,28 +91,17 @@
 							<span class="text-gray-600 text-light">${article.regDate}</span>
 						</div>
 
-						<!-- 수정날짜 -->
-						<div>
-							<span class="badge">수정날짜</span>
-							<span class="text-gray-600 text-light">${article.updateDate}</span>
-						</div>
+						<c:if test="${article.updateDate != article.regDate}">
+							<!-- 수정날짜 -->
+							<div>
+								<span class="badge">수정날짜</span>
+								<span class="text-gray-600 text-light">${article.updateDate}</span>
+							</div>
+						</c:if>
+
 					</div>
 
-					<!-- 본문 -->
-					<div class="mt-6">
-						<span class="badge badge-outline">본문</span>
-						<div class="mt-3">
-							<c:forEach begin="1" end="${fileInputMaxCount}" var="inputNo">
-								<c:set var="fileNo" value="${String.valueOf(inputNo)}" />
-								<c:set var="file"
-									value="${article.extra.file__common__attachment[fileNo]}" />
-									${file.mediaHtml}
-							</c:forEach>
-						</div>
-						<div class="mt-3 break-all ml-1">${article.body}</div>
-					</div>
-
-					<div class="flex plain-link-wrap gap-3 mt-4">
+					<div class="flex plain-link-wrap gap-3 mt-10">
 
 						<div class="flex"></div>
 
@@ -116,7 +119,7 @@
 										${Util.numberFormat(totleItemsCountByLike)}
 									</span>
 								</a>
-							</c:when>
+							</c:when>							
 							<c:otherwise>
 								<form class="grid form-type-1" action="../like/doLike"
 									method="POST" enctype="multipart/form-data">
@@ -168,7 +171,7 @@
 								<span class="text-red-500">
 									<i class="fas fa-trash"></i>
 								</span>
-									<span class="text-red-500">삭제</span>
+								<span class="text-red-500">삭제</span>
 							</a>
 						</c:if>
 					</div>
@@ -198,7 +201,8 @@
 						<input type="hidden" name="redirectUrl"
 							value="/usr/article/detail?id=${article.id}" />
 
-						<input name="body" type="text" style="border-radius: 25px" placeholder="댓글을 입력해주세요." autocomplete="off"
+						<input name="body" type="text" style="border-radius: 25px"
+							placeholder="댓글을 입력해주세요." autocomplete="off"
 							class="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400
 								focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue">
 
@@ -216,7 +220,8 @@
 						<div class="item-bt-1">
 							<div class="flex py-5 px-4">
 								<div class="flex-shrink-0">
-									<img class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
+									<img
+										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
 										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
 										src="${loginedMember.profileImgUrl}">
 								</div>
