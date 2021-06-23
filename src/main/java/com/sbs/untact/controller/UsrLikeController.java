@@ -44,7 +44,7 @@ public class UsrLikeController extends BaseController {
 
 		ResultData dodeleteRd = likeService.delete(id);
 		
-		redirectUrl = "/usr/article/detail?id=" + article.getId();
+		redirectUrl = "../article/detail?id=" + article.getId();
 		
 		return Util.msgAndReplace(dodeleteRd.getMsg(), redirectUrl);
 	}

@@ -30,10 +30,13 @@ import com.sbs.untact.util.Util;
 public class UsrArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
+	
 	@Autowired
 	private GenFileService genFileService;
+	
 	@Autowired
 	private LikeService likeService;
+	
 	@Autowired
 	private ReplyService replyService;
 

@@ -18,20 +18,27 @@ import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Like;
 import com.sbs.untact.dto.Member;
+import com.sbs.untact.dto.Reply;
 import com.sbs.untact.dto.ResultData;
 import com.sbs.untact.service.ArticleService;
 import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.LikeService;
+import com.sbs.untact.service.ReplyService;
 import com.sbs.untact.util.Util;
 
 @Controller
 public class AdmArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
+	
 	@Autowired
 	private GenFileService genFileService;
+	
 	@Autowired
 	private LikeService likeService;
+	
+	@Autowired
+	private ReplyService replyService;
 
 	@RequestMapping("/adm/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
@@ -63,27 +70,27 @@ public class AdmArticleController extends BaseController {
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		
+
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
 		if (id == 0) {
-			return  msgAndBack(req, "게시물 번호를 입력해주세요.");
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
 
 		if (Util.isEmpty(param.get("title"))) {
-			return  msgAndBack(req, "제목을 입력해주세요.");
+			return msgAndBack(req, "제목을 입력해주세요.");
 		}
 
 		if (Util.isEmpty(param.get("body"))) {
-			return  msgAndBack(req, "내용을 입력해주세요.");
+			return msgAndBack(req, "내용을 입력해주세요.");
 		}
 
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return  msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanModifyRd = articleService.getActorCanModifyRd(article, loginedMember);
@@ -110,7 +117,7 @@ public class AdmArticleController extends BaseController {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return msgAndBack(req,"해당 게시물은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanDeleteRd = articleService.getActorCanDeleteRd(article, loginedMember);
@@ -185,10 +192,14 @@ public class AdmArticleController extends BaseController {
 		}
 
 		Like like = likeService.getLikeByArticle(id);
+
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
+
+		List<Reply> replys = replyService.getForPrintReplies(id);
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);
 		req.setAttribute("article", article);
+		req.setAttribute("replys", replys);
 		req.setAttribute("like", like);
 		req.setAttribute("totleItemsCountByLike", totleItemsCountByLike);
 		req.setAttribute("loginMemberId", loginMemberId);

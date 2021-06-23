@@ -44,7 +44,7 @@ public class AdmLikeController extends BaseController {
 
 		ResultData dodeleteRd = likeService.delete(id);
 		
-		redirectUrl = "/adm/article/detail?id=" + article.getId();
+		redirectUrl = "../article/detail?id=" + article.getId();
 		
 		return Util.msgAndReplace(dodeleteRd.getMsg(), redirectUrl);
 	}

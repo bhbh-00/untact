@@ -129,7 +129,7 @@
 									<input type="hidden" name="memberId"
 										value="${loginedMember.id}" />
 									<input type="hidden" name="redirectUrl"
-										value="/usr/article/detail?id=${article.id}" />
+										value="../article/detail?id=${article.id}" />
 									<input type="hidden" name="like" value="like" />
 
 									<button type="submit">
@@ -199,7 +199,7 @@
 						<input type="hidden" name="relId" value="${article.id}" />
 						<input type="hidden" name="memberId" value="${loginedMember.id}" />
 						<input type="hidden" name="redirectUrl"
-							value="/usr/article/detail?id=${article.id}" />
+							value="../article/detail?id=${article.id}" />
 
 						<input name="body" type="text" style="border-radius: 25px"
 							placeholder="댓글을 입력해주세요." autocomplete="off"
@@ -243,7 +243,7 @@
 
 										<div class="flex text-sm">
 
-											<c:if test="${ loginedMember.id == reply.memberId}">
+											<c:if test="${ loginedMember.id == reply.memberId }">
 
 												<!-- 수정 -->
 												<a href="../reply/modify?id=${reply.id}"
