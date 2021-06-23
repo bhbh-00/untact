@@ -26,7 +26,7 @@
 			<c:forEach items="${LatestArticleByBoardNameFree}" var="articles">
 
 				<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
-				<c:set var="detailUrl" value="detail?id=${articles.id}" />
+				<c:set var="detailUrl" value="../article/detail?id=${articles.id}" />
 				
 				<div class="p-4">
 
