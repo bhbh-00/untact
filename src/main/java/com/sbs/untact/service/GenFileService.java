@@ -206,9 +206,9 @@ public class GenFileService {
 	}
 
 	public void changeInputFileRelIds(Map<String, Object> param, int id) {
-		String genFileIdsStr = Util.ifEmpty((String)param.get("genFileIdsStr"), null);
-		
-		if ( genFileIdsStr != null ) {
+		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
+
+		if (genFileIdsStr != null) {
 			List<Integer> genFileIds = Util.getListDividedBy(genFileIdsStr, ",");
 
 			// 파일이 먼저 생성된 후에, 관련 데이터가 생성되는 경우에는, file의 relId가 일단 0으로 저장된다.

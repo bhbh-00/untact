@@ -152,6 +152,7 @@ function JoinForm__checkAndSubmit(form) {
 		}
 
 		form.submit();			
+		JoinForm__checkAndSubmitDone = true;
 	}
 
 	function startUpload(onSuccess) {
@@ -183,7 +184,6 @@ function JoinForm__checkAndSubmit(form) {
 	form.loginPwConfirm.value = '';
 
 	startUpload(submitForm);
-	JoinForm__checkAndSubmitDone = true;
 
 }
 

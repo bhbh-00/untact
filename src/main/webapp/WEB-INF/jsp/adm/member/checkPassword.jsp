@@ -42,12 +42,13 @@
 						
 						<input type="hidden" name="checkPasswordAuthCode" value="${param.checkPasswordAuthCode}">
 						<input type="hidden" name="loginPw" />
+						<input type="hidden" name="redirectUrl" value="../member/modify?id=${member.id}"/>
 
 						<div class="container mx-auto flex mb-2 ml-2 text-xl">
 							<span class="flex items-center mr-1">
 								<i class="fas fa-user-cog"></i>
 							</span>
-							<span class="font-bold"> 마이페이지 </span>
+							<span class="font-bold"> 회원정보 </span>
 						</div>
 
 						<div class="form-control">

@@ -155,7 +155,7 @@
 
 					<div class="grid grid-item-float gap-3 mt-4">
 						<!-- 수정 -->
-						<a href="../member/modify?id=${member.id}" class="text-blue-500">
+						<a href="modify?id=${member.id}" class="text-blue-500">
 							<span>
 								<i class="fas fa-edit"></i>
 								<span>수정</span>

@@ -98,7 +98,7 @@ public class UsrMemberController extends BaseController {
 
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
-		redirectUrl = "/usr/member/modify?id=" + loginedMember.getId();
+		redirectUrl = "../member/modify?id=" + loginedMember.getId();
 
 		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
 
@@ -280,7 +280,7 @@ public class UsrMemberController extends BaseController {
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String Modify(HttpServletRequest req, int id, String checkPasswordAuthCode) {
+	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -334,7 +334,7 @@ public class UsrMemberController extends BaseController {
 		
 		req.setAttribute("member", loginedMember);
 		
-		String redirectUrl = "/usr/member/mypage?id=" + loginedMember.getId();
+		String redirectUrl = "../member/mypage?id=" + loginedMember.getId();
 
 		return Util.msgAndReplace(modifyRd.getMsg(), redirectUrl);
 	}

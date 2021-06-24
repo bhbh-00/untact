@@ -60,7 +60,7 @@ body {
 
 				<!-- 게시물 관리 -->
 				<li>
-					<a href="../article/list?boardId=1"
+					<a href="#"
 						class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="far fa-newspaper"></i>
@@ -93,7 +93,7 @@ body {
 				
 				<!-- 회원관리 -->
 				<li>
-					<a href="../member/list" class="h-full flex items-center px-5">
+					<a href="../member/checkPassword" class="h-full flex items-center px-5">
 						<span class="text-xl">
 							<i class="fas fa-user"></i>
 						</span>

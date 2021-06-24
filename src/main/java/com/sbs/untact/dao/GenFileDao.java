@@ -10,7 +10,6 @@ import com.sbs.untact.dto.GenFile;
 
 @Mapper
 public interface GenFileDao {
-	
 	void saveMeta(Map<String, Object> param);
 
 	GenFile getGenFile(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId,
