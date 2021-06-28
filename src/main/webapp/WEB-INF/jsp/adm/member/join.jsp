@@ -12,10 +12,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
-const JoinForm__checkAndSubmitDone = false;
 <!--  const = var / 중복 방지를 위한.  -->
-let JoinForm__validLoginId = '';
+const JoinForm__checkAndSubmitDone = false;
+
 //로그인 아이디 중복체크 함수 ajax
+let JoinForm__validLoginId = '';
 function JoinForm__checkLoginIdDup(obj) {
 	
 	const form = $('.formLogin').get(0);
