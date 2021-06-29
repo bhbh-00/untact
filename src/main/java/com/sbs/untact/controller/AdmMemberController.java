@@ -48,7 +48,7 @@ public class AdmMemberController extends BaseController {
 
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
-		redirectUrl = "../member/list";
+		redirectUrl = "../member/modify?id=" + loginedMember.getId();
 
 		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
 
@@ -146,16 +146,7 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/list")
 	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param,
-			@RequestParam(defaultValue = "1") int page, String checkPasswordAuthCode) {
-
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
-				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
-
-		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
-			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
-		}
+			@RequestParam(defaultValue = "1") int page) {
 
 		String searchKeywordType = (String) param.get("searchKeywordType");
 
@@ -374,7 +365,16 @@ public class AdmMemberController extends BaseController {
 	}
 
 	@RequestMapping("/adm/member/modify")
-	public String Modify(Integer id, HttpServletRequest req) {
+	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
+
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
 
 		if (id == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
@@ -387,7 +387,6 @@ public class AdmMemberController extends BaseController {
 		}
 
 		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
-
 		Map<String, GenFile> filesMap = new HashMap<>();
 
 		for (GenFile file : files) {
@@ -395,6 +394,7 @@ public class AdmMemberController extends BaseController {
 		}
 
 		member.getExtraNotNull().put("file__common__attachment", filesMap);
+
 		req.setAttribute("member", member);
 
 		return "/adm/member/modify";
@@ -402,14 +402,25 @@ public class AdmMemberController extends BaseController {
 
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
-	public String doModify(Integer id, String loginPw, int authLevel, String name, String nickname, String cellphoneNo,
-			String email, HttpSession session, String redirectUrl) {
+	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,
+			String cellphoneNo, String email, String checkPasswordAuthCode) {
 
-		ResultData modifyMemberRd = memberService.modify(id, loginPw, authLevel, name, nickname, cellphoneNo, email);
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		redirectUrl = "../member/list";
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
 
-		return Util.msgAndReplace(modifyMemberRd.getMsg(), redirectUrl);
+		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
+			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
+		}
+
+		ResultData modifyRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
+				cellphoneNo, email);
+
+		req.setAttribute("member", loginedMember);
+
+		String redirectUrl = "../member/list";
+
+		return Util.msgAndReplace(modifyRd.getMsg(), redirectUrl);
 	}
-
 }

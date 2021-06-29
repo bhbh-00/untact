@@ -142,6 +142,8 @@
 						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
 						<input type="hidden" name="loginPw" />
+						<input type="hidden" name="checkPasswordAuthCode"
+							value="${param.checkPasswordAuthCode}">
 
 						<!-- 번호 -->
 						<div class="form-control">

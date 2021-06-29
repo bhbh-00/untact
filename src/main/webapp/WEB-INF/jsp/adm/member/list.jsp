@@ -153,23 +153,27 @@
 
 					</div>
 
-					<div class="grid grid-item-float gap-3 mt-4">
-						<!-- 수정 -->
-						<a href="modify?id=${member.id}" class="text-blue-500">
-							<span>
-								<i class="fas fa-edit"></i>
-								<span>수정</span>
-							</span>
-						</a>
+					<div class="grid grid-item-float gap-3 mt-4 ml-2">
+						<c:if test="${loginedMember.id == member.id}">
+							<!-- 수정 -->
+							<a
+								href="checkPassword?afterUrl=${Util.getUrlEncoded('../member/modify')}"
+								class="text-blue-500">
+								<span>
+									<i class="fas fa-edit"></i>
+									<span>수정</span>
+								</span>
+							</a>
 
-						<!-- 삭제 -->
-						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-							href="doDelete?id=${member.id}" class="text-red-500">
-							<span>
-								<i class="fas fa-trash"></i>
-								<span>삭제</span>
-							</span>
-						</a>
+							<!-- 삭제 -->
+							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+								href="doDelete?id=${member.id}" class="text-red-500">
+								<span>
+									<i class="fas fa-trash"></i>
+									<span>삭제</span>
+								</span>
+							</a>
+						</c:if>
 					</div>
 
 				</div>
