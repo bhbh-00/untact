@@ -129,10 +129,10 @@ public class UsrArticleController extends BaseController {
 			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
-		ResultData deleteMemberRd = articleService.deleteArticle(id);
+		ResultData deleteArticleRd = articleService.deleteArticle(id);
 		String redirectUrl = "../article/list";
 
-		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
+		return Util.msgAndReplace(deleteArticleRd.getMsg(), redirectUrl);
 	}
 
 	@RequestMapping("/usr/article/add")

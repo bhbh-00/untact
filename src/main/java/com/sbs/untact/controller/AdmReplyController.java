@@ -28,32 +28,33 @@ public class AdmReplyController extends BaseController {
 
 	@RequestMapping("/adm/reply/doDelete")
 	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req, String redirectUrl) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		// 선생님은 replyId로만!
 		if (id == null) {
-			return new ResultData("F-1", "댓글 번호를 입력해주세요.");
+			return msgAndBack(req, "댓글 번호를 입력해주세요.");
 		}
 
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
-			return new ResultData("F-1", "해당 댓글은 존재하지 않습니다.");
+			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
 
 		ResultData actorCanDeleteRd = replyService.getActorCanDeleteRd(reply, loginedMember);
 		// articleService 말고 이제는 reply서비스에게!
 
 		if (actorCanDeleteRd.isFail()) {
-			return actorCanDeleteRd;
+			return msgAndBack(req, actorCanDeleteRd.getMsg());
 		}
 
-		return replyService.delete(id);
+		ResultData deleteReplyRd = replyService.delete(id);
+
+		return Util.msgAndReplace(deleteReplyRd.getMsg(), "../article/detail?id=" + reply.getRelId());
 	}
 
-	@RequestMapping("/v/reply/modify")
+	@RequestMapping("/adm/reply/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
 		Article article = articleService.getArticleByReply(id);

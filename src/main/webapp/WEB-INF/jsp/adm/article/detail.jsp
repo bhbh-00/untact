@@ -244,7 +244,7 @@
 											<c:if test="${ loginedMember.id == reply.memberId}">
 
 												<!-- 수정 -->
-												<a href="/usr/reply/modify?id=${reply.id}"
+												<a href="../reply/modify?id=${reply.id}"
 													class="flex plain-link mr-2">
 													<span>
 														<i class="fas fa-edit"></i>
@@ -254,7 +254,7 @@
 
 												<!-- 삭제 -->
 												<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-													href="/usr/reply/doDelete?id=${reply.id}"
+													href="../reply/doDelete?id=${reply.id}"
 													class="flex plain-link">
 													<span class="text-red-500">
 														<i class="fas fa-trash"></i>
