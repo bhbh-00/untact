@@ -26,6 +26,8 @@ public class Member extends EntityDto {
 	private String nickname;
 	private String cellphoneNo;
 	private String email;
+	private boolean delStatus;
+    private String delDate;
 	
 	private String Extra__thumbImg;
 	

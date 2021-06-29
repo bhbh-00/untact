@@ -15,11 +15,11 @@ public interface ArticleDao {
 
 	void modify(Map<String, Object> param);
 
-	void deleteArticle(@Param("id") Integer id);
+	void delete(@Param("id") Integer id);
 
 	Article getArticle(@Param("id") Integer id);
 
-	void addArticle(Map<String, Object> param);
+	void add(Map<String, Object> param);
 
 	List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);

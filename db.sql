@@ -11,7 +11,11 @@ CREATE TABLE article (
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     title CHAR(100) NOT NULL,
-    `body` TEXT NOT NULL
+    `body` TEXT NOT NULL,
+    blindStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '블라인드여부',
+    blindDate DATETIME COMMENT '블라인드날짜',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부',
+    delDate DATETIME COMMENT '삭제날짜'
 );
 
 # 게시물, 테스트 데이터 생성
@@ -221,7 +225,7 @@ CREATE TABLE genFile (
   fileDir CHAR(20) NOT NULL, # 파일이 저장되는 폴더명
   PRIMARY KEY (id),
   KEY relId (relId,relTypeCode,typeCode,type2Code,fileNo)
-); 
+);
 
 # ============================================== like
 

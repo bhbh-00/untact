@@ -19,8 +19,6 @@ public interface ReplyDao {
 
 	void delete(@Param("id") Integer id);
 
-	List<Reply> getReplyByArticle(@Param("id") Integer id, @Param("relTypeCode") String relTypeCode);
-
 	void modify(@Param("id") Integer id, @Param("body") String body);
 
 }

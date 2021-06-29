@@ -11,7 +11,8 @@
 		LEFT JOIN
 		reply AS R
 		ON A.id = R.relId
-		WHERE R.id = #{id};
+		WHERE R.id = #{id}
+		AND A.delStatus = 0;
 	</select>
 
 	<select id="getLatestArticleByBoardNameNotice" resultType="Article">
@@ -24,6 +25,7 @@
 		LEFT JOIN `board` AS B
 		ON A.boardId = B.id
 		WHERE A.boardId = 1
+		AND A.delStatus = 0
 		ORDER BY A.id DESC
 		LIMIT 2;
 	</select>
@@ -38,6 +40,7 @@
 		LEFT JOIN `board` AS B
 		ON A.boardId = B.id
 		WHERE A.boardId = 2
+		AND A.delStatus = 0
 		ORDER BY A.id DESC
 		LIMIT 2;
 	</select>
@@ -52,6 +55,7 @@
 		LEFT JOIN `board` AS B
 		ON A.boardId = B.id
 		WHERE A.memberId = #{id}
+		AND A.delStatus = 0;
 	</select>
 	
 	<select id="getArticlesTotleCountByMyList" resultType="int">
@@ -59,6 +63,7 @@
 		FROM article
 		WHERE memberId = #{id}
 		AND boardId = #{boardId}
+		AND delStatus = 0
 		<if test="searchKeywordType == 'title'">
 			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
@@ -77,6 +82,7 @@
 		FROM article
 		WHERE 1
 		AND boardId = #{boardId}
+		
 		<if test="searchKeywordType == 'title'">
 			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
@@ -87,6 +93,7 @@
 			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			`body` LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
+		AND delStatus = 0
 		ORDER BY id DESC
 	</select>
 
@@ -94,6 +101,7 @@
 		SELECT *
 		FROM board
 		WHERE id = #{id}
+		AND delStatus = 0;
 	</select>
 	
 	<select id="getForPrintArticlesByMyList" resultType="Article">
@@ -106,6 +114,7 @@
 		LEFT JOIN `board` AS B
 		ON A.boardId = B.id
 		WHERE A.memberId = #{id}
+		AND A.delStatus = 0
 		<if test="boardId != null">
 			AND A.boardId = #{boardId}
 		</if>
@@ -123,7 +132,7 @@
 		ORDER BY A.id ASC
 		<if test="limitStart != null and limitTake != null">
 			LIMIT #{limitStart}, #{limitTake}
-		</if>
+		</if>		
 	</select>
 
 	<select id="getForPrintArticles" resultType="Article">
@@ -136,6 +145,7 @@
 		LEFT JOIN `board` AS B
 		ON A.boardId = B.id
 		WHERE 1
+		AND A.delStatus = 0
 		<if test="boardId != null">
 			AND A.boardId = #{boardId}
 		</if>
@@ -165,18 +175,21 @@
 		`member` AS M
 		ON A.memberId = M.id
 		WHERE A.id = #{id}
+		AND A.delStatus = 0
 	</select>
 
 	<select id="getArticle" resultType="Article">
 		SELECT *
 		FROM article
 		WHERE id = #{id}
+		AND delStatus = 0
 	</select>
 
 	<select id="getArticles" resultType="Article">
 		SELECT *
 		FROM article
 		WHERE 1
+		AND delStatus = 0
 		<if test="searchKeywordType == 'title'">
 			AND title LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
@@ -190,7 +203,7 @@
 		ORDER BY id DESC
 	</select>
 
-	<insert id="addArticle" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
@@ -200,10 +213,12 @@
 		`body` = #{body}
 	</insert>
 
-	<delete id="deleteArticle">
-		DELETE FROM article
-		WHERE id = #{id}
-	</delete>
+	<update id="delete">
+		UPDATE article
+        SET delStatus = 1,
+        delDate = NOW()
+        WHERE id = #{id}
+	</update>
 
 	<update id="modify">
 		UPDATE article
@@ -219,6 +234,7 @@
 			</if>
 		</set>
 		WHERE id = #{id}
+		AND delStatus = 0
 	</update>
 
 </mapper>

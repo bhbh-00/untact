@@ -5,29 +5,18 @@
 
 <mapper namespace="com.sbs.untact.dao.ReplyDao">
 
-	<select id="getReplyByArticle" resultType="Reply">
-		SELECT R.*,
-		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM reply AS R
-		LEFT JOIN
-		`member` AS M
-		ON R.memberId = M.id
-		LEFT JOIN
-		article AS A
-		ON R.relId = A.id
-		WHERE R.relId = #{id}
-		And R.relTypeCode = #{relTypeCode}
-	</select>
-
-	<delete id="delete">
-		DELETE FROM reply
-		WHERE id = #{id};
-	</delete>
+	<update id="delete">
+        UPDATE reply
+        SET delDate = NOW(),
+        delStatus = 1
+        WHERE id = #{id}
+    </update>
 	
 	<select id="getReply" resultType="Reply">
 		SELECT *
 		FROM reply
 		WHERE id = #{id}
+		AND delStatus = 0
 	</select>
 
 	<update id="modify">
@@ -38,6 +27,7 @@
 			</if>
 		</set>
 		WHERE id = #{id}
+		AND delStatus = 0
 	</update>
 
 	<insert id="doAdd" useGeneratedKeys="true" keyProperty="id">
@@ -58,6 +48,7 @@
 		`member` AS M
 		ON R.memberId = M.id
 		WHERE R.relId = #{id}
+		AND R.delStatus = 0
 	</select>
 
 </mapper>

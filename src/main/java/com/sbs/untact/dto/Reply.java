@@ -16,6 +16,10 @@ public class Reply extends EntityDto {
 	private int relId;
 	private int memberId;
 	private String body;
+	private boolean blindStatus;
+    private String blindDate;
+    private boolean delStatus;
+    private String delDate;
 	
 	private String extra__writer;
 }

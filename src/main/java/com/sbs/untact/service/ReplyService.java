@@ -68,8 +68,4 @@ public class ReplyService {
 		return replyDao.getReply(id);
 	}
 
-	public List<Reply> getReplyByArticle(Integer id, String relTypeCode) {
-		return getReplyByArticle(id, relTypeCode);
-	}
-
 }

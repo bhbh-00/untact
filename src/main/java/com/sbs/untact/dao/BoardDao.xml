@@ -5,15 +5,18 @@
 
 <mapper namespace="com.sbs.untact.dao.BoardDao">
 
-	<delete id="delete">
-		DELETE FROM `board`
-		WHERE id = #{id}
-	</delete>
+	<update id="delete">
+        UPDATE `board`
+        SET delDate = NOW(),
+        delStatus = 1
+        WHERE id = #{id}
+    </update>
 	
 	<select id="getBoardByCode" resultType="Board">
 		SELECT *
 		FROM `board`
 		WHERE `code` = #{code}
+		AND delStatus = 0
 	</select>
 	
 	<select id="getBoardByName" resultType="Board">
@@ -30,6 +33,7 @@
 			</if>
 		</set>
 		WHERE id = #{id}
+		AND delStatus = 0
 	</update>
 
 	<insert id="add" useGeneratedKeys="true" keyProperty="id">
@@ -45,6 +49,7 @@
 		SELECT count(*)
 		FROM `board`
 		WHERE 1
+		AND delStatus = 0
 		<if test="searchKeywordType == 'name'">
 			AND `name` LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
@@ -64,6 +69,7 @@
 		FROM `board`
 		WHERE
 		id = #{id}
+		AND delStatus = 0
 	</select>
 
 	<select id="getForPrintBoards" resultType="Board">
@@ -73,6 +79,7 @@
 		LEFT JOIN `member` AS M
 		ON B.memberId = M.id
 		WHERE 1
+		AND B.delStatus = 0
 		<if test="searchKeywordType == 'name'">
 			AND B.'name' LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
@@ -94,6 +101,7 @@
 		FROM `Board`
 		WHERE
 		id = #{id}
+		AND delStatus = 0
 	</select>
 
 </mapper>

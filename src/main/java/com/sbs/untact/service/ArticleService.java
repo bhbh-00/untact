@@ -33,7 +33,7 @@ public class ArticleService {
 	}
 
 	public ResultData deleteArticle(int id) {
-		articleDao.deleteArticle(id);
+		articleDao.delete(id);
 
 		genFileService.deleteGenFiles("article", id);
 
@@ -45,7 +45,7 @@ public class ArticleService {
 	}
 
 	public ResultData doAdd(Map<String, Object> param) {
-		articleDao.addArticle(param);
+		articleDao.add(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
