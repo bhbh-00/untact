@@ -129,6 +129,18 @@ body {
 						</li>
 					</c:otherwise>
 				</c:choose>
+
+				<c:if test="${loginedMember.id == null}">
+					<li>
+						<a href="../member/join" class="h-full flex items-center px-5">
+							<span class="text-xl">
+								<i class="fas fa-user"></i>
+							</span>
+							<span class="hidden md:block text-lg">&nbsp;회원가입</span>
+						</a>
+						<div></div>
+					</li>
+				</c:if>
 			</ul>
 		</nav>
 	</div>

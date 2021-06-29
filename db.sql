@@ -70,7 +70,9 @@ CREATE TABLE `member` (
     `name` CHAR(30) NOT NULL,
     `nickname` CHAR(30) NOT NULL,
     `email` CHAR(100) NOT NULL,
-    `cellphoneNo` CHAR(20) NOT NULL
+    `cellphoneNo` CHAR(20) NOT NULL,
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴여부',
+    delDate DATETIME COMMENT '탈퇴날짜'
 );
 
 # 로그인 ID로 검색했을 때
@@ -137,7 +139,11 @@ CREATE TABLE board (
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     `code` CHAR(20) UNIQUE NOT NULL,
-    `name` CHAR(20) UNIQUE NOT NULL
+    `name` CHAR(20) UNIQUE NOT NULL,
+    blindStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '블라인드여부',
+    blindDate DATETIME COMMENT '블라인드날짜',
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부',
+    delDate DATETIME COMMENT '삭제날짜'
 );
 
 # 게시판 별 리스팅 테스트 생성
@@ -170,7 +176,11 @@ CREATE TABLE reply (
     updateDate DATETIME NOT NULL,
     relId INT(10) UNSIGNED NOT NULL,
     memberId INT(10) UNSIGNED NOT NULL,
-    `body` TEXT NOT NULL
+    `body` TEXT NOT NULL,
+    delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '삭제여부',
+    delDate DATETIME COMMENT '삭제날짜',
+    blindStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '블라인드여부',
+    blindDate DATETIME COMMENT '블라인드날짜'
 );
 
 # 댓글 테스트 데이터 생성
