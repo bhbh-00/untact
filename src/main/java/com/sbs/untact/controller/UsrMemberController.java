@@ -34,7 +34,7 @@ public class UsrMemberController extends BaseController {
 
 	@RequestMapping("/usr/member/doFindLoginPw")
 	@ResponseBody
-	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
+	public String doFindLoginPw(HttpServletRequest req,  String name, String loginId, String email, String redirectUrl) {
 
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/usr/member/login";
@@ -43,6 +43,10 @@ public class UsrMemberController extends BaseController {
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
+		
+		if (member.getName().equals(name) == false) {
 			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
 		}
 

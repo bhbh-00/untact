@@ -67,12 +67,14 @@
 								</div>
 								
 								<div class="form-control">
+								<span class="p-1">이름</span>
 									<input name="name" autofocus="autofocus" type="text"
 										placeholder="이름을 입력해주세요." class="input input-bordered"
 										maxlength="20">
 								</div>
 
 								<div class="form-control mt-3 mb-4">
+								<span class="p-1">이메일</span>
 									<input name="email" autofocus="autofocus" type="email"
 										placeholder="이메일를 입력해주세요." class="input input-bordered"
 										maxlength="100">
