@@ -44,7 +44,7 @@
 						<span class="flex items-center mr-1">
 							<i class="fas fa-user-cog"></i>
 						</span>
-						<span class="font-bold"> 마이페이지 </span>
+						<span class="font-bold"> 비밀번호 확인 </span>
 					</div>
 
 					<form class="grid form-type-1" action="doCheckPassword"

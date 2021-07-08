@@ -119,7 +119,7 @@
 										${Util.numberFormat(totleItemsCountByLike)}
 									</span>
 								</a>
-							</c:when>							
+							</c:when>
 							<c:otherwise>
 								<form class="grid form-type-1" action="../like/doLike"
 									method="POST" enctype="multipart/form-data">
@@ -181,6 +181,97 @@
 		</div>
 	</div>
 
+	<!-- 댓글 수정 모달 시작 -->
+	<style>
+	.section-reply-modify {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 10;
+		display: none;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.section-reply-modify>div {
+		background-color: white;
+		padding: 20px 30px;
+		border-radius: 30px;
+	}
+</style>
+
+	<script>
+		function ReplyModify__showModal(el) {
+			const $div = $(el).closest('[data-id]');
+			const replyId = $div.attr('data-id');
+			const replyBody = $div.find('.reply-body').html();
+			$('.section-reply-modify [name="id"]').val(replyId);
+			$('.section-reply-modify [name="body"]').val(replyBody);
+			$('.section-reply-modify').css('display', 'flex');
+		}
+		function ReplyModify__hideModal() {
+			$('.section-reply-modify').hide();
+		}
+		let ReplyModify__submitFormDone = false;
+		function ReplyModify__submitForm(form) {
+			if (ReplyModify__submitFormDone) {
+				return;
+			}
+			form.body.value = form.body.value.trim();
+			if (form.body.value.length == 0) {
+				alert('내용을 입력해주세요.');
+				form.body.focus();
+				return;
+			}
+			form.submit();
+			ReplyModify__submitFormDone = true;
+		}
+	</script>
+
+	<div class="section section-reply-modify hidden">
+		<div>
+			<div class="container mx-auto">
+				<form method="POST" enctype="multipart/form-data"
+					action="../reply/doModify"
+					onsubmit="ReplyModify__submitForm(this); return false;">
+					<input type="hidden" name="id" value="${reply.id}" />
+					<input type="hidden" name="redirectUrl"
+						value="../article/detail?id=${article.id}" />
+
+					<div class="form-control">
+						<label class="label"> 내용 </label>
+						<textarea class="textarea textarea-bordered w-full h-24"
+							placeholder="내용을 입력해주세요." name="body" maxlength="2000"></textarea>
+					</div>
+
+					<div class="mt-4 btn-wrap gap-1">
+						<button type="submit" class="btn btn-primary btn-sm mb-1">
+							<span>
+								<i class="far fa-edit"></i>
+							</span>
+							&nbsp;
+							<span>수정</span>
+						</button>
+
+						<button type="button" onclick="history.back();"
+							class="btn btn-sm mb-1" title="닫기">
+							<span>
+								<i class="fas fa-list"></i>
+							</span>
+							&nbsp;
+							<span>닫기</span>
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- 댓글 수정 모달 끝 -->
+
+
 	<div class="container mx-auto mt-4">
 		<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
 			<div id="vue-app__reply-box">
@@ -218,6 +309,7 @@
 					<!-- 댓글 List -->
 					<c:forEach items="${replys}" var="reply">
 						<div class="item-bt-1">
+							<script type="text/x-template" class="reply-body hidden">${reply.body}</script>
 							<div class="flex py-5 px-4">
 								<div class="flex-shrink-0">
 									<img
@@ -246,13 +338,13 @@
 											<c:if test="${ loginedMember.id == reply.memberId }">
 
 												<!-- 수정 -->
-												<a href="../reply/modify?id=${reply.id}"
+												<button onclick="ReplyModify__showModal(this);"
 													class="flex plain-link mr-2">
 													<span>
 														<i class="fas fa-edit"></i>
 													</span>
 													<span class="hidden md:block">수정</span>
-												</a>
+												</button>
 
 												<!-- 삭제 -->
 												<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"

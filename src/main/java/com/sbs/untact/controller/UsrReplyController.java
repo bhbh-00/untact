@@ -60,7 +60,7 @@ public class UsrReplyController extends BaseController {
 		Article article = articleService.getArticleByReply(id);
 
 		if (id == null) {
-			return msgAndBack(req, "댓글 번호를 입력해주세요.");
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
 
 		Reply reply = replyService.getReply(id);
@@ -81,10 +81,12 @@ public class UsrReplyController extends BaseController {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		if (id == null) {
-			return msgAndBack(req, "댓글 번호를 입력해주세요.");
-		}
+		Article article = articleService.getArticleByReply(id);
 
+		if (id == null) {
+			return msgAndBack(req, "게시물 번호를 입력해주세요.");
+		}
+		
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
@@ -98,6 +100,9 @@ public class UsrReplyController extends BaseController {
 		}
 
 		ResultData modifyReplyRd = replyService.modify(id, body);
+
+		req.setAttribute("reply", reply);
+		req.setAttribute("article", article);
 
 		return Util.msgAndReplace(modifyReplyRd.getMsg(), redirectUrl);
 	}
