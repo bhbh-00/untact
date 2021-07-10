@@ -220,8 +220,8 @@
 								<div class="flex-shrink-0">
 									<img
 										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
-										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
-										src="${loginedMember.profileImgUrl}">
+										onerror="${reply.profileFallbackImgOnErrorHtmlAttr}"
+										src="${reply.profileImgUrl}">
 								</div>
 								<div class="flex-grow px-1">
 

@@ -183,24 +183,24 @@
 
 	<!-- 댓글 수정 모달 시작 -->
 	<style>
-	.section-reply-modify {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 10;
-		display: none;
-		align-items: center;
-		justify-content: center;
-	}
-	
-	.section-reply-modify>div {
-		background-color: white;
-		padding: 20px 30px;
-		border-radius: 30px;
-	}
+.section-reply-modify {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 10;
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.section-reply-modify>div {
+	background-color: white;
+	padding: 20px 30px;
+	border-radius: 30px;
+}
 </style>
 
 	<script>
@@ -314,8 +314,8 @@
 								<div class="flex-shrink-0">
 									<img
 										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
-										onerror="${loginedMember.profileFallbackImgOnErrorHtmlAttr}"
-										src="${loginedMember.profileImgUrl}">
+										onerror="${reply.profileFallbackImgOnErrorHtmlAttr}"
+										src="${reply.profileImgUrl}">
 								</div>
 								<div class="flex-grow px-1">
 
