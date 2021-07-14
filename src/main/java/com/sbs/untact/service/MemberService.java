@@ -37,11 +37,13 @@ public class MemberService {
 
 	@Autowired
 	private AttrService attrService;
-
+	
+	// 
 	public int getNeedToChangePasswordFreeDays() {
 		return needToChangePasswordFreeDays;
 	}
-
+	
+	// 비밀번호 등록 시점
 	private void setNeedToChangePasswordLater(int actorId) {
 		int days = getNeedToChangePasswordFreeDays();
 		attrService.setValue("member", actorId, "extra", "needToChangePassword", "0",
@@ -53,16 +55,24 @@ public class MemberService {
 		memberDao.join(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
-
+		
+		// 파일 업로드 시
 		genFileService.changeInputFileRelIds(param, id);
-
+		
+		// 비밀번호 등록 시점
 		setNeedToChangePasswordLater(id);
 
 		return new ResultData("s-1", String.format("회원가입이 정상적으로 처리되었습니다.", param.get("nickname")));
 	}
-
+	
+	// 기존회원의 아이디 조회
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
+	}
+	
+	// 기존회원의 이름과 이메일 조회
+	public Member getMemberByNameAndEmail(String name, String email) {
+		return memberDao.getMemberByNameAndEmail(name, email);
 	}
 
 	public Member getMember(int id) {
@@ -72,6 +82,7 @@ public class MemberService {
 	// 회원정보 수정
 	public ResultData modify(int id, String loginPw, int authLevel, String name, String nickname, String cellphoneNo,
 			String email) {
+		
 		memberDao.modify(id, loginPw, authLevel, name, nickname, cellphoneNo, email);
 
 		if (loginPw != null) {
@@ -81,19 +92,18 @@ public class MemberService {
 
 		return new ResultData("s-1", "회원정보가 수정되었습니다.");
 	}
-
+	
+	// 관리자
 	public boolean isAdmin(Member actor) {
 		return actor.getAuthLevel() == 7;
 	}
-
+	
+	// 
 	public Member getMemberByAuthKey(String authKey) {
 		return memberDao.getMemberByAuthKey(authKey);
 	}
-
-	public Member getMembers(int authLevel) {
-		return memberDao.getMember(authLevel);
-	}
-
+	
+	// 회원 리스트
 	public List<Member> getForPrintMembers(String searchKeywordType, String searchKeyword, int page, int itemsInAPage,
 			@RequestParam Map<String, Object> param) {
 		int limitStart = (page - 1) * itemsInAPage;
@@ -113,6 +123,7 @@ public class MemberService {
 
 	// static이여야함!
 	// static 시작
+	// 권한레벨별 이름 설정
 	public static String getAuthLevelName(Member member) {
 		switch (member.getAuthLevel()) {
 		case 7:
@@ -123,7 +134,8 @@ public class MemberService {
 			return "유형정보없음";
 		}
 	}
-
+	
+	// 권한레벨별 색깔 설정
 	public static String getAuthLevelNameColor(Member member) {
 		switch (member.getAuthLevel()) {
 		case 7:
@@ -135,12 +147,14 @@ public class MemberService {
 		}
 	}
 	// static 끝
-
+	
+	// 회원탈퇴
 	public ResultData delete(Integer id) {
 		memberDao.delete(id);
 		return new ResultData("S-1", "탈퇴 완료되었습니다.", "id", id);
 	}
-
+	
+	// 회원
 	public Member getForPrintMemberByAuthKey(String authKey) {
 		Member member = memberDao.getMemberByAuthKey(authKey);
 
@@ -170,10 +184,7 @@ public class MemberService {
 		return memberDao.getMemberByLoginPw(loginPw);
 	}
 
-	public Member getMemberByNameAndEmail(String name, String email) {
-		return memberDao.getMemberByNameAndEmail(name, email);
-	}
-
+	
 	// 비밀번호 찾기 메일 보내기
 	public ResultData notifyTempLoginPwByEmail(Member actor) {
 		String title = "[" + siteName + "] 임시 패스워드 발송";

@@ -33,6 +33,7 @@ public class AdmMemberController extends BaseController {
 	}
 
 	// checkPasswordAuthCode : 체크비밀번호인증코드
+	// 비밀번호 확인
 	@RequestMapping("/adm/member/doCheckPassword")
 	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUrl) {
 
@@ -63,6 +64,7 @@ public class AdmMemberController extends BaseController {
 		return ("/adm/member/findLoginPw");
 	}
 
+	// 비밀번호 찾기
 	@RequestMapping("/adm/member/doFindLoginPw")
 	@ResponseBody
 	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
@@ -92,6 +94,7 @@ public class AdmMemberController extends BaseController {
 		return ("/adm/member/findLoginId");
 	}
 
+	// 아이디 찾기
 	@RequestMapping("/adm/member/doFindLoginId")
 	@ResponseBody
 	public String dofindLoginId(HttpServletRequest req, String name, String email, String redirectUrl) {
@@ -109,6 +112,7 @@ public class AdmMemberController extends BaseController {
 		return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
 	}
 
+	// 회원 탈퇴
 	@RequestMapping("/adm/member/doDelete")
 	@ResponseBody
 	public ResultData doDelete(Integer id, HttpServletRequest req) {
@@ -126,6 +130,7 @@ public class AdmMemberController extends BaseController {
 		return memberService.delete(id);
 	}
 
+	// 회원 탈퇴
 	@RequestMapping("/adm/member/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 
@@ -144,6 +149,7 @@ public class AdmMemberController extends BaseController {
 		return "/adm/member/detail";
 	}
 
+	// 회원 리스트
 	@RequestMapping("/adm/member/list")
 	public String showList(HttpServletRequest req, @RequestParam Map<String, Object> param,
 			@RequestParam(defaultValue = "1") int page) {
@@ -212,6 +218,7 @@ public class AdmMemberController extends BaseController {
 		return "adm/member/list";
 	}
 
+	// 회원가입 시 아이디의 조건 확인
 	@RequestMapping("/adm/member/getLoginIdDup")
 	@ResponseBody
 	public ResultData getLoginIdDup(String loginId) {
@@ -240,6 +247,7 @@ public class AdmMemberController extends BaseController {
 			return new ResultData("F-1", "아이디는 영문소문자와 숫자의 조합으로 구성되어야 합니다.");
 		}
 
+		// 아이디 중복 확인
 		Member existingMember = memberService.getMemberByLoginId(loginId);
 
 		if (existingMember != null) {
@@ -250,48 +258,33 @@ public class AdmMemberController extends BaseController {
 
 	}
 
+	// 회원가입
 	@RequestMapping("/adm/member/join")
 	public String ShowJoin() {
 		return "/adm/member/join";
 	}
 
+	// 회원가입
 	@RequestMapping("/adm/member/doJoin")
 	@ResponseBody
 	public String doJoin(@RequestParam Map<String, Object> param) {
 
-		if (param.get("loginId") == null) {
-			return Util.msgAndBack("아이디를 입력해주세요.");
-		}
-
+		// 아이디 중복 확인
 		Member existingMember = memberService.getMemberByLoginId((String) param.get("loginId"));
 
 		if (existingMember != null) {
 			return Util.msgAndBack("이미 사용 중인 아이디입니다.");
 		}
 
-		if (param.get("loginPw") == null) {
-			return Util.msgAndBack("비밀번호를 입력해주세요.");
-		}
-		if (param.get("name") == null) {
-			return Util.msgAndBack("이름을 입력해주세요.");
+		// 이름과 이메일 중복 확인
+		existingMember = memberService.getMemberByNameAndEmail((String) param.get("name"), (String) param.get("email"));
+
+		if (existingMember != null) {
+			return Util.msgAndBack(String.format("%s님 이미 가입되어 있는「%s」메일 주소입니다. (%s)", param.get("name"),
+					param.get("email"), existingMember.getRegDate()));
 		}
 
-		if (param.get("authLevel") == null) {
-			return Util.msgAndBack("권한번호를 선택해주세요.");
-		}
-
-		if (param.get("nickname") == null) {
-			return Util.msgAndBack("닉네임을 입력해주세요.");
-		}
-
-		if (param.get("cellphoneNo") == null) {
-			return Util.msgAndBack("핸드폰을 입력해주세요.");
-		}
-
-		if (param.get("email") == null) {
-			return Util.msgAndBack("이메일을 입력해주세요.");
-		}
-
+		// 회원가입
 		memberService.join(param);
 
 		String msg = String.format("%s님! 가입을 환영합니다.", param.get("nickname"));
@@ -301,6 +294,7 @@ public class AdmMemberController extends BaseController {
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
+	// 로그아웃
 	@RequestMapping("/adm/member/doLogout")
 	@ResponseBody
 	public String doLogout(HttpSession session) {
@@ -310,11 +304,13 @@ public class AdmMemberController extends BaseController {
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
 	}
 
+	// 로그인
 	@RequestMapping("/adm/member/login")
 	public String ShowLogin() {
 		return ("/adm/member/login");
 	}
 
+	// 관리자 페이지 로그인
 	@RequestMapping("/adm/member/doLogin")
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, String redirectUrl, HttpSession session) {
@@ -323,6 +319,7 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("아이디를 입력해주세요.");
 		}
 
+		// 아이디 확인
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
@@ -333,10 +330,12 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("비밀번호를 입력해주세요.");
 		}
 
+		// 비밀번호 확인
 		if (member.getLoginPw().equals(loginPw) == false) {
 			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
 		}
 
+		// 관리자 계정이 맞는지 확인
 		if (memberService.isAdmin(member) == false) {
 			return Util.msgAndBack("관리자만 이용 가능합니다.");
 		}
@@ -347,6 +346,7 @@ public class AdmMemberController extends BaseController {
 
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
 
+		// 비밀번호 변경 90일 확인
 		boolean needToChangePassword = memberService.needToChangePassword(member.getId());
 
 		if (needToChangePassword) {
@@ -354,6 +354,7 @@ public class AdmMemberController extends BaseController {
 			redirectUrl = "../member/mypage?id=" + member.getId();
 		}
 
+		// 임시비밀 번호 확인
 		boolean usingTempPassword = memberService.usingTempPassword(member.getId());
 
 		if (usingTempPassword) {
@@ -364,6 +365,7 @@ public class AdmMemberController extends BaseController {
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
 
+	// 회원정보 수정
 	@RequestMapping("/adm/member/modify")
 	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
 
@@ -386,6 +388,7 @@ public class AdmMemberController extends BaseController {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
+		// 파일
 		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
 		Map<String, GenFile> filesMap = new HashMap<>();
 
@@ -400,6 +403,7 @@ public class AdmMemberController extends BaseController {
 		return "/adm/member/modify";
 	}
 
+	// 회원정보 수정
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
 	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,

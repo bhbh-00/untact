@@ -237,9 +237,9 @@
 				<form method="POST" enctype="multipart/form-data"
 					action="../reply/doModify"
 					onsubmit="ReplyModify__submitForm(this); return false;">
-					<input type="hidden" name="id" value="${reply.id}" />
+					<input type="hidden" name="id"/>
 					<input type="hidden" name="redirectUrl"
-						value="../article/detail?id=${article.id}" />
+						value="../article/detail?id=${reply.relId}" />
 
 					<div class="form-control">
 						<label class="label"> 내용 </label>

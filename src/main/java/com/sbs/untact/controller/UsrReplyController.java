@@ -1,6 +1,5 @@
 package com.sbs.untact.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,20 +56,17 @@ public class UsrReplyController extends BaseController {
 	@RequestMapping("/usr/reply/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
-		Article article = articleService.getArticleByReply(id);
-
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
 		}
-
+		
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
 			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
-
+		
 		req.setAttribute("reply", reply);
-		req.setAttribute("article", article);
 
 		return "/usr/reply/modify";
 	}
@@ -80,8 +76,6 @@ public class UsrReplyController extends BaseController {
 	public String doModify(Integer id, String body, HttpServletRequest req, String redirectUrl) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		Article article = articleService.getArticleByReply(id);
 
 		if (id == null) {
 			return msgAndBack(req, "게시물 번호를 입력해주세요.");
@@ -102,7 +96,6 @@ public class UsrReplyController extends BaseController {
 		ResultData modifyReplyRd = replyService.modify(id, body);
 
 		req.setAttribute("reply", reply);
-		req.setAttribute("article", article);
 
 		return Util.msgAndReplace(modifyReplyRd.getMsg(), redirectUrl);
 	}

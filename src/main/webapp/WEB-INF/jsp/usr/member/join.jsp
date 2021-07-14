@@ -78,7 +78,7 @@
 		}
 
 		if (form.loginId.value != JoinForm__validLoginId) {
-			alert('아이디 중복체크를 해주세요.');
+			alert('입력하신 아이디를 확인해 주세요.');
 			form.loginId.focus();
 
 			return;

@@ -5,6 +5,7 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
+ 	<!--  -->
 	<select id="getMemberTotleCount" resultType="int">
 		SELECT count(*)
 		FROM `member`
@@ -35,16 +36,7 @@
 		</if>
 		ORDER BY id DESC
 	</select>
-
-	<select id="getMemberByNameAndEmail" resultType="Member">
-		SELECT *
-		FROM `member`
-		WHERE
-		`name` = #{name}
-		AND email = #{email}
-		AND delStatus = 0
-	</select>
-
+	
 	<select id="getMemberByLoginPw" resultType="Member">
 		SELECT *
 		FROM `member`
@@ -59,7 +51,8 @@
         delStatus = 1
         WHERE id = #{id}
 	</update>
-
+	
+	<!-- 회원가입 -->
 	<insert id="join" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO `member`
@@ -74,12 +67,23 @@
 		cellphoneNo = #{cellphoneNo},
 		email = #{email}
 	</insert>
-
+	
+	<!-- 기존 회원의 아이디 찾기 -->
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
 		FROM `member`
 		WHERE
 		loginId = #{loginId}
+		AND delStatus = 0
+	</select>
+	
+	<!-- 기존 회원의 이름과 이메일 찾기 -->
+	<select id="getMemberByNameAndEmail" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE
+		`name` = #{name}
+		AND email = #{email}
 		AND delStatus = 0
 	</select>
 
@@ -126,14 +130,6 @@
 		AND delStatus = 0
 	</select>
 
-	<select id="getMembers" resultType="Member">
-		SELECT *
-		FROM `member`
-		WHERE
-		authLevel = #{authLevel}
-		AND delStatus = 0
-	</select>
-	
 	<update id="modify">
 		UPDATE `member`
 		<set>

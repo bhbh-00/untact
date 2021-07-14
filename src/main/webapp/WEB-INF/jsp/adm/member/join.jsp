@@ -11,58 +11,57 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
-<script>
-<!--  const = var / 중복 방지를 위한.  -->
-const JoinForm__checkAndSubmitDone = false;
-
-//로그인 아이디 중복체크 함수 ajax
-let JoinForm__validLoginId = '';
-function JoinForm__checkLoginIdDup(obj) {
+	<script>
+	const JoinForm__checkAndSubmitDone = false;
 	
-	const form = $('.formLogin').get(0);
-	
-	form.loginId.value = form.loginId.value.trim();
-	
-	if (form.loginId.value.length == 0) {
-		return;
+	//로그인 아이디 중복체크 함수 ajax
+	let JoinForm__validLoginId = '';
+	function JoinForm__checkLoginIdDup(obj) {
+		
+		const form = $('.formLogin').get(0);
+		
+		form.loginId.value = form.loginId.value.trim();
+		
+		if (form.loginId.value.length == 0) {
+			return;
+		}
+		
+		$.get(
+			'getLoginIdDup',
+			// url
+			{
+				loginId:form.loginId.value
+			},
+			function(data) {
+				
+				let colorClass = 'text-green-500';
+				
+				if ( data.fail ) {	
+					colorClass = 'text-red-500';
+				}
+				
+				$('.loginIdInputMsg').html("<span class='" + colorClass + "'>" + data.msg + "</span>");
+				
+				if ( data.fail ) {
+					form.loginId.focus();
+				}
+				
+				else {
+					JoinForm__validLoginId = data.body.loginId;
+				}
+				
+			
+			},
+			
+			'json'
+			
+			/* 형식
+			(html -> html)
+			(json -> json)
+			*/
+		);
 	}
 	
-	// 편지라고 생각하면 됌!
-	$.get(
-		'getLoginIdDup',
-		// url
-		{
-			loginId:form.loginId.value
-		},
-		function(data) {
-			
-			let colorClass = 'text-green-500';
-			
-			if ( data.fail ) {	
-				colorClass = 'text-red-500';
-			}
-			
-			$('.loginIdInputMsg').html("<span class='" + colorClass + "'>" + data.msg + "</span>");
-			
-			if ( data.fail ) {
-				form.loginId.focus();
-			}
-			
-			else {
-				JoinForm__validLoginId = data.body.loginId;
-			}
-			
-		
-		},
-		
-		'json'
-		
-		/* 형식
-		(html -> html)
-		(json -> json)
-		*/
-	);
-}
 function JoinForm__checkAndSubmit(form) {
 	
 	if ( JoinForm__checkAndSubmitDone ) {
@@ -79,7 +78,7 @@ function JoinForm__checkAndSubmit(form) {
 	}
 	
 	if ( form.loginId.value != JoinForm__validLoginId ) {
-		alert('아이디 중복체크를 해주세요.');
+		alert('입력하신 아이디를 확인해 주세요.');
 		form.loginId.focus();
 		
 		return;
