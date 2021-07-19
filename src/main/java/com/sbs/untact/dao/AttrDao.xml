@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sbs.untact.dao.AttrDao">
-    <select id="get" resultType="Attr">
+	<select id="get" resultType="Attr">
         <![CDATA[
 		SELECT *
 		FROM attr
@@ -13,9 +13,20 @@
 		AND type2Code = #{type2Code}
 		AND (expireDate >= NOW() OR expireDate IS NULL)
 		 ]]>
-    </select>
-
-    <select id="getValue" resultType="String">
+	</select>
+	
+	<!-- 설정 -->
+	<insert id="setValue">
+		INSERT INTO attr (regDate, updateDate, `relTypeCode`, `relId`, `typeCode`,
+		`type2Code`, `value`, expireDate)
+		VALUES (NOW(), NOW(), #{relTypeCode}, #{relId}, #{typeCode}, #{type2Code},
+		#{value}, #{expireDate})
+		ON DUPLICATE KEY UPDATE
+		updateDate = NOW() , `value` = #{value}, expireDate = #{expireDate}
+	</insert>
+	
+	<!-- 값 가져오기 -->
+	<select id="getValue" resultType="String">
         <![CDATA[
 		SELECT value
 		FROM attr
@@ -25,21 +36,14 @@
 		AND type2Code = #{type2Code}
 		AND (expireDate >= NOW() OR expireDate IS NULL)
 		 ]]>
-    </select>
+	</select>
 
-    <delete id="remove">
-        DELETE FROM attr
-        WHERE relId = #{relId}
-        AND relTypeCode = #{relTypeCode}
-        AND typeCode = #{typeCode}
-        AND type2Code = #{type2Code}
-    </delete>
-
-    <insert id="setValue">
-        INSERT INTO attr (regDate, updateDate, `relTypeCode`, `relId`, `typeCode`, `type2Code`, `value`, expireDate)
-        VALUES (NOW(), NOW(), #{relTypeCode}, #{relId}, #{typeCode}, #{type2Code}, #{value}, #{expireDate})
-        ON DUPLICATE KEY UPDATE
-        updateDate = NOW() , `value` = #{value}, expireDate = #{expireDate}
-    </insert>
+	<delete id="remove">
+		DELETE FROM attr
+		WHERE relId = #{relId}
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+	</delete>
 
 </mapper> 

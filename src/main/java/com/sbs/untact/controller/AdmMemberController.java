@@ -67,15 +67,20 @@ public class AdmMemberController extends BaseController {
 	// 비밀번호 찾기
 	@RequestMapping("/adm/member/doFindLoginPw")
 	@ResponseBody
-	public String doFindLoginPw(HttpServletRequest req, String loginId, String email, String redirectUrl) {
+	public String doFindLoginPw(HttpServletRequest req, String name, String loginId, String email, String redirectUrl) {
 
 		if (Util.isEmpty(redirectUrl)) {
 			redirectUrl = "/adm/member/login";
 		}
 
+		// 기존 회원의 아이디 확인
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
+			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
+		}
+
+		if (member.getName().equals(name) == false) {
 			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
 		}
 
@@ -83,6 +88,7 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
 		}
 
+		// 비밀번호 찾기 메일 보내기
 		ResultData notifyTempLoginPwByEmailRs = memberService.notifyTempLoginPwByEmail(member);
 
 		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
@@ -103,6 +109,7 @@ public class AdmMemberController extends BaseController {
 			redirectUrl = "/";
 		}
 
+		// 기존 회원의 이름과 이메일 확인
 		Member member = memberService.getMemberByNameAndEmail(name, email);
 
 		if (member == null) {
@@ -350,7 +357,7 @@ public class AdmMemberController extends BaseController {
 		boolean needToChangePassword = memberService.needToChangePassword(member.getId());
 
 		if (needToChangePassword) {
-			msg = "현재 비밀번호를 사용한지" + memberService.getNeedToChangePasswordFreeDays() + "일이 지났습니다. 비밀번호를 변경해주세요.";
+			msg = "현재 비밀번호를 사용한지 " + memberService.getNeedToChangePasswordFreeDays() + "일이 지났습니다. 비밀번호를 변경해주세요.";
 			redirectUrl = "../member/mypage?id=" + member.getId();
 		}
 

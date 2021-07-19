@@ -21,7 +21,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
-	
+
+	// 현재시간
 	public static String getCurrenDate() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
@@ -60,6 +61,7 @@ public class Util {
 		return map;
 	}
 
+	//
 	public static int getAsInt(Object object, int defaultValue) {
 		if (object instanceof BigInteger) {
 			return ((BigInteger) object).intValue();
@@ -78,6 +80,7 @@ public class Util {
 		return defaultValue;
 	}
 
+	// 메시지(알림 창)와 이전으로 돌아가기
 	public static String msgAndBack(String msg) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<script>");
@@ -89,6 +92,7 @@ public class Util {
 		return sb.toString();
 	}
 
+	// 메시지(알림 창)와 다음 페이지로 가기
 	public static String msgAndReplace(String msg, String url) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<script>");
@@ -112,6 +116,7 @@ public class Util {
 		return "";
 	}
 
+	//
 	public static String toJsonStr(Object obj) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -123,6 +128,7 @@ public class Util {
 		return "";
 	}
 
+	//
 	public static Map<String, Object> getParamMap(HttpServletRequest request) {
 		Map<String, Object> param = new HashMap<>();
 
@@ -138,6 +144,7 @@ public class Util {
 		return param;
 	}
 
+	// URL의 인코딩 가져오기
 	public static String getUrlEncoded(String str) {
 		try {
 			return URLEncoder.encode(str, "UTF-8");
@@ -146,6 +153,7 @@ public class Util {
 		}
 	}
 
+	// 만약에 없다면
 	public static <T> T ifNull(T data, T defaultValue) {
 		return data != null ? data : defaultValue;
 	}
@@ -181,6 +189,7 @@ public class Util {
 		return true;
 	}
 
+	// 만약에 공백이라면
 	public static <T> T ifEmpty(T data, T defaultValue) {
 		if (isEmpty(data)) {
 			return defaultValue;
@@ -189,6 +198,7 @@ public class Util {
 		return data;
 	}
 
+	// 파일의 타입에 관련된
 	public static String getFileExtTypeCodeFromFileName(String fileName) {
 		String ext = getFileExtFromFileName(fileName).toLowerCase();
 
@@ -209,6 +219,7 @@ public class Util {
 		return "etc";
 	}
 
+	// 파일의 타입에 관련된
 	public static String getFileExtType2CodeFromFileName(String fileName) {
 		String ext = getFileExtFromFileName(fileName).toLowerCase();
 
@@ -233,8 +244,8 @@ public class Util {
 		return "etc";
 	}
 
+	// 파일 이름으로부터 확장자만 따로 빼서 주는
 	public static String getFileExtFromFileName(String fileName) {
-		// 파일 이름으로부터 확장자만 따로 빼서 주는
 
 		int pos = fileName.lastIndexOf(".");
 		String ext = fileName.substring(pos + 1);
@@ -242,6 +253,7 @@ public class Util {
 		return ext;
 	}
 
+	// 현재의 년도와 월
 	public static String getNowYearMonthDateStr() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy_MM");
 
@@ -250,11 +262,13 @@ public class Util {
 		return dateStr;
 	}
 
+	//
 	public static List<Integer> getListDividedBy(String str, String divideBy) {
 		return Arrays.asList(str.split(divideBy)).stream().map(s -> Integer.parseInt(s.trim()))
 				.collect(Collectors.toList());
 	}
 
+	// 파일 삭제에 관련된
 	public static boolean delteFile(String filePath) {
 		java.io.File ioFile = new java.io.File(filePath);
 		if (ioFile.exists()) {
@@ -386,11 +400,12 @@ public class Util {
 		}
 	}
 
-	// 메일보내기
+	// 새로운 uri와 인코딩 가져오기
 	public static String getNewUriAndEncoded(String url, String paramName, String pramValue) {
 		return getUrlEncoded(getNewUrl(url, paramName, pramValue));
 	}
 
+	// 임시 비밀번호
 	public static String getTempPassword(int length) {
 		int index = 0;
 		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -408,7 +423,7 @@ public class Util {
 
 	// 유효시간 설정
 	public static String getDateStrLater(long seconds) {
-		SimpleDateFormat format  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		String dateStr = format.format(System.currentTimeMillis() + seconds * 1000);
 

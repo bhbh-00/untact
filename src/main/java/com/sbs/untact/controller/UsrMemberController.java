@@ -26,13 +26,13 @@ public class UsrMemberController extends BaseController {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
+
 	// 비밀번호 찾기
 	@RequestMapping("/usr/member/findLoginPw")
 	public String ShowfindLoginPw() {
 		return ("/usr/member/findLoginPw");
 	}
-	
+
 	// 비밀번호 찾기
 	@RequestMapping("/usr/member/doFindLoginPw")
 	@ResponseBody
@@ -60,7 +60,7 @@ public class UsrMemberController extends BaseController {
 
 		return Util.msgAndReplace(notifyTempLoginPwByEmailRs.getMsg(), redirectUrl);
 	}
-	
+
 	// 아이디 찾기
 	@RequestMapping("/usr/member/findLoginId")
 	public String ShowfindLoginId() {
@@ -83,7 +83,7 @@ public class UsrMemberController extends BaseController {
 
 		return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
 	}
-	
+
 	// 비밀번호 확인
 	@RequestMapping("/usr/member/checkPassword")
 	public String ShowCheckPassword(HttpServletRequest req) {
@@ -104,11 +104,13 @@ public class UsrMemberController extends BaseController {
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
-
+		
+		// checkPasswordAuthCode 생성
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
 		redirectUrl = "../member/modify?id=" + loginedMember.getId();
-
+		
+		// checkPasswordAuthCode가 포함 된 새로운 url 가져오기
 		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
 
 		req.setAttribute("loginedMember", loginedMember);
@@ -120,7 +122,7 @@ public class UsrMemberController extends BaseController {
 	@RequestMapping("/usr/member/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
-		
+
 		if (id == null) {
 			return msgAndBack(req, "id를 입력해주세요.");
 		}
@@ -137,7 +139,7 @@ public class UsrMemberController extends BaseController {
 
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
-	
+
 	// 내 프로필 보기
 	@RequestMapping("/usr/member/mypage")
 	public String showMyPage(HttpServletRequest req, Integer id) {
@@ -156,7 +158,7 @@ public class UsrMemberController extends BaseController {
 
 		return "/usr/member/mypage";
 	}
-	
+
 	// 회원가입 시 아이디의 조건 확인
 	@RequestMapping("/usr/member/getLoginIdDup")
 	@ResponseBody
@@ -185,7 +187,7 @@ public class UsrMemberController extends BaseController {
 		if (Util.isStandardLoginIdString(loginId) == false) {
 			return new ResultData("F-1", "아이디는 영문소문자와 숫자의 조합으로 구성 되어야 합니다.");
 		}
-		
+
 		// 아이디 중복 확인
 		Member existingMember = memberService.getMemberByLoginId(loginId);
 
@@ -196,7 +198,7 @@ public class UsrMemberController extends BaseController {
 		return new ResultData("S-1", String.format("%s(은)는 사용 가능한 아이디 입니다.", loginId), "loginId", loginId);
 
 	}
-	
+
 	// 회원가입
 	@RequestMapping("/usr/member/join")
 	public String ShowJoin() {
@@ -232,7 +234,7 @@ public class UsrMemberController extends BaseController {
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
-	
+
 	// 로그아웃
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
@@ -242,13 +244,13 @@ public class UsrMemberController extends BaseController {
 
 		return Util.msgAndReplace("로그아웃 되었습니다.", "../member/login");
 	}
-	
+
 	// 로그인
 	@RequestMapping("/usr/member/login")
 	public String ShowLogin() {
 		return ("/usr/member/login");
 	}
-	
+
 	// 로그인
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
@@ -257,7 +259,7 @@ public class UsrMemberController extends BaseController {
 		if (loginId == null) {
 			return Util.msgAndBack("아이디를 입력해주세요.");
 		}
-		
+
 		// 아이디 확인
 		Member member = memberService.getMemberByLoginId(loginId);
 
@@ -268,7 +270,7 @@ public class UsrMemberController extends BaseController {
 		if (loginPw == null) {
 			return Util.msgAndBack("비밀번호를 입력해주세요.");
 		}
-		
+
 		// 비밀번호 확인
 		if (member.getLoginPw().equals(loginPw) == false) {
 			return Util.msgAndBack("비밀번호가 일치하지 않습니다.");
@@ -279,15 +281,15 @@ public class UsrMemberController extends BaseController {
 		String msg = String.format("%s님! 환영합니다.", member.getNickname());
 
 		redirectUrl = Util.ifEmpty(redirectUrl, "../home/main");
-		
+
 		// 비밀번호 변경 90일 확인
 		boolean needToChangePassword = memberService.needToChangePassword(member.getId());
 
 		if (needToChangePassword) {
-			msg = "현재 비밀번호를 사용한지" + memberService.getNeedToChangePasswordFreeDays() + "일이 지났습니다. 비밀번호를 변경해주세요.";
+			msg = "현재 비밀번호를 사용한지 " + memberService.getNeedToChangePasswordFreeDays() + "일이 지났습니다. 비밀번호를 변경해주세요.";
 			redirectUrl = "../member/mypage?id=" + member.getId();
 		}
-		
+
 		// 임시비밀 번호 확인
 		boolean usingTempPassword = memberService.usingTempPassword(member.getId());
 
@@ -298,13 +300,14 @@ public class UsrMemberController extends BaseController {
 
 		return Util.msgAndReplace(msg, redirectUrl);
 	}
-	
-	//	회원정보 수정
+
+	// 회원 정보 수정
 	@RequestMapping("/usr/member/modify")
 	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		
+
+		// checkPasswordAuthCode 확인
 		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
 				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
 
@@ -316,12 +319,13 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
 		}
 
+		// 회원의 번호로 정보 불러오기
 		Member member = memberService.getForPrintMember(id);
 
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
-		
+
 		// 파일 확인
 		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
 		Map<String, GenFile> filesMap = new HashMap<>();
@@ -336,8 +340,8 @@ public class UsrMemberController extends BaseController {
 
 		return "/usr/member/modify";
 	}
-	
-	//	회원정보 수정
+
+	// 회원 정보 수정
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
 	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,
@@ -345,6 +349,7 @@ public class UsrMemberController extends BaseController {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
+		// checkPasswordAuthCode 확인
 		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
 				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
 
@@ -352,6 +357,7 @@ public class UsrMemberController extends BaseController {
 			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
 		}
 
+		// 회원 정보 수정
 		ResultData modifyRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
 				cellphoneNo, email);
 

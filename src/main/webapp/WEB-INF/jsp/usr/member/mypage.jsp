@@ -102,7 +102,7 @@
 							<span>수정</span>
 						</span>
 					</a>
-					<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+					<a onclick="if ( !confirm('회원 탈퇴하시겠습니까?') ) return false;"
 						href="doDelete?id=${loginedMember.id}" class="text-red-500 ">
 						<span>
 							<i class="fas fa-trash"></i>

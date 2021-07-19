@@ -25,6 +25,19 @@ public class AttrService {
 		return attrDao.get(relTypeCode, relId, typeCode, type2Code);
 	}
 
+	// 설정
+	public int setValue(String relTypeCode, int relId, String typeCode, String type2Code, String value,
+			String expireDate) {
+		attrDao.setValue(relTypeCode, relId, typeCode, type2Code, value, expireDate);
+		Attr attr = get(relTypeCode, relId, typeCode, type2Code);
+
+		if (attr != null) {
+			return attr.getId();
+		}
+
+		return -1;
+	}
+
 	public int setValue(String name, String value, String expireDate) {
 		String[] nameBits = name.split("__");
 		String relTypeCode = nameBits[0];
@@ -34,7 +47,8 @@ public class AttrService {
 
 		return setValue(relTypeCode, relId, typeCode, type2Code, value, expireDate);
 	}
-
+	
+	// 가져오기
 	public String getValue(String name) {
 		String[] nameBits = name.split("__");
 		String relTypeCode = nameBits[0];
@@ -69,15 +83,4 @@ public class AttrService {
 		return attrDao.remove(relTypeCode, relId, typeCode, type2Code);
 	}
 
-	public int setValue(String relTypeCode, int relId, String typeCode, String type2Code, String value,
-			String expireDate) {
-		attrDao.setValue(relTypeCode, relId, typeCode, type2Code, value, expireDate);
-        Attr attr = get(relTypeCode, relId, typeCode, type2Code);
-
-        if (attr != null) {
-            return attr.getId();
-        }
-
-        return -1;
-	}
 }

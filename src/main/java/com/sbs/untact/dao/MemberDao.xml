@@ -68,7 +68,7 @@
 		email = #{email}
 	</insert>
 	
-	<!-- 기존 회원의 아이디 찾기 -->
+	<!-- 기존 회원의 아이디 -->
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
 		FROM `member`
@@ -77,7 +77,7 @@
 		AND delStatus = 0
 	</select>
 	
-	<!-- 기존 회원의 이름과 이메일 찾기 -->
+	<!-- 기존 회원의 이름과 이메일 확인 -->
 	<select id="getMemberByNameAndEmail" resultType="Member">
 		SELECT *
 		FROM `member`
@@ -86,7 +86,39 @@
 		AND email = #{email}
 		AND delStatus = 0
 	</select>
-
+	
+	<!-- 회원정보 수정 -->
+	<update id="modify">
+		UPDATE `member`
+		<set>
+			<if
+				test="loginPw != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
+				updateDate = NOW(),
+			</if>
+			<if test="loginPw != null">
+				loginPw = #{loginPw},
+			</if>
+			<if test="authLevel != null">
+				authLevel = #{authLevel},
+			</if>
+			<if test="name != null">
+				`name` = #{name},
+			</if>
+			<if test="nickname != null">
+				nickname = #{nickname},
+			</if>
+			<if test="cellphoneNo != null">
+				cellphoneNo = #{cellphoneNo},
+			</if>
+			<if test="email != null">
+				email = #{email}
+			</if>
+		</set>
+		WHERE id = #{id}
+		AND delStatus = 0
+	</update>
+	
+	<!-- 회원의 번호로 정보 불러오기 -->
 	<select id="getForPrintMember" resultType="Member">
 		SELECT *
 		FROM `member`
@@ -130,34 +162,6 @@
 		AND delStatus = 0
 	</select>
 
-	<update id="modify">
-		UPDATE `member`
-		<set>
-			<if
-				test="loginPw != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
-				updateDate = NOW(),
-			</if>
-			<if test="loginPw != null">
-				loginPw = #{loginPw},
-			</if>
-			<if test="authLevel != null">
-				authLevel = #{authLevel},
-			</if>
-			<if test="name != null">
-				`name` = #{name},
-			</if>
-			<if test="nickname != null">
-				nickname = #{nickname},
-			</if>
-			<if test="cellphoneNo != null">
-				cellphoneNo = #{cellphoneNo},
-			</if>
-			<if test="email != null">
-				email = #{email}
-			</if>
-		</set>
-		WHERE id = #{id}
-		AND delStatus = 0
-	</update>
+	
 
 </mapper>
