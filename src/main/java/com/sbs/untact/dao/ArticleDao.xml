@@ -202,7 +202,8 @@
 		</if>
 		ORDER BY id DESC
 	</select>
-
+	
+	<!-- 게시물 작성 -->
 	<insert id="add" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO article
 		SET regDate = NOW(),

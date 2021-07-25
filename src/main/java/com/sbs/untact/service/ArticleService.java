@@ -36,7 +36,8 @@ public class ArticleService {
 	// 게시물 삭제
 	public ResultData delete(int id) {
 		articleDao.delete(id);
-
+		
+		// 파일 삭제
 		genFileService.deleteGenFiles("article", id);
 
 		return new ResultData("S-1", "삭제되었습니다.", "id", id);
@@ -46,12 +47,14 @@ public class ArticleService {
 	public Article getArticle(int id) {
 		return articleDao.getArticle(id);
 	}
-
+	
+	// 게시물 작성
 	public ResultData doAdd(Map<String, Object> param) {
 		articleDao.add(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
-
+		
+		// 파일 업로드 시 파일의 번호를 게시물의 번호를 바꾼다.
 		genFileService.changeInputFileRelIds(param, id);
 
 		return new ResultData("s-1", "게시물이 추가되었습니다.", "id", id);

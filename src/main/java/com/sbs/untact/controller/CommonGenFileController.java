@@ -35,13 +35,15 @@ public class CommonGenFileController extends BaseController {
 
 	@Autowired
 	private GenFileService genFileService;
-
+	
+	// 파일 업로드
 	@RequestMapping("/common/genFile/doUpload")
 	@ResponseBody
 	public ResultData doUpload(@RequestParam Map<String, Object> param, MultipartRequest multipartRequest) {
 		return genFileService.saveFiles(param, multipartRequest);
 	}
-
+	
+	// 파일 다운로드
 	@GetMapping("/common/genFile/doDownload")
 	public ResponseEntity<Resource> downloadFile(int id, HttpServletRequest request) throws IOException {
 		GenFile genFile = genFileService.getGenFile(id);
@@ -60,7 +62,8 @@ public class CommonGenFileController extends BaseController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + genFile.getOriginFileName() + "\"")
 				.contentType(MediaType.parseMediaType(contentType)).body(resource);
 	}
-
+	
+	// 파일 보기
 	@GetMapping("/common/genFile/file/{relTypeCode}/{relId}/{typeCode}/{type2Code}/{fileNo}")
 	public ResponseEntity<Resource> showFile(HttpServletRequest request, @PathVariable String relTypeCode,
 			@PathVariable int relId, @PathVariable String typeCode, @PathVariable String type2Code,

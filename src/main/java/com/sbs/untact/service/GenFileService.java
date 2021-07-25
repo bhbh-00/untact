@@ -27,7 +27,8 @@ public class GenFileService {
 
 	@Autowired
 	private GenFileDao genFileDao;
-
+	
+	// 
 	public ResultData saveMeta(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo,
 			String originFileName, String fileExtTypeCode, String fileExtType2Code, String fileExt, int fileSize,
 			String fileDir) {
