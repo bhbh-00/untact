@@ -5,26 +5,16 @@
 
 <mapper namespace="com.sbs.untact.dao.BoardDao">
 
+	<!-- 게시판 삭제 -->
 	<update id="delete">
-        UPDATE `board`
-        SET delDate = NOW(),
-        delStatus = 1
-        WHERE id = #{id}
-    </update>
+		UPDATE `board`
+		SET delDate = NOW(),
+		delStatus = 1
+		WHERE
+		id = #{id}
+	</update>
 	
-	<select id="getBoardByCode" resultType="Board">
-		SELECT *
-		FROM `board`
-		WHERE `code` = #{code}
-		AND delStatus = 0
-	</select>
-	
-	<select id="getBoardByName" resultType="Board">
-		SELECT *
-		FROM `board`
-		WHERE `name` = #{name}
-	</select>
-	
+	<!-- 게시판 수정 -->
 	<update id="modify">
 		UPDATE `board`
 		<set>
@@ -35,47 +25,49 @@
 		WHERE id = #{id}
 		AND delStatus = 0
 	</update>
+	
+	<!-- 게시판 번호 확인 -->
+	<select id="getBoard" resultType="Board">
+		SELECT *
+		FROM `Board`
+		WHERE
+		id =
+		#{id}
+		AND delStatus = 0
+	</select>
 
+	<!-- 게시판 생성 -->
 	<insert id="add" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `board`
+		INSERT INTO
+		`board`
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		memberId = #{memberId},
 		code = #{code},
 		`name` = #{name}
 	</insert>
-
-	<select id="getBoardsTotleCount" resultType="int">
-		SELECT count(*)
-		FROM `board`
-		WHERE 1
-		AND delStatus = 0
-		<if test="searchKeywordType == 'name'">
-			AND `name` LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchKeywordType == 'code'">
-			AND `code` LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchKeywordType == 'nameAndCode'">
-			AND (`name` LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			code
-			LIKE CONCAT('%', #{searchKeyword}, '%'))
-		</if>
-		ORDER BY id DESC
-	</select>
-
-	<select id="getForPrintBoard" resultType="Board">
+	
+	<!-- 기존의 이름 확인 -->
+	<select id="getBoardByName" resultType="Board">
 		SELECT *
 		FROM `board`
-		WHERE
-		id = #{id}
+		WHERE `name` = #{name}
+	</select>
+
+	<!-- 기존의 코드 확인 -->
+	<select id="getBoardByCode" resultType="Board">
+		SELECT *
+		FROM `board`
+		WHERE `code` = #{code}
 		AND delStatus = 0
 	</select>
 
+	<!-- 게시판 리스트 -->
 	<select id="getForPrintBoards" resultType="Board">
 		SELECT B.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM `board` AS B
+		FROM `board` AS
+		B
 		LEFT JOIN `member` AS M
 		ON B.memberId = M.id
 		WHERE 1
@@ -96,9 +88,30 @@
 		</if>
 	</select>
 
-	<select id="getBoard" resultType="Board">
+	<!-- 게시판의 총 갯수 -->
+	<select id="getBoardsTotleCount" resultType="int">
+		SELECT count(*)
+		FROM `board`
+		WHERE 1
+		AND delStatus = 0
+		<if test="searchKeywordType == 'name'">
+			AND `name` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'code'">
+			AND `code` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nameAndCode'">
+			AND (`name` LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			code
+			LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		ORDER BY id DESC
+	</select>
+	
+	<!-- 게시판 번호로 정보 불러오기 -->
+	<select id="getForPrintBoard" resultType="Board">
 		SELECT *
-		FROM `Board`
+		FROM `board`
 		WHERE
 		id = #{id}
 		AND delStatus = 0

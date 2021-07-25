@@ -66,7 +66,8 @@ public class AdmArticleController extends BaseController {
 
 		return "/adm/article/modify";
 	}
-
+	
+	// 게시물 수정
 	@RequestMapping("/adm/article/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
@@ -104,7 +105,8 @@ public class AdmArticleController extends BaseController {
 
 		return Util.msgAndReplace(modifyArticleRd.getMsg(), redirectUrl);
 	}
-
+	
+	// 게시물 삭제
 	@RequestMapping("/adm/article/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
@@ -126,7 +128,7 @@ public class AdmArticleController extends BaseController {
 			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
-		ResultData deleteMemberRd = articleService.deleteArticle(id);
+		ResultData deleteMemberRd = articleService.delete(id);
 		String redirectUrl = "../article/list";
 
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
@@ -137,7 +139,8 @@ public class AdmArticleController extends BaseController {
 		return "/adm/article/add";
 
 	}
-
+	
+	// 게시물 작성
 	@RequestMapping("/adm/article/doAdd")
 	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
@@ -167,7 +170,8 @@ public class AdmArticleController extends BaseController {
 		return msgAndReplace(req, String.format("%d번 게시물이 작성되었습니다.", newArticleId),
 				"../article/detail?id=" + newArticleId);
 	}
-
+	
+	// 게시물 상세보기
 	@RequestMapping("/adm/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 
@@ -206,7 +210,8 @@ public class AdmArticleController extends BaseController {
 
 		return "/adm/article/detail";
 	}
-
+	
+	// 게시물 리스트
 	@RequestMapping("/adm/article/list")
 	// @ResponseBody가 없으면 return /adm/article/list.jps로 가야함
 	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,

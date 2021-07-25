@@ -122,19 +122,23 @@ public class AdmMemberController extends BaseController {
 	// 회원 탈퇴
 	@RequestMapping("/adm/member/doDelete")
 	@ResponseBody
-	public ResultData doDelete(Integer id, HttpServletRequest req) {
+	public String doDelete(Integer id, HttpServletRequest req) {
 
 		if (id == null) {
-			return new ResultData("F-1", "id를 입력해주세요.");
+			return msgAndBack(req, "id를 입력해주세요.");
 		}
 
 		Member member = memberService.getMember(id);
 
 		if (member == null) {
-			return new ResultData("F-1", "해당 회원은 존재하지 않습니다.");
+			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
-		return memberService.delete(id);
+		ResultData deleteMemberRd = memberService.delete(id);
+
+		String redirectUrl = "/usr/member/login";
+
+		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
 
 	// 회원 탈퇴

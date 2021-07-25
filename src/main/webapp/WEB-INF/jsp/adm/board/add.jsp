@@ -13,7 +13,7 @@
 
 	let BoardAdd__validCode = '';
 
-	//중복체크 함수 ajax
+	//조건 체크 함수 ajax
 	function AddForm__checkCodeDup(obj) {
 
 		const form = $('.formCode').get(0);

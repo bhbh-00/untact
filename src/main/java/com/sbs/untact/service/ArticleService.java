@@ -23,7 +23,8 @@ public class ArticleService {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-
+	
+	// 게시물 수정
 	public ResultData modify(Map<String, Object> param) {
 		articleDao.modify(param);
 
@@ -31,15 +32,17 @@ public class ArticleService {
 
 		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
 	}
-
-	public ResultData deleteArticle(int id) {
+	
+	// 게시물 삭제
+	public ResultData delete(int id) {
 		articleDao.delete(id);
 
 		genFileService.deleteGenFiles("article", id);
 
 		return new ResultData("S-1", "삭제되었습니다.", "id", id);
 	}
-
+	
+	// 
 	public Article getArticle(int id) {
 		return articleDao.getArticle(id);
 	}

@@ -30,13 +30,13 @@ import com.sbs.untact.util.Util;
 public class UsrArticleController extends BaseController {
 	@Autowired
 	private ArticleService articleService;
-	
+
 	@Autowired
 	private GenFileService genFileService;
-	
+
 	@Autowired
 	private LikeService likeService;
-	
+
 	@Autowired
 	private ReplyService replyService;
 
@@ -66,7 +66,8 @@ public class UsrArticleController extends BaseController {
 
 		return "/usr/article/modify";
 	}
-
+	
+	// 게시물 수정
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
@@ -101,12 +102,13 @@ public class UsrArticleController extends BaseController {
 		}
 
 		ResultData modifyArticleRd = articleService.modify(param);
-		
+
 		String redirectUrl = "../article/detail?id=" + article.getId();
 
 		return Util.msgAndReplace(modifyArticleRd.getMsg(), redirectUrl);
 	}
-
+	
+	// 게시물 삭제
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
@@ -129,7 +131,7 @@ public class UsrArticleController extends BaseController {
 			return Util.msgAndReplace(actorCanDeleteRd.getMsg(), "../article/detail?id=" + article.getId());
 		}
 
-		ResultData deleteArticleRd = articleService.deleteArticle(id);
+		ResultData deleteArticleRd = articleService.delete(id);
 		String redirectUrl = "../article/list";
 
 		return Util.msgAndReplace(deleteArticleRd.getMsg(), redirectUrl);
@@ -140,16 +142,12 @@ public class UsrArticleController extends BaseController {
 		return "/usr/article/add";
 	}
 
+	// 게시물 작성
 	@RequestMapping("/usr/article/doAdd")
 	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			MultipartRequest multipartRequest) {
-		// String title, String body이 null이면 내용이 없는 거!!
 
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
-		/*
-		 * HttpSession 말고 Http서블릿리쿼스트 req로 바꿔주기 Util.getAsInt 필요 없음 (int로 형변환 필요함)
-		 * !!로그인과 회원가입은 세션이 필요함
-		 */
 
 		if (param.get("title") == null) {
 			return msgAndBack(req, "제목을 입력해주세요.");
@@ -169,6 +167,7 @@ public class UsrArticleController extends BaseController {
 				"../article/detail?id=" + newArticleId);
 	}
 
+	// 게시물 상세 페이지
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(HttpServletRequest req, Integer id) {
 
@@ -193,7 +192,7 @@ public class UsrArticleController extends BaseController {
 		}
 
 		Like like = likeService.getLikeByArticle(id);
-	
+
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
 
 		List<Reply> replys = replyService.getForPrintReplies(id);
@@ -208,6 +207,7 @@ public class UsrArticleController extends BaseController {
 		return "/usr/article/detail";
 	}
 
+	// 내 게시물 보기
 	@RequestMapping("/usr/article/myList")
 	public String showMyList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
 			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
@@ -237,10 +237,6 @@ public class UsrArticleController extends BaseController {
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
 		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
 
-		/*
-		 * 반지름이라고 생각하면 됌. 현재 페이지가 10일 때 pageMenuArmSize가 5이면 10을 기준으로 왼쪽은 4 5 6 7 8 9 10
-		 * 오른쪽은 10 11 12 13 14 15 16 페이지네이션의 총 갯수는 11 (기준인 10도 포함 해야함)
-		 */
 		int pageMenuArmSize = 5;
 
 		// 시작 페이지 번호
@@ -270,11 +266,11 @@ public class UsrArticleController extends BaseController {
 		return "/usr/article/myList";
 	}
 
+	// 게시물 리스트
 	@RequestMapping("/usr/article/list")
-	// @ResponseBody가 없으면 return /usr/article/list.jps로 가야함
 	public String showList(HttpServletRequest req, @RequestParam(defaultValue = "1") int boardId,
 			String searchKeywordType, String searchKeyword, @RequestParam(defaultValue = "1") int page) {
-		// @RequestParam(defaultValue = "1") -> page를 입력하지 않아도 1page가 되도록
+
 		int loginMemberId = (int) req.getAttribute("loginedMemberId");
 
 		Board board = articleService.getBoard(boardId);
@@ -316,11 +312,6 @@ public class UsrArticleController extends BaseController {
 
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
 		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
-
-		/*
-		 * 반지름이라고 생각하면 됌. 현재 페이지가 10일 때 pageMenuArmSize가 5이면 10을 기준으로 왼쪽은 4 5 6 7 8 9 10
-		 * 오른쪽은 10 11 12 13 14 15 16 페이지네이션의 총 갯수는 11 (기준인 10도 포함 해야함)
-		 */
 		int pageMenuArmSize = 5;
 
 		// 시작 페이지 번호
@@ -338,7 +329,6 @@ public class UsrArticleController extends BaseController {
 			pageMenuEnd = totlePage;
 		}
 
-		// req.setAttribute( "" , ) -> 이게 있어야지 jsp에서 뜸!
 		req.setAttribute("totleItemsCount", totleItemsCount);
 		req.setAttribute("totlePage", totlePage);
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);

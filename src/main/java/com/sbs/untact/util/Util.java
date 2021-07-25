@@ -338,6 +338,24 @@ public class Util {
 		// _, 알파벳, 숫자로만 구성
 		return Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,19}$", str);
 	}
+	
+	public static boolean isStandardCodeString(String str) {
+
+		if (str == null) {
+			return false;
+		}
+
+		if (str.length() == 0) {
+			return false;
+		}
+
+		// 정규표현식
+		// 조건
+		// 2자 이상, 20자 이하로 구성
+		// 숫자로 시작 금지
+		// _, 알파벳, 숫자로만 구성
+		return Pattern.matches("^[a-zA-Z]{2,10}$", str);
+	}
 
 	public static String getNewUrlRemoved(String url, String paramName) {
 		String deleteStrStarts = paramName + "=";

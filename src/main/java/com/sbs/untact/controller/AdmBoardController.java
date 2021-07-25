@@ -21,7 +21,8 @@ import com.sbs.untact.util.Util;
 public class AdmBoardController extends BaseController {
 	@Autowired
 	private BoardService boardService;
-
+	
+	// 게시판 삭제
 	@RequestMapping("/adm/board/doDelete")
 	@ResponseBody
 	public String doDelete(int id, HttpServletRequest req) {
@@ -37,7 +38,7 @@ public class AdmBoardController extends BaseController {
 		if (board == null) {
 			return msgAndBack(req, "해당 게시판은 존재하지 않습니다.");
 		}
-
+		
 		ResultData actorCanDeleteRd = boardService.getActorCanDeleteRd(board, loginedMember);
 
 		if (actorCanDeleteRd.isFail()) {
@@ -50,7 +51,26 @@ public class AdmBoardController extends BaseController {
 
 		return Util.msgAndReplace(deleteBoardRd.getMsg(), redirectUrl);
 	}
+	
+	// 게시판 이름 중복 확인
+	@RequestMapping("/adm/board/getNameDup")
+	@ResponseBody
+	public ResultData getNameDup(String name) {
 
+		if (name == null) {
+			return new ResultData("F-1", "이름을 입력해주세요.");
+		}
+
+		Board existingBoard = boardService.getBoardByName(name);
+
+		if (existingBoard != null) {
+			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 이름 입니다.", name));
+		}
+
+		return new ResultData("S-1", String.format("%s(은)는 사용가능한 이름 입니다.", name), "name", name);
+	}
+
+	// 게시판 코드 생성의 조건
 	@RequestMapping("/adm/board/getCodeDup")
 	@ResponseBody
 	public ResultData getCodeDup(String code) {
@@ -58,33 +78,22 @@ public class AdmBoardController extends BaseController {
 		if (code == null) {
 			return new ResultData("F-1", "code를 입력해주세요.");
 		}
-
+		
+		// 기존의 코드 확인
 		Board existingBoard = boardService.getBoardByCode(code);
 
 		if (existingBoard != null) {
 			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 code 입니다.", code));
 		}
+		
+		if (Util.isStandardCodeString(code) == false) {
+			return new ResultData("F-1", "영문 소문자 조합으로 1자 이상으로 구성되어야 합니다.");
+		}
 
 		return new ResultData("S-1", String.format("%s(은)는 사용가능한 code 입니다.", code), "code", code);
 	}
-
-	@RequestMapping("/adm/board/getNameDup")
-	@ResponseBody
-	public ResultData getNameDup(String name) {
-
-		if (name == null) {
-			return new ResultData("F-1", "name를 입력해주세요.");
-		}
-
-		Board existingBoard = boardService.getBoardByName(name);
-
-		if (existingBoard != null) {
-			return new ResultData("F-2", String.format("%s(은)는 이미 사용중인 code 입니다.", name));
-		}
-
-		return new ResultData("S-1", String.format("%s(은)는 사용가능한 name 입니다.", name), "name", name);
-	}
-
+	
+	// 게시판 수정 폼
 	@RequestMapping("/adm/board/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
@@ -102,7 +111,8 @@ public class AdmBoardController extends BaseController {
 
 		return "/adm/board/modify";
 	}
-
+	
+	// 게시판 수정
 	@RequestMapping("/adm/board/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
@@ -116,7 +126,7 @@ public class AdmBoardController extends BaseController {
 		}
 
 		if (Util.isEmpty(param.get("name"))) {
-			return msgAndBack(req, "name을 입력해주세요.");
+			return msgAndBack(req, "이름을 입력해주세요.");
 		}
 
 		Board board = boardService.getBoard(id);
@@ -141,7 +151,8 @@ public class AdmBoardController extends BaseController {
 	public String ShowAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		return "/adm/board/add";
 	}
-
+	
+	// 게시판 작성
 	@RequestMapping("/adm/board/doAdd")
 	public String doAdd(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 
@@ -154,22 +165,24 @@ public class AdmBoardController extends BaseController {
 		if (param.get("name") == null) {
 			return msgAndBack(req, "name를 입력해주세요");
 		}
-
+		
+		// 기존의 이름 확인
 		Board existingBoard = boardService.getBoardByName((String) param.get("name"));
 
 		if (existingBoard != null) {
-			return msgAndBack(req, "이미 등록 된 name입니다.");
+			return msgAndBack(req, String.format("「 %s 」은 이미 등록되어 있습니다.", existingBoard.getName()));
 		}
-
+		
 		param.put("loginedMember", loginedMember);
 
 		ResultData addBoardRd = boardService.doAdd(param);
 
 		int newBoardId = (int) addBoardRd.getBody().get("id");
 
-		return msgAndReplace(req, String.format("%d번 게시판이 작성되었습니다.", newBoardId), "../board/list");
+		return msgAndReplace(req, String.format("%s번 게시판이 생성되었습니다.", newBoardId), "../board/list");
 	}
 
+	// 게시판 리스트
 	@RequestMapping("/adm/board/list")
 	public String showList(HttpServletRequest req, String searchKeywordType, String searchKeyword,
 			@RequestParam(defaultValue = "1") int page, Map<String, Object> param) {
@@ -206,10 +219,7 @@ public class AdmBoardController extends BaseController {
 		// 총 페이지 갯수 (총 게시물 수 / 한 페이지 안의 게시물 갯수)
 		int totlePage = (int) Math.ceil(totleItemsCount / (double) itemsInAPage);
 
-		/*
-		 * 반지름이라고 생각하면 됌. 현재 페이지가 10일 때 pageMenuArmSize가 5이면 10을 기준으로 왼쪽은 4 5 6 7 8 9 10
-		 * 오른쪽은 10 11 12 13 14 15 16 페이지네이션의 총 갯수는 11 (기준인 10도 포함 해야함)
-		 */
+		// 페이징의 반지름
 		int pageMenuArmSize = 5;
 
 		// 시작 페이지 번호
@@ -227,7 +237,6 @@ public class AdmBoardController extends BaseController {
 			pageMenuEnd = totlePage;
 		}
 
-		// req.setAttribute( "" , ) -> 이게 있어야지 jsp에서 뜸!
 		req.setAttribute("totleItemsCount", totleItemsCount);
 		req.setAttribute("totlePage", totlePage);
 		req.setAttribute("pageMenuArmSize", pageMenuArmSize);
