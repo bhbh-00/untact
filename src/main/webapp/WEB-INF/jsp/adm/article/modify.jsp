@@ -8,7 +8,7 @@
 
 
 <!-- 첨부파일 갯수 조절 -->
-<c:set var="fileInputMaxCount" value="10" />
+<c:set var="fileInputMaxCount" value="5" />
 <script>
 	ArticleModify__fileInputMaxCount = parseInt("${fileInputMaxCount}");
 	const articleId = parseInt("${article.id}");

@@ -5,7 +5,7 @@
 <%@ include file="../part/mainLayoutHead.jspf"%>
 
 <!-- 첨부파일 갯수 조절 -->
-<c:set var="fileInputMaxCount" value="10" />
+<c:set var="fileInputMaxCount" value="5" />
 
 <script>
 	ArticleAdd__fileInputMaxCount = parseInt("${fileInputMaxCount}");
@@ -147,7 +147,7 @@
 								class="input input-bordered">
 						</div>
 
-						<div class="form-control">
+						<div class="form-control">`
 							<label class="label">
 								<span class="label-text">본문</span>
 							</label>
@@ -172,20 +172,11 @@
 							</div>
 						</c:forEach>
 
-						<div>
-							<button class="btn btn-ghost btn-sm mb-1 text-blue-500"
-								type="submit">
-								<i class="fas fa-edit mr-1"></i>
+						<div class="mt-4 btn-wrap gap-1">
+							<button class="btn btn-ghost btn-sm mb-1 text-blue-500" type="submit">
+								<i class="fas fa-pen mr-1"></i>
 								<span>작성</span>
 							</button>
-
-							<a href="list?" class="btn btn-ghost btn-sm mb-1" title="리스트 보기">
-								<span>
-									<i class="fas fa-list"></i>
-								</span>
-								&nbsp;
-								<span>리스트</span>
-							</a>
 						</div>
 
 					</form>
