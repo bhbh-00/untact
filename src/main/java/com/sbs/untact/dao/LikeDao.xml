@@ -9,31 +9,37 @@
 		SELECT *
 		FROM `like`
 		WHERE memberId = #{id}
+		AND delStatus = 0
 	</select>
 
 	<select id="getLikeTotleCountByArticle" resultType="int">
 		SELECT COUNT(*)
 		FROM `like`
 		WHERE relId = #{id}
+		AND delStatus = 0
 	</select>
 	
 	<select id="getLikeByArticle" resultType="like">
 		SELECT *
 		FROM `like`
 		WHERE relId = #{id}
+		AND delStatus = 0
 	</select>
-
+	
 	<select id="getLike" resultType="int">
 		SELECT *
 		FROM `like`
 		WHERE id = #{id}
+		AND delStatus = 0
 	</select>
 
 	<select id="getLikeTotleCount" resultType="int">
 		SELECT count(*)
 		FROM `like`
+		AND delStatus = 0
 	</select>
 	
+	<!-- 좋아요 -->
 	<insert id="doLike" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `like`
 		SET regDate = NOW(),
@@ -43,10 +49,13 @@
 		memberId = #{memberId},
 		`like` = #{like}
 	</insert>
-
-	<delete id="delete">
-		DELETE FROM `like`
-		WHERE id = #{id}
-	</delete>
+	
+	<!-- 좋아요 해제 -->
+	<update id="delete">
+        UPDATE `like`
+        SET delDate = NOW(),
+        delStatus = 1
+        WHERE id = #{id}
+    </update>
 
 </mapper>

@@ -16,10 +16,12 @@ public class LikeService {
 	@Autowired
 	private LikeDao likeDao;
 
+	// 좋아요 수
 	public Like getLikeTotleCount(int id) {
 		return likeDao.getLikeTotleCount(id);
 	}
 
+	// 좋아요
 	public ResultData doLike(@RequestParam Map<String, Object> param) {
 		likeDao.doLike(param);
 
@@ -48,10 +50,11 @@ public class LikeService {
 		return likeDao.totleCountLikeByArticle();
 	}
 
+	// 좋아요 해제
 	public ResultData delete(Integer id) {
 		likeDao.delete(id);
 
-		return new ResultData("S-1", "좋아요를 취소합니다.", "id", id);
+		return new ResultData("S-1", "좋아요를 해제합니다.", "id", id);
 	}
 
 }

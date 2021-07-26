@@ -17,6 +17,10 @@ public class Like extends EntityDto {
 	private int relId;
 	private int memberId;
 	private String like;
+	private boolean blindStatus;
+	private String blindDate;
+	private boolean delStatus;
+	private String delDate;
 	
 	private String extra__writer;
 	private String extra__boardName;

@@ -39,7 +39,8 @@ public class UsrArticleController extends BaseController {
 
 	@Autowired
 	private ReplyService replyService;
-
+	
+	// 게시물 수정
 	@RequestMapping("/usr/article/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
@@ -71,8 +72,6 @@ public class UsrArticleController extends BaseController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req) {
-		// String title, String body는 레퍼런스라서 입력 값?을 넣지않아도 오류 안남, null값이 들어감
-		// int는 고유?타입이라서 값을 넣지않아도 null이 될 수 없음
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		int id = Util.getAsInt(param.get("id"), 0);
@@ -190,11 +189,14 @@ public class UsrArticleController extends BaseController {
 		for (GenFile file : files) {
 			filesMap.put(file.getFileNo() + "", file);
 		}
-
+		
+		// 좋아요
 		Like like = likeService.getLikeByArticle(id);
-
+		
+		// 좋아요 갯수
 		int totleItemsCountByLike = likeService.getLikeTotleCountByArticle(id);
-
+		
+		// 댓글 리스트
 		List<Reply> replys = replyService.getForPrintReplies(id);
 
 		article.getExtraNotNull().put("file__common__attachment", filesMap);

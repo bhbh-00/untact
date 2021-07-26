@@ -23,37 +23,18 @@ public class ArticleService {
 	private MemberService memberService;
 	@Autowired
 	private GenFileService genFileService;
-	
-	// 게시물 수정
-	public ResultData modify(Map<String, Object> param) {
-		articleDao.modify(param);
 
-		int id = Util.getAsInt(param.get("id"), 0);
-
-		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
-	}
-	
-	// 게시물 삭제
-	public ResultData delete(int id) {
-		articleDao.delete(id);
-		
-		// 파일 삭제
-		genFileService.deleteGenFiles("article", id);
-
-		return new ResultData("S-1", "삭제되었습니다.", "id", id);
-	}
-	
-	// 
+	//
 	public Article getArticle(int id) {
 		return articleDao.getArticle(id);
 	}
-	
+
 	// 게시물 작성
 	public ResultData doAdd(Map<String, Object> param) {
 		articleDao.add(param);
 
 		int id = Util.getAsInt(param.get("id"), 0);
-		
+
 		// 파일 업로드 시 파일의 번호를 게시물의 번호를 바꾼다.
 		genFileService.changeInputFileRelIds(param, id);
 
@@ -64,6 +45,7 @@ public class ArticleService {
 		return articleDao.getArticles(searchKeywordType, searchKeyword);
 	}
 
+	// 게시물 상세 페이지
 	public Article getForPrintArticle(Integer id) {
 		return articleDao.getForPrintArticle(id);
 	}
@@ -98,6 +80,7 @@ public class ArticleService {
 		return articleDao.getBoard(boardId);
 	}
 
+	// 게시물 수정 가능 권한 여부
 	public ResultData getActorCanModifyRd(Article article, Member actor) {
 		if (article.getMemberId() == actor.getId()) {
 			return new ResultData("S-1", "가능합니다.");
@@ -110,8 +93,28 @@ public class ArticleService {
 		return new ResultData("F-1", "권한이 없습니다.");
 	}
 
+	// 게시물 수정
+	public ResultData modify(Map<String, Object> param) {
+		articleDao.modify(param);
+
+		int id = Util.getAsInt(param.get("id"), 0);
+
+		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
+	}
+
+	// 게시물 삭제 가능 권한 여부 확인
 	public ResultData getActorCanDeleteRd(Article article, Member actor) {
 		return getActorCanModifyRd(article, actor);
+	}
+
+	// 게시물 삭제
+	public ResultData delete(int id) {
+		articleDao.delete(id);
+
+		// 파일 삭제
+		genFileService.deleteGenFiles("article", id);
+
+		return new ResultData("S-1", "삭제되었습니다.", "id", id);
 	}
 
 	public int getArticlesTotleCount(int boardId, String searchKeywordType, String searchKeyword) {

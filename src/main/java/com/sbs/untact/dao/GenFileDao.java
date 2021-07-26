@@ -12,8 +12,9 @@ import com.sbs.untact.dto.GenFile;
 public interface GenFileDao {
 	void saveMeta(Map<String, Object> param);
 
-	GenFile getGenFile(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId,
-			@Param("typeCode") String typeCode, @Param("type2Code") String type2Code, @Param("fileNo") int fileNo);
+	GenFile getGenFile(@Param("relTypeCode") String relTypeCogetGenFilesByRelTypeCodeAndRelIdde,
+			@Param("relId") int relId, @Param("typeCode") String typeCode, @Param("type2Code") String type2Code,
+			@Param("fileNo") int fileNo);
 
 	GenFile getGenFileById(@Param("id") int id);
 
@@ -21,11 +22,14 @@ public interface GenFileDao {
 
 	void deleteFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
+	// 파일 리스트
 	List<GenFile> getGenFiles(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId,
 			@Param("typeCode") String typeCode, @Param("type2Code") String type2Code);
 
+	// 파일 리스트
 	List<GenFile> getGenFilesByRelTypeCodeAndRelId(@Param("relTypeCode") String relTypeCode, @Param("relId") int relId);
 
+	// 파일 삭제
 	void deleteFile(@Param("id") int id);
 
 	List<GenFile> getGenFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(@Param("relTypeCode") String relTypeCode,

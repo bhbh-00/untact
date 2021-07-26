@@ -109,7 +109,8 @@ public class GenFileService {
 		return new ResultData("S-1", "파일이 생성되었습니다.", "id", newGenFileId, "fileRealPath", targetFilePath, "fileName",
 				targetFileName, "fileInputName", fileInputName);
 	}
-
+	
+	// 파일 리스트
 	public List<GenFile> getGenFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
 		return genFileDao.getGenFiles(relTypeCode, relId, typeCode, type2Code);
 	}
@@ -168,7 +169,8 @@ public class GenFileService {
 	public void changeRelId(int id, int relId) {
 		genFileDao.changeRelId(id, relId);
 	}
-
+	
+	// 파일 삭제
 	public void deleteGenFiles(String relTypeCode, int relId) {
 		List<GenFile> genFiles = genFileDao.getGenFilesByRelTypeCodeAndRelId(relTypeCode, relId);
 
@@ -176,7 +178,8 @@ public class GenFileService {
 			deleteGenFile(genFile);
 		}
 	}
-
+	
+	// 파일 삭제
 	private void deleteGenFile(GenFile genFile) {
 		String filePath = genFile.getFilePath(genFileDirPath);
 		Util.delteFile(filePath);
@@ -205,7 +208,8 @@ public class GenFileService {
 
 		return rs;
 	}
-
+	
+	// 파일 업로드 시 파일의 번호를 게시물의 번호를 바꾼다.
 	public void changeInputFileRelIds(Map<String, Object> param, int id) {
 		String genFileIdsStr = Util.ifEmpty((String) param.get("genFileIdsStr"), null);
 

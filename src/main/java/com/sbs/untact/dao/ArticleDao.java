@@ -26,7 +26,8 @@ public interface ArticleDao {
 
 	List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
-
+	
+	// 게시물 상세페이지
 	Article getForPrintArticle(@Param("id") Integer id);
 
 	List<Article> getForPrintArticles(@Param("boardId") int boardId,

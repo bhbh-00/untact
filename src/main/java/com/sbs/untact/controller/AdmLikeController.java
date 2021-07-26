@@ -23,7 +23,8 @@ public class AdmLikeController extends BaseController {
 	private ArticleService articleService;
 	@Autowired
 	private LikeService likeService;
-
+	
+	// 좋아요 해제
 	@RequestMapping("/adm/like/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req, String redirectUrl) {
@@ -48,7 +49,8 @@ public class AdmLikeController extends BaseController {
 		
 		return Util.msgAndReplace(dodeleteRd.getMsg(), redirectUrl);
 	}
-
+	
+	// 좋아요
 	@RequestMapping("/adm/like/doLike")
 	@ResponseBody
 	public String doLike(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
