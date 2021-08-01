@@ -10,7 +10,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
-<c:set var="fileInputMaxCount" value="10" />
+<c:set var="fileInputMaxCount" value="5" />
 
 <!-- 댓글 from -->
 <script>
@@ -111,7 +111,7 @@
 						<!-- 만약에 좋아요의 멤버아이디와 아이디가 같으면 채우진 하트 아니면 빈하트 -->
 						<c:choose>
 							<c:when test="${like.memberId == loginedMember.id}">
-								<a href="/usr/like/doDelete?id=${like.id}"
+								<a href="../like/doDelete?id=${like.id}"
 									class="flex plain-link">
 									<span class="text-pink-500">
 										<!-- 하트 -->
@@ -180,101 +180,10 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- 댓글 수정 모달 시작 -->
-	<style>
-.section-reply-modify {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 10;
-	display: none;
-	align-items: center;
-	justify-content: center;
-}
-
-.section-reply-modify>div {
-	background-color: white;
-	padding: 20px 30px;
-	border-radius: 30px;
-}
-</style>
-
-	<script>
-		function ReplyModify__showModal(el) {
-			const $div = $(el).closest('[data-id]');
-			const replyId = $div.attr('data-id');
-			const replyBody = $div.find('.reply-body').html();
-			$('.section-reply-modify [name="id"]').val(replyId);
-			$('.section-reply-modify [name="body"]').val(replyBody);
-			$('.section-reply-modify').css('display', 'flex');
-		}
-		function ReplyModify__hideModal() {
-			$('.section-reply-modify').hide();
-		}
-		let ReplyModify__submitFormDone = false;
-		function ReplyModify__submitForm(form) {
-			if (ReplyModify__submitFormDone) {
-				return;
-			}
-			form.body.value = form.body.value.trim();
-			if (form.body.value.length == 0) {
-				alert('내용을 입력해주세요.');
-				form.body.focus();
-				return;
-			}
-			form.submit();
-			ReplyModify__submitFormDone = true;
-		}
-	</script>
-
-	<div class="section section-reply-modify hidden">
-		<div>
-			<div class="container mx-auto">
-				<form method="POST" enctype="multipart/form-data"
-					action="../reply/doModify"
-					onsubmit="ReplyModify__submitForm(this); return false;">
-					<input type="hidden" name="id"/>
-					<input type="hidden" name="redirectUrl"
-						value="../article/detail?id=${reply.relId}" />
-
-					<div class="form-control">
-						<label class="label"> 내용 </label>
-						<textarea class="textarea textarea-bordered w-full h-24"
-							placeholder="내용을 입력해주세요." name="body" maxlength="2000"></textarea>
-					</div>
-
-					<div class="mt-4 btn-wrap gap-1">
-						<button type="submit" class="btn btn-primary btn-sm mb-1">
-							<span>
-								<i class="far fa-edit"></i>
-							</span>
-							&nbsp;
-							<span>수정</span>
-						</button>
-
-						<button type="button" onclick="history.back();"
-							class="btn btn-sm mb-1" title="닫기">
-							<span>
-								<i class="fas fa-list"></i>
-							</span>
-							&nbsp;
-							<span>닫기</span>
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<!-- 댓글 수정 모달 끝 -->
-
-
+	
 	<div class="container mx-auto mt-4">
 		<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-			<div id="vue-app__reply-box">
+			<div>
 				<div class="card-title bg-white">
 					<i class="far fa-comments"></i>
 					<span class="text-lg">댓글</span>
@@ -338,13 +247,13 @@
 											<c:if test="${ loginedMember.id == reply.memberId }">
 
 												<!-- 수정 -->
-												<button onclick="ReplyModify__showModal(this);"
+												<a href="../reply/modify?id=${reply.id}"
 													class="flex plain-link mr-2">
 													<span>
 														<i class="fas fa-edit"></i>
 													</span>
 													<span class="hidden md:block">수정</span>
-												</button>
+												</a>
 
 												<!-- 삭제 -->
 												<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"

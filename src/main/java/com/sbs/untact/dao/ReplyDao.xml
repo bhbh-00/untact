@@ -5,13 +5,7 @@
 
 <mapper namespace="com.sbs.untact.dao.ReplyDao">
 
-	<update id="delete">
-        UPDATE reply
-        SET delDate = NOW(),
-        delStatus = 1
-        WHERE id = #{id}
-    </update>
-	
+	<!-- 댓글 확인 -->
 	<select id="getReply" resultType="Reply">
 		SELECT *
 		FROM reply
@@ -19,6 +13,15 @@
 		AND delStatus = 0
 	</select>
 
+	<!-- 댓글 삭제 -->
+	<update id="delete">
+        UPDATE reply
+        SET delDate = NOW(),
+        delStatus = 1
+        WHERE id = #{id}
+    </update>
+		
+	<!-- 댓글 수정 -->
 	<update id="modify">
 		UPDATE reply
 		<set>
@@ -29,7 +32,8 @@
 		WHERE id = #{id}
 		AND delStatus = 0
 	</update>
-
+	
+	<!-- 댓글 작성 -->
 	<insert id="doAdd" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO reply
 		SET regDate = NOW(),
@@ -39,7 +43,8 @@
 		`body` = #{body},
 		memberId= #{memberId}
 	</insert>
-
+	
+	<!-- 댓글 리스트 -->
 	<select id="getForPrintReplies" resultType="Reply">
 		SELECT R.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer

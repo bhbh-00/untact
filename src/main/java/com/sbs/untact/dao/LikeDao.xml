@@ -4,58 +4,67 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sbs.untact.dao.LikeDao">
-	
+
 	<select id="getLikeByMemberId" resultType="like">
 		SELECT *
 		FROM `like`
 		WHERE memberId = #{id}
 		AND delStatus = 0
 	</select>
+	
+	<!-- 좋아요 -->
+	<insert id="doLike" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO `like`
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		relTypeCode =
+		#{relTypeCode},
+		relId = #{relId},
+		memberId = #{memberId},
+		`like` =
+		#{like}
+	</insert>
 
-	<select id="getLikeTotleCountByArticle" resultType="int">
-		SELECT COUNT(*)
-		FROM `like`
-		WHERE relId = #{id}
+	<!-- 좋아요 갯수 -->
+	<select id="getLikeTotleCount" resultType="int">
+		SELECT count(*)
+		FROM
+		`like`
 		AND delStatus = 0
 	</select>
-	
+
+	<!-- 해당 게시물의 좋아요 -->
 	<select id="getLikeByArticle" resultType="like">
 		SELECT *
 		FROM `like`
 		WHERE relId = #{id}
 		AND delStatus = 0
 	</select>
-	
-	<select id="getLike" resultType="int">
-		SELECT *
+
+	<!-- 해당 게시물의 좋아요 갯수 -->
+	<select id="getLikeTotleCountByArticle" resultType="int">
+		SELECT
+		COUNT(*)
 		FROM `like`
-		WHERE id = #{id}
+		WHERE relId = #{id}
 		AND delStatus = 0
 	</select>
 
-	<select id="getLikeTotleCount" resultType="int">
-		SELECT count(*)
+	<select id="getLike" resultType="int">
+		SELECT *
 		FROM `like`
+		WHERE id =
+		#{id}
 		AND delStatus = 0
 	</select>
-	
-	<!-- 좋아요 -->
-	<insert id="doLike" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `like`
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		relTypeCode = #{relTypeCode},
-		relId = #{relId},
-		memberId = #{memberId},
-		`like` = #{like}
-	</insert>
-	
+
 	<!-- 좋아요 해제 -->
 	<update id="delete">
-        UPDATE `like`
-        SET delDate = NOW(),
-        delStatus = 1
-        WHERE id = #{id}
-    </update>
+		UPDATE `like`
+		SET delDate = NOW(),
+		delStatus = 1
+		WHERE id = #{id}
+	</update>
 
 </mapper>

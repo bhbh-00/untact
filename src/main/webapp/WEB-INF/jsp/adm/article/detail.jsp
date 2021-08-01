@@ -10,7 +10,7 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
-<c:set var="fileInputMaxCount" value="10" />
+<c:set var="fileInputMaxCount" value="5" />
 
 <!-- 댓글 from -->
 <script>
@@ -48,7 +48,7 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					
+
 					<!-- 제목 -->
 					<div>
 						<span>${article.title}</span>
@@ -154,24 +154,22 @@
 							</c:otherwise>
 						</c:choose>
 
-						<c:if test="${article.memberId == loginedMember.id}">
-							<!-- 수정 -->
-							<a href="modify?id=${article.id}" class="flex plain-link">
-								<span>
-									<i class="fas fa-edit"></i>
-								</span>
-								<span>수정</span>
-							</a>
+						<!-- 수정 -->
+						<a href="modify?id=${article.id}" class="flex plain-link">
+							<span>
+								<i class="fas fa-edit"></i>
+							</span>
+							<span>수정</span>
+						</a>
 
-							<!-- 삭제 -->
-							<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
-								href="doDelete?id=${article.id}" class="flex plain-link">
-								<span class="text-red-500">
-									<i class="fas fa-trash"></i>
-									<span>삭제</span>
-								</span>
-							</a>
-						</c:if>
+						<!-- 삭제 -->
+						<a onclick="if ( !confirm('삭제하시겠습니까?') ) return false;"
+							href="doDelete?id=${article.id}" class="flex plain-link">
+							<span class="text-red-500">
+								<i class="fas fa-trash"></i>
+								<span>삭제</span>
+							</span>
+						</a>
 					</div>
 
 				</div>
@@ -181,7 +179,7 @@
 
 	<div class="container mx-auto mt-4">
 		<div class="card bordered shadow-lg item-bt-1-not-last-child bg-white">
-			<div id="vue-app__reply-box">
+			<div>
 				<div class="card-title bg-white">
 					<i class="far fa-comments"></i>
 					<span class="text-lg">댓글</span>
@@ -240,9 +238,7 @@
 										<div class="flex-grow"></div>
 
 										<div class="flex text-sm">
-
-											<c:if test="${ loginedMember.id == reply.memberId}">
-
+										
 												<!-- 수정 -->
 												<a href="../reply/modify?id=${reply.id}"
 													class="flex plain-link mr-2">
@@ -262,7 +258,6 @@
 													</span>
 												</a>
 
-											</c:if>
 										</div>
 									</div>
 								</div>

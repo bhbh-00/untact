@@ -30,7 +30,7 @@
 	}
 </script>
 
-<section class="section-usr-reply-modify">
+<section class="section-adm-reply-modify">
 
 	<div
 		class="container mx-auto bg-white card bordered shadow-lg px-5 pt-5 pb-3">

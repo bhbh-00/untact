@@ -132,29 +132,4 @@ public class AdmReplyController extends BaseController {
 		return Util.msgAndReplace(doAddRd.getMsg(), redirectUrl);
 	}
 
-	@RequestMapping("/adm/reply/replyList")
-	public String showList(HttpServletRequest req, String relTypeCode, Integer relId) {
-
-		if (relTypeCode == null) {
-			return msgAndBack(req, "relTypeCode를 입력해주세요.");
-		}
-
-		if (relId == null) {
-			return msgAndBack(req, "댓글 번호를 입력해주세요.");
-		}
-
-		if (relTypeCode.equals("article")) {
-			Article article = articleService.getArticle(relId);
-
-			if (article == null) {
-				msgAndBack(req, "해당 게시물은 존재하지 않습니다.");
-			}
-		}
-
-		List<Reply> replies = replyService.getForPrintReplies(relId);
-
-		req.setAttribute("replies", replies);
-
-		return "/adm/reply/replyList";
-	}
 }

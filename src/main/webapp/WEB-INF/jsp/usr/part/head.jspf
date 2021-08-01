@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="/resource/common.css" />
 <link rel="stylesheet" href="/resource/adm/common.css" />
 
-<!-- vue -->
+<!-- vue 3.0 불러오기 -->
 <script src="https://unpkg.com/vue@next"></script>
 
 <%="<script>"%>

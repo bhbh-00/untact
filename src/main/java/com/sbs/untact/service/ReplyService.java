@@ -19,7 +19,7 @@ public class ReplyService {
 	@Autowired
 	private MemberService memberService;
 
-	// 댓글 생성
+	// 댓글 작성
 	public ResultData doAdd(Map<String, Object> param) {
 		replyDao.doAdd(param);
 
@@ -40,17 +40,15 @@ public class ReplyService {
 
 		return new ResultData("F-1", "권한이 없습니다.");
 	}
+	
+	// 댓글 확인
+	public Reply getReply(Integer id) {
+		return replyDao.getReply(id);
+	}
 
 	// 권한에 따른 삭제 가능 여부
 	public ResultData getActorCanDeleteRd(Reply reply, Member actor) {
 		return getActorCanModifyRd(reply, actor);
-	}
-
-	// 댓글 수정
-	public ResultData modify(Integer id, String body) {
-		replyDao.modify(id, body);
-
-		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
 	}
 
 	// 댓글 삭제
@@ -60,12 +58,18 @@ public class ReplyService {
 		return new ResultData("S-1", "삭제하였습니다.", "id", id);
 	}
 
+	// 댓글 수정
+	public ResultData modify(Integer id, String body) {
+		replyDao.modify(id, body);
+
+		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
+	}
+
+	// 댓글 리스트
 	public List<Reply> getForPrintReplies(Integer id) {
 		return replyDao.getForPrintReplies(id);
 	}
 
-	public Reply getReply(Integer id) {
-		return replyDao.getReply(id);
-	}
+	
 
 }

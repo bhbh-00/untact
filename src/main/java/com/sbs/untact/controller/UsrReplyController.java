@@ -24,7 +24,8 @@ public class UsrReplyController extends BaseController {
 	private ReplyService replyService;
 	@Autowired
 	private ArticleService articleService;
-
+	
+	// 댓글 삭제
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req, String redirectUrl) {
@@ -52,25 +53,30 @@ public class UsrReplyController extends BaseController {
 
 		return Util.msgAndReplace(deleteReplyRd.getMsg(), "../article/detail?id=" + reply.getRelId());
 	}
-
+	
+	// 댓글 수정
 	@RequestMapping("/usr/reply/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
+		Article article = articleService.getArticleByReply(id);
+
 		if (id == null) {
-			return msgAndBack(req, "게시물 번호를 입력해주세요.");
+			return msgAndBack(req, "댓글 번호를 입력해주세요.");
 		}
-		
+
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
 			return msgAndBack(req, "해당 댓글은 존재하지 않습니다.");
 		}
-		
-		req.setAttribute("reply", reply);
 
+		req.setAttribute("reply", reply);
+		req.setAttribute("article", article);
+		
 		return "/usr/reply/modify";
 	}
-
+	
+	// 댓글 수정
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
 	public String doModify(Integer id, String body, HttpServletRequest req, String redirectUrl) {
@@ -78,9 +84,9 @@ public class UsrReplyController extends BaseController {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		if (id == null) {
-			return msgAndBack(req, "게시물 번호를 입력해주세요.");
+			return msgAndBack(req, "댓글 번호를 입력해주세요.");
 		}
-		
+
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
@@ -95,11 +101,10 @@ public class UsrReplyController extends BaseController {
 
 		ResultData modifyReplyRd = replyService.modify(id, body);
 
-		req.setAttribute("reply", reply);
-
 		return Util.msgAndReplace(modifyReplyRd.getMsg(), redirectUrl);
 	}
-
+	
+	// 댓글 작성
 	@RequestMapping("/usr/reply/doAdd")
 	@ResponseBody
 	public String doReply(@RequestParam Map<String, Object> param, HttpServletRequest req, String redirectUrl) {
