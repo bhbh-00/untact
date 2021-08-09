@@ -16,13 +16,14 @@ public interface ReplyDao {
 
 	// 댓글 리스트
 	List<Reply> getForPrintReplies(@Param("id") Integer id);
-	
+
 	// 댓글 확인
 	Reply getReply(@Param("id") Integer id);
+
+	// 댓글 수정
+	void modify(@Param("id") Integer id, @Param("body") String body);
 
 	// 댓글 삭제
 	void delete(@Param("id") Integer id);
 
-	// 댓글 수정
-	void modify(@Param("id") Integer id, @Param("body") String body);
 }

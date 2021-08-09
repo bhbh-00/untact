@@ -32,10 +32,6 @@ public class UsrReplyController extends BaseController {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		if (id == null) {
-			return msgAndBack(req, "댓글 번호를 입력해주세요.");
-		}
-
 		Reply reply = replyService.getReply(id);
 
 		if (reply == null) {
@@ -82,10 +78,6 @@ public class UsrReplyController extends BaseController {
 	public String doModify(Integer id, String body, HttpServletRequest req, String redirectUrl) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		if (id == null) {
-			return msgAndBack(req, "댓글 번호를 입력해주세요.");
-		}
 
 		Reply reply = replyService.getReply(id);
 

@@ -28,6 +28,18 @@ public class ReplyService {
 		return new ResultData("s-1", "댓글이 추가되었습니다.", "id", id);
 	}
 
+	// 댓글 확인
+	public Reply getReply(Integer id) {
+		return replyDao.getReply(id);
+	}
+
+	// 댓글 수정
+	public ResultData modify(Integer id, String body) {
+		replyDao.modify(id, body);
+
+		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
+	}
+
 	// 권한에 따른 수정 가능 여부
 	public ResultData getActorCanModifyRd(Reply reply, Member actor) {
 		if (reply.getMemberId() == actor.getId()) {
@@ -39,11 +51,6 @@ public class ReplyService {
 		}
 
 		return new ResultData("F-1", "권한이 없습니다.");
-	}
-	
-	// 댓글 확인
-	public Reply getReply(Integer id) {
-		return replyDao.getReply(id);
 	}
 
 	// 권한에 따른 삭제 가능 여부
@@ -58,18 +65,9 @@ public class ReplyService {
 		return new ResultData("S-1", "삭제하였습니다.", "id", id);
 	}
 
-	// 댓글 수정
-	public ResultData modify(Integer id, String body) {
-		replyDao.modify(id, body);
-
-		return new ResultData("s-1", "수정 완료되었습니다.", "id", id);
-	}
-
 	// 댓글 리스트
 	public List<Reply> getForPrintReplies(Integer id) {
 		return replyDao.getForPrintReplies(id);
 	}
-
-	
 
 }

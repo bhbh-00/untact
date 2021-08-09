@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ include file="../part/head.jspf"%>
 
 <!-- lodash -->
@@ -152,6 +154,7 @@
 			}
 
 			form.submit();
+			JoinForm__checkAndSubmitDone = true;
 		}
 
 		function startUpload(onSuccess) {
@@ -178,13 +181,12 @@
 			// onSuccess를 실행한다.
 		}
 
+
 		form.loginPw.value = sha256(form.loginPwInput.value);
 		form.loginPwInput.value = '';
 		form.loginPwConfirm.value = '';
 
 		startUpload(submitForm);
-		JoinForm__checkAndSubmitDone = true;
-
 	}
 
 	$(function() {

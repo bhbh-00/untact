@@ -1,3 +1,5 @@
+# GRANT ALL PRIVILEGES ON *.* TO sbsst@`%` IDENTIFIED BY 'sbs123414';
+
 # 데이터베이스 생성
 DROP DATABASE IF EXISTS untact;
 CREATE DATABASE untact;
