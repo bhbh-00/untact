@@ -110,7 +110,7 @@ public class MemberService {
 		// 비밀번호 등록 시점
 		setNeedToChangePasswordLater(id);
 
-		return new ResultData("s-1", String.format("회원가입이 정상적으로 처리되었습니다.", param.get("nickname")));
+		return new ResultData("s-1", "회원가입이 정상적으로 처리되었습니다.");
 	}
 
 	// 기존 회원의 이름과 이메일 확인

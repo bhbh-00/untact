@@ -220,12 +220,7 @@
 						<div class="item-bt-1">
 							<script type="text/x-template" class="reply-body hidden">${reply.body}</script>
 							<div class="flex py-5 px-4">
-								<div class="flex-shrink-0">
-									<img
-										class="w-11 h-11 object-cover rounded-full shadow mr-2 cursor-pointer"
-										onerror="${reply.profileFallbackImgOnErrorHtmlAttr}"
-										src="${reply.profileImgUrl}">
-								</div>
+								
 								<div class="flex-grow px-1">
 
 									<div class="flex text-gray-500 text-light text-sm">

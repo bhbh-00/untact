@@ -78,44 +78,13 @@
 			return;
 		}
 
-		function startUpload(onSuccess) {
-			if (!form["file__member__" + param.id + "__common__attachment__1"].value) {
-				onSuccess();
-				return;
-			}
-
-			const formData = new FormData(form);
-
-			$.ajax({
-				url : '/common/genFile/doUpload',
-				data : formData,
-				processData : false,
-				contentType : false,
-				dataType : "json",
-				type : 'POST',
-				success : onSuccess
-			});
-
-			// 파일을 업로드 한 후
-			// 기다린다.
-			// 응답을 받는다.
-			// onSuccess를 실행한다.
-		}
-		const submitForm = function(data) {
-			if (data) {
-				form.genFileIdsStr.value = data.body.genFileIdsStr;
-			}
-
-			form.submit();
-			ModifyMember_checkAndSubmitDone = true;
-
-		}
-
 		form.loginPw.value = sha256(form.loginPwInput.value);
 		form.loginPwInput.value = '';
 		form.loginPwConfirm.value = '';
+		
+		form.submit();
+		ModifyMember_checkAndSubmitDone = true;
 
-		startUpload(submitForm);
 	}
 </script>
 
@@ -137,7 +106,6 @@
 					<form class="grid form-type-1" action="doModify" method="POST"
 						onsubmit="ModifyMember_checkAndSubmit(this); return false;">
 
-						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="id" value="${member.id}" />
 						<input type="hidden" name="loginPw" />
 						<input type="hidden" name="authLevel" value="${member.authLevel}" />
@@ -168,24 +136,6 @@
 						<div class="form-control">
 							<label class="cursor-pointer label"> 아이디 </label>
 							<div class="plain-text">${member.loginId}</div>
-						</div>
-
-						<!-- 프로필 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">프로필</span>
-							</label>
-							<div>
-								<input accept="image/gif, image/jpeg, image/png"
-									class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
-									name="file__member__${member.id}__common__attachment__1"
-									maxlength="20" />
-								<div class="mt-3">
-									<c:set var="fileNo" value="${String.valueOf(1)}" />
-									${member.extra.file__common__attachment[fileNo].mediaHtml}
-								</div>
-							</div>
 						</div>
 
 						<!-- 비밀번호 -->

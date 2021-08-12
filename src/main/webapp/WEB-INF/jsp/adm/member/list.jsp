@@ -94,12 +94,6 @@
 
 					<div
 						class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
-						<!-- 프로필 -->
-						<a href="#" class="row-span-7">
-							<img class="w-40 h-40 object-cover rounded-full"
-								onerror="${member.profileFallbackImgOnErrorHtmlAttr}"
-								src="${member.profileImgUrl}">
-						</a>
 
 						<!-- 아이디 -->
 						<a href="#" class="cursor-pointer hover:underline">

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ include file="../part/head.jspf"%>
 
 <!-- lodash -->
@@ -54,11 +56,7 @@
 			},
 			
 			'json'
-			
-			/* 형식
-			(html -> html)
-			(json -> json)
-			*/
+
 		);
 	}
 	
@@ -146,7 +144,8 @@ function JoinForm__checkAndSubmit(form) {
 	form.loginPw.value = sha256(form.loginPwInput.value);
 	form.loginPwInput.value = '';
 	form.loginPwConfirm.value = '';
-
+	
+	form.submit();
 	JoinForm__checkAndSubmitDone = true;
 
 }

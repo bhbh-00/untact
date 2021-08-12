@@ -31,19 +31,6 @@ public class Member extends EntityDto {
 	
 	private String Extra__thumbImg;
 	
-	public String getProfileImgUrl() {
-        return "/common/genFile/file/member/" + id + "/common/attachment/1";
-        
-    }
-
-    public String getProfileFallbackImgUrl() {
-        return "https://via.placeholder.com/300?text=No image";
-    }
-
-    public String getProfileFallbackImgOnErrorHtmlAttr() {
-        return "this.src = '" + getProfileFallbackImgUrl() + "'";
-    }
-	
 	public String getAuthLevelName() {
 		return MemberService.getAuthLevelName(this);
 	}
