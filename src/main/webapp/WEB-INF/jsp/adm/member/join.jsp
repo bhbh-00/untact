@@ -143,47 +143,11 @@ function JoinForm__checkAndSubmit(form) {
 		return;
 	}
 	
-	// 파일 업로드
-	// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
-	const submitForm = function(data) {
-		
-		if (data) {
-			form.genFileIdsStr.value = data.body.genFileIdsStr;
-		}
-
-		form.submit();			
-		JoinForm__checkAndSubmitDone = true;
-	}
-
-	function startUpload(onSuccess) {
-		if (!form.file__member__0__common__attachment__1.value) {
-			onSuccess();
-			return;
-		}
-
-		const formData = new FormData(form);
-
-		$.ajax({
-			url : '/common/genFile/doUpload',
-			data : formData,
-			processData : false,
-			contentType : false,
-			dataType : "json",
-			type : 'POST',
-			success : onSuccess
-		});
-
-		// 파일을 업로드 한 후
-		// 기다린다.
-		// 응답을 받는다.
-		// onSuccess를 실행한다.
-	}
-
 	form.loginPw.value = sha256(form.loginPwInput.value);
 	form.loginPwInput.value = '';
 	form.loginPwConfirm.value = '';
 
-	startUpload(submitForm);
+	JoinForm__checkAndSubmitDone = true;
 
 }
 
@@ -228,7 +192,6 @@ $(function() {
 						method="POST"
 						onsubmit="JoinForm__checkAndSubmit(this); return false;">
 
-						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="redirectUrl"
 							value="${param.redirectUrl}" />
 						<input type="hidden" name="loginPw" />
@@ -266,21 +229,6 @@ $(function() {
 							<input autofocus="autofocus" type="password"
 								placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm"
 								maxlength="20" class="input input-bordered">
-						</div>
-
-
-						<!-- 프로필이미지 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">프로필 이미지</span>
-							</label>
-							<div>
-								<input class="thumb-available"
-									data-thumb-selector="next().next()" type="file"
-									name="file__member__0__common__attachment__1"
-									placeholder="프로필이미지" accept="image/png, image/jpeg, image/png">
-								<div class="mt-2"></div>
-							</div>
 						</div>
 
 						<!-- 회원타입 -->

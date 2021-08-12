@@ -1,27 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <%@ include file="../part/head.jspf"%>
 
-<!-- lodash -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-
-<!-- sha256 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-
 
 <script>
 	const JoinForm__checkAndSubmitDone = false;
 
 	let JoinForm__validLoginId = '';
 
-	//로그인 아이디 중복체크 함수 ajax
-	function JoinForm__checkLoginIdDup(obj) {
-
+	// 로그인 아이디 중복체크 함수
+	function JoinForm__checkLoginIdDup() {
 		const form = $('.formLogin').get(0);
 
 		form.loginId.value = form.loginId.value.trim();
@@ -30,13 +21,9 @@
 			return;
 		}
 
-		// 편지라고 생각하면 됌!
-		$.get('getLoginIdDup',
-		// url
-		{
+		$.get('getLoginIdDup', {
 			loginId : form.loginId.value
 		}, function(data) {
-
 			let colorClass = 'text-green-500';
 
 			if (data.fail) {
@@ -47,25 +34,13 @@
 
 			if (data.fail) {
 				form.loginId.focus();
-			}
-
-			else {
+			} else {
 				JoinForm__validLoginId = data.body.loginId;
 			}
 
-		},
-
-		'json'
-
-		/* 형식
-		(html -> html)
-		(json -> json)
-		 */
-		);
+		}, 'json');
 	}
-
 	function JoinForm__checkAndSubmit(form) {
-
 		if (JoinForm__checkAndSubmitDone) {
 			return;
 		}
@@ -73,39 +48,36 @@
 		form.loginId.value = form.loginId.value.trim();
 
 		if (form.loginId.value.length == 0) {
-			alert('아이디를 입력해주세요.');
+			alert('로그인아이디를 입력해주세요.');
 			form.loginId.focus();
 
 			return;
 		}
 
 		if (form.loginId.value != JoinForm__validLoginId) {
-			alert('입력하신 아이디를 확인해 주세요.');
+			alert('로그인아이디 중복체크를해주세요.');
 			form.loginId.focus();
 
 			return;
 		}
 
 		form.loginPwInput.value = form.loginPwInput.value.trim();
-
+		
 		if (form.loginPwInput.value.length == 0) {
 			alert('비밀번호를 입력해주세요.');
 			form.loginPwInput.focus();
-
 			return;
 		}
-
+		
 		if (form.loginPwConfirm.value.length == 0) {
 			alert('비밀번호를 확인해주세요.');
 			form.loginPwConfirm.focus();
-
 			return;
 		}
-
+		
 		if (form.loginPwInput.value != form.loginPwConfirm.value) {
 			alert('비밀번호가 일치하지 않습니다.');
 			form.loginPwConfirm.focus();
-
 			return;
 		}
 
@@ -121,7 +93,7 @@
 		form.nickname.value = form.nickname.value.trim();
 
 		if (form.nickname.value.length == 0) {
-			alert('닉네임를 입력해주세요.');
+			alert('별명을 입력해주세요.');
 			form.nickname.focus();
 
 			return;
@@ -130,7 +102,7 @@
 		form.email.value = form.email.value.trim();
 
 		if (form.email.value.length == 0) {
-			alert('이메일를 입력해주세요.');
+			alert('이메일을 입력해주세요.');
 			form.email.focus();
 
 			return;
@@ -139,56 +111,18 @@
 		form.cellphoneNo.value = form.cellphoneNo.value.trim();
 
 		if (form.cellphoneNo.value.length == 0) {
-			alert('전화번호를 입력해주세요.');
+			alert('휴대전화번호를 입력해주세요.');
 			form.cellphoneNo.focus();
 
 			return;
 		}
 
-		// 파일 업로드
-		// ajax를 사용하는 이유는 파일 전송을 폼 전송으로 할 때 화면이 전환 되니깐
-		const submitForm = function(data) {
-
-			if (data) {
-				form.genFileIdsStr.value = data.body.genFileIdsStr;
-			}
-
-			form.submit();
-			JoinForm__checkAndSubmitDone = true;
-		}
-
-		function startUpload(onSuccess) {
-			if (!form.file__member__0__common__attachment__1.value) {
-				onSuccess();
-				return;
-			}
-
-			const formData = new FormData(form);
-
-			$.ajax({
-				url : '/common/genFile/doUpload',
-				data : formData,
-				processData : false,
-				contentType : false,
-				dataType : "json",
-				type : 'POST',
-				success : onSuccess
-			});
-
-			// 파일을 업로드 한 후
-			// 기다린다.
-			// 응답을 받는다.
-			// onSuccess를 실행한다.
-		}
-
-
 		form.loginPw.value = sha256(form.loginPwInput.value);
 		form.loginPwInput.value = '';
 		form.loginPwConfirm.value = '';
 
-		startUpload(submitForm);
+		JoinForm__checkAndSubmitDone = true;
 	}
-
 	$(function() {
 		$('.inputLoginId').change(function() {
 			JoinForm__checkLoginIdDup();
@@ -197,7 +131,6 @@
 		$('.inputLoginId').keyup(_.debounce(JoinForm__checkLoginIdDup, 1000));
 	});
 </script>
-
 <section class="section-member-join">
 
 	<div
@@ -215,35 +148,25 @@
 			</div>
 
 			<div
-				class="container mx-auto bg-white card bordered shadow-lg px-5 pt-8 pb-3">
+				class="container mx-auto bg-white card bordered shadow-lg px-5 pt-5 pb-3">
 
-				<div class="flex container mx-auto px-5 pb-2">
-					<div class="text-xl">
-						<i class="fas fa-user-edit mr-1"></i>
-						<span class="font-bold">회원가입</span>
-					</div>
-
-					<div class="flex-grow"></div>
-
-					<div class="flex items-center text-gray-500">
-						<a href="../home/main" class="btn btn-ghost btn-sm mb-1">
-							<i class="fas fa-home text-lg"></i>
-							<span>home</span>
-						</a>
-					</div>
+				<div class="container mx-auto flex text-xl mt-4 ml-5">
+					<span class="flex items-center mr-1">
+						<i class="fas fa-user-edit"></i>
+					</span>
+					<span class="font-bold"> 회원가입 </span>
 				</div>
 
-				<div class="px-4 py-4">
+				<div class="px-4 py-8">
 
 					<form class="formLogin grid form-type-1" action="doJoin"
-						onsubmit="JoinForm__checkAndSubmit(this); return false;"
-						method="POST">
+						method="POST"
+						onsubmit="JoinForm__checkAndSubmit(this); return false;">
 
-						<input type="hidden" name="genFileIdsStr" />
 						<input type="hidden" name="redirectUrl"
 							value="${param.redirectUrl}" />
 						<input type="hidden" name="loginPw" />
-						<input type="hidden" name="authLevel" value="3" />
+						<input type="hidden" name="authLevel" value="3"/>
 
 						<!-- loginId -->
 						<div class="form-control">
@@ -267,7 +190,7 @@
 							</label>
 							<input autofocus="autofocus" type="password"
 								placeholder="영문+숫자 조합으로 입력해주세요." name="loginPwInput"
-								maxlength="20" class="input input-bordered">
+								maxlength="30" class="input input-bordered">
 						</div>
 
 						<!-- 비밀번호 확인 -->
@@ -278,21 +201,6 @@
 							<input autofocus="autofocus" type="password"
 								placeholder="비밀번호와 일치해야합니다." name="loginPwConfirm"
 								maxlength="20" class="input input-bordered">
-						</div>
-
-
-						<!-- 프로필이미지 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">프로필 이미지</span>
-							</label>
-							<div>
-								<input accept="image/gif, image/jpeg, image/png"
-									class="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-									autofocus="autofocus" type="file" placeholder="프로필이미지를 선택해주세요."
-									name="file__member__0__common__attachment__1" maxlength="20" />
-								<div class="mt-2"></div>
-							</div>
 						</div>
 
 						<!-- name -->
@@ -337,7 +245,7 @@
 						<div class="form-control mt-4">
 							<input type="submit"
 								class="btn btn-wide btn-sm mb-1 bg-gray-400 border-transparent w-full text-base"
-								value="가입하기">
+								value="회원가입">
 						</div>
 
 					</form>
@@ -350,3 +258,4 @@
 </section>
 
 <%@ include file="../part/foot.jspf"%>
+

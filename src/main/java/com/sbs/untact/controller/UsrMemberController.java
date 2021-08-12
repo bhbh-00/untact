@@ -104,12 +104,12 @@ public class UsrMemberController extends BaseController {
 		if (loginedMember.getLoginPw().equals(loginPw) == false) {
 			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
 		}
-		
+
 		// checkPasswordAuthCode 생성
 		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
 
 		redirectUrl = "../member/modify?id=" + loginedMember.getId();
-		
+
 		// checkPasswordAuthCode가 포함 된 새로운 url 가져오기
 		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
 
@@ -325,16 +325,6 @@ public class UsrMemberController extends BaseController {
 		if (member == null) {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
-
-		// 파일 확인
-		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
-		Map<String, GenFile> filesMap = new HashMap<>();
-
-		for (GenFile file : files) {
-			filesMap.put(file.getFileNo() + "", file);
-		}
-
-		member.getExtraNotNull().put("file__common__attachment", filesMap);
 
 		req.setAttribute("member", member);
 

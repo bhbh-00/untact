@@ -399,16 +399,6 @@ public class AdmMemberController extends BaseController {
 			return msgAndBack(req, "존재하지 않는 회원입니다.");
 		}
 
-		// 파일
-		List<GenFile> files = genFileService.getGenFiles("member", member.getId(), "common", "attachment");
-		Map<String, GenFile> filesMap = new HashMap<>();
-
-		for (GenFile file : files) {
-			filesMap.put(file.getFileNo() + "", file);
-		}
-
-		member.getExtraNotNull().put("file__common__attachment", filesMap);
-
 		req.setAttribute("member", member);
 
 		return "/adm/member/modify";

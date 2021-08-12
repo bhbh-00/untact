@@ -107,9 +107,6 @@ public class MemberService {
 
 		int id = Util.getAsInt(param.get("id"), 0);
 
-		// 파일 업로드 시 파일의 번호를 게시물의 번호를 바꾼다.
-		genFileService.changeInputFileRelIds(param, id);
-
 		// 비밀번호 등록 시점
 		setNeedToChangePasswordLater(id);
 
