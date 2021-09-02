@@ -1,6 +1,5 @@
 package com.sbs.untact.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
-import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
@@ -24,39 +21,6 @@ import com.sbs.untact.util.Util;
 public class AdmMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
-	@Autowired
-	private GenFileService genFileService;
-
-	@RequestMapping("/adm/member/checkPassword")
-	public String ShowCheckPassword(HttpServletRequest req) {
-		return "/adm/member/checkPassword";
-	}
-
-	// checkPasswordAuthCode : 체크비밀번호인증코드
-	// 비밀번호 확인
-	@RequestMapping("/adm/member/doCheckPassword")
-	public String doCheckPassword(HttpServletRequest req, String loginPw, String redirectUrl) {
-
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		if (loginPw == null) {
-			return msgAndBack(req, "비밀번호를 입력해주세요.");
-		}
-
-		if (loginedMember.getLoginPw().equals(loginPw) == false) {
-			return msgAndBack(req, "비밀번호가 일치하지 않습니다.");
-		}
-
-		String authCode = memberService.genCheckPasswordAuthCode(loginedMember.getId());
-
-		redirectUrl = "../member/modify?id=" + loginedMember.getId();
-
-		redirectUrl = Util.getNewUrl(redirectUrl, "checkPasswordAuthCode", authCode);
-
-		req.setAttribute("loginedMember", loginedMember);
-
-		return msgAndReplace(req, "", redirectUrl);
-	}
 
 	// 비밀번호 찾기
 	@RequestMapping("/adm/member/findLoginPw")
@@ -378,16 +342,7 @@ public class AdmMemberController extends BaseController {
 
 	// 회원정보 수정
 	@RequestMapping("/adm/member/modify")
-	public String Modify(HttpServletRequest req, Integer id, String checkPasswordAuthCode) {
-
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
-
-		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
-				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
-
-		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
-			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
-		}
+	public String Modify(HttpServletRequest req, Integer id) {
 
 		if (id == 0) {
 			return msgAndBack(req, "회원 번호를 입력해주세요.");
@@ -407,20 +362,11 @@ public class AdmMemberController extends BaseController {
 	// 회원정보 수정
 	@RequestMapping("/adm/member/doModify")
 	@ResponseBody
-	public String doModify(HttpServletRequest req, String loginPw, int authLevel, String name, String nickname,
-			String cellphoneNo, String email, String checkPasswordAuthCode) {
+	public String doModify(HttpServletRequest req, int id, int authLevel) {
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
-				.checkValidCheckPasswordAuthCode(loginedMember.getId(), checkPasswordAuthCode);
-
-		if (checkValidCheckPasswordAuthCodeResultData.isFail()) {
-			return msgAndBack(req, checkValidCheckPasswordAuthCodeResultData.getMsg());
-		}
-
-		ResultData modifyRd = memberService.modify(loginedMember.getId(), loginPw, authLevel, name, nickname,
-				cellphoneNo, email);
+		ResultData modifyRd = memberService.admModify(id , authLevel);
 
 		req.setAttribute("member", loginedMember);
 

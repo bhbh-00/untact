@@ -18,6 +18,7 @@
 	
 	//로그인 아이디 중복체크 함수 ajax
 	let JoinForm__validLoginId = '';
+	
 	function JoinForm__checkLoginIdDup(obj) {
 		
 		const form = $('.formLogin').get(0);
@@ -30,7 +31,6 @@
 		
 		$.get(
 			'getLoginIdDup',
-			// url
 			{
 				loginId:form.loginId.value
 			},

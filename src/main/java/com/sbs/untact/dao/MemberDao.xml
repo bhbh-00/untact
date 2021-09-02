@@ -5,7 +5,7 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
- 	<!--  -->
+	<!-- -->
 	<select id="getMemberTotleCount" resultType="int">
 		SELECT count(*)
 		FROM `member`
@@ -26,17 +26,22 @@
 		<if test="searchKeywordType == 'email'">
 			AND email LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
-		<if test="searchKeywordType == 'loginIdAndNameAndNicknameAndCellphoneNoAndEmail'">
+		<if
+			test="searchKeywordType == 'loginIdAndNameAndNicknameAndCellphoneNoAndEmail'">
 			AND (loginId LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			authLevel LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			name LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			nickname LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			cellphoneNo LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			email LIKE CONCAT('%', #{searchKeyword}, '%'))
+			name LIKE
+			CONCAT('%', #{searchKeyword}, '%') OR
+			nickname LIKE CONCAT('%',
+			#{searchKeyword}, '%') OR
+			cellphoneNo LIKE CONCAT('%',
+			#{searchKeyword}, '%') OR
+			email LIKE CONCAT('%', #{searchKeyword},
+			'%'))
 		</if>
 		ORDER BY id DESC
 	</select>
-	
+
 	<select id="getMemberByLoginPw" resultType="Member">
 		SELECT *
 		FROM `member`
@@ -44,31 +49,34 @@
 		loginPw = #{loginPw}
 		AND delStatus = 0
 	</select>
-	
+
 	<!-- 회원 탈퇴 -->
 	<update id="delete">
 		UPDATE `member`
-        SET delDate = NOW(),
-        delStatus = 1
-        WHERE id = #{id}
+		SET delDate = NOW(),
+		delStatus = 1
+		WHERE id = #{id}
 	</update>
-	
+
 	<!-- 회원가입 -->
 	<insert id="join" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO `member`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		loginId = #{loginId},
+		loginId =
+		#{loginId},
 		loginPw = #{loginPw},
 		authLevel = #{authLevel},
-		authKey = CONCAT("authKey1__", UUID(), "__", RAND()),
+		authKey =
+		CONCAT("authKey1__", UUID(), "__", RAND()),
 		`name` = #{name},
-		nickname = #{nickname},
+		nickname =
+		#{nickname},
 		cellphoneNo = #{cellphoneNo},
 		email = #{email}
 	</insert>
-	
+
 	<!-- 기존 회원의 아이디 -->
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
@@ -77,23 +85,25 @@
 		loginId = #{loginId}
 		AND delStatus = 0
 	</select>
-	
+
 	<!-- 기존 회원의 이름과 이메일 확인 -->
 	<select id="getMemberByNameAndEmail" resultType="Member">
 		SELECT *
-		FROM `member`
+		FROM
+		`member`
 		WHERE
 		`name` = #{name}
 		AND email = #{email}
 		AND delStatus = 0
 	</select>
-	
+
 	<!-- 회원정보 수정 -->
 	<update id="modify">
 		UPDATE `member`
 		<set>
 			<if
-				test="loginPw != null and authLevel != null and name != null and nickname != null and cellphoneNo != null and email != null">
+				test="loginPw != null and authLevel != null and name != null 
+				and nickname != null and cellphoneNo != null and email != null">
 				updateDate = NOW(),
 			</if>
 			<if test="loginPw != null">
@@ -118,7 +128,20 @@
 		WHERE id = #{id}
 		AND delStatus = 0
 	</update>
-	
+
+	<!-- 회원정보 수정 -->
+	<update id="admModify">
+		UPDATE `member`
+		<set>
+			<if test="authLevel != null">
+				authLevel = #{authLevel},
+			</if>
+		</set>
+		WHERE id = #{id}
+		AND delStatus = 0
+	</update>
+
+
 	<!-- 회원의 번호로 정보 불러오기 -->
 	<select id="getForPrintMember" resultType="Member">
 		SELECT *
@@ -159,10 +182,11 @@
 		SELECT *
 		FROM `member`
 		WHERE
-		id = #{id}
+		id =
+		#{id}
 		AND delStatus = 0
 	</select>
 
-	
+
 
 </mapper>

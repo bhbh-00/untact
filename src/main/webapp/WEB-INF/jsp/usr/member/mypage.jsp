@@ -60,7 +60,7 @@
 
 					<!-- 이메일 -->
 					<a href="#" class="cursor-pointer hover:underline">
-						<span class="badge badge-outline mb-1">닉네임</span>
+						<span class="badge badge-outline mb-1">이메일</span>
 						<span>${loginedMember.email}</span>
 					</a>
 

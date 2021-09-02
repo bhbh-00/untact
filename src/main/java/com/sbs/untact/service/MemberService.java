@@ -249,4 +249,10 @@ public class MemberService {
 		return memberDao.getMemberTotleCount(searchKeywordType, searchKeyword);
 	}
 
+	public ResultData admModify(int id, int authLevel) {
+		memberDao.admModify(id, authLevel);
+
+		return new ResultData("s-1", "회원정보가 수정되었습니다.");
+	}
+
 }

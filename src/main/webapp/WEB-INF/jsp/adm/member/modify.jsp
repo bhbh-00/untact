@@ -9,81 +9,6 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
-<script>
-	const ModifyMember_checkAndSubmitDone = false;
-
-	function ModifyMember_checkAndSubmit(form) {
-
-		if (ModifyMember_checkAndSubmitDone) {
-
-			return;
-		}
-
-		form.loginPwInput.value = form.loginPwInput.value.trim();
-
-		if (form.loginPwInput.value.length == 0) {
-			alert('비밀번호를 입력해주세요.');
-			form.loginPwInput.focus();
-
-			return;
-		}
-
-		if (form.loginPwConfirm.value.length == 0) {
-			alert('비밀번호를 확인해주세요.');
-			form.loginPwConfirm.focus();
-
-			return;
-		}
-
-		if (form.loginPwInput.value != form.loginPwConfirm.value) {
-			alert('비밀번호가 일치하지 않습니다.');
-			form.loginPwConfirm.focus();
-
-			return;
-		}
-
-		form.name.value = form.name.value.trim();
-
-		if (form.name.value.length == 0) {
-			alert('이름을 입력해주세요.');
-			form.name.focus();
-			return;
-		}
-
-		form.nickname.value = form.nickname.value.trim();
-
-		if (form.nickname.value.length == 0) {
-			alert('닉네임을 입력해주세요.');
-			form.nickname.focus();
-			return;
-		}
-
-		form.email.value = form.email.value.trim();
-
-		if (form.email.value.length == 0) {
-			alert('이메일을 입력해주세요.');
-			form.email.focus();
-			return;
-		}
-
-		form.cellphoneNo.value = form.cellphoneNo.value.trim();
-
-		if (form.cellphoneNo.value.length == 0) {
-			alert('휴대전화번호를 입력해주세요.');
-			form.cellphoneNo.focus();
-			return;
-		}
-
-		form.loginPw.value = sha256(form.loginPwInput.value);
-		form.loginPwInput.value = '';
-		form.loginPwConfirm.value = '';
-		
-		form.submit();
-		ModifyMember_checkAndSubmitDone = true;
-
-	}
-</script>
-
 <section class="section-adm-member-modify">
 
 	<div class="section-member-modify">
@@ -104,10 +29,7 @@
 						action="doModify" method="POST">
 
 						<input type="hidden" name="id" value="${member.id}" />
-						<input type="hidden" name="loginPw" />
-						<input type="hidden" name="checkPasswordAuthCode"
-							value="${param.checkPasswordAuthCode}">
-
+			
 						<!-- 번호 -->
 						<div class="form-control">
 							<label class="cursor-pointer label"> 번호 </label>
@@ -134,24 +56,6 @@
 							<div class="plain-text">${member.loginId}</div>
 						</div>
 
-						<!-- 비밀번호 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">비밀번호</span>
-							</label>
-							<input type="password" name="loginPwInput" placeholder="비밀번호"
-								class="input input-bordered" maxlength="30">
-						</div>
-
-						<!-- 비밀번호 확인 -->
-						<div class="form-control">
-							<label class="label">
-								<span class="label-text">비밀번호 확인</span>
-							</label>
-							<input type="password" name="loginPwConfirm"
-								placeholder="비밀번호 확인" class="input input-bordered" value="">
-						</div>
-
 						<!-- 회원타입 -->
 						<div class="form-control">
 							<label class="label">
@@ -173,38 +77,27 @@
 
 						<!-- 이름 -->
 						<div class="form-control">
-							<label class="label">
-								<span class="label-text">이름</span>
-							</label>
-							<input type="text" placeholder="이름 입력해주세요." name="name"
-								class="input input-bordered" value="${member.name}">
+							<label class="cursor-pointer label"> 이름 </label>
+							<div class="plain-text">${member.name}</div>
 						</div>
+
 
 						<!-- 닉네임 -->
 						<div class="form-control">
-							<label class="label">
-								<span class="label-text">닉네임</span>
-							</label>
-							<input type="text" name="nickname" class="input input-bordered"
-								value="${member.nickname}">
+							<label class="cursor-pointer label"> 닉네임 </label>
+							<div class="plain-text">${member.nickname}</div>
 						</div>
 
 						<!-- 이메일 -->
 						<div class="form-control">
-							<label class="label">
-								<span class="label-text">이메일</span>
-							</label>
-							<input type="email" name="email" class="input input-bordered"
-								value="${member.email}">
+							<label class="cursor-pointer label"> 이메일 </label>
+							<div class="plain-text">${member.email}</div>
 						</div>
 
 						<!-- 전화번호 -->
 						<div class="form-control">
-							<label class="label">
-								<span class="label-text">전화번호</span>
-							</label>
-							<input type="text" name="cellphoneNo"
-								class="input input-bordered" value="${member.cellphoneNo}">
+							<label class="cursor-pointer label"> 전화번호 </label>
+							<div class="plain-text">${member.cellphoneNo}</div>
 						</div>
 
 						<div class="form-control mt-4">

@@ -46,5 +46,8 @@ public interface MemberDao {
 	// 회원의 총 수
 	int getMemberTotleCount(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
+	
+	// 회원관리 회원수정
+	void admModify(@Param("id") int id, @Param("authLevel") int authLevel);
 
 }

@@ -1,7 +1,5 @@
 package com.sbs.untact.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sbs.untact.dto.GenFile;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
-import com.sbs.untact.service.GenFileService;
 import com.sbs.untact.service.MemberService;
 import com.sbs.untact.util.Util;
 
@@ -24,8 +20,6 @@ import com.sbs.untact.util.Util;
 public class UsrMemberController extends BaseController {
 	@Autowired
 	private MemberService memberService;
-	@Autowired
-	private GenFileService genFileService;
 
 	// 비밀번호 찾기
 	@RequestMapping("/usr/member/findLoginPw")
