@@ -50,7 +50,7 @@
 					<span>
 						<i class="fas fa-people-arrows"></i>
 					</span>
-					<span>UNTACT</span>
+					<span>UNTACT ADMIN</span>
 				</a>
 			</div>
 
@@ -101,18 +101,18 @@
 							</div>
 
 							<div class="flex flex-col md:flex-row text-gray-600">
-								<div class="p-1 text-center md:flex-grow">
+								<div class="p-1 text-center md:flex-grow">									
 									<i class="fas fa-sign-in-alt"></i>
 									<a href="login"
 										class="inline-block hover:underline">로그인</a>
 									<a href="#" class="inline-block hover:underline">
 										| </a>
-									<i class="fas fa-user"></i>	
+									<i class="fas fa-user"></i>
 									<a href="join"
 										class="inline-block hover:underline">회원가입</a>
 									<a href="#" class="inline-block hover:underline">
 										| </a>
-									<i class="fas fa-search"></i>	
+									<i class="fas fa-search"></i>
 									<a href="findLoginId"
 										class="inline-block hover:underline">아이디찾기</a>
 								</div>

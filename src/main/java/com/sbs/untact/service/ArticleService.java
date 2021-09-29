@@ -155,11 +155,13 @@ public class ArticleService {
 			String searchKeyword) {
 		return articleDao.getArticlesTotleCountByMyList(loginMemberId, boardId, searchKeywordType, searchKeyword);
 	}
-
+	
+	// 가장 최신 자유 게시물 2개
 	public List<Article> getLatestArticleByBoardNameFree() {
 		return articleDao.getLatestArticleByBoardNameFree();
 	}
-
+	
+	// 가장 최신 공지사항 게시물 2개
 	public List<Article> getLatestArticleByBoardNameNotice() {
 		return articleDao.getLatestArticleByBoardNameNotice();
 	}

@@ -15,7 +15,8 @@ public interface BoardDao {
 	void modify(Map<String, Object> param);
 
 	// 게시판 리스트
-	List<Board> getForPrintBoards(Map<String, Object> param);
+	List<Board> getForPrintBoards(@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword,
+			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
 	// 게시판의 총 갯수
 	int getBoardsTotleCount(@Param("searchKeywordType") String searchKeywordType,

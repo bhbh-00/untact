@@ -13,13 +13,13 @@
 
 <section class="section-adm-home-main">
 
-	<div class="container mx-auto p-5 mb-5">
-		<img
+	<div class="mb-14">
+		<img class="container mx-auto card shadow-lg"
 			src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1489&q=80">
 	</div>
 
 	<div
-		class="container mx-auto bg-white card bordered shadow-lg p-5 mb-5">
+		class="container mx-auto bg-white card bordered shadow-lg p-5 mb-3">
 
 		<div class="items-center ml-2">
 			<span class="text-xl font-bold">
@@ -39,10 +39,19 @@
 
 				<!-- 게시판 번호 -->
 				<!-- 게시물 번호 -->
-				<a href="${detailUrl}" class="cursor-pointer hover:underline">
-					<span class="badge badge-info">${articles.extra__boardName}</span>
-					<span class="text-base">No.${articles.id}</span>
-				</a>
+				<c:if test="${articles.extra__boardName eq '공지사항'}">
+					<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<span class="badge badge-info">${articles.extra__boardName}</span>
+						<span class="text-base">No.${articles.id}</span>
+					</a>
+				</c:if>
+
+				<c:if test="${articles.extra__boardName eq '자유'}">
+					<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<span class="badge badge-warning">${articles.extra__boardName}</span>
+						<span class="text-base">No.${articles.id}</span>
+					</a>
+				</c:if>
 
 				<div class="mt-3 grid sm:grid-cols-2 xl:grid-cols-2 gap-4">
 
@@ -86,16 +95,26 @@
 		<c:forEach items="${LatestArticleByBoardNameNotice}" var="articles">
 
 			<!-- 반복문 안에 임시변수를 넣어둘 수 있음! c:set -->
-			<c:set var="detailUrl" value="detail?id=${articles.id}" />
+			<c:set var="detailUrl" value="../article/detail?id=${articles.id}" />
 
 			<div class="card bg-white p-6">
 
 				<!-- 게시판 번호 -->
 				<!-- 게시물 번호 -->
-				<a href="${detailUrl}" class="cursor-pointer hover:underline">
-					<span class="badge badge-info">${articles.extra__boardName}</span>
-					<span class="text-base">No.${articles.id}</span>
-				</a>
+				<c:if test="${articles.extra__boardName eq '공지사항'}">
+					<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<span class="badge badge-info">${articles.extra__boardName}</span>
+						<span class="text-base">No.${articles.id}</span>
+					</a>
+				</c:if>
+
+				<c:if test="${articles.extra__boardName eq '자유'}">
+					<a href="${detailUrl}" class="cursor-pointer hover:underline">
+						<span class="badge badge-warning">${articles.extra__boardName}</span>
+						<span class="text-base">No.${articles.id}</span>
+					</a>
+				</c:if>
+
 
 				<div class="mt-3 grid sm:grid-cols-2 xl:grid-cols-2 gap-4">
 

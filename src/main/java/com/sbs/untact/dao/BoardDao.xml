@@ -66,8 +66,7 @@
 	<select id="getForPrintBoards" resultType="Board">
 		SELECT B.*,
 		IFNULL(M.nickname, "탈퇴회원") AS extra__writer
-		FROM `board` AS
-		B
+		FROM `board` AS B
 		LEFT JOIN `member` AS M
 		ON B.memberId = M.id
 		WHERE 1

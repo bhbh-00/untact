@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.untact.dao.BoardDao;
+import com.sbs.untact.dto.Article;
 import com.sbs.untact.dto.Board;
 import com.sbs.untact.dto.Member;
 import com.sbs.untact.dto.ResultData;
@@ -21,17 +22,14 @@ public class BoardService {
 	private MemberService memberService;
 
 	// 게시판 리스트
-	public List<Board> getForPrintBoards(String searchKeywordType, String searchKeyword, int page, int itemsInAPage,
-			@RequestParam Map<String, Object> param) {
+	public List<Board> getForPrintBoards(String searchKeywordType, String searchKeyword, int page, int itemsInAPage) {
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 
-		param.put("searchKeywordType", searchKeywordType);
-		param.put("searchKeyword", searchKeyword);
-		param.put("page", page);
-		param.put("itemsInAPage", itemsInAPage);
+		List<Board> Boards = boardDao.getForPrintBoards(searchKeywordType, searchKeyword, limitStart,
+				limitTake);
 
-		return boardDao.getForPrintBoards(param);
+		return Boards;
 	}
 
 	// 게시판의 총 갯수

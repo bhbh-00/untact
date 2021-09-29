@@ -19,10 +19,10 @@ public class UsrHomeController extends BaseController {
 	@RequestMapping("/usr/home/main")
 	public String showMain(HttpServletRequest req) {
 
-		// 가장 최신 자유 게시물 1개
+		// 가장 최신 자유 게시물 2개
 		List<Article> LatestArticleByBoardNameFree = articleService.getLatestArticleByBoardNameFree();
 
-		// 가장 최신 공지사항 게시물 1개
+		// 가장 최신 공지사항 게시물 2개
 		List<Article> LatestArticleByBoardNameNotice = articleService.getLatestArticleByBoardNameNotice();
 
 		req.setAttribute("LatestArticleByBoardNameFree", LatestArticleByBoardNameFree);

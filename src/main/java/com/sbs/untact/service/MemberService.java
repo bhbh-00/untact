@@ -136,11 +136,6 @@ public class MemberService {
 		return new ResultData("s-1", "회원정보가 수정되었습니다.");
 	}
 
-	// 회원의 번호로 정보 불러오기
-	public Member getForPrintMember(int id) {
-		return memberDao.getForPrintMember(id);
-	}
-
 	// checkPasswordAuthCode 생성
 	public String genCheckPasswordAuthCode(int actorId) {
 		String attrName = "member__" + actorId + "__extra__checkPasswordAuthCode";
@@ -166,6 +161,11 @@ public class MemberService {
 	//
 	public Member getMemberByAuthKey(String authKey) {
 		return memberDao.getMemberByAuthKey(authKey);
+	}
+
+	// 총 게시물의 갯수를 구하는
+	public int getMemberTotleCount(String searchKeywordType, String searchKeyword) {
+		return memberDao.getMemberTotleCount(searchKeywordType, searchKeyword);
 	}
 
 	// 회원 리스트
@@ -245,10 +245,12 @@ public class MemberService {
 		return memberDao.getMemberByLoginPw(loginPw);
 	}
 
-	public int getMemberTotleCount(String searchKeywordType, String searchKeyword) {
-		return memberDao.getMemberTotleCount(searchKeywordType, searchKeyword);
+	// 회원의 번호로 정보 불러오기
+	public Member getForPrintMember(int id) {
+		return memberDao.getForPrintMember(id);
 	}
 
+	// 관리자 회원정보 수정
 	public ResultData admModify(int id, int authLevel) {
 		memberDao.admModify(id, authLevel);
 

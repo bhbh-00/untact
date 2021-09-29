@@ -5,7 +5,7 @@
 
 <mapper namespace="com.sbs.untact.dao.MemberDao">
 
-	<!-- -->
+	<!-- 총 게시물의 갯수를 구하는 -->
 	<select id="getMemberTotleCount" resultType="int">
 		SELECT count(*)
 		FROM `member`
@@ -40,6 +40,34 @@
 			'%'))
 		</if>
 		ORDER BY id DESC
+	</select>
+
+	<!-- 회원 리스트 -->
+	<select id="getForPrintMembers" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE 1
+		AND delStatus = 0
+		<if test="searchKeywordType == 'name'">
+			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nickname'">
+			AND `nickname` LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchKeywordType == 'nameAndNickname'">
+			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			nickname LIKE CONCAT('%', #{searchKeyword}, '%'))
+		</if>
+		<if test="searchKeywordType == 'loginId'">
+			AND loginId LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test=" authLevel != null and authLevel != '' ">
+			AND authLevel = #{authLevel}
+		</if>
+		ORDER BY id DESC
+		<if test="limitStart != null and limitTake != null">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
 	</select>
 
 	<select id="getMemberByLoginPw" resultType="Member">
@@ -129,7 +157,16 @@
 		AND delStatus = 0
 	</update>
 
-	<!-- 회원정보 수정 -->
+	<!-- 회원의 번호로 정보 불러오기 -->
+	<select id="getForPrintMember" resultType="Member">
+		SELECT *
+		FROM `member`
+		WHERE
+		id = #{id}
+		AND delStatus = 0
+	</select>
+
+	<!-- 관리자 회원정보 수정 -->
 	<update id="admModify">
 		UPDATE `member`
 		<set>
@@ -140,43 +177,6 @@
 		WHERE id = #{id}
 		AND delStatus = 0
 	</update>
-
-
-	<!-- 회원의 번호로 정보 불러오기 -->
-	<select id="getForPrintMember" resultType="Member">
-		SELECT *
-		FROM `member`
-		WHERE
-		id = #{id}
-		AND delStatus = 0
-	</select>
-
-	<select id="getForPrintMembers" resultType="Member">
-		SELECT *
-		FROM `member`
-		WHERE 1
-		AND delStatus = 0
-		<if test="searchKeywordType == 'name'">
-			AND name LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchKeywordType == 'nickname'">
-			AND `nickname` LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test="searchKeywordType == 'nameAndNickname'">
-			AND (name LIKE CONCAT('%', #{searchKeyword}, '%') OR
-			nickname LIKE CONCAT('%', #{searchKeyword}, '%'))
-		</if>
-		<if test="searchKeywordType == 'loginId'">
-			AND loginId LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
-		<if test=" authLevel != null and authLevel != '' ">
-			AND authLevel = #{authLevel}
-		</if>
-		ORDER BY id DESC
-		<if test="limitStart != null and limitTake != null">
-			LIMIT #{limitStart}, #{limitTake}
-		</if>
-	</select>
 
 	<select id="getMember" resultType="Member">
 		SELECT *

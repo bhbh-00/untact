@@ -98,7 +98,7 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>내 정보수정</span>
+					<span>내 정보 수정</span>
 				</div>
 
 				<div class="px-4 py-8">

@@ -19,7 +19,7 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>회원정보수정</span>
+					<span>회원정보 수정</span>
 				</div>
 
 				<div class="px-4 py-8">
@@ -29,6 +29,8 @@
 						action="doModify" method="POST">
 
 						<input type="hidden" name="id" value="${member.id}" />
+						<input type="hidden" name="checkPasswordAuthCode"
+							value="${param.checkPasswordAuthCode}">
 			
 						<!-- 번호 -->
 						<div class="form-control">

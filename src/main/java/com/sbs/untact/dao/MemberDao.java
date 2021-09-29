@@ -26,6 +26,10 @@ public interface MemberDao {
 	//
 	Member getMemberByAuthKey(@Param("authKey") String authKey);
 
+	// 총 게시물의 갯수를 구하는
+	int getMemberTotleCount(@Param("searchKeywordType") String searchKeywordType,
+			@Param("searchKeyword") String searchKeyword);
+
 	// 회원 리스트
 	List<Member> getForPrintMembers(Map<String, Object> param);
 
@@ -43,11 +47,7 @@ public interface MemberDao {
 	// 회원의 번호로 정보 불러오기
 	Member getForPrintMember(@Param("id") int id);
 
-	// 회원의 총 수
-	int getMemberTotleCount(@Param("searchKeywordType") String searchKeywordType,
-			@Param("searchKeyword") String searchKeyword);
-	
-	// 회원관리 회원수정
+	// 관리자 회원정보 수정
 	void admModify(@Param("id") int id, @Param("authLevel") int authLevel);
 
 }

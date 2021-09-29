@@ -75,7 +75,9 @@ public class UsrMemberController extends BaseController {
 			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
 		}
 
-		return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
+		redirectUrl = "/usr/member/login";
+
+		return Util.msgAndReplace(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()), redirectUrl);
 	}
 
 	// 비밀번호 확인

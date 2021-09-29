@@ -80,7 +80,9 @@ public class AdmMemberController extends BaseController {
 			return Util.msgAndBack("일치하는 회원이 존재하지 않습니다.");
 		}
 
-		return Util.msgAndBack(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()));
+		redirectUrl = "/adm/member/login";
+
+		return Util.msgAndReplace(String.format("회원님의 아이디는 [ %s ] 입니다.", member.getLoginId()), redirectUrl);
 	}
 
 	// 회원 탈퇴
@@ -100,7 +102,7 @@ public class AdmMemberController extends BaseController {
 
 		ResultData deleteMemberRd = memberService.delete(id);
 
-		String redirectUrl = "/usr/member/login";
+		String redirectUrl = "/adm/member/login";
 
 		return Util.msgAndReplace(deleteMemberRd.getMsg(), redirectUrl);
 	}
@@ -364,11 +366,12 @@ public class AdmMemberController extends BaseController {
 	@ResponseBody
 	public String doModify(HttpServletRequest req, int id, int authLevel) {
 
-		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		Member member = memberService.getForPrintMember(id);
 
-		ResultData modifyRd = memberService.admModify(id , authLevel);
+		// 회원정보 수정
+		ResultData modifyRd = memberService.admModify(id, authLevel);
 
-		req.setAttribute("member", loginedMember);
+		req.setAttribute("member", member);
 
 		String redirectUrl = "../member/list";
 

@@ -16,25 +16,8 @@
 		AND
 		A.delStatus = 0;
 	</select>
-
-	<select id="getLatestArticleByBoardNameNotice"
-		resultType="Article">
-		SELECT A.*,
-		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
-		B.name AS extra__boardName
-		FROM article AS A
-		LEFT JOIN `member` AS M
-		ON
-		A.memberId = M.id
-		LEFT JOIN `board` AS B
-		ON A.boardId = B.id
-		WHERE
-		A.boardId = 1
-		AND A.delStatus = 0
-		ORDER BY A.id DESC
-		LIMIT 2;
-	</select>
-
+	
+	<!-- 가장 최신 자유 게시물 2개 -->
 	<select id="getLatestArticleByBoardNameFree"
 		resultType="Article">
 		SELECT A.*,
@@ -48,6 +31,25 @@
 		ON A.boardId = B.id
 		WHERE
 		A.boardId = 2
+		AND A.delStatus = 0
+		ORDER BY A.id DESC
+		LIMIT 2;
+	</select>
+	
+	<!-- 가장 최신 공지사항 게시물 2개 -->
+	<select id="getLatestArticleByBoardNameNotice"
+		resultType="Article">
+		SELECT A.*,
+		IFNULL(M.nickname, "탈퇴회원") AS extra__writer,
+		B.name AS extra__boardName
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON
+		A.memberId = M.id
+		LEFT JOIN `board` AS B
+		ON A.boardId = B.id
+		WHERE
+		A.boardId = 1
 		AND A.delStatus = 0
 		ORDER BY A.id DESC
 		LIMIT 2;

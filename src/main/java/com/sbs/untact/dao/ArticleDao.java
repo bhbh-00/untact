@@ -12,21 +12,21 @@ import com.sbs.untact.dto.Board;
 @Mapper
 public interface ArticleDao {
 	// interface에서는 public 필요없음!
-	
+
 	// 게시물 수정
 	void modify(Map<String, Object> param);
-	
+
 	// 게시물 삭제
 	void delete(@Param("id") Integer id);
 
 	Article getArticle(@Param("id") Integer id);
-	
+
 	// 게시물 작성
 	void add(Map<String, Object> param);
 
 	List<Article> getArticles(@Param("searchKeywordType") String searchKeywordType,
 			@Param("searchKeyword") String searchKeyword);
-	
+
 	// 게시물 상세페이지
 	Article getForPrintArticle(@Param("id") Integer id);
 
@@ -36,7 +36,8 @@ public interface ArticleDao {
 
 	Board getBoard(int boardId);
 
-	int getArticlesTotleCount(@Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
+	int getArticlesTotleCount(@Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType,
+			@Param("searchKeyword") String searchKeyword);
 
 	List<Article> getForPrintArticleByMemberId(@Param("id") int id);
 
@@ -44,10 +45,13 @@ public interface ArticleDao {
 			@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword,
 			@Param("limitStart") int limitStart, @Param("limitTake") int limitTake);
 
-	int getArticlesTotleCountByMyList(@Param("id") int id, @Param("boardId") int boardId, @Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
+	int getArticlesTotleCountByMyList(@Param("id") int id, @Param("boardId") int boardId,
+			@Param("searchKeywordType") String searchKeywordType, @Param("searchKeyword") String searchKeyword);
 
+	// 가장 최신 자유 게시물 2개
 	List<Article> getLatestArticleByBoardNameFree();
 
+	// 가장 최신 공지사항 게시물 2개
 	List<Article> getLatestArticleByBoardNameNotice();
 
 	Article getArticleByReply(@Param("id") Integer id);
