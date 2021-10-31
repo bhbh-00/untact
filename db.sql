@@ -296,5 +296,6 @@ INSERT INTO attr (
 	`value`,
 	expireDate
 )
+
 SELECT NOW(), NOW(), 'member', id, 'extra', 'needToChangePassword', 0, NULL
 FROM `member`

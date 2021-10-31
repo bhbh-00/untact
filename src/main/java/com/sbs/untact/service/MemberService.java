@@ -45,7 +45,7 @@ public class MemberService {
 		String title = "[" + siteName + "] 임시 패스워드 발송";
 		String tempPassword = Util.getTempPassword(6);
 		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
-		body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
+		body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인하러 가기</a>";
 
 		// 위의 내용으로 메일 보내기
 		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);

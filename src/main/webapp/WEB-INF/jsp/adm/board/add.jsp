@@ -116,7 +116,7 @@
 					<a href="javascript:history.back();" class="cursor-pointer">
 						<i class="fas fa-chevron-left"></i>
 					</a>
-					<span>게시판 추가</span>
+					<span>게시판 작성</span>
 				</div>
 
 				<div class="px-4 py-8">

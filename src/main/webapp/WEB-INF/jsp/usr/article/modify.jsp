@@ -4,9 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
+
 <%@ page import="com.sbs.untact.util.Util"%>
-
-
+	
 <!-- 첨부파일 갯수 조절 -->
 <c:set var="fileInputMaxCount" value="5" />
 <script>

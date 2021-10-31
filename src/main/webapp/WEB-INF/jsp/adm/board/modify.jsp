@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%@ page import="com.sbs.untact.util.Util"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ include file="../part/mainLayoutHead.jspf"%>
-
-<%@ page import="com.sbs.untact.util.Util"%>
-
-<!-- lodash -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 
 <script>
 	const BoardModify_checkAndSubmitDone = false;
@@ -127,17 +123,13 @@
 						</div>
 
 						<!-- 수정날짜 -->
-						<div class="form-control">
-							<label class="cursor-pointer label"> 수정날짜 </label>
-							<div class="plain-text">${board.updateDate}</div>
-						</div>
-
-						<!-- 작성자 -->
-						<div class="form-control">
-							<label class="cursor-pointer label"> 작성자 </label>
-							<div class="plain-text">${board.extra__writer}</div>
-						</div>
-
+						<c:if test="${board.updateDate != board.regDate}">
+							<div class="form-control">
+								<label class="cursor-pointer label"> 수정날짜 </label>
+								<div class="plain-text">${board.updateDate}</div>
+							</div>
+						</c:if>
+						
 						<!-- 코드 -->
 						<div class="form-control">
 							<label class="cursor-pointer label"> 코드 </label>
@@ -172,7 +164,7 @@
 								<span>취소</span>
 							</button>
 						</div>
-						
+
 					</form>
 
 				</div>

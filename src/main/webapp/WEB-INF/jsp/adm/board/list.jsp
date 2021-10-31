@@ -68,7 +68,7 @@
 
 				<div class="p-4">
 
-					<!-- 게시물 번호 -->
+					<!-- 게시판 번호 -->
 					<a class="hover:underline">
 						<span class="badge badge-outline">No.${board.id}</span>
 					</a>

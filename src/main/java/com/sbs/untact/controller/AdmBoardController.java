@@ -93,7 +93,7 @@ public class AdmBoardController extends BaseController {
 		return new ResultData("S-1", String.format("%s(은)는 사용가능한 code 입니다.", code), "code", code);
 	}
 	
-	// 게시판 수정 폼
+	// 게시판 수정
 	@RequestMapping("/adm/board/modify")
 	public String ShowModify(Integer id, HttpServletRequest req) {
 
