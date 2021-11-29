@@ -7,7 +7,7 @@
 
 ## 관련링크
 - [개요](https://drive.google.com/file/d/1bghacSFS3NRBfqOxjW1mrp9FV-K2IAxn/view?usp=sharing)
-- [기술](https://drive.google.com/drive/u/0/folders/1IAphAjLc9K3adi7XN9zFIed9W-No5muu)
+- [기술](https://drive.google.com/file/d/1y3LxADoQJvZFpyNFHrzmL2frYijg7eu_/view?usp=sharing)
 - GITHUB
 - UNTACT 접속
 
