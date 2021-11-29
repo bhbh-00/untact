@@ -6,8 +6,8 @@
 # 프로젝트 | 비대면서비스(Untact)
 
 ## 관련링크
-- 개요
-- 기술
+- [개요](https://drive.google.com/file/d/1bghacSFS3NRBfqOxjW1mrp9FV-K2IAxn/view?usp=sharing)
+- [기술](https://drive.google.com/drive/u/0/folders/1IAphAjLc9K3adi7XN9zFIed9W-No5muu)
 - GITHUB
 - UNTACT 접속
 
